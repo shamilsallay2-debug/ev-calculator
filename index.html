@@ -54,6 +54,9 @@ body.light select option{background:#fff;color:#1a1033}
 .compare-table td.cost{font-weight:700;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:right}
 .compare-table td.name{font-weight:600}
 .best-badge{font-size:0.6rem;background:rgba(46,204,113,0.2);color:#2ecc71;padding:2px 6px;border-radius:4px;font-weight:700;margin-left:6px}
+.mode-tabs{display:flex;gap:6px;margin-bottom:16px;background:var(--input-bg);padding:4px;border-radius:12px;border:1px solid rgba(139,92,246,0.15)}
+.mode-tab{flex:1;padding:10px;border-radius:9px;border:none;background:none;color:var(--faint);font-family:inherit;font-weight:700;font-size:0.8rem;cursor:pointer;transition:all 0.2s}
+.mode-tab.active{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;box-shadow:0 4px 12px rgba(139,92,246,0.4)}
 @media(max-width:480px){body{padding-left:88px;padding-right:12px}.app{max-width:100%}.sidebar{width:72px}.nav-item{width:56px}.nav-icon{font-size:1.25rem}.nav-label{font-size:0.55rem}.compare-table{font-size:0.72rem}}
 </style>
 </head>
@@ -123,30 +126,86 @@ body.light select option{background:#fff;color:#1a1033}
 </div>
 
 <div class="card">
-<div class="card-title">Charging Rate</div>
+<div class="card-title">Charging Mode</div>
+<div class="mode-tabs">
+<button type="button" class="mode-tab" id="tabHome">🏠 Home</button>
+<button type="button" class="mode-tab active" id="tabPublic">🔌 Public DC</button>
+</div>
+
+<!-- Home mode fields -->
+<div id="homeFields" style="display:none">
+<div class="field">
+<label>Home Electricity Rate <span class="hint">(LKR/kWh)</span></label>
+<select id="homeRateSelect">
+<option value="">— Choose CEB / LECO domestic tariff —</option>
+<optgroup label="CEB Domestic (2026)">
+<option value="30">CEB Domestic 0–30 units — 30</option>
+<option value="37">CEB Domestic 31–60 units — 37</option>
+<option value="42">CEB Domestic 61–90 units — 42</option>
+<option value="50">CEB Domestic 91–120 units — 50</option>
+<option value="65">CEB Domestic 121–180 units — 65</option>
+<option value="85">CEB Domestic >180 units — 85</option>
+</optgroup>
+<optgroup label="LECO Domestic (2026)">
+<option value="32">LECO Domestic 0–30 units — 32</option>
+<option value="39">LECO Domestic 31–60 units — 39</option>
+<option value="44">LECO Domestic 61–90 units — 44</option>
+<option value="52">LECO Domestic 91–120 units — 52</option>
+<option value="68">LECO Domestic 121–180 units — 68</option>
+<option value="88">LECO Domestic >180 units — 88</option>
+</optgroup>
+<optgroup label="Other">
+<option value="custom">Custom Home Rate — Enter Manually</option>
+</optgroup>
+</select>
+<div class="hint">Sri Lanka domestic tariff increases with monthly usage. Pick the tier that matches your bill.</div>
+</div>
+<div class="field">
+<label>Home Rate per kWh <span class="hint">(LKR)</span></label>
+<input type="number" id="homeRate" value="42" step="0.01" min="0" inputmode="decimal">
+</div>
+<div class="field">
+<label>Home Charger Power <span class="hint">(kW)</span></label>
+<select id="homeChargerPower">
+<option value="2.3">Standard outlet 2.3 kW (10A)</option>
+<option value="3.3">Standard outlet 3.3 kW (15A)</option>
+<option value="7" selected>AC wallbox 7 kW (32A)</option>
+<option value="11">AC wallbox 11 kW (3-phase)</option>
+<option value="22">AC wallbox 22 kW (3-phase)</option>
+</select>
+</div>
+<div class="field">
+<label>Home Charging Efficiency <span class="hint">(%)</span></label>
+<input type="number" id="homeEfficiency" value="88" step="1" min="50" max="100" inputmode="numeric">
+<div class="hint">AC home charging is typically 85–90% efficient.</div>
+</div>
+</div>
+
+<!-- Public mode fields -->
+<div id="publicFields">
 <div class="field">
 <label>Quick Select</label>
 <select id="quickRate">
 <option value="">— Choose a provider / time —</option>
-<optgroup label="LECO (DC Fast)">
-<option value="89.23">LECO Day (05:30–18:30) — 89.23</option>
-<option value="113.85">LECO Peak (18:30–22:30) — 113.85</option>
-<option value="54.36">LECO Off-Peak (22:30–05:30) — 54.36</option>
+<optgroup label="Volt Charge (BYD Partner)">
+<option value="150">Volt Charge Flat Rate — 150</option>
 </optgroup>
 <optgroup label="ChargeNET">
 <option value="120">ChargeNET Fast (DC) — 120</option>
 <option value="70">ChargeNET Regular (AC) — 70</option>
 </optgroup>
-<optgroup label="Volt Charge (BYD Partner)">
-<option value="150">Volt Charge Flat Rate — 150</option>
-</optgroup>
-<optgroup label="ChargeUP (Lanka IOC)">
-<option value="custom">ChargeUP — Enter Rate Manually</option>
+<optgroup label="LECO (DC Fast)">
+<option value="89.23">LECO Day (05:30–18:30) — 89.23</option>
+<option value="113.85">LECO Peak (18:30–22:30) — 113.85</option>
+<option value="54.36">LECO Off-Peak (22:30–05:30) — 54.36</option>
 </optgroup>
 <optgroup label="CEB">
 <option value="83.08">CEB Day — 83.08</option>
 <option value="107.70">CEB Peak — 107.70</option>
 <option value="51.29">CEB Off-Peak — 51.29</option>
+</optgroup>
+<optgroup label="ChargeUP (Lanka IOC)">
+<option value="custom">ChargeUP — Enter Rate Manually</option>
 </optgroup>
 <optgroup label="Other">
 <option value="custom">Custom Rate — Enter Manually</option>
@@ -160,9 +219,6 @@ body.light select option{background:#fff;color:#1a1033}
 <div class="field">
 <label>Charger Power <span class="hint">(kW)</span></label>
 <select id="chargerPower">
-<option value="7">AC 7 kW (home/slow)</option>
-<option value="11">AC 11 kW</option>
-<option value="22">AC 22 kW</option>
 <option value="30" selected>DC 30 kW</option>
 <option value="50">DC 50 kW</option>
 <option value="60">DC 60 kW</option>
@@ -173,12 +229,10 @@ body.light select option{background:#fff;color:#1a1033}
 <option value="240">DC 240 kW</option>
 </select>
 </div>
+</div>
+
 <button type="button" id="advToggle" style="background:none;border:none;color:var(--purpleB);font-size:0.85rem;cursor:pointer;padding:8px 0;font-weight:600;font-family:inherit"><span id="advArrow" style="display:inline-block;transition:transform 0.3s">▶</span> Advanced options</button>
 <div id="advContent" style="display:none;padding-top:16px;border-top:1px solid rgba(139,92,246,0.15);margin-top:10px">
-<div class="field">
-<label>Efficiency <span class="hint">(%)</span></label>
-<input type="number" id="efficiency" value="90" step="1" min="50" max="100" inputmode="numeric">
-</div>
 <div class="field">
 <label>Session Fee <span class="hint">(LKR)</span></label>
 <input type="number" id="sessionFee" value="0" step="1" min="0" inputmode="numeric">
@@ -209,7 +263,7 @@ body.light select option{background:#fff;color:#1a1033}
 <div style="margin-top:18px"><button type="button" id="saveBtn" style="width:100%;padding:15px;border-radius:14px;border:none;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;box-shadow:0 4px 20px rgba(139,92,246,0.4)">💾 Save to History</button></div>
 </div>
 
-<div class="card">
+<div class="card" id="compareCard">
 <div class="card-title">Cost Comparison</div>
 <p style="font-size:0.75rem;color:var(--dim);margin-bottom:8px;line-height:1.5">What this same charge would cost at each network.</p>
 <table class="compare-table" id="compareTable">
@@ -304,6 +358,10 @@ body.light select option{background:#fff;color:#1a1033}
 <div style="background:var(--input-bg);padding:14px;border-radius:10px;font-family:monospace;font-size:0.8rem;color:var(--blueB);margin:10px 0;border-left:3px solid var(--blue)">Time (h) = Needed ÷ Charger Power</div>
 <p style="font-size:0.85rem;color:var(--dim);line-height:1.7"><strong style="color:var(--purpleB)">Range at Target:</strong> Rated range × (Target% ÷ 100)</p>
 </div>
+<div class="card">
+<div class="card-title">Home vs Public Charging</div>
+<p style="font-size:0.85rem;color:var(--dim);line-height:1.7">Switch between <strong style="color:var(--purpleB)">Home</strong> and <strong style="color:var(--purpleB)">Public DC</strong> at the top of the Charging Mode card. Home mode uses your CEB/LECO domestic tariff and slower AC charger. Public mode uses DC fast charger rates. Home charging is usually 3–5× cheaper per kWh but takes longer.</p>
+</div>
 </div>
 
 </div>
@@ -316,6 +374,11 @@ var vehicleSelect=$('vehicleSelect'),customCapacity=$('customCapacity'),customCa
 var totalCost=$('totalCost'),energyAdd=$('energyAdd'),energyBilled=$('energyBilled'),batteryTarget=$('batteryTarget'),chargeTime=$('chargeTime');
 var rangeAtTarget=$('rangeAtTarget');
 var feeRow=$('feeRow'),feeVal=$('feeVal'),taxRow=$('taxRow'),taxVal=$('taxVal'),saveBtn=$('saveBtn');
+
+var homeRateSelect=$('homeRateSelect'),homeRate=$('homeRate'),homeChargerPower=$('homeChargerPower'),homeEfficiency=$('homeEfficiency');
+var tabHome=$('tabHome'),tabPublic=$('tabPublic'),homeFields=$('homeFields'),publicFields=$('publicFields'),compareCard=$('compareCard');
+
+var currentMode='public';
 
 var vehicleRanges={'30.08':300,'38.88':380,'44.9':405,'60.48':427,'49.92':410,'43.89':320,'51.87':340,'56.83':480,'64':450,'61.06':420};
 var vehicleDCPower={'30.08':30,'38.88':40,'44.9':60,'60.48':80,'49.92':70,'43.89':40,'51.87':60,'56.83':100,'64':135,'61.06':80};
@@ -331,7 +394,7 @@ var providerRates=[
 {name:'CEB Off-Peak',rate:51.29}
 ];
 
-// ============ INDEXEDDB SETUP ============
+// ============ INDEXEDDB ============
 var DB_NAME='evCalcDB';
 var DB_VERSION=1;
 var STORE_NAME='history';
@@ -346,21 +409,14 @@ var store=database.createObjectStore(STORE_NAME,{keyPath:'ts'});
 store.createIndex('ts','ts',{unique:true});
 }
 };
-req.onsuccess=function(e){
-db=e.target.result;
-if(callback)callback();
-};
-req.onerror=function(e){
-console.error('IndexedDB error:',e.target.error);
-if(callback)callback();
-};
+req.onsuccess=function(e){db=e.target.result;if(callback)callback()};
+req.onerror=function(e){console.error('IndexedDB error:',e.target.error);if(callback)callback()};
 }
 
 function addRecord(record,cb){
 if(!db){if(cb)cb(false);return}
 var tx=db.transaction([STORE_NAME],'readwrite');
-var store=tx.objectStore(STORE_NAME);
-var req=store.add(record);
+var req=tx.objectStore(STORE_NAME).add(record);
 req.onsuccess=function(){if(cb)cb(true)};
 req.onerror=function(e){console.error('Add failed:',e.target.error);if(cb)cb(false)};
 }
@@ -368,8 +424,7 @@ req.onerror=function(e){console.error('Add failed:',e.target.error);if(cb)cb(fal
 function getAllRecords(cb){
 if(!db){cb([]);return}
 var tx=db.transaction([STORE_NAME],'readonly');
-var store=tx.objectStore(STORE_NAME);
-var req=store.getAll();
+var req=tx.objectStore(STORE_NAME).getAll();
 req.onsuccess=function(){cb(req.result||[])};
 req.onerror=function(e){console.error('Get failed:',e.target.error);cb([])};
 }
@@ -377,8 +432,7 @@ req.onerror=function(e){console.error('Get failed:',e.target.error);cb([])};
 function deleteRecord(ts,cb){
 if(!db){if(cb)cb(false);return}
 var tx=db.transaction([STORE_NAME],'readwrite');
-var store=tx.objectStore(STORE_NAME);
-var req=store.delete(ts);
+var req=tx.objectStore(STORE_NAME).delete(ts);
 req.onsuccess=function(){if(cb)cb(true)};
 req.onerror=function(){if(cb)cb(false)};
 }
@@ -386,19 +440,15 @@ req.onerror=function(){if(cb)cb(false)};
 function clearAllRecords(cb){
 if(!db){if(cb)cb(false);return}
 var tx=db.transaction([STORE_NAME],'readwrite');
-var store=tx.objectStore(STORE_NAME);
-var req=store.clear();
+var req=tx.objectStore(STORE_NAME).clear();
 req.onsuccess=function(){if(cb)cb(true)};
 req.onerror=function(){if(cb)cb(false)};
 }
 
-// Request persistent storage
 if(navigator.storage&&navigator.storage.persist){
-navigator.storage.persist().then(function(p){
-console.log('Persistent storage:',p?'granted':'denied');
-});
+navigator.storage.persist().then(function(p){console.log('Persistent storage:',p?'granted':'denied')});
 }
-// =========================================
+// =================================
 
 document.querySelectorAll('.nav-item').forEach(function(btn){
 btn.addEventListener('click',function(){
@@ -415,6 +465,23 @@ if(c.style.display==='none'){c.style.display='block';a.style.transform='rotate(9
 else{c.style.display='none';a.style.transform='rotate(0)'}
 });
 
+// Mode switching
+function setMode(mode){
+currentMode=mode;
+if(mode==='home'){
+tabHome.classList.add('active');tabPublic.classList.remove('active');
+homeFields.style.display='block';publicFields.style.display='none';
+compareCard.style.display='none';
+}else{
+tabPublic.classList.add('active');tabHome.classList.remove('active');
+homeFields.style.display='none';publicFields.style.display='block';
+compareCard.style.display='block';
+}
+calc();savePrefs();
+}
+tabHome.addEventListener('click',function(){setMode('home')});
+tabPublic.addEventListener('click',function(){setMode('public')});
+
 function lkr(n){return 'LKR '+n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',')}
 function clamp(v,min,max){v=parseInt(v);if(isNaN(v))return min;if(v<min)return min;if(v>max)return max;return v}
 
@@ -424,14 +491,22 @@ function calc(){
 var cap=parseFloat(capacity.value)||0;
 var cur=parseFloat(current.value)||0;
 var tgt=parseFloat(target.value)||0;
-var r=parseFloat(rate.value)||0;
-var eff=parseFloat(efficiency.value)||90;
 var fee=parseFloat(sessionFee.value)||0;
 var taxPct=parseFloat(tax.value)||0;
-var power=parseFloat(chargerPower.value)||30;
 
 currentNum.value=cur;
 targetNum.value=tgt;
+
+var r,eff,power;
+if(currentMode==='home'){
+r=parseFloat(homeRate.value)||0;
+eff=parseFloat(homeEfficiency.value)||88;
+power=parseFloat(homeChargerPower.value)||7;
+}else{
+r=parseFloat(rate.value)||0;
+eff=parseFloat(efficiency.value)||90;
+power=parseFloat(chargerPower.value)||30;
+}
 
 var needed=(tgt>cur)?((tgt-cur)/100)*cap:0;
 var billed=needed/(eff/100);
@@ -466,12 +541,12 @@ rangeAtTarget.textContent=((tgt/100)*rangePerFull).toFixed(0)+' km';
 if(fee>0){feeRow.style.display='flex';feeVal.textContent=lkr(fee)}else{feeRow.style.display='none'}
 if(taxAmount>0){taxRow.style.display='flex';taxVal.textContent=lkr(taxAmount)}else{taxRow.style.display='none'}
 
-currentCalc={cap:cap,cur:cur,tgt:tgt,r:r,needed:needed,billed:billed,total:total};
+currentCalc={cap:cap,cur:cur,tgt:tgt,r:r,needed:needed,billed:billed,total:total,mode:currentMode};
 saveBtn.disabled=needed<=0;
 saveBtn.style.opacity=needed<=0?'0.5':'1';
 
 updateVehicleInfo();
-updateComparison(billed,taxPct,fee);
+if(currentMode==='public'){updateComparison(billed,taxPct,fee)}
 }
 
 function updateComparison(billed,taxPct,fee){
@@ -508,17 +583,20 @@ $('vehicleDC').textContent=dcPower>0?dcPower+' kW':'—';
 
 vehicleSelect.addEventListener('change',function(){
 var v=this.value;
-if(v==='custom'){customCapacityField.style.display='block';}
-else{customCapacityField.style.display='none';if(v){capacity.value=v;calc();savePrefs();}}
+if(v==='custom'){customCapacityField.style.display='block'}
+else{customCapacityField.style.display='none';if(v){capacity.value=v;calc();savePrefs()}}
 });
 
-customCapacity.addEventListener('input',function(){
-capacity.value=this.value;calc();savePrefs();
-});
+customCapacity.addEventListener('input',function(){capacity.value=this.value;calc();savePrefs()});
 
 quickRate.addEventListener('change',function(){
-if(this.value&&this.value!=='custom'){rate.value=this.value;calc();savePrefs();}
-else if(this.value==='custom'){rate.value='';rate.focus();calc();}
+if(this.value&&this.value!=='custom'){rate.value=this.value;calc();savePrefs()}
+else if(this.value==='custom'){rate.value='';rate.focus();calc()}
+});
+
+homeRateSelect.addEventListener('change',function(){
+if(this.value&&this.value!=='custom'){homeRate.value=this.value;calc();savePrefs()}
+else if(this.value==='custom'){homeRate.value='';homeRate.focus();calc()}
 });
 
 currentNum.addEventListener('input',function(){var v=clamp(this.value,1,100);current.value=v;calc();savePrefs()});
@@ -529,7 +607,12 @@ current.addEventListener('input',function(){currentNum.value=this.value;calc()})
 target.addEventListener('input',function(){targetNum.value=this.value;calc()});
 
 function savePrefs(){
-try{localStorage.setItem('evPrefs',JSON.stringify({capacity:capacity.value,current:current.value,target:target.value,rate:rate.value,efficiency:efficiency.value,sessionFee:sessionFee.value,tax:tax.value,vehicle:vehicleSelect.value,chargerPower:chargerPower.value,theme:document.body.classList.contains('light')?'light':'dark'}))}catch(e){}
+try{localStorage.setItem('evPrefs',JSON.stringify({
+capacity:capacity.value,current:current.value,target:target.value,rate:rate.value,efficiency:efficiency.value,sessionFee:sessionFee.value,tax:tax.value,vehicle:vehicleSelect.value,chargerPower:chargerPower.value,
+homeRate:homeRate.value,homeChargerPower:homeChargerPower.value,homeEfficiency:homeEfficiency.value,
+mode:currentMode,
+theme:document.body.classList.contains('light')?'light':'dark'
+}))}catch(e){}
 }
 
 try{var s=localStorage.getItem('evPrefs');if(s){var p=JSON.parse(s);
@@ -542,10 +625,20 @@ if(p.sessionFee)sessionFee.value=p.sessionFee;
 if(p.tax)tax.value=p.tax;
 if(p.vehicle){vehicleSelect.value=p.vehicle;if(p.vehicle==='custom')customCapacityField.style.display='block'}
 if(p.chargerPower)chargerPower.value=p.chargerPower;
+if(p.homeRate)homeRate.value=p.homeRate;
+if(p.homeChargerPower)homeChargerPower.value=p.homeChargerPower;
+if(p.homeEfficiency)homeEfficiency.value=p.homeEfficiency;
+if(p.mode)currentMode=p.mode;
 if(p.theme==='light'){document.body.classList.add('light');$('themeKnob').style.left='32px'}
 }}catch(e){}
 
-// ============ RENDER HISTORY FROM INDEXEDDB ============
+// Apply saved mode
+if(currentMode==='home'){
+tabHome.classList.add('active');tabPublic.classList.remove('active');
+homeFields.style.display='block';publicFields.style.display='none';
+compareCard.style.display='none';
+}
+
 function renderHistory(){
 getAllRecords(function(hist){
 var list=$('historyList'),stats=$('historyStats'),cb=$('clearBtn'),er=$('exportRow');
@@ -557,16 +650,16 @@ var sorted=hist.slice().sort(function(a,b){return b.ts-a.ts});
 list.innerHTML=sorted.map(function(item){
 var d=new Date(item.ts),mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 var dt=d.getDate()+' '+mo[d.getMonth()]+' · '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
-return '<div style="background:var(--input-bg);border-radius:12px;padding:14px 16px;margin-bottom:10px;border:1px solid rgba(139,92,246,0.15);border-left:3px solid #8b5cf6;position:relative"><button data-id="'+item.ts+'" class="delBtn" style="position:absolute;top:10px;right:10px;background:none;border:none;color:#6a5a9e;font-size:1.2rem;cursor:pointer">×</button><div style="display:flex;justify-content:space-between;margin-bottom:8px;padding-right:24px"><span style="font-size:1.05rem;font-weight:800;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent">'+lkr(item.total)+'</span><span style="font-size:0.7rem;color:#6a5a9e">'+dt+'</span></div><div style="font-size:0.78rem;color:var(--dim);line-height:1.6">🔋 <span style="color:var(--text);font-weight:600">'+item.cur+'% → '+item.tgt+'%</span> · ⚡ <span style="color:var(--text);font-weight:600">+'+item.needed.toFixed(2)+' kWh</span> · 💵 <span style="color:var(--text);font-weight:600">'+item.r.toFixed(2)+' LKR/kWh</span></div></div>'
+var modeIcon=item.mode==='home'?'🏠':'🔌';
+return '<div style="background:var(--input-bg);border-radius:12px;padding:14px 16px;margin-bottom:10px;border:1px solid rgba(139,92,246,0.15);border-left:3px solid #8b5cf6;position:relative"><button data-id="'+item.ts+'" class="delBtn" style="position:absolute;top:10px;right:10px;background:none;border:none;color:#6a5a9e;font-size:1.2rem;cursor:pointer">×</button><div style="display:flex;justify-content:space-between;margin-bottom:8px;padding-right:24px"><span style="font-size:1.05rem;font-weight:800;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent">'+lkr(item.total)+'</span><span style="font-size:0.7rem;color:#6a5a9e">'+dt+'</span></div><div style="font-size:0.78rem;color:var(--dim);line-height:1.6">'+modeIcon+' <span style="color:var(--text);font-weight:600">'+item.cur+'% → '+item.tgt+'%</span> · ⚡ <span style="color:var(--text);font-weight:600">+'+item.needed.toFixed(2)+' kWh</span> · 💵 <span style="color:var(--text);font-weight:600">'+item.r.toFixed(2)+' LKR/kWh</span></div></div>'
 }).join('');
 list.querySelectorAll('.delBtn').forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();var id=parseInt(b.dataset.id);deleteRecord(id,function(){renderHistory()})})});
 });
 }
-// =====================================================
 
 saveBtn.addEventListener('click',function(){
 if(!currentCalc||currentCalc.needed<=0)return;
-var record={ts:Date.now(),cap:currentCalc.cap,cur:currentCalc.cur,tgt:currentCalc.tgt,r:currentCalc.r,needed:currentCalc.needed,billed:currentCalc.billed,total:currentCalc.total};
+var record={ts:Date.now(),cap:currentCalc.cap,cur:currentCalc.cur,tgt:currentCalc.tgt,r:currentCalc.r,needed:currentCalc.needed,billed:currentCalc.billed,total:currentCalc.total,mode:currentCalc.mode};
 addRecord(record,function(ok){
 if(ok){
 renderHistory();
@@ -580,20 +673,18 @@ setTimeout(function(){saveBtn.textContent='💾 Save to History';saveBtn.style.b
 });
 
 $('clearBtn').addEventListener('click',function(){
-if(confirm('Delete all history? This cannot be undone.')){
-clearAllRecords(function(){renderHistory()});
-}
+if(confirm('Delete all history? This cannot be undone.')){clearAllRecords(function(){renderHistory()})}
 });
 
 $('exportBtn').addEventListener('click',function(){
 getAllRecords(function(h){
 if(h.length===0)return;
-var rows=[['Date','Time','Battery Capacity (kWh)','From %','To %','Energy Added (kWh)','Billed (kWh)','Rate (LKR/kWh)','Total (LKR)']];
+var rows=[['Date','Time','Mode','Battery Capacity (kWh)','From %','To %','Energy Added (kWh)','Billed (kWh)','Rate (LKR/kWh)','Total (LKR)']];
 h.slice().sort(function(a,b){return a.ts-b.ts}).forEach(function(x){
 var d=new Date(x.ts);
 var date=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 var time=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
-rows.push([date,time,x.cap,x.cur,x.tgt,x.needed.toFixed(2),x.billed.toFixed(2),x.r.toFixed(2),x.total.toFixed(2)]);
+rows.push([date,time,x.mode||'public',x.cap,x.cur,x.tgt,x.needed.toFixed(2),x.billed.toFixed(2),x.r.toFixed(2),x.total.toFixed(2)]);
 });
 var csv=rows.map(function(r){return r.map(function(c){return '"'+String(c).replace(/"/g,'""')+'"'}).join(',')}).join('\n');
 var blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
@@ -612,16 +703,12 @@ else{document.body.classList.add('light');$('themeKnob').style.left='32px'}
 savePrefs();
 });
 
-[capacity,current,target,rate,efficiency,sessionFee,tax,chargerPower].forEach(function(el){
+[capacity,current,target,rate,efficiency,sessionFee,tax,chargerPower,homeRate,homeChargerPower,homeEfficiency].forEach(function(el){
 el.addEventListener('input',calc);
 el.addEventListener('change',function(){calc();savePrefs()});
 });
 
-// Init: open DB first, then run calc and render
-openDB(function(){
-calc();
-renderHistory();
-});
+openDB(function(){calc();renderHistory()});
 </script>
 </body>
 </html>
