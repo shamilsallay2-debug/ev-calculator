@@ -172,7 +172,12 @@ body.light select option{background:#fff;color:#1a1033}
 <option value="7" selected>AC wallbox 7 kW (32A)</option>
 <option value="11">AC wallbox 11 kW (3-phase)</option>
 <option value="22">AC wallbox 22 kW (3-phase)</option>
+<option value="custom">Custom Power — Enter Manually</option>
 </select>
+</div>
+<div class="field" id="customHomePowerField" style="display:none">
+<label>Custom Charger Power <span class="hint">(kW)</span></label>
+<input type="number" id="customHomePower" value="7" step="0.1" min="0.5" max="50" inputmode="decimal">
 </div>
 <div class="field">
 <label>Home Charging Efficiency <span class="hint">(%)</span></label>
@@ -227,7 +232,12 @@ body.light select option{background:#fff;color:#1a1033}
 <option value="150">DC 150 kW</option>
 <option value="180">DC 180 kW</option>
 <option value="240">DC 240 kW</option>
+<option value="custom">Custom Power — Enter Manually</option>
 </select>
+</div>
+<div class="field" id="customPublicPowerField" style="display:none">
+<label>Custom Charger Power <span class="hint">(kW)</span></label>
+<input type="number" id="customPublicPower" value="30" step="0.1" min="0.5" max="500" inputmode="decimal">
 </div>
 </div>
 
@@ -361,6 +371,7 @@ body.light select option{background:#fff;color:#1a1033}
 <div class="card">
 <div class="card-title">Home vs Public Charging</div>
 <p style="font-size:0.85rem;color:var(--dim);line-height:1.7">Switch between <strong style="color:var(--purpleB)">Home</strong> and <strong style="color:var(--purpleB)">Public DC</strong> at the top of the Charging Mode card. Home mode uses your CEB/LECO domestic tariff and slower AC charger. Public mode uses DC fast charger rates. Home charging is usually 3–5× cheaper per kWh but takes longer.</p>
+<p style="font-size:0.85rem;color:var(--dim);line-height:1.7;margin-top:10px"><strong style="color:var(--purpleB)">Custom Power:</strong> If your charger isn't in the list, pick <strong>Custom Power — Enter Manually</strong> and type your exact kW rating.</p>
 </div>
 </div>
 
@@ -376,6 +387,8 @@ var rangeAtTarget=$('rangeAtTarget');
 var feeRow=$('feeRow'),feeVal=$('feeVal'),taxRow=$('taxRow'),taxVal=$('taxVal'),saveBtn=$('saveBtn');
 
 var homeRateSelect=$('homeRateSelect'),homeRate=$('homeRate'),homeChargerPower=$('homeChargerPower'),homeEfficiency=$('homeEfficiency');
+var customHomePower=$('customHomePower'),customHomePowerField=$('customHomePowerField');
+var customPublicPower=$('customPublicPower'),customPublicPowerField=$('customPublicPowerField');
 var tabHome=$('tabHome'),tabPublic=$('tabPublic'),homeFields=$('homeFields'),publicFields=$('publicFields'),compareCard=$('compareCard');
 
 var currentMode='public';
@@ -465,7 +478,6 @@ if(c.style.display==='none'){c.style.display='block';a.style.transform='rotate(9
 else{c.style.display='none';a.style.transform='rotate(0)'}
 });
 
-// Mode switching
 function setMode(mode){
 currentMode=mode;
 if(mode==='home'){
@@ -487,6 +499,20 @@ function clamp(v,min,max){v=parseInt(v);if(isNaN(v))return min;if(v<min)return m
 
 var currentCalc=null;
 
+function getHomePower(){
+if(homeChargerPower.value==='custom'){
+return parseFloat(customHomePower.value)||7;
+}
+return parseFloat(homeChargerPower.value)||7;
+}
+
+function getPublicPower(){
+if(chargerPower.value==='custom'){
+return parseFloat(customPublicPower.value)||30;
+}
+return parseFloat(chargerPower.value)||30;
+}
+
 function calc(){
 var cap=parseFloat(capacity.value)||0;
 var cur=parseFloat(current.value)||0;
@@ -501,11 +527,11 @@ var r,eff,power;
 if(currentMode==='home'){
 r=parseFloat(homeRate.value)||0;
 eff=parseFloat(homeEfficiency.value)||88;
-power=parseFloat(homeChargerPower.value)||7;
+power=getHomePower();
 }else{
 r=parseFloat(rate.value)||0;
 eff=parseFloat(efficiency.value)||90;
-power=parseFloat(chargerPower.value)||30;
+power=getPublicPower();
 }
 
 var needed=(tgt>cur)?((tgt-cur)/100)*cap:0;
@@ -599,6 +625,26 @@ if(this.value&&this.value!=='custom'){homeRate.value=this.value;calc();savePrefs
 else if(this.value==='custom'){homeRate.value='';homeRate.focus();calc()}
 });
 
+homeChargerPower.addEventListener('change',function(){
+if(this.value==='custom'){
+customHomePowerField.style.display='block';
+customHomePower.focus();
+}else{
+customHomePowerField.style.display='none';
+}
+calc();savePrefs();
+});
+
+chargerPower.addEventListener('change',function(){
+if(this.value==='custom'){
+customPublicPowerField.style.display='block';
+customPublicPower.focus();
+}else{
+customPublicPowerField.style.display='none';
+}
+calc();savePrefs();
+});
+
 currentNum.addEventListener('input',function(){var v=clamp(this.value,1,100);current.value=v;calc();savePrefs()});
 currentNum.addEventListener('blur',function(){var v=clamp(this.value,1,100);this.value=v;current.value=v;calc();savePrefs()});
 targetNum.addEventListener('input',function(){var v=clamp(this.value,1,100);target.value=v;calc();savePrefs()});
@@ -610,6 +656,7 @@ function savePrefs(){
 try{localStorage.setItem('evPrefs',JSON.stringify({
 capacity:capacity.value,current:current.value,target:target.value,rate:rate.value,efficiency:efficiency.value,sessionFee:sessionFee.value,tax:tax.value,vehicle:vehicleSelect.value,chargerPower:chargerPower.value,
 homeRate:homeRate.value,homeChargerPower:homeChargerPower.value,homeEfficiency:homeEfficiency.value,
+customHomePower:customHomePower.value,customPublicPower:customPublicPower.value,
 mode:currentMode,
 theme:document.body.classList.contains('light')?'light':'dark'
 }))}catch(e){}
@@ -624,15 +671,16 @@ if(p.efficiency)efficiency.value=p.efficiency;
 if(p.sessionFee)sessionFee.value=p.sessionFee;
 if(p.tax)tax.value=p.tax;
 if(p.vehicle){vehicleSelect.value=p.vehicle;if(p.vehicle==='custom')customCapacityField.style.display='block'}
-if(p.chargerPower)chargerPower.value=p.chargerPower;
+if(p.chargerPower){chargerPower.value=p.chargerPower;if(p.chargerPower==='custom')customPublicPowerField.style.display='block'}
 if(p.homeRate)homeRate.value=p.homeRate;
-if(p.homeChargerPower)homeChargerPower.value=p.homeChargerPower;
+if(p.homeChargerPower){homeChargerPower.value=p.homeChargerPower;if(p.homeChargerPower==='custom')customHomePowerField.style.display='block'}
 if(p.homeEfficiency)homeEfficiency.value=p.homeEfficiency;
+if(p.customHomePower)customHomePower.value=p.customHomePower;
+if(p.customPublicPower)customPublicPower.value=p.customPublicPower;
 if(p.mode)currentMode=p.mode;
 if(p.theme==='light'){document.body.classList.add('light');$('themeKnob').style.left='32px'}
 }}catch(e){}
 
-// Apply saved mode
 if(currentMode==='home'){
 tabHome.classList.add('active');tabPublic.classList.remove('active');
 homeFields.style.display='block';publicFields.style.display='none';
@@ -703,7 +751,7 @@ else{document.body.classList.add('light');$('themeKnob').style.left='32px'}
 savePrefs();
 });
 
-[capacity,current,target,rate,efficiency,sessionFee,tax,chargerPower,homeRate,homeChargerPower,homeEfficiency].forEach(function(el){
+[capacity,current,target,rate,efficiency,sessionFee,tax,homeRate,homeEfficiency,customHomePower,customPublicPower].forEach(function(el){
 el.addEventListener('input',calc);
 el.addEventListener('change',function(){calc();savePrefs()});
 });
