@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="manifest" href="manifest.json">
+<script>if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0a0612">
+<title>EV Charge Calculator — Sri Lanka</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{--bg:#0a0612;--card:rgba(30,20,60,0.55);--border:rgba(120,80,255,0.18);--blue:#3b82f6;--blueB:#60a5fa;--purple:#8b5cf6;--purpleB:#a78bfa;--text:#ede9fe;--dim:#a29ac4;--faint:#6a5a9e;--input-bg:rgba(10,6,18,0.7);--shadow:rgba(0,0,0,0.4);--solar:#fbbf24;--solar-bg:rgba(251,191,36,0.15)}
+body.light{--bg:#f4f2fc;--card:rgba(255,255,255,0.85);--border:rgba(120,80,255,0.25);--text:#1a1033;--dim:#5a4a8a;--faint:#8a7ab0;--input-bg:rgba(255,255,255,0.9);--shadow:rgba(120,80,255,0.15)}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);background-image:radial-gradient(circle at 15% 0%,rgba(59,130,246,0.18),transparent 45%),radial-gradient(circle at 85% 100%,rgba(139,92,246,0.18),transparent 45%);background-attachment:fixed;color:var(--text);min-height:100vh;padding:16px;padding-left:96px;transition:background 0.3s,color 0.3s}
+.app{max-width:520px;margin:0 auto}
+.page{display:none;animation:fadeIn 0.3s}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+h1{font-size:1.4rem;font-weight:800;text-align:center;margin-bottom:22px;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.card{background:var(--card);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:20px;padding:20px;margin-bottom:14px;border:1px solid var(--border);box-shadow:0 8px 32px var(--shadow);position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(139,92,246,0.5),transparent)}
+.card-title{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--purpleB);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.card-title::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--purpleB);box-shadow:0 0 8px var(--purpleB)}
+.field{margin-bottom:16px}
+.field:last-child{margin-bottom:0}
+.field label{display:flex;justify-content:space-between;align-items:center;font-size:0.85rem;color:var(--dim);margin-bottom:8px;font-weight:500}
+input[type=range]{-webkit-appearance:none;width:100%;height:6px;border-radius:3px;background:linear-gradient(90deg,var(--blue),var(--purple));outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;background:#fff;cursor:pointer;border:3px solid var(--purple);box-shadow:0 0 12px rgba(139,92,246,0.8),0 2px 8px rgba(0,0,0,0.5)}
+input[type=number],select{width:100%;padding:13px 16px;border-radius:12px;border:1px solid rgba(139,92,246,0.2);background:var(--input-bg);color:var(--text);font-size:1rem;outline:none;font-family:inherit}
+input:focus,select:focus{border-color:var(--purpleB);box-shadow:0 0 0 3px rgba(139,92,246,0.15)}
+input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+input[type=number]{-moz-appearance:textfield}
+select{-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath fill='%23a78bfa' d='M7 10L2 5h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:40px}
+select optgroup{background:#1e1b4b;color:var(--purpleB)}
+select option{background:#120a24;color:#fff}
+body.light select option{background:#fff;color:#1a1033}
+.range-pill{background:linear-gradient(135deg,rgba(59,130,246,0.25),rgba(139,92,246,0.25));border:1px solid rgba(139,92,246,0.4);border-radius:12px;padding:12px 16px;margin-top:14px;display:flex;justify-content:space-between;align-items:center}
+.range-pill .rl{font-size:0.7rem;text-transform:uppercase;letter-spacing:1.2px;color:var(--dim);font-weight:700}
+.range-pill .rv{font-size:1.3rem;font-weight:800;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hint{font-size:0.7rem;color:var(--faint);margin-top:6px;font-style:italic}
+.pct-input{width:70px;text-align:center;font-weight:700;color:var(--text);font-size:0.95rem;background:rgba(139,92,246,0.2);border:1px solid rgba(139,92,246,0.3);padding:4px 8px;border-radius:8px;font-family:inherit;outline:none}
+.pct-input:focus{border-color:var(--purpleB);box-shadow:0 0 0 3px rgba(139,92,246,0.15)}
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:80px;background:var(--card);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;padding:20px 0;gap:8px;z-index:100;box-shadow:4px 0 24px var(--shadow)}
+.sidebar::after{content:'';position:absolute;top:10%;bottom:10%;right:0;width:1px;background:linear-gradient(180deg,transparent,rgba(139,92,246,0.6),transparent)}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 6px;width:64px;color:var(--faint);cursor:pointer;border:none;background:none;transition:all 0.2s;border-radius:12px;font-family:inherit;letter-spacing:0.3px}
+.nav-item.active{color:var(--purpleB);background:rgba(139,92,246,0.15)}
+.nav-item.active .nav-icon{filter:drop-shadow(0 0 8px rgba(139,92,246,0.9))}
+.nav-icon{font-size:1.4rem;line-height:1;transition:all 0.2s}
+.nav-label{font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.3px}
+.compare-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:0.8rem}
+.compare-table th{text-align:left;padding:8px 6px;color:var(--dim);font-weight:700;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid var(--border)}
+.compare-table td{padding:8px 6px;border-bottom:1px solid rgba(139,92,246,0.08);color:var(--text)}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td.cost{font-weight:700;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:right}
+.compare-table td.name{font-weight:600}
+.best-badge{font-size:0.6rem;background:rgba(46,204,113,0.2);color:#2ecc71;padding:2px 6px;border-radius:4px;font-weight:700;margin-left:6px}
+.power-pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.power-pill{padding:8px 12px;border-radius:10px;border:1px solid rgba(139,92,246,0.25);background:rgba(139,92,246,0.08);color:var(--dim);font-size:0.75rem;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.15s}
+.power-pill.active{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;border-color:transparent;box-shadow:0 4px 12px rgba(139,92,246,0.4)}
+.power-pill:active{transform:scale(0.97)}
+.solar-toggle{display:flex;justify-content:space-between;align-items:center;padding:14px;background:var(--solar-bg);border:1px solid rgba(251,191,36,0.3);border-radius:14px;margin-bottom:14px}
+.solar-toggle .solar-label{display:flex;align-items:center;gap:10px;font-size:0.9rem;font-weight:600;color:var(--text)}
+.solar-toggle .solar-icon{font-size:1.3rem}
+.switch{width:60px;height:32px;border-radius:16px;border:1px solid rgba(251,191,36,0.4);background:rgba(251,191,36,0.15);cursor:pointer;position:relative;transition:background 0.3s;font-family:inherit}
+.switch .knob{position:absolute;top:2px;left:2px;width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#fbbf24,#f59e0b);transition:left 0.3s;box-shadow:0 2px 8px rgba(251,191,36,0.5)}
+.switch.on{background:rgba(251,191,36,0.4)}
+.switch.on .knob{left:32px}
+.solar-row{display:flex;justify-content:space-between;padding:10px 0;font-size:0.9rem;border-bottom:1px solid rgba(251,191,36,0.15)}
+.solar-row:last-child{border-bottom:none}
+.solar-row .label{color:var(--dim)}
+.solar-row .val{font-weight:700;color:var(--solar)}
+.solar-badge{display:inline-flex;align-items:center;gap:4px;font-size:0.65rem;background:rgba(251,191,36,0.2);color:var(--solar);padding:3px 8px;border-radius:6px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px}
+@media(max-width:480px){body{padding-left:88px;padding-right:12px}.app{max-width:100%}.sidebar{width:72px}.nav-item{width:56px}.nav-icon{font-size:1.25rem}.nav-label{font-size:0.5rem}.compare-table{font-size:0.72rem}}
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+<button type="button" class="nav-item active" data-page="calc"><span class="nav-icon">⚡</span><span class="nav-label">Public</span></button>
+<button type="button" class="nav-item" data-page="home"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></button>
+<button type="button" class="nav-item" data-page="stations"><span class="nav-icon">🔌</span><span class="nav-label">Stations</span></button>
+<button type="button" class="nav-item" data-page="vehicle"><span class="nav-icon">🚗</span><span class="nav-label">Vehicle</span></button>
+<button type="button" class="nav-item" data-page="help"><span class="nav-icon">❓</span><span class="nav-label">Help</span></button>
+</div>
+
+<div class="app">
+
+<!-- PAGE: PUBLIC CHARGING -->
+<div class="page active" id="page-calc">
+<h1>⚡ Public Charging</h1>
+
+<div class="card">
+<div class="card-title">Vehicle</div>
+<div class="field">
+<label>Select Your Car</label>
+<select id="vehicleSelect">
+<option value="">— Choose your vehicle —</option>
+<optgroup label="BYD Sri Lanka (John Keells CG Auto)">
+<option value="30.08">BYD Atto 1 Dynamic — 30.08 kWh</option>
+<option value="38.88">BYD Atto 1 Premium — 38.88 kWh</option>
+<option value="44.9">BYD Dolphin Dynamic 49 — 44.9 kWh</option>
+<option value="60.48">BYD Dolphin Premium — 60.48 kWh</option>
+<option value="49.92">BYD Atto 3 Advanced — 49.92 kWh</option>
+<option value="60.48">BYD Atto 3 Superior — 60.48 kWh</option>
+</optgroup>
+<optgroup label="Dongfeng (Euro Motors)">
+<option value="43.89">Dongfeng Box — 43.89 kWh</option>
+<option value="51.87">Dongfeng Vigo — 51.87 kWh</option>
+<option value="56.83">Dongfeng 007 — 56.83 kWh</option>
+</optgroup>
+<optgroup label="Other Brands">
+<option value="64">MG4 EV (Long Range) — 64 kWh</option>
+<option value="61.06">OMODA E5 — 61.06 kWh</option>
+</optgroup>
+<optgroup label="Other">
+<option value="custom">Custom Vehicle — Enter Capacity</option>
+</optgroup>
+</select>
+</div>
+<div class="field" id="customCapacityField" style="display:none">
+<label>Custom Capacity <span class="hint">(kWh)</span></label>
+<input type="number" id="customCapacity" value="30.08" step="0.01" min="1" inputmode="decimal">
+</div>
+<div class="field">
+<label>Battery Capacity <span class="hint">(kWh)</span></label>
+<input type="number" id="capacity" value="30.08" step="0.01" min="1" inputmode="decimal">
+</div>
+</div>
+
+<div class="card">
+<div class="card-title">Battery &amp; Charge</div>
+<div class="field">
+<label>Current Charge <input type="number" class="pct-input" id="currentNum" value="20" min="1" max="100" step="1" inputmode="numeric"></label>
+<input type="range" id="current" min="1" max="100" value="20" step="1">
+</div>
+<div class="field">
+<label>Target Charge <input type="number" class="pct-input" id="targetNum" value="80" min="1" max="100" step="1" inputmode="numeric"></label>
+<input type="range" id="target" min="1" max="100" value="80" step="1">
+</div>
+</div>
+
+<div class="card">
+<div class="card-title">Charging Rate</div>
+<div class="field">
+<label>Quick Select</label>
+<select id="quickRate">
+<option value="">— Choose a provider / time —</option>
+<optgroup label="LECO (DC Fast)">
+<option value="89.23">LECO Day (05:30–18:30) — 89.23</option>
+<option value="113.85">LECO Peak (18:30–22:30) — 113.85</option>
+<option value="54.36">LECO Off-Peak (22:30–05:30) — 54.36</option>
+</optgroup>
+<optgroup label="ChargeNET">
+<option value="120">ChargeNET Fast (DC) — 120</option>
+<option value="70">ChargeNET Regular (AC) — 70</option>
+</optgroup>
+<optgroup label="Volt Charge (BYD Partner)">
+<option value="150">Volt Charge Flat Rate — 150</option>
+</optgroup>
+<optgroup label="ChargeUP (Lanka IOC)">
+<option value="custom">ChargeUP — Enter Rate Manually</option>
+</optgroup>
+<optgroup label="CEB">
+<option value="83.08">CEB Day — 83.08</option>
+<option value="107.70">CEB Peak — 107.70</option>
+<option value="51.29">CEB Off-Peak — 51.29</option>
+</optgroup>
+<optgroup label="Other">
+<option value="custom">Custom Rate — Enter Manually</option>
+</optgroup>
+</select>
+</div>
+<div class="field">
+<label>Rate per kWh <span class="hint">(LKR)</span></label>
+<input type="number" id="rate" value="150" step="0.01" min="0" inputmode="decimal">
+</div>
+<div class="field">
+<label>Charger Power <span class="hint">(kW)</span></label>
+<select id="chargerPower">
+<option value="7">AC 7 kW (home/slow)</option>
+<option value="11">AC 11 kW</option>
+<option value="22">AC 22 kW</option>
+<option value="30" selected>DC 30 kW</option>
+<option value="50">DC 50 kW</option>
+<option value="60">DC 60 kW</option>
+<option value="100">DC 100 kW</option>
+<option value="120">DC 120 kW</option>
+<option value="150">DC 150 kW</option>
+<option value="180">DC 180 kW</option>
+<option value="240">DC 240 kW</option>
+</select>
+</div>
+<button type="button" id="advToggle" style="background:none;border:none;color:var(--purpleB);font-size:0.85rem;cursor:pointer;padding:8px 0;font-weight:600;font-family:inherit"><span id="advArrow" style="display:inline-block;transition:transform 0.3s">▶</span> Advanced options</button>
+<div id="advContent" style="display:none;padding-top:16px;border-top:1px solid rgba(139,92,246,0.15);margin-top:10px">
+<div class="field">
+<label>Efficiency <span class="hint">(%)</span></label>
+<input type="number" id="efficiency" value="90" step="1" min="50" max="100" inputmode="numeric">
+</div>
+<div class="field">
+<label>Session Fee <span class="hint">(LKR)</span></label>
+<input type="number" id="sessionFee" value="0" step="1" min="0" inputmode="numeric">
+</div>
+<div class="field">
+<label>Tax / VAT <span class="hint">(%)</span></label>
+<input type="number" id="tax" value="0" step="0.1" min="0" inputmode="decimal">
+</div>
+</div>
+</div>
+
+<div class="card" style="background:linear-gradient(135deg,rgba(59,130,246,0.15),rgba(139,92,246,0.1),rgba(10,6,18,0.6));border:1px solid rgba(139,92,246,0.3)">
+<div class="card-title">Result</div>
+<div style="text-align:center;padding:12px 0 20px;border-bottom:1px solid rgba(139,92,246,0.15);margin-bottom:16px">
+<div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:2px;color:var(--dim);margin-bottom:8px;font-weight:600">Total Cost</div>
+<div id="totalCost" style="font-size:2.6rem;font-weight:800;line-height:1.1;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">LKR 0.00</div>
+</div>
+<div style="display:flex;justify-content:space-between;padding:10px 0;font-size:0.9rem;border-bottom:1px solid rgba(139,92,246,0.08)"><span style="color:var(--dim)">Energy to add</span><span id="energyAdd" style="font-weight:600;color:var(--text)">0.00 kWh</span></div>
+<div style="display:flex;justify-content:space-between;padding:10px 0;font-size:0.9rem;border-bottom:1px solid rgba(139,92,246,0.08)"><span style="color:var(--dim)">Billed energy</span><span id="energyBilled" style="font-weight:600;color:var(--text)">0.00 kWh</span></div>
+<div style="display:flex;justify-content:space-between;padding:10px 0;font-size:0.9rem;border-bottom:1px solid rgba(139,92,246,0.08)"><span style="color:var(--dim)">Battery at target</span><span id="batteryTarget" style="font-weight:700;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">0.00 kWh</span></div>
+<div style="display:flex;justify-content:space-between;padding:10px 0;font-size:0.9rem"><span style="color:var(--dim)">Est. charging time</span><span id="chargeTime" style="font-weight:700;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">—</span></div>
+<div class="range-pill">
+<span class="rl">Range at target</span>
+<span class="rv" id="rangeAtTarget">—</span>
+</div>
+<div id="feeRow" style="display:none;justify-content:space-between;padding:10px 0;font-size:0.9rem"><span style="color:var(--dim)">Session fee</span><span id="feeVal" style="font-weight:600;color:var(--text)">LKR 0.00</span></div>
+<div id="taxRow" style="display:none;justify-content:space-between;padding:10px 0;font-size:0.9rem"><span style="color:var(--dim)">Tax</span><span id="taxVal" style="font-weight:600;color:var(--text)">LKR 0.00</span></div>
+<div style="margin-top:18px"><button type="button" id="saveBtn" style="width:100%;padding:15px;border-radius:14px;border:none;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;box-shadow:0 4px 20px rgba(139,92,246,0.4)">💾 Save to History</button></div>
+</div>
+
+<div class="card">
+<div class="card-title">Cost Comparison</div>
+<p style="font-size:0.75rem;color:var(--dim);margin-bottom:8px;line-height:1.5">What this same charge would cost at each network.</p>
+<table class="compare-table" id="compareTable">
+<thead><tr><th>Provider</th><th style="text-align:right">Cost</th></tr></thead>
+<tbody id="compareBody"></tbody>
+</table>
+</div>
+
+<div class="card">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+<div class="card-title" style="margin-bottom:0">Charging History</div>
+<button type="button" id="clearBtn" style="display:none;background:transparent;color:#f87171;border:1px solid rgba(248,113,113,0.3);font-size:0.8rem;padding:8px 14px;border-radius:10px;cursor:pointer;font-weight:600;font-family:inherit">Clear all</button>
+</div>
+<div id="historyStats" style="display:none;gap:10px;margin-bottom:14px">
+<div style="flex:1;background:var(--input-bg);border-radius:12px;padding:12px 8px;text-align:center;border:1px solid rgba(139,92,246,0.15)"><div id="statCount" style="font-size:1.15rem;font-weight:800;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent">0</div><div style="font-size:0.6rem;color:var(--faint);text-transform:uppercase;letter-spacing:0.8px;margin-top:4px;font-weight:700">Sessions</div></div>
+<div style="flex:1;background:var(--input-bg);border-radius:12px;padding:12px 8px;text-align:center;border:1px solid rgba(139,92,246,0.15)"><div id="statEnergy" style="font-size:1.15rem;font-weight:800;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent">0</div><div style="font-size:0.6rem;color:var(--faint);text-transform:uppercase;letter-spacing:0.8px;margin-top:4px;font-weight:700">kWh</div></div>
+<div style="flex:1;background:var(--input-bg);border-radius:12px;padding:12px 8px;text-align:center;border:1px solid rgba(139,92,246,0.15)"><div id="statCost" style="font-size:1.15rem;font-weight:800;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent">0</div><div style="font-size:0.6rem;color:var(--faint);text-transform:uppercase;letter-spacing:0.8px;margin-top:4px;font-weight:700">LKR</div></div>
+</div>
+<div id="historyList"><div style="text-align:center;padding:28px 12px;color:var(--faint);font-size:0.85rem;font-style:italic">No charges logged yet.</div></div>
+<div id="exportRow" style="display:none;margin-top:14px">
+<button type="button" id="exportBtn" style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(139,92,246,0.3);background:rgba(139,92,246,0.1);color:var(--purpleB);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit">📤 Export History as CSV</button>
+</div>
+</div>
+
+<div class="card">
+<div class="card-title">Appearance</div>
+<div style="display:flex;justify-content:space-between;align-items:center">
+<span style="font-size:0.85rem;color:var(--dim);font-weight:500">Light theme</span>
+<button type="button" id="themeToggle" style="width:60px;height:32px;border-radius:16px;border:1px solid rgba(139,92,246,0.4);background:rgba(139,92,246,0.15);cursor:pointer;position:relative;transition:background 0.3s;font-family:inherit"><span id="themeKnob" style="position:absolute;top:2px;left:2px;width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#8b5cf6);transition:left 0.3s;box-shadow:0 2px 8px rgba(139,92,246,0.5)"></span></button>
+</div>
+</div>
+</div>
+
+<!-- PAGE: HOME CHARGING -->
+<div class="page" id="page-home">
+<h1>🏠 Home Charging</h1>
+
+<div class="card">
+<div class="card-title">Vehicle</div>
+<div class="field">
+<label>Select Your Car</label>
+<select id="hVehicleSelect">
+<option value="">— Choose your vehicle —</option>
+<optgroup label="BYD Sri Lanka (John Keells CG Auto)">
+<option value="30.08">BYD Atto 1 Dynamic — 30.08 kWh</option>
+<option value="38.88">BYD Atto 1 Premium — 38.88 kWh</option>
+<option value="44.9">BYD Dolphin Dynamic 49 — 44.9 kWh</option>
+<option value="60.48">BYD Dolphin Premium — 60.48 kWh</option>
+<option value="49.92">BYD Atto 3 Advanced — 49.92 kWh</option>
+<option value="60.48">BYD Atto 3 Superior — 60.48 kWh</option>
+</optgroup>
+<optgroup label="Dongfeng (Euro Motors)">
+<option value="43.89">Dongfeng Box — 43.89 kWh</option>
+<option value="51.87">Dongfeng Vigo — 51.87 kWh</option>
+<option value="56.83">Dongfeng 007 — 56.83 kWh</option>
+</optgroup>
+<optgroup label="Other Brands">
+<option value="64">MG4 EV (Long Range) — 64 kWh</option>
+<option value="61.06">OMODA E5 — 61.06 kWh</option>
+</optgroup>
+<optgroup label="Other">
+<option value="custom">Custom Vehicle — Enter Capacity</option>
+</optgroup>
+</select>
+</div>
+<div class="field" id="hCustomCapacityField" style="display:none">
+<label>Custom Capacity <span class="hint">(kWh)</span></label>
+<input type="number" id="hCustomCapacity" value="30.08" step="0.01" min="1" inputmode="decimal">
+</div>
+<div class="field">
+<label>Battery Capacity <span class="hint">(kWh)</span></label>
+<input type="number" id="hCapacity" value="30.08" step="0.01" min="1" inputmode="decimal">
+</div>
+</div>
+
+<div class="card">
+<div class="card-title">Battery &amp; Charge</div>
+<div class="field">
+<label>Current Charge <input type="number" class="pct-input" id="hCurrentNum" value="20" min="1" max="100" step="1" inputmode="numeric"></label>
+<input type="range" id="hCurrent" min="1" max="100" value="20" step="1">
+</div>
+<div class="field">
+<label>Target Charge <input type="number" class="pct-input" id="hTargetNum" value="80" min="1" max="100" step="1" inputmode="numeric"></label>
+<input type="range" id="hTarget" min="1" max="100" value="80" step="1">
+</div>
+</div>
+
+<div class="card">
+<div class="card-title">Home Charger</div>
+<div class="field">
+<label>Charger Type</label>
+<div class="power-pills" id="hChargerPills">
+<button type="button" class="power-pill" data-power="2.3">2.3 kW (13A plug)</button>
+<button type="button" class="power-pill" data-power="3.5">3.5 kW (16A)</button>
+<button type="button" class="power-pill active" data-power="7.2">7.2 kW (32A)</button>
+<button type="button" class="power-pill" data-power="11">11 kW (3-phase)</button>
+<button type="button" class="power-pill" data-power="22">22 kW (3-phase)</button>
+</div>
+</div>
+<div class="field">
+<label>Charger Power <span class="hint">(kW) — editable</span></label>
+<input type="number" id="hChargerPower" value="7.2" step="0.1" min="0.5" max="50" inputmode="decimal">
+<div class="hint">Tap a preset above or type any value.</div>
+</div>
+<div class="field">
+<label>Electricity Rate <span class="hint">(LKR/kWh)</span></label>
+<select id="hRatePreset">
+<option value="">— Choose a tariff —</option>
+<optgroup label="Domestic — Low Usage">
+<option value="30">Domestic ≤30 units — 30.00</option>
+<option value="36">Domestic 31–60 units — 36.00</option>
+<option value="42">Domestic 61–90 units — 42.00</option>
+<option value="50">Domestic 91–120 units — 50.00</option>
+<option value="60">Domestic 121–180 units — 60.00</option>
+<option value="75">Domestic >180 units — 75.00</option>
+</optgroup>
+<optgroup label="Time of Use (if you have ToU meter)">
+<option value="32">ToU Off-Peak (22:30–05:30) — 32.00</option>
+<option value="45">ToU Day (05:30–18:30) — 45.00</option>
+<option value="60">ToU Peak (18:30–22:30) — 60.00</option>
+</optgroup>
+<optgroup label="Other">
+<option value="custom">Custom Rate — Enter Manually</option>
+</optgroup>
+</select>
+<div class="hint" style="margin-top:6px">Domestic rates are indicative. Check your CEB/LECO bill.</div>
+</div>
+<div class="field">
+<label>Rate per kWh <span class="hint">(LKR)</span></label>
+<input type="number" id="hRate" value="42" step="0.01" min="0" inputmode="decimal">
+</div>
+<div class="field">
+<label>Efficiency <span class="hint">(%)</span></label>
+<input type="number" id="hEfficiency" value="88" step="1" min="50" max="100" inputmode="numeric">
+<div class="hint">Home AC charging is typically 85–92% efficient.</div>
+</div>
+</div>
+
+<!-- SOLAR CARD -->
+<div class="card" style="border:1px solid rgba(251,191,36,0.3);background:linear-gradient(135deg,rgba(251,191,36,0.08),rgba(30,20,60,0.5))">
+<div class="card-title" style="color:var(--solar)">☀️ Solar Power</div>
+<div class="solar-toggle">
+<div class="solar-label">
+<span class="solar-icon">☀️</span>
+<span>I have solar panels</span>
+</div>
+<button type="button" class="switch" id="solarSwitch"><span class="knob"></span></button>
+</div>
+<div id="solarFields" style="display:none">
+<div class="field">
+<label>Solar System Size <span class="hint">(kW peak)</span></label>
+<input type="number" id="solarSize" value="5" step="0.1" min="0.5" max="100" inputmode="decimal">
+<div class="hint">Your rooftop system's rated capacity. A 5 kW system typically generates 20–25 kWh on a sunny day.</div>
+</div>
+<div class="field">
+<label>Daytime Charging Share <span class="hint">(%)</span></label>
+<input type="number" id="solarShare" value="30" step="5" min="0" max="100" inputmode="numeric">
+<div class="hint">What % of your charging happens while the sun is shining? Night charging = 0%.</div>
+</div>
+<div class="hint" style="margin-top:10px;padding:10px;background:rgba(251,191,36,0.1);border-radius:8px;border-left:3px solid var(--solar)">
+<strong style="color:var(--solar)">Note on Sri Lankan policy:</strong> Under the current <strong>Net Plus</strong> scheme (post-March 2026), solar generation is sold to the grid and your consumption is billed separately. Solar only reduces your charging cost if you charge while the system is producing and self-consume the energy. If you have an older Net Metering agreement, your credits directly offset consumption.
+</div>
+</div>
+</div>
+
+<div class="card" style="background:linear-gradient(135deg,rgba(59,130,246,0.15),rgba(139,92,246,0.1),rgba(10,6,18,0.6));border:1px solid rgba(139,92,246,0.3)">
+<div class="card-title">Result</div>
+<div style="text-align:center;padding:12px 0 20px;border-bottom:1px solid rgba(139,92,246,0.15);margin-bottom:16px">
+<div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:2px;color:var(--dim);margin-bottom:8px;font-weight:600">Total Cost</div>
+<div id="hTotalCost" style="font-size:2.6rem;font-weight:800;line-height:1.1;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">LKR 0.00</div>
+</div>
+<div style="display:flex;justify-content:space-between;padding:10px 0;font-size:0.9rem;border-bottom:1px solid rgba(139,92,246,0.08)"><span style="color:var(--dim)">Energy to add</span><span id="hEnergyAdd" style="font-weight:600;color:var(--text)">0.00 kWh</span></div>
+<div style="display:flex;justify-content:space-between;padding:10px 0;font-size:0.9rem;border-bottom:1px solid rgba(139,92,246,0.08)"><span style="color:var(--dim)">Billed energy</span><span id="hEnergyBilled" style="font-weight:600;color:var(--text)">0.00 kWh</span></div>
+<div style="display:flex;justify-content:space-between;padding:10px 0;font-size:0.9rem;border-bottom:1px solid rgba(139,92,246,0.08)"><span style="color:var(--dim)">Battery at target</span><span id="hBatteryTarget" style="font-weight:700;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">0.00 kWh</span></div>
+<div style="display:flex;justify-content:space-between;padding:10px 0;font-size:0.9rem;border-bottom:1px solid rgba(139,92,246,0.08)"><span style="color:var(--dim)">Charging time</span><span id="hChargeTime" style="font-weight:700;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">—</span></div>
+<div style="display:flex;justify-content:space-between;padding:10px 0;font-size:0.9rem"><span style="color:var(--dim)">Ready at (from now)</span><span id="hReadyTime" style="font-weight:700;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">—</span></div>
+<div class="range-pill">
+<span class="rl">Range at target</span>
+<span class="rv" id="hRangeAtTarget">—</span>
+</div>
+<div style="display:flex;justify-content:space-between;padding:10px 0;font-size:0.9rem;border-top:1px solid rgba(139,92,246,0.15);margin-top:10px"><span style="color:var(--dim)">Cost per km</span><span id="hCostPerKm" style="font-weight:600;color:var(--text)">—</span></div>
+
+<!-- SOLAR RESULT BREAKDOWN -->
+<div id="solarResult" style="display:none;margin-top:12px;padding-top:12px;border-top:1px dashed rgba(251,191,36,0.3)">
+<div class="solar-badge" style="margin-bottom:10px">☀️ Solar Breakdown</div>
+<div class="solar-row"><span class="label">From solar (free)</span><span class="val" id="solarFromSolar">0.00 kWh</span></div>
+<div class="solar-row"><span class="label">From grid (paid)</span><span class="val" id="solarFromGrid">0.00 kWh</span></div>
+<div class="solar-row"><span class="label">Solar savings</span><span class="val" id="solarSavings" style="color:#2ecc71">LKR 0.00</span></div>
+</div>
+
+<div style="margin-top:18px"><button type="button" id="hSaveBtn" style="width:100%;padding:15px;border-radius:14px;border:none;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;box-shadow:0 4px 20px rgba(139,92,246,0.4)">💾 Save Home Charge</button></div>
+</div>
+
+<div class="card">
+<div class="card-title">Compare to Public Charging</div>
+<p style="font-size:0.75rem;color:var(--dim);margin-bottom:8px;line-height:1.5">How much you save charging at home vs. public DC fast.</p>
+<table class="compare-table">
+<thead><tr><th>Option</th><th style="text-align:right">Cost</th></tr></thead>
+<tbody id="hCompareBody"></tbody>
+</table>
+</div>
+</div>
+
+<!-- PAGE: STATIONS -->
+<div class="page" id="page-stations">
+<h1>🔌 Charging Stations</h1>
+<div style="background:var(--input-bg);border-radius:14px;padding:16px;margin-bottom:12px;border-left:3px solid var(--purple)">
+<div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-weight:700;color:var(--text)">Volt Charge</span><span style="font-size:0.6rem;background:rgba(139,92,246,0.2);color:var(--purpleB);padding:3px 10px;border-radius:6px;font-weight:700">LARGEST</span></div>
+<div style="font-size:0.8rem;color:var(--dim);line-height:1.6;margin-bottom:12px">Flat: <strong style="color:var(--blueB)">LKR 150/kWh</strong></div>
+<div style="display:flex;gap:8px"><a href="tel:+94766700280" style="flex:1;text-align:center;padding:11px;border-radius:10px;background:rgba(139,92,246,0.15);color:var(--purpleB);text-decoration:none;font-weight:700;font-size:0.8rem;border:1px solid rgba(139,92,246,0.25)">📞 Call</a><a href="https://www.google.com/maps/search/Volt+Charge+Charging+Station+Sri+Lanka" target="_blank" style="flex:1;text-align:center;padding:11px;border-radius:10px;background:rgba(59,130,246,0.15);color:var(--blueB);text-decoration:none;font-weight:700;font-size:0.8rem;border:1px solid rgba(59,130,246,0.25)">📍 Map</a></div>
+</div>
+<div style="background:var(--input-bg);border-radius:14px;padding:16px;margin-bottom:12px;border-left:3px solid var(--purple)">
+<div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-weight:700;color:var(--text)">chargeNET</span><span style="font-size:0.6rem;background:rgba(139,92,246,0.2);color:var(--purpleB);padding:3px 10px;border-radius:6px;font-weight:700">PRIVATE</span></div>
+<div style="font-size:0.8rem;color:var(--dim);line-height:1.6;margin-bottom:12px">DC: <strong style="color:var(--blueB)">120</strong> · AC: <strong style="color:var(--blueB)">70</strong> LKR/kWh</div>
+<div style="display:flex;gap:8px"><a href="tel:+9415551551" style="flex:1;text-align:center;padding:11px;border-radius:10px;background:rgba(139,92,246,0.15);color:var(--purpleB);text-decoration:none;font-weight:700;font-size:0.8rem;border:1px solid rgba(139,92,246,0.25)">📞 Call</a><a href="https://www.google.com/maps/search/chargeNET+Sri+Lanka" target="_blank" style="flex:1;text-align:center;padding:11px;border-radius:10px;background:rgba(59,130,246,0.15);color:var(--blueB);text-decoration:none;font-weight:700;font-size:0.8rem;border:1px solid rgba(59,130,246,0.25)">📍 Map</a></div>
+</div>
+<div style="background:var(--input-bg);border-radius:14px;padding:16px;margin-bottom:12px;border-left:3px solid var(--purple)">
+<div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-weight:700;color:var(--text)">LECO</span><span style="font-size:0.6rem;background:rgba(139,92,246,0.2);color:var(--purpleB);padding:3px 10px;border-radius:6px;font-weight:700">GOV</span></div>
+<div style="font-size:0.8rem;color:var(--dim);line-height:1.6;margin-bottom:12px">Day: <strong style="color:var(--blueB)">89.23</strong> · Peak: <strong style="color:var(--blueB)">113.85</strong> · Off: <strong style="color:var(--blueB)">54.36</strong></div>
+<div style="display:flex;gap:8px"><a href="tel:+94112345678" style="flex:1;text-align:center;padding:11px;border-radius:10px;background:rgba(139,92,246,0.15);color:var(--purpleB);text-decoration:none;font-weight:700;font-size:0.8rem;border:1px solid rgba(139,92,246,0.25)">📞 Call</a><a href="https://www.google.com/maps/search/LECO+Charging+Station" target="_blank" style="flex:1;text-align:center;padding:11px;border-radius:10px;background:rgba(59,130,246,0.15);color:var(--blueB);text-decoration:none;font-weight:700;font-size:0.8rem;border:1px solid rgba(59,130,246,0.25)">📍 Map</a></div>
+</div>
+<div style="background:var(--input-bg);border-radius:14px;padding:16px;margin-bottom:12px;border-left:3px solid var(--purple)">
+<div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-weight:700;color:var(--text)">ChargeUP (Lanka IOC)</span><span style="font-size:0.6rem;background:rgba(139,92,246,0.2);color:var(--purpleB);padding:3px 10px;border-radius:6px;font-weight:700">EXPANDING</span></div>
+<div style="font-size:0.8rem;color:var(--dim);line-height:1.6;margin-bottom:12px">Partnered with Lanka IOC. Rates vary.</div>
+<div style="display:flex;gap:8px"><a href="tel:+94112345678" style="flex:1;text-align:center;padding:11px;border-radius:10px;background:rgba(139,92,246,0.15);color:var(--purpleB);text-decoration:none;font-weight:700;font-size:0.8rem;border:1px solid rgba(139,92,246,0.25)">📞 Call</a><a href="https://www.google.com/maps/search/ChargeUP+EV+Charging+Sri+Lanka" target="_blank" style="flex:1;text-align:center;padding:11px;border-radius:10px;background:rgba(59,130,246,0.15);color:var(--blueB);text-decoration:none;font-weight:700;font-size:0.8rem;border:1px solid rgba(59,130,246,0.25)">📍 Map</a></div>
+</div>
+<div style="background:var(--input-bg);border-radius:14px;padding:16px;margin-bottom:12px;border-left:3px solid var(--purple)">
+<div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-weight:700;color:var(--text)">CEB</span><span style="font-size:0.6rem;background:rgba(139,92,246,0.2);color:var(--purpleB);padding:3px 10px;border-radius:6px;font-weight:700">GRID</span></div>
+<div style="font-size:0.8rem;color:var(--dim);line-height:1.6;margin-bottom:12px">Day: <strong style="color:var(--blueB)">83.08</strong> · Peak: <strong style="color:var(--blueB)">107.70</strong> · Off: <strong style="color:var(--blueB)">51.29</strong></div>
+<div style="display:flex;gap:8px"><a href="tel:+94112345678" style="flex:1;text-align:center;padding:11px;border-radius:10px;background:rgba(139,92,246,0.15);color:var(--purpleB);text-decoration:none;font-weight:700;font-size:0.8rem;border:1px solid rgba(139,92,246,0.25)">📞 Call</a><a href="https://www.google.com/maps/search/CEB+EV+Charging+Station" target="_blank" style="flex:1;text-align:center;padding:11px;border-radius:10px;background:rgba(59,130,246,0.15);color:var(--blueB);text-decoration:none;font-weight:700;font-size:0.8rem;border:1px solid rgba(59,130,246,0.25)">📍 Map</a></div>
+</div>
+</div>
+
+<!-- PAGE: VEHICLE -->
+<div class="page" id="page-vehicle">
+<h1>🚗 Vehicle Info</h1>
+<div class="card">
+<div class="card-title">Selected Vehicle</div>
+<div style="display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid rgba(139,92,246,0.1);font-size:0.85rem"><span style="color:var(--dim)">Model</span><span id="vehicleName" style="color:var(--text);font-weight:600">BYD Atto 1 Dynamic</span></div>
+<div style="display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid rgba(139,92,246,0.1);font-size:0.85rem"><span style="color:var(--dim)">Battery Capacity</span><span id="vehicleCapacity" style="color:var(--text);font-weight:600">30.08 kWh</span></div>
+<div style="display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid rgba(139,92,246,0.1);font-size:0.85rem"><span style="color:var(--dim)">Rated Range</span><span id="vehicleRange" style="color:var(--text);font-weight:600">300 km</span></div>
+<div style="display:flex;justify-content:space-between;padding:11px 0;font-size:0.85rem"><span style="color:var(--dim)">Max DC Power</span><span id="vehicleDC" style="color:var(--text);font-weight:600">30 kW</span></div>
+</div>
+<div class="card">
+<div class="card-title">Note</div>
+<p style="font-size:0.85rem;color:var(--dim);line-height:1.7">Range figures are manufacturer-rated (NEDC/WLTP). Real-world range in Sri Lanka is typically <strong style="color:var(--purpleB)">15–25% lower</strong> due to heat, AC use, and terrain.</p>
+</div>
+</div>
+
+<!-- PAGE: HELP -->
+<div class="page" id="page-help">
+<h1>❓ Help</h1>
+<div class="card">
+<div class="card-title">Public Charging</div>
+<p style="font-size:0.85rem;color:var(--dim);line-height:1.7"><strong style="color:var(--purpleB)">Energy to Add:</strong></p>
+<div style="background:var(--input-bg);padding:14px;border-radius:10px;font-family:monospace;font-size:0.8rem;color:var(--blueB);margin:10px 0;border-left:3px solid var(--blue)">kWh = (Target% − Current%) ÷ 100 × Capacity</div>
+<p style="font-size:0.85rem;color:var(--dim);line-height:1.7"><strong style="color:var(--purpleB)">Billed Energy:</strong> Adds charging losses.</p>
+<div style="background:var(--input-bg);padding:14px;border-radius:10px;font-family:monospace;font-size:0.8rem;color:var(--blueB);margin:10px 0;border-left:3px solid var(--blue)">Billed = Needed ÷ (Efficiency ÷ 100)</div>
+<p style="font-size:0.85rem;color:var(--dim);line-height:1.7"><strong style="color:var(--purpleB)">Total Cost:</strong></p>
+<div style="background:var(--input-bg);padding:14px;border-radius:10px;font-family:monospace;font-size:0.8rem;color:var(--blueB);margin:10px 0;border-left:3px solid var(--blue)">Cost = (Billed × Rate) + Tax + Session Fee</div>
+</div>
+<div class="card">
+<div class="card-title">Home Charging</div>
+<p style="font-size:0.85rem;color:var(--dim);line-height:1.7">Home charging uses AC power, which is slower but far cheaper per kWh. The formulas are the same, but efficiency is slightly lower (AC losses) and there's no session fee.</p>
+<p style="font-size:0.85rem;color:var(--dim);line-height:1.7"><strong style="color:var(--purpleB)">Charging Time:</strong></p>
+<div style="background:var(--input-bg);padding:14px;border-radius:10px;font-family:monospace;font-size:0.8rem;color:var(--blueB);margin:10px 0;border-left:3px solid var(--blue)">Time (h) = Energy Needed ÷ Charger Power</div>
+<p style="font-size:0.85rem;color:var(--dim);line-height:1.7"><strong style="color:var(--purpleB)">Cost per km:</strong> Total cost ÷ range gained. Useful for comparing home vs. public charging in daily use.</p>
+</div>
+<div class="card">
+<div class="card-title">☀️ Solar Power (Home)</div>
+<p style="font-size:0.85rem;color:var(--dim);line-height:1.7">If you have rooftop solar, the calculator estimates how much of your charging energy comes from solar (free) vs. the grid (paid).</p>
+<p style="font-size:0.85rem;color:var(--dim);line-height:1.7"><strong style="color:var(--solar)">Current Sri Lankan policy:</strong> Under the <strong>Net Plus</strong> scheme (for new connections after March 2026), solar generation is sold to the grid and household consumption is billed separately. Solar only reduces your charging cost if you charge while the system is producing and self-consume the energy.</p>
+<p style="font-size:0.85rem;color:var(--dim);line-height:1.7"><strong style="color:var(--solar)">How to estimate the Daytime Charging Share:</strong></p>
+<ul style="font-size:0.85rem;color:var(--dim);line-height:1.7;padding-left:20px">
+<li>Overnight charging = <strong>0%</strong></li>
+<li>Plugging in at 9 AM on a sunny day = <strong>70–90%</strong></li>
+<li>Plugging in at 4 PM = <strong>30–50%</strong></li>
+<li>Plugging in at 7 PM = <strong>0%</strong></li>
+</ul>
+</div>
+<div class="card">
+<div class="card-title">Efficiency Guide</div>
+<p style="font-size:0.85rem;color:var(--dim);line-height:1.7"><strong style="color:var(--purpleB)">DC Fast:</strong> 90–99% efficient</p>
+<p style="font-size:0.85rem;color:var(--dim);line-height:1.7"><strong style="color:var(--purpleB)">AC Home:</strong> 85–92% efficient</p>
+<p style="font-size:0.85rem;color:var(--dim);line-height:1.7">Losses mean the station or meter bills you for slightly more kWh than your battery stores.</p>
+</div>
+</div>
+
+</div>
+
+<script>
+var $=function(id){return document.getElementById(id)};
+
+// ===== PUBLIC CHARGING =====
+var capacity=$('capacity'),current=$('current'),target=$('target'),rate=$('rate'),quickRate=$('quickRate'),efficiency=$('efficiency'),sessionFee=$('sessionFee'),tax=$('tax'),chargerPower=$('chargerPower');
+var currentNum=$('currentNum'),targetNum=$('targetNum');
+var vehicleSelect=$('vehicleSelect'),customCapacity=$('customCapacity'),customCapacityField=$('customCapacityField');
+var totalCost=$('totalCost'),energyAdd=$('energyAdd'),energyBilled=$('energyBilled'),batteryTarget=$('batteryTarget'),chargeTime=$('chargeTime');
+var rangeAtTarget=$('rangeAtTarget');
+var feeRow=$('feeRow'),feeVal=$('feeVal'),taxRow=$('taxRow'),taxVal=$('taxVal'),saveBtn=$('saveBtn');
+
+// ===== HOME CHARGING =====
+var hCapacity=$('hCapacity'),hCurrent=$('hCurrent'),hTarget=$('hTarget'),hRate=$('hRate'),hEfficiency=$('hEfficiency'),hChargerPower=$('hChargerPower');
+var hCurrentNum=$('hCurrentNum'),hTargetNum=$('hTargetNum'),hRatePreset=$('hRatePreset');
+var hVehicleSelect=$('hVehicleSelect'),hCustomCapacity=$('hCustomCapacity'),hCustomCapacityField=$('hCustomCapacityField');
+var hTotalCost=$('hTotalCost'),hEnergyAdd=$('hEnergyAdd'),hEnergyBilled=$('hEnergyBilled'),hBatteryTarget=$('hBatteryTarget');
+var hChargeTime=$('hChargeTime'),hReadyTime=$('hReadyTime'),hRangeAtTarget=$('hRangeAtTarget'),hCostPerKm=$('hCostPerKm'),hSaveBtn=$('hSaveBtn');
+
+// ===== SOLAR =====
+var solarSwitch=$('solarSwitch'),solarFields=$('solarFields'),solarSize=$('solarSize'),solarShare=$('solarShare');
+var solarResult=$('solarResult'),solarFromSolar=$('solarFromSolar'),solarFromGrid=$('solarFromGrid'),solarSavings=$('solarSavings');
+var solarEnabled=false;
+
+var vehicleRanges={'30.08':300,'38.88':380,'44.9':405,'60.48':427,'49.92':410,'43.89':320,'51.87':340,'56.83':480,'64':450,'61.06':420};
+var vehicleDCPower={'30.08':30,'38.88':40,'44.9':60,'60.48':80,'49.92':70,'43.89':40,'51.87':60,'56.83':100,'64':135,'61.06':80};
+
+var providerRates=[
+{name:'Volt Charge',rate:150},
+{name:'ChargeNET Fast',rate:120},
+{name:'LECO Day',rate:89.23},
+{name:'LECO Peak',rate:113.85},
+{name:'LECO Off-Peak',rate:54.36},
+{name:'CEB Day',rate:83.08},
+{name:'CEB Peak',rate:107.70},
+{name:'CEB Off-Peak',rate:51.29}
+];
+
+// Navigation
+document.querySelectorAll('.nav-item').forEach(function(btn){
+btn.addEventListener('click',function(){
+document.querySelectorAll('.nav-item').forEach(function(b){b.classList.remove('active')});
+document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+btn.classList.add('active');
+document.getElementById('page-'+btn.dataset.page).classList.add('active');
+});
+});
+
+// Advanced toggle
+$('advToggle').addEventListener('click',function(){
+var c=$('advContent'),a=$('advArrow');
+if(c.style.display==='none'){c.style.display='block';a.style.transform='rotate(90deg)'}
+else{c.style.display='none';a.style.transform='rotate(0)'}
+});
+
+function lkr(n){return 'LKR '+n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',')}
+function clamp(v,min,max){v=parseInt(v);if(isNaN(v))return min;if(v<min)return min;if(v>max)return max;return v}
+function formatDuration(hours){
+if(hours<=0)return '—';
+if(hours>=1){
+var h=Math.floor(hours);
+var m=Math.round((hours-h)*60);
+if(m===60){h++;m=0}
+return h+'h '+m+'m';
+}else{
+return Math.round(hours*60)+' min';
+}
+}
+function formatReadyTime(hours){
+if(hours<=0)return '—';
+var now=new Date();
+var ready=new Date(now.getTime()+hours*3600*1000);
+return String(ready.getHours()).padStart(2,'0')+':'+String(ready.getMinutes()).padStart(2,'0');
+}
+
+// ===== PUBLIC CALC =====
+var currentCalc=null;
+
+function calc(){
+var cap=parseFloat(capacity.value)||0;
+var cur=parseFloat(current.value)||0;
+var tgt=parseFloat(target.value)||0;
+var r=parseFloat(rate.value)||0;
+var eff=parseFloat(efficiency.value)||90;
+var fee=parseFloat(sessionFee.value)||0;
+var taxPct=parseFloat(tax.value)||0;
+var power=parseFloat(chargerPower.value)||30;
+
+currentNum.value=cur;
+targetNum.value=tgt;
+
+var needed=(tgt>cur)?((tgt-cur)/100)*cap:0;
+var billed=needed/(eff/100);
+var baseCost=billed*r;
+var taxAmount=baseCost*(taxPct/100);
+baseCost+=taxAmount;
+var total=baseCost+fee;
+var battAtTarget=(tgt/100)*cap;
+
+totalCost.textContent=lkr(total);
+energyAdd.textContent=needed.toFixed(2)+' kWh';
+energyBilled.textContent=billed.toFixed(2)+' kWh';
+batteryTarget.textContent=battAtTarget.toFixed(2)+' kWh';
+
+if(needed>0&&power>0){
+chargeTime.textContent=formatDuration(needed/power);
+}else{
+chargeTime.textContent='—';
+}
+
+var rangePerFull=vehicleRanges[capacity.value]||0;
+if(rangePerFull>0){
+rangeAtTarget.textContent=((tgt/100)*rangePerFull).toFixed(0)+' km';
+}else{
+rangeAtTarget.textContent='—';
+}
+
+if(fee>0){feeRow.style.display='flex';feeVal.textContent=lkr(fee)}else{feeRow.style.display='none'}
+if(taxAmount>0){taxRow.style.display='flex';taxVal.textContent=lkr(taxAmount)}else{taxRow.style.display='none'}
+
+currentCalc={cap:cap,cur:cur,tgt:tgt,r:r,needed:needed,billed:billed,total:total};
+saveBtn.disabled=needed<=0;
+saveBtn.style.opacity=needed<=0?'0.5':'1';
+
+updateVehicleInfo();
+updateComparison(billed,taxPct,fee);
+}
+
+function updateComparison(billed,taxPct,fee){
+var body=$('compareBody');
+if(billed<=0){body.innerHTML='<tr><td colspan="2" style="text-align:center;color:#6a5a9e;padding:14px;font-style:italic">Enter a target above current charge to compare.</td></tr>';return}
+var results=providerRates.map(function(p){
+var base=billed*p.rate;
+var taxAmt=base*(taxPct/100);
+return {name:p.name,cost:base+taxAmt+fee};
+});
+var min=Math.min.apply(null,results.map(function(x){return x.cost}));
+body.innerHTML=results.map(function(x){
+var badge=x.cost===min?'<span class="best-badge">BEST</span>':'';
+return '<tr><td class="name">'+x.name+badge+'</td><td class="cost">'+lkr(x.cost)+'</td></tr>';
+}).join('');
+}
+
+function updateVehicleInfo(){
+var opt=vehicleSelect.options[vehicleSelect.selectedIndex];
+var rangePerFull=vehicleRanges[capacity.value]||0;
+var dcPower=vehicleDCPower[capacity.value]||0;
+if(opt&&opt.value&&opt.value!=='custom'){
+$('vehicleName').textContent=opt.text.split(' — ')[0];
+$('vehicleCapacity').textContent=capacity.value+' kWh';
+$('vehicleRange').textContent=rangePerFull>0?rangePerFull+' km':'—';
+$('vehicleDC').textContent=dcPower>0?dcPower+' kW':'—';
+}else if(opt&&opt.value==='custom'){
+$('vehicleName').textContent='Custom Vehicle';
+$('vehicleCapacity').textContent=capacity.value+' kWh';
+$('vehicleRange').textContent=rangePerFull>0?rangePerFull+' km':'—';
+$('vehicleDC').textContent=dcPower>0?dcPower+' kW':'—';
+}
+}
+
+vehicleSelect.addEventListener('change',function(){
+var v=this.value;
+if(v==='custom'){customCapacityField.style.display='block';}
+else{customCapacityField.style.display='none';if(v){capacity.value=v;calc();savePrefs();}}
+});
+
+customCapacity.addEventListener('input',function(){capacity.value=this.value;calc();savePrefs()});
+
+quickRate.addEventListener('change',function(){
+if(this.value&&this.value!=='custom'){rate.value=this.value;calc();savePrefs();}
+else if(this.value==='custom'){rate.value='';rate.focus();calc();}
+});
+
+currentNum.addEventListener('input',function(){var v=clamp(this.value,1,100);current.value=v;calc();savePrefs()});
+currentNum.addEventListener('blur',function(){var v=clamp(this.value,1,100);this.value=v;current.value=v;calc();savePrefs()});
+targetNum.addEventListener('input',function(){var v=clamp(this.value,1,100);target.value=v;calc();savePrefs()});
+targetNum.addEventListener('blur',function(){var v=clamp(this.value,1,100);this.value=v;target.value=v;calc();savePrefs()});
+current.addEventListener('input',function(){currentNum.value=this.value;calc()});
+target.addEventListener('input',function(){targetNum.value=this.value;calc()});
+
+// ===== HOME CALC =====
+var homeCalc=null;
+
+function hCalc(){
+var cap=parseFloat(hCapacity.value)||0;
+var cur=parseFloat(hCurrent.value)||0;
+var tgt=parseFloat(hTarget.value)||0;
+var r=parseFloat(hRate.value)||0;
+var eff=parseFloat(hEfficiency.value)||88;
+var power=parseFloat(hChargerPower.value)||7.2;
+
+hCurrentNum.value=cur;
+hTargetNum.value=tgt;
+
+var needed=(tgt>cur)?((tgt-cur)/100)*cap:0;
+var billed=needed/(eff/100);
+var total=billed*r;
+var battAtTarget=(tgt/100)*cap;
+var hours=(needed>0&&power>0)?needed/power:0;
+
+// Solar calculation
+var solarKWh=0;
+var gridKWh=billed;
+var solarSavingsAmt=0;
+
+if(solarEnabled&&needed>0){
+var share=clamp(parseFloat(solarShare.value)||0,0,100)/100;
+solarKWh=billed*share;
+gridKWh=billed-solarKWh;
+solarSavingsAmt=solarKWh*r;
+total=gridKWh*r;
+}
+
+hTotalCost.textContent=lkr(total);
+hEnergyAdd.textContent=needed.toFixed(2)+' kWh';
+hEnergyBilled.textContent=billed.toFixed(2)+' kWh';
+hBatteryTarget.textContent=battAtTarget.toFixed(2)+' kWh';
+hChargeTime.textContent=formatDuration(hours);
+hReadyTime.textContent=hours>0?formatReadyTime(hours):'—';
+
+var rangePerFull=vehicleRanges[hCapacity.value]||0;
+var rangeGained=0;
+if(rangePerFull>0){
+rangeGained=(needed/cap)*rangePerFull;
+hRangeAtTarget.textContent=((tgt/100)*rangePerFull).toFixed(0)+' km';
+}else{
+hRangeAtTarget.textContent='—';
+}
+
+if(rangeGained>0&&total>0){
+hCostPerKm.textContent='LKR '+(total/rangeGained).toFixed(2)+' /km';
+}else{
+hCostPerKm.textContent='—';
+}
+
+// Solar breakdown
+if(solarEnabled&&needed>0){
+solarResult.style.display='block';
+solarFromSolar.textContent=solarKWh.toFixed(2)+' kWh';
+solarFromGrid.textContent=gridKWh.toFixed(2)+' kWh';
+solarSavings.textContent=lkr(solarSavingsAmt);
+}else{
+solarResult.style.display='none';
+}
+
+homeCalc={cap:cap,cur:cur,tgt:tgt,r:r,needed:needed,billed:billed,total:total,power:power,solarKWh:solarKWh,gridKWh:gridKWh};
+hSaveBtn.disabled=needed<=0;
+hSaveBtn.style.opacity=needed<=0?'0.5':'1';
+
+hUpdateCompare(billed,gridKWh);
+}
+
+function hUpdateCompare(billed,gridKWh){
+var body=$('hCompareBody');
+if(billed<=0){body.innerHTML='<tr><td colspan="2" style="text-align:center;color:#6a5a9e;padding:14px;font-style:italic">Enter target above current charge.</td></tr>';return}
+var homeCost=gridKWh*parseFloat(hRate.value||0);
+var results=[
+{name:solarEnabled?'🏠 Home (with solar)':'🏠 Home',cost:homeCost},
+{name:'Volt Charge',cost:billed*150},
+{name:'ChargeNET Fast',cost:billed*120},
+{name:'LECO Off-Peak',cost:billed*54.36},
+{name:'CEB Off-Peak',cost:billed*51.29}
+];
+var min=Math.min.apply(null,results.map(function(x){return x.cost}));
+body.innerHTML=results.map(function(x){
+var badge=x.cost===min?'<span class="best-badge">BEST</span>':'';
+return '<tr><td class="name">'+x.name+badge+'</td><td class="cost">'+lkr(x.cost)+'</td></tr>';
+}).join('');
+}
+
+hVehicleSelect.addEventListener('change',function(){
+var v=this.value;
+if(v==='custom'){hCustomCapacityField.style.display='block';}
+else{hCustomCapacityField.style.display='none';if(v){hCapacity.value=v;hCalc();hSavePrefs();}}
+});
+
+hCustomCapacity.addEventListener('input',function(){hCapacity.value=this.value;hCalc();hSavePrefs()});
+
+hRatePreset.addEventListener('change',function(){
+if(this.value&&this.value!=='custom'){hRate.value=this.value;hCalc();hSavePrefs();}
+else if(this.value==='custom'){hRate.value='';hRate.focus();hCalc();}
+});
+
+hCurrentNum.addEventListener('input',function(){var v=clamp(this.value,1,100);hCurrent.value=v;hCalc();hSavePrefs()});
+hCurrentNum.addEventListener('blur',function(){var v=clamp(this.value,1,100);this.value=v;hCurrent.value=v;hCalc();hSavePrefs()});
+hTargetNum.addEventListener('input',function(){var v=clamp(this.value,1,100);hTarget.value=v;hCalc();hSavePrefs()});
+hTargetNum.addEventListener('blur',function(){var v=clamp(this.value,1,100);this.value=v;hTarget.value=v;hCalc();hSavePrefs()});
+hCurrent.addEventListener('input',function(){hCurrentNum.value=this.value;hCalc()});
+hTarget.addEventListener('input',function(){hTargetNum.value=this.value;hCalc()});
+
+// Solar switch
+solarSwitch.addEventListener('click',function(){
+solarEnabled=!solarEnabled;
+this.classList.toggle('on',solarEnabled);
+solarFields.style.display=solarEnabled?'block':'none';
+hCalc();hSavePrefs();
+});
+
+solarSize.addEventListener('input',hCalc);
+solarShare.addEventListener('input',function(){
+var v=clamp(this.value,0,100);
+if(this.value!==String(v))this.value=v;
+hCalc();hSavePrefs();
+});
+
+// Charger power pills
+document.querySelectorAll('#hChargerPills .power-pill').forEach(function(pill){
+pill.addEventListener('click',function(){
+document.querySelectorAll('#hChargerPills .power-pill').forEach(function(p){p.classList.remove('active')});
+pill.classList.add('active');
+hChargerPower.value=pill.dataset.power;
+hCalc();hSavePrefs();
+});
+});
+
+// ===== PREFS =====
+function savePrefs(){
+try{localStorage.setItem('evPrefs',JSON.stringify({capacity:capacity.value,current:current.value,target:target.value,rate:rate.value,efficiency:efficiency.value,sessionFee:sessionFee.value,tax:tax.value,vehicle:vehicleSelect.value,chargerPower:chargerPower.value,theme:document.body.classList.contains('light')?'light':'dark'}))}catch(e){}
+}
+function hSavePrefs(){
+try{localStorage.setItem('evHomePrefs',JSON.stringify({capacity:hCapacity.value,current:hCurrent.value,target:hTarget.value,rate:hRate.value,efficiency:hEfficiency.value,power:hChargerPower.value,vehicle:hVehicleSelect.value,solarEnabled:solarEnabled,solarSize:solarSize.value,solarShare:solarShare.value}))}catch(e){}
+}
+
+try{var s=localStorage.getItem('evPrefs');if(s){var p=JSON.parse(s);
+if(p.capacity)capacity.value=p.capacity;
+if(p.current)current.value=p.current;
+if(p.target)target.value=p.target;
+if(p.rate)rate.value=p.rate;
+if(p.efficiency)efficiency.value=p.efficiency;
+if(p.sessionFee)sessionFee.value=p.sessionFee;
+if(p.tax)tax.value=p.tax;
+if(p.vehicle){vehicleSelect.value=p.vehicle;if(p.vehicle==='custom')customCapacityField.style.display='block'}
+if(p.chargerPower)chargerPower.value=p.chargerPower;
+if(p.theme==='light'){document.body.classList.add('light');$('themeKnob').style.left='32px'}
+}}catch(e){}
+
+try{var s2=localStorage.getItem('evHomePrefs');if(s2){var p2=JSON.parse(s2);
+if(p2.capacity)hCapacity.value=p2.capacity;
+if(p2.current)hCurrent.value=p2.current;
+if(p2.target)hTarget.value=p2.target;
+if(p2.rate)hRate.value=p2.rate;
+if(p2.efficiency)hEfficiency.value=p2.efficiency;
+if(p2.power)hChargerPower.value=p2.power;
+if(p2.vehicle){hVehicleSelect.value=p2.vehicle;if(p2.vehicle==='custom')hCustomCapacityField.style.display='block'}
+if(p2.solarEnabled){solarEnabled=true;solarSwitch.classList.add('on');solarFields.style.display='block'}
+if(p2.solarSize)solarSize.value=p2.solarSize;
+if(p2.solarShare)solarShare.value=p2.solarShare;
+document.querySelectorAll('#hChargerPills .power-pill').forEach(function(pill){
+if(parseFloat(pill.dataset.power)===parseFloat(hChargerPower.value)){pill.classList.add('active')}
+else{pill.classList.remove('active')}
+});
+}}catch(e){}
+
+// ===== HISTORY =====
+function getHistory(){try{return JSON.parse(localStorage.getItem('evHist')||'[]')}catch(e){return[]}}
+function saveHistory(h){try{localStorage.setItem('evHist',JSON.stringify(h))}catch(e){}}
+
+function renderHistory(){
+var h=getHistory(),list=$('historyList'),stats=$('historyStats'),cb=$('clearBtn'),er=$('exportRow');
+if(h.length===0){list.innerHTML='<div style="text-align:center;padding:28px 12px;color:#6a5a9e;font-size:0.85rem;font-style:italic">No charges logged yet.</div>';stats.style.display='none';cb.style.display='none';er.style.display='none';return}
+var tc=0,te=0;h.forEach(function(x){tc+=x.total;te+=x.needed});
+$('statCount').textContent=h.length;$('statEnergy').textContent=te.toFixed(0);$('statCost').textContent=tc.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',');
+stats.style.display='flex';cb.style.display='block';er.style.display='block';
+var sorted=h.slice().sort(function(a,b){return b.ts-a.ts});
+list.innerHTML=sorted.map(function(item){
+var d=new Date(item.ts),mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+var dt=d.getDate()+' '+mo[d.getMonth()]+' · '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+var src=item.source==='home'?'🏠 Home':'🔌 Public';
+var solarTag=item.solarKWh>0?' · ☀️ '+item.solarKWh.toFixed(1)+' kWh solar':'';
+return '<div style="background:var(--input-bg);border-radius:12px;padding:14px 16px;margin-bottom:10px;border:1px solid rgba(139,92,246,0.15);border-left:3px solid #8b5cf6;position:relative"><button data-id="'+item.ts+'" class="delBtn" style="position:absolute;top:10px;right:10px;background:none;border:none;color:#6a5a9e;font-size:1.2rem;cursor:pointer">×</button><div style="display:flex;justify-content:space-between;margin-bottom:8px;padding-right:24px"><span style="font-size:1.05rem;font-weight:800;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent">'+lkr(item.total)+'</span><span style="font-size:0.7rem;color:#6a5a9e">'+dt+'</span></div><div style="font-size:0.78rem;color:var(--dim);line-height:1.6">'+src+' · 🔋 <span style="color:var(--text);font-weight:600">'+item.cur+'% → '+item.tgt+'%</span> · ⚡ <span style="color:var(--text);font-weight:600">+'+item.needed.toFixed(2)+' kWh</span> · 💵 <span style="color:var(--text);font-weight:600">'+item.r.toFixed(2)+' LKR/kWh</span>'+solarTag+'</div></div>'
+}).join('');
+list.querySelectorAll('.delBtn').forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();var id=parseInt(b.dataset.id);saveHistory(getHistory().filter(function(x){return x.ts!==id}));renderHistory()})});
+}
+
+saveBtn.addEventListener('click',function(){
+if(!currentCalc||currentCalc.needed<=0)return;
+var h=getHistory();h.push({ts:Date.now(),source:'public',cap:currentCalc.cap,cur:currentCalc.cur,tgt:currentCalc.tgt,r:currentCalc.r,needed:currentCalc.needed,billed:currentCalc.billed,total:currentCalc.total,solarKWh:0});
+saveHistory(h);renderHistory();
+saveBtn.textContent='✓ Saved!';saveBtn.style.background='#2ecc71';
+setTimeout(function(){saveBtn.textContent='💾 Save to History';saveBtn.style.background='linear-gradient(135deg,#3b82f6,#8b5cf6)'},1200);
+});
+
+hSaveBtn.addEventListener('click',function(){
+if(!homeCalc||homeCalc.needed<=0)return;
+var h=getHistory();h.push({ts:Date.now(),source:'home',cap:homeCalc.cap,cur:homeCalc.cur,tgt:homeCalc.tgt,r:homeCalc.r,needed:homeCalc.needed,billed:homeCalc.billed,total:homeCalc.total,solarKWh:homeCalc.solarKWh||0});
+saveHistory(h);renderHistory();
+hSaveBtn.textContent='✓ Saved!';hSaveBtn.style.background='#2ecc71';
+setTimeout(function(){hSaveBtn.textContent='💾 Save Home Charge';hSaveBtn.style.background='linear-gradient(135deg,#3b82f6,#8b5cf6)'},1200);
+});
+
+$('clearBtn').addEventListener('click',function(){
+if(confirm('Delete all history?')){saveHistory([]);renderHistory()}
+});
+
+// CSV Export
+$('exportBtn').addEventListener('click',function(){
+var h=getHistory();
+if(h.length===0)return;
+var rows=[['Date','Time','Source','Battery Capacity (kWh)','From %','To %','Energy Added (kWh)','Billed (kWh)','Solar (kWh)','Rate (LKR/kWh)','Total (LKR)']];
+h.slice().sort(function(a,b){return a.ts-b.ts}).forEach(function(x){
+var d=new Date(x.ts);
+var date=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+var time=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+rows.push([date,time,x.source||'public',x.cap,x.cur,x.tgt,x.needed.toFixed(2),x.billed.toFixed(2),(x.solarKWh||0).toFixed(2),x.r.toFixed(2),x.total.toFixed(2)]);
+});
+var csv=rows.map(function(r){return r.map(function(c){return '"'+String(c).replace(/"/g,'""')+'"'}).join(',')}).join('\n');
+var blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
+var url=URL.createObjectURL(blob);
+var a=document.createElement('a');
+a.href=url;a.download='ev-charging-history-'+new Date().toISOString().slice(0,10)+'.csv';
+document.body.appendChild(a);a.click();document.body.removeChild(a);
+URL.revokeObjectURL(url);
+});
+
+// Theme toggle
+$('themeToggle').addEventListener('click',function(){
+var isLight=document.body.classList.toggle('light');
+$('themeKnob').style.left=isLight?'32px':'2px';
+savePrefs();
+});
+
+// ===== EVENT WIRING =====
+[capacity,current,target,rate,efficiency,sessionFee,tax,chargerPower].forEach(function(el){
+el.addEventListener('input',calc);
+el.addEventListener('change',function(){calc();savePrefs()});
+});
+[hCapacity,hCurrent,hTarget,hRate,hEfficiency,hChargerPower].forEach(function(el){
+el.addEventListener('input',hCalc);
+el.addEventListener('change',function(){hCalc();hSavePrefs()});
+});
+
+calc();renderHistory();hCalc();
+</script>
+</body>
+</html>
