@@ -12,7 +12,7 @@
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyB5dZG9i2ZSSO4LeurzZFI8Loku7R20rE8",
@@ -29,7 +29,7 @@ const db = getFirestore(fbApp);
 
 window.fbAuth = auth;
 window.fbDB = db;
-window.fbFuncs = { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail, collection, addDoc, getDocs, deleteDoc, doc, updateDoc };
+window.fbFuncs = { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, getDoc };
 window.firebaseReady = true;
 window.dispatchEvent(new Event('firebase-ready'));
 </script>
@@ -207,101 +207,6 @@ body.light .notice-banner{color:#b45309}
 </div>
 </div>
 
-<!-- ONBOARDING -->
-<div class="onboard-overlay" id="onboardOverlay">
-<div class="onboard-box">
-<h2>Welcome! 👋</h2>
-<p class="step">Step <span id="obStep">1</span> of 3</p>
-<div id="obStep1">
-<div class="ob-field"><label>What do you drive?</label>
-<select id="obVehicle">
-<option value="">— Select your vehicle (or skip) —</option>
-<optgroup label="BYD Sri Lanka">
-<option value="30.08">BYD Atto 1 Dynamic — 30.08 kWh</option>
-<option value="38.88">BYD Atto 1 Premium — 38.88 kWh</option>
-<option value="44.9">BYD Dolphin Dynamic 49 — 44.9 kWh</option>
-<option value="60.48">BYD Dolphin Premium — 60.48 kWh</option>
-<option value="49.92">BYD Atto 3 Advanced — 49.92 kWh</option>
-<option value="60.48">BYD Atto 3 Superior — 60.48 kWh</option>
-<option value="82.5">BYD Seal — 82.5 kWh</option>
-<option value="71.8">BYD M6 — 71.8 kWh</option>
-<option value="43.2">BYD Atto 2 — 43.2 kWh</option>
-<option value="18.3">BYD Sealion 6 DM-i — 18.3 kWh (PHEV)</option>
-<option value="12.9">BYD Sealion 5 DM-i — 12.9 kWh (PHEV)</option>
-<option value="29.58">BYD Shark 6 — 29.58 kWh (PHEV)</option>
-</optgroup>
-<optgroup label="MG (Sri Lanka)">
-<option value="64">MG4 EV Long Range — 64 kWh</option>
-<option value="51">MG4 EV Urban — 51 kWh</option>
-<option value="50.3">MG ZS EV — 50.3 kWh</option>
-<option value="17.3">MG Comet EV — 17.3 kWh</option>
-<option value="31.9">MG Binguo EV — 31.9 kWh</option>
-<option value="49">MG S5 EV — 49 kWh</option>
-<option value="70">MG Cyberster — 70 kWh</option>
-<option value="18.1">MG Hector PHEV — 18.1 kWh (PHEV)</option>
-</optgroup>
-<optgroup label="Evolution Auto">
-<option value="90.4">AVATR 11 — 90.4 kWh</option>
-<option value="75">IM5 — 75 kWh</option>
-<option value="75">IM6 — 75 kWh</option>
-<option value="66">XPENG G6 — 66 kWh</option>
-<option value="77">Riddara RD6 — 77 kWh</option>
-<option value="53.6">DFSK Glory E3 — 53.6 kWh</option>
-<option value="70.38">JMEV EWIND — 70.38 kWh</option>
-</optgroup>
-<optgroup label="Wuling / BAW (Browns EV)">
-<option value="37.9">Wuling Cloud — 37.9 kWh</option>
-<option value="31.9">Wuling Binguo — 31.9 kWh</option>
-<option value="29">BAW E6 — 29 kWh</option>
-<option value="41">BAW E7 — 41 kWh</option>
-</optgroup>
-<optgroup label="Dongfeng">
-<option value="43.89">Dongfeng Box — 43.89 kWh</option>
-<option value="51.87">Dongfeng Vigo — 51.87 kWh</option>
-<option value="56.83">Dongfeng 007 — 56.83 kWh</option>
-</optgroup>
-<optgroup label="Other Brands">
-<option value="61.06">OMODA E5 — 61.06 kWh</option>
-</optgroup>
-</select></div>
-</div>
-<div id="obStep2" style="display:none">
-<div class="ob-field"><label>Where do you usually charge?</label>
-<select id="obMode">
-<option value="public">Mostly public (Volt Charge, ChargeNET, etc.)</option>
-<option value="home">Mostly at home</option>
-<option value="both">A mix of both</option>
-</select></div>
-</div>
-<div id="obStep3" style="display:none">
-<div class="ob-field"><label>What's your home electricity rate? (skip if unsure)</label>
-<select id="obHomeRate">
-<option value="">— Skip —</option>
-<optgroup label="CEB Domestic">
-<option value="30">CEB 0–30 units — 30 LKR/kWh</option>
-<option value="37">CEB 31–60 units — 37 LKR/kWh</option>
-<option value="42">CEB 61–90 units — 42 LKR/kWh</option>
-<option value="50">CEB 91–120 units — 50 LKR/kWh</option>
-<option value="65">CEB 121–180 units — 65 LKR/kWh</option>
-<option value="85">CEB >180 units — 85 LKR/kWh</option>
-</optgroup>
-<optgroup label="LECO Domestic">
-<option value="32">LECO 0–30 units — 32 LKR/kWh</option>
-<option value="39">LECO 31–60 units — 39 LKR/kWh</option>
-<option value="44">LECO 61–90 units — 44 LKR/kWh</option>
-<option value="52">LECO 91–120 units — 52 LKR/kWh</option>
-<option value="68">LECO 121–180 units — 68 LKR/kWh</option>
-<option value="88">LECO >180 units — 88 LKR/kWh</option>
-</optgroup>
-</select></div>
-</div>
-<div class="onboard-actions">
-<button type="button" class="ob-skip" id="obSkip">Skip setup</button>
-<button type="button" class="ob-next" id="obNext">Next →</button>
-</div>
-</div>
-</div>
-
 <!-- INFO MODAL -->
 <div class="modal-overlay" id="infoModal">
 <div class="modal-box">
@@ -362,58 +267,7 @@ body.light .notice-banner{color:#b45309}
 <div class="field" style="margin-bottom:8px">
 <label style="font-size:0.85rem;font-weight:600">Your vehicle</label>
 <select id="vehicleSelect">
-<option value="">— Choose your vehicle —</option>
-<optgroup label="BYD Sri Lanka (John Keells CG Auto)">
-<option value="30.08">BYD Atto 1 Dynamic — 30.08 kWh</option>
-<option value="38.88">BYD Atto 1 Premium — 38.88 kWh</option>
-<option value="44.9">BYD Dolphin Dynamic 49 — 44.9 kWh</option>
-<option value="60.48">BYD Dolphin Premium — 60.48 kWh</option>
-<option value="49.92">BYD Atto 3 Advanced — 49.92 kWh</option>
-<option value="60.48">BYD Atto 3 Superior — 60.48 kWh</option>
-<option value="82.5">BYD Seal — 82.5 kWh</option>
-<option value="71.8">BYD M6 — 71.8 kWh</option>
-<option value="43.2">BYD Atto 2 — 43.2 kWh</option>
-<option value="18.3">BYD Sealion 6 DM-i — 18.3 kWh (PHEV)</option>
-<option value="12.9">BYD Sealion 5 DM-i — 12.9 kWh (PHEV)</option>
-<option value="29.58">BYD Shark 6 — 29.58 kWh (PHEV)</option>
-</optgroup>
-<optgroup label="MG (Sri Lanka)">
-<option value="64">MG4 EV Long Range — 64 kWh</option>
-<option value="51">MG4 EV Urban — 51 kWh</option>
-<option value="50.3">MG ZS EV — 50.3 kWh</option>
-<option value="17.3">MG Comet EV — 17.3 kWh</option>
-<option value="31.9">MG Binguo EV — 31.9 kWh</option>
-<option value="49">MG S5 EV — 49 kWh</option>
-<option value="70">MG Cyberster — 70 kWh</option>
-<option value="18.1">MG Hector PHEV — 18.1 kWh (PHEV)</option>
-</optgroup>
-<optgroup label="Evolution Auto">
-<option value="90.4">AVATR 11 — 90.4 kWh</option>
-<option value="75">IM5 — 75 kWh</option>
-<option value="75">IM6 — 75 kWh</option>
-<option value="66">XPENG G6 — 66 kWh</option>
-<option value="77">Riddara RD6 — 77 kWh</option>
-<option value="53.6">DFSK Glory E3 — 53.6 kWh</option>
-<option value="70.38">JMEV EWIND — 70.38 kWh</option>
-</optgroup>
-<optgroup label="Wuling / BAW (Browns EV)">
-<option value="37.9">Wuling Cloud — 37.9 kWh</option>
-<option value="31.9">Wuling Binguo — 31.9 kWh</option>
-<option value="29">BAW E6 — 29 kWh</option>
-<option value="41">BAW E7 — 41 kWh</option>
-</optgroup>
-<optgroup label="Dongfeng (Euro Motors)">
-<option value="43.89">Dongfeng Box — 43.89 kWh</option>
-<option value="51.87">Dongfeng Vigo — 51.87 kWh</option>
-<option value="56.83">Dongfeng 007 — 56.83 kWh</option>
-</optgroup>
-<optgroup label="Other Brands">
-<option value="61.06">OMODA E5 — 61.06 kWh</option>
-</optgroup>
-<optgroup label="My Garage" id="garageOptGroup" style="display:none"></optgroup>
-<optgroup label="Other">
-<option value="custom">Custom — One-off entry</option>
-</optgroup>
+<option value="">— Loading vehicles… —</option>
 </select>
 </div>
 <div class="field" id="customCapacityField" style="display:none">
@@ -487,30 +341,7 @@ body.light .notice-banner{color:#b45309}
 <div id="publicFields">
 <div class="field"><label>Network / station</label>
 <select id="quickRate">
-<option value="">— Choose a provider —</option>
-<optgroup label="Volt Charge (BYD Partner)">
-<option value="150">Volt Charge Flat Rate — 150</option>
-</optgroup>
-<optgroup label="ChargeNET">
-<option value="120">ChargeNET Fast (DC) — 120</option>
-<option value="70">ChargeNET Regular (AC) — 70</option>
-</optgroup>
-<optgroup label="LECO (DC Fast)">
-<option value="89.23">LECO Day — 89.23</option>
-<option value="113.85">LECO Peak — 113.85</option>
-<option value="54.36">LECO Off-Peak — 54.36</option>
-</optgroup>
-<optgroup label="CEB">
-<option value="83.08">CEB Day — 83.08</option>
-<option value="107.70">CEB Peak — 107.70</option>
-<option value="51.29">CEB Off-Peak — 51.29</option>
-</optgroup>
-<optgroup label="ChargeUP (Lanka IOC)">
-<option value="custom">ChargeUP — Enter manually</option>
-</optgroup>
-<optgroup label="Other">
-<option value="custom">Custom — Enter manually</option>
-</optgroup>
+<option value="">— Loading networks… —</option>
 </select></div>
 <div class="field"><label>Rate per kWh <span class="hint">(LKR)</span></label><input type="number" id="rate" value="150" step="0.01" min="0" inputmode="decimal"></div>
 <div class="field"><label>Charger power <span class="hint">(kW)</span></label>
@@ -557,11 +388,9 @@ body.light .notice-banner{color:#b45309}
 <div style="margin-top:18px"><button type="button" id="saveBtn" style="width:100%;padding:15px;border-radius:14px;border:none;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;box-shadow:0 4px 20px rgba(139,92,246,0.4)">💾 Save this charge</button></div>
 </div>
 
-<!-- COMPARE SECTION -->
 <div class="card">
 <button type="button" class="adv-toggle" id="compareToggle"><span class="arrow" id="compareArrow">▶</span> Compare with other options</button>
 <div id="compareContent" style="display:none;padding-top:14px;border-top:1px solid rgba(139,92,246,0.15);margin-top:8px">
-
 <div id="compareCard">
 <div class="card-title" style="margin-top:8px">Cost at other networks</div>
 <table class="compare-table">
@@ -569,7 +398,6 @@ body.light .notice-banner{color:#b45309}
 <tbody id="compareBody"></tbody>
 </table>
 </div>
-
 <div style="margin-top:18px;padding-top:14px;border-top:1px solid rgba(139,92,246,0.1)">
 <div class="card-title">vs Petrol Car</div>
 <p style="font-size:0.75rem;color:var(--dim);margin-bottom:10px;line-height:1.5">How much you'd pay for the same distance in a petrol car.</p>
@@ -592,11 +420,9 @@ body.light .notice-banner{color:#b45309}
 <span id="co2Saved" style="font-size:1rem;font-weight:800;color:var(--blueB)">0 kg</span>
 </div>
 </div>
-
 </div>
 </div>
 
-<!-- CHARGING TIMER -->
 <div class="card">
 <div class="card-title">Charging Timer</div>
 <p style="font-size:0.8rem;color:var(--dim);margin-bottom:12px;line-height:1.6">Get a reminder so you don't overstay at the charger.</p>
@@ -751,7 +577,7 @@ body.light .notice-banner{color:#b45309}
 <div class="card-title">Rate disclaimer</div>
 <p style="font-size:0.82rem;color:var(--dim);line-height:1.7">Network rates are based on published tariffs and may change. Always verify the rate shown at the charger. The calculator lets you enter any custom rate.</p>
 </div>
-  <div class="card" style="text-align:center;padding:16px">
+<div class="card" style="text-align:center;padding:16px">
 <p style="font-size:0.75rem;color:var(--faint);line-height:1.6;margin:0">© 2026 Shamil Sallay. All rights reserved.<br>EV Charge Calculator — Sri Lanka</p>
 </div>
 </div>
@@ -767,50 +593,124 @@ var userVehicles=[];
 var editingVehicleId=null;
 var confirmCallback=null;
 
-var builtInVehicles={
-'30.08':{name:'BYD Atto 1 Dynamic',capacity:30.08,range:300,dc:30},
-'38.88':{name:'BYD Atto 1 Premium',capacity:38.88,range:380,dc:40},
-'44.9':{name:'BYD Dolphin Dynamic 49',capacity:44.9,range:405,dc:60},
-'60.48':{name:'BYD Dolphin Premium',capacity:60.48,range:427,dc:80},
-'49.92':{name:'BYD Atto 3 Advanced',capacity:49.92,range:410,dc:70},
-'82.5':{name:'BYD Seal',capacity:82.5,range:520,dc:150},
-'71.8':{name:'BYD M6',capacity:71.8,range:420,dc:115},
-'43.2':{name:'BYD Atto 2',capacity:43.2,range:410,dc:65},
-'18.3':{name:'BYD Sealion 6 DM-i',capacity:18.3,range:92,dc:18},
-'12.9':{name:'BYD Sealion 5 DM-i',capacity:12.9,range:71,dc:18},
-'29.58':{name:'BYD Shark 6',capacity:29.58,range:100,dc:40},
-'64':{name:'MG4 EV Long Range',capacity:64,range:450,dc:135},
-'51':{name:'MG4 EV Urban',capacity:51,range:350,dc:88},
-'50.3':{name:'MG ZS EV',capacity:50.3,range:320,dc:76},
-'17.3':{name:'MG Comet EV',capacity:17.3,range:230,dc:25},
-'31.9':{name:'MG Binguo EV',capacity:31.9,range:333,dc:40},
-'49':{name:'MG S5 EV',capacity:49,range:340,dc:120},
-'70':{name:'MG Cyberster',capacity:70,range:520,dc:140},
-'18.1':{name:'MG Hector PHEV',capacity:18.1,range:65,dc:18},
-'90.4':{name:'AVATR 11',capacity:90.4,range:575,dc:240},
-'75':{name:'IM5 / IM6',capacity:75,range:530,dc:120},
-'66':{name:'XPENG G6',capacity:66,range:435,dc:280},
-'77':{name:'Riddara RD6',capacity:77,range:424,dc:120},
-'53.6':{name:'DFSK Glory E3',capacity:53.6,range:405,dc:80},
-'70.38':{name:'JMEV EWIND',capacity:70.38,range:610,dc:80},
-'37.9':{name:'Wuling Cloud',capacity:37.9,range:460,dc:50},
-'29':{name:'BAW E6',capacity:29,range:290,dc:40},
-'41':{name:'BAW E7',capacity:41,range:400,dc:50},
-'43.89':{name:'Dongfeng Box',capacity:43.89,range:320,dc:40},
-'51.87':{name:'Dongfeng Vigo',capacity:51.87,range:340,dc:60},
-'56.83':{name:'Dongfeng 007',capacity:56.83,range:480,dc:100},
-'61.06':{name:'OMODA E5',capacity:61.06,range:430,dc:80}
-};
-
-var providerRates=[{name:'Volt Charge',rate:150},{name:'ChargeNET Fast',rate:120},{name:'LECO Day',rate:89.23},{name:'LECO Peak',rate:113.85},{name:'LECO Off-Peak',rate:54.36},{name:'CEB Day',rate:83.08},{name:'CEB Peak',rate:107.70},{name:'CEB Off-Peak',rate:51.29}];
+// Loaded from Firestore
+var builtInVehicles={};
+var providerRates=[];
 
 var infos={
 charged:{title:'What you\'ll pay for',text:'Charging isn\'t 100% efficient — some energy is lost as heat. The station bills you for the total energy delivered, which is slightly more than what actually lands in your battery.'},
 efficiency:{title:'Charging efficiency',text:'DC fast: 90–95%. AC home: 85–90%. The rest is lost as heat.'}
 };
 
+// ============ LOAD CONFIG FROM FIRESTORE ============
+function loadConfig(cb){
+// Try localStorage cache first for instant load
+try{
+var cached=localStorage.getItem('evConfig');
+if(cached){
+var c=JSON.parse(cached);
+if(c.vehicles&&Object.keys(c.vehicles).length>0)builtInVehicles=c.vehicles;
+if(c.rates&&c.rates.length>0)providerRates=c.rates;
+}
+}catch(e){}
+
+// Now fetch from Firestore
+if(!db){if(cb)cb();return}
+Promise.all([
+fbFuncs.getDoc(fbFuncs.doc(db,'config','vehicles')),
+fbFuncs.getDoc(fbFuncs.doc(db,'config','rates'))
+]).then(function(results){
+var vDoc=results[0],rDoc=results[1];
+if(vDoc.exists()){
+var vData=vDoc.data();
+if(vData.list&&typeof vData.list==='object')builtInVehicles=vData.list;
+}
+if(rDoc.exists()){
+var rData=rDoc.data();
+if(rData.list&&Array.isArray(rData.list))providerRates=rData.list;
+}
+// Cache for offline
+try{localStorage.setItem('evConfig',JSON.stringify({vehicles:builtInVehicles,rates:providerRates}))}catch(e){}
+if(cb)cb();
+}).catch(function(e){
+console.warn('Config load failed, using cache:',e);
+if(cb)cb();
+});
+}
+
+// Build vehicle dropdown from loaded config
+function buildVehicleDropdown(){
+var sel=$('vehicleSelect');
+var curVal=sel.value;
+sel.innerHTML='<option value="">— Choose your vehicle —</option>';
+// Group by brand prefix
+var byBrand={};
+Object.keys(builtInVehicles).forEach(function(k){
+var v=builtInVehicles[k];
+var brand='Other';
+var n=v.name||'';
+if(n.indexOf('BYD')===0)brand='BYD Sri Lanka';
+else if(n.indexOf('MG')===0)brand='MG (Sri Lanka)';
+else if(n.indexOf('AVATR')===0||n.indexOf('IM5')===0||n.indexOf('XPENG')===0||n.indexOf('Riddara')===0||n.indexOf('DFSK')===0||n.indexOf('JMEV')===0)brand='Evolution Auto';
+else if(n.indexOf('Wuling')===0||n.indexOf('BAW')===0)brand='Wuling / BAW';
+else if(n.indexOf('Dongfeng')===0)brand='Dongfeng';
+if(!byBrand[brand])byBrand[brand]=[];
+byBrand[brand].push({key:k,v:v});
+});
+Object.keys(byBrand).forEach(function(brand){
+var grp=document.createElement('optgroup');
+grp.label=brand;
+byBrand[brand].forEach(function(item){
+var o=document.createElement('option');
+o.value=item.key;
+o.textContent=item.v.name+' — '+item.v.capacity+' kWh';
+grp.appendChild(o);
+});
+sel.appendChild(grp);
+});
+// My Garage group
+var garageGrp=document.createElement('optgroup');
+garageGrp.label='My Garage';
+garageGrp.id='garageOptGroup';
+sel.appendChild(garageGrp);
+// Custom
+var otherGrp=document.createElement('optgroup');
+otherGrp.label='Other';
+var customOpt=document.createElement('option');
+customOpt.value='custom';
+customOpt.textContent='Custom — One-off entry';
+otherGrp.appendChild(customOpt);
+sel.appendChild(otherGrp);
+sel.value=curVal;
+}
+
+// Build rate dropdown from loaded config
+function buildRateDropdown(){
+var sel=$('quickRate');
+var curVal=sel.value;
+sel.innerHTML='<option value="">— Choose a provider —</option>';
+providerRates.forEach(function(p){
+var o=document.createElement('option');
+o.value=p.rate;
+o.textContent=p.name+' — '+p.rate;
+sel.appendChild(o);
+});
+var grp=document.createElement('optgroup');
+grp.label='Other';
+var cust=document.createElement('option');
+cust.value='custom';
+cust.textContent='Custom — Enter manually';
+grp.appendChild(cust);
+sel.appendChild(grp);
+sel.value=curVal;
+}
+
+// ============ FIREBASE INIT ============
 function onFirebaseReady(){
 auth=window.fbAuth;db=window.fbDB;fbFuncs=window.fbFuncs;
+loadConfig(function(){
+buildVehicleDropdown();
+buildRateDropdown();
 fbFuncs.onAuthStateChanged(auth,function(user){
 currentUser=user;
 if(user){
@@ -818,12 +718,13 @@ $('authScreen').style.display='none';
 $('mainApp').style.display='block';
 $('userEmail').textContent=user.email;
 $('settingsEmail').textContent=user.email;
-loadUserVehicles(function(){renderGarage();renderHistory();updateVehicleDropdowns()});
+loadUserVehicles(function(){renderGarage();renderHistory();updateVehicleDropdowns();calc()});
 }else{
 $('authScreen').style.display='flex';
 $('mainApp').style.display='none';
 userVehicles=[];
 }
+});
 });
 }
 if(window.firebaseReady){onFirebaseReady();}else{window.addEventListener('firebase-ready',onFirebaseReady);}
@@ -849,7 +750,7 @@ function getAllRecords(cb){if(!currentUser){cb([]);return}fbFuncs.getDocs(getUse
 function deleteRecord(ts,cb){getAllRecords(function(a){var t=a.find(function(x){return x.ts===ts});if(!t){if(cb)cb(false);return}fbFuncs.deleteDoc(fbFuncs.doc(db,'users',currentUser.uid,'history',t._docId)).then(function(){if(cb)cb(true)}).catch(function(){if(cb)cb(false)})})}
 function clearAllRecords(cb){getAllRecords(function(a){var p=a.map(function(x){return fbFuncs.deleteDoc(fbFuncs.doc(db,'users',currentUser.uid,'history',x._docId))});Promise.all(p).then(function(){if(cb)cb(true)}).catch(function(){if(cb)cb(false)})})}
 
-// CLOUD VEHICLES
+// Cloud vehicles
 function getUserVehiclesRef(){return fbFuncs.collection(db,'users',currentUser.uid,'vehicles')}
 function loadUserVehicles(cb){if(!currentUser){userVehicles=[];if(cb)cb();return}fbFuncs.getDocs(getUserVehiclesRef()).then(function(s){userVehicles=[];s.forEach(function(d){var data=d.data();data._docId=d.id;userVehicles.push(data)});if(cb)cb()}).catch(function(e){console.error(e);userVehicles=[];if(cb)cb()})}
 function addUserVehicle(v,cb){if(!currentUser){if(cb)cb(false);return}fbFuncs.addDoc(getUserVehiclesRef(),v).then(function(ref){v._docId=ref.id;userVehicles.push(v);if(cb)cb(true)}).catch(function(e){console.error(e);if(cb)cb(false)})}
@@ -857,9 +758,10 @@ function updateUserVehicle(id,updates,cb){fbFuncs.updateDoc(fbFuncs.doc(db,'user
 function deleteUserVehicle(id,cb){fbFuncs.deleteDoc(fbFuncs.doc(db,'users',currentUser.uid,'vehicles',id)).then(function(){userVehicles=userVehicles.filter(function(v){return v._docId!==id});if(cb)cb(true)}).catch(function(e){console.error(e);if(cb)cb(false)})}
 
 function updateVehicleDropdowns(){
-var grp=$('garageOptGroup');grp.innerHTML='';
+var grp=$('garageOptGroup');if(!grp)return;
+grp.innerHTML='';
 if(userVehicles.length>0){grp.style.display='';userVehicles.forEach(function(v){var opt=document.createElement('option');opt.value='custom_'+v._docId;opt.textContent=v.name+' — '+v.capacity+' kWh';grp.appendChild(opt)})}else{grp.style.display='none'}
-var hf=$('historyVehicleFilter');var curHf=hf.value;
+var hf=$('historyVehicleFilter');if(!hf)return;var curHf=hf.value;
 hf.innerHTML='<option value="all">All vehicles</option>';
 userVehicles.forEach(function(v){var o=document.createElement('option');o.value='custom_'+v._docId;o.textContent=v.name;hf.appendChild(o)});
 Object.keys(builtInVehicles).forEach(function(k){var v=builtInVehicles[k];var o=document.createElement('option');o.value=k;o.textContent=v.name;hf.appendChild(o)});
@@ -932,6 +834,7 @@ updatePetrolComparison(needed,total,vehicle);
 function updateComparison(billed,taxPct,fee){
 var body=$('compareBody');
 if(billed<=0){body.innerHTML='<tr><td colspan="2" style="text-align:center;color:#6a5a9e;padding:14px;font-style:italic">Set target above current charge.</td></tr>';return}
+if(!providerRates||providerRates.length===0){body.innerHTML='<tr><td colspan="2" style="text-align:center;color:#6a5a9e;padding:14px;font-style:italic">Network data not loaded.</td></tr>';return}
 var res=providerRates.map(function(p){var b=billed*p.rate;var t=b*(taxPct/100);return{name:p.name,cost:b+t+fee}});
 var mn=Math.min.apply(null,res.map(function(x){return x.cost}));
 body.innerHTML=res.map(function(x){var bd=x.cost===mn?'<span class="best-badge">BEST</span>':'';return '<tr><td class="name">'+x.name+bd+'</td><td class="cost">'+lkr(x.cost)+'</td></tr>'}).join('');
@@ -988,12 +891,14 @@ setFuel92:$('setFuel92').value,setFuel95:$('setFuel95').value,setDiesel:$('setDi
 }
 
 try{var s=localStorage.getItem('evPrefs');if(s){var p=JSON.parse(s);
-if(p.capacity)$('capacity').value=p.capacity;if(p.current)$('current').value=p.current;if(p.target)$('target').value=p.target;if(p.rate)$('rate').value=p.rate;if(p.efficiency)$('efficiency').value=p.efficiency;if(p.sessionFee)$('sessionFee').value=p.sessionFee;if(p.tax)$('tax').value=p.tax;if(p.vehicle)$('vehicleSelect').value=p.vehicle;
+if(p.capacity)$('capacity').value=p.capacity;if(p.current)$('current').value=p.current;if(p.target)$('target').value=p.target;if(p.rate)$('rate').value=p.rate;if(p.efficiency)$('efficiency').value=p.efficiency;if(p.sessionFee)$('sessionFee').value=p.sessionFee;if(p.tax)$('tax').value=p.tax;
 if(p.chargerPower){$('chargerPower').value=p.chargerPower;if(p.chargerPower==='custom')$('customPublicPowerField').style.display='block'}
 if(p.homeRate)$('homeRate').value=p.homeRate;if(p.homeChargerPower){$('homeChargerPower').value=p.homeChargerPower;if(p.homeChargerPower==='custom')$('customHomePowerField').style.display='block'}
 if(p.homeEfficiency)$('homeEfficiency').value=p.homeEfficiency;if(p.customHomePower)$('customHomePower').value=p.customHomePower;if(p.customPublicPower)$('customPublicPower').value=p.customPublicPower;if(p.mode)currentMode=p.mode;
 if(p.theme==='light'){document.body.classList.add('light');$('themeKnob').style.left='32px'}
 if(p.setFuel92)$('setFuel92').value=p.setFuel92;if(p.setFuel95)$('setFuel95').value=p.setFuel95;if(p.setDiesel)$('setDiesel').value=p.setDiesel;if(p.setPetrolKm)$('setPetrolKm').value=p.setPetrolKm;
+// Restore vehicle after dropdown loads — deferred
+window._pendingVehicle=p.vehicle;
 }}catch(e){}
 
 if(currentMode==='home'){$('tabHome').classList.add('active');$('tabPublic').classList.remove('active');$('homeFields').style.display='block';$('publicFields').style.display='none'}
@@ -1071,6 +976,22 @@ $('rerunOnboard').addEventListener('click',function(){showOnboard()});
 
 calc();
 if(!localStorage.getItem('obDone')){setTimeout(showOnboard,1500)}
+
+// Restore saved vehicle selection once dropdown is populated
+window.addEventListener('firebase-ready',function(){
+setTimeout(function(){
+if(window._pendingVehicle){
+var sel=$('vehicleSelect');
+if(sel.querySelector('option[value="'+window._pendingVehicle+'"]')){
+sel.value=window._pendingVehicle;
+var v=getVehicleByKey(window._pendingVehicle);
+if(v)$('capacity').value=v.capacity;
+}
+delete window._pendingVehicle;
+}
+calc();
+},500);
+});
 </script>
 </body>
 </html>
