@@ -806,22 +806,44 @@ function submitReport(stationId,status,btn){
 if(!currentUser){alert('Please sign in to report station status.');return}
 var meta=reportLabels[status];
 if(!meta)return;
+
+// Rate limit: check last report time for this station by this user
+var rateKey='lastReport_'+currentUser.uid+'_'+stationId;
+var lastTs=parseInt(localStorage.getItem(rateKey)||'0');
+var now=Date.now();
+var COOLDOWN_MS=60*60*1000; // 1 hour
+if(now-lastTs<COOLDOWN_MS){
+var remaining=Math.ceil((COOLDOWN_MS-(now-lastTs))/60000);
+alert('You already reported this station recently. Please wait '+remaining+' more minute'+(remaining===1?'':'s')+'.');
+return;
+}
+
+// Also check against the fetched reports to prevent duplicate reporting from other devices
+var existing=stationReports[stationId];
+if(existing&&existing.uid===currentUser.uid&&(now-existing.ts)<COOLDOWN_MS){
+var remaining=Math.ceil((COOLDOWN_MS-(now-existing.ts))/60000);
+alert('You already reported this station recently. Please wait '+remaining+' more minute'+(remaining===1?'':'s')+'.');
+return;
+}
+
 btn.disabled=true;
 var originalText=btn.textContent;
 btn.textContent='Sending…';
+
 fbFuncs.addDoc(fbFuncs.collection(db,'station_reports'),{
 stationId:stationId,
 status:status,
 uid:currentUser.uid,
 name:currentUser.email?currentUser.email.split('@')[0]:'User',
-ts:Date.now()
+ts:now
 }).then(function(){
+// Remember when this user last reported this station
+try{localStorage.setItem(rateKey,String(now))}catch(e){}
 btn.textContent='✓ Reported';
 setTimeout(function(){
 btn.textContent=originalText;
 btn.disabled=false;
 },1200);
-// Refresh local cache
 loadStationReports(function(){renderStations()});
 }).catch(function(e){
 console.error('Report failed:',e);
