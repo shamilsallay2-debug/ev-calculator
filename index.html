@@ -12,7 +12,7 @@
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, getDoc, query, where, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyB5dZG9i2ZSSO4LeurzZFI8Loku7R20rE8",
@@ -29,7 +29,7 @@ const db = getFirestore(fbApp);
 
 window.fbAuth = auth;
 window.fbDB = db;
-window.fbFuncs = { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, getDoc };
+window.fbFuncs = { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, getDoc, query, where, orderBy, limit };
 window.firebaseReady = true;
 window.dispatchEvent(new Event('firebase-ready'));
 </script>
@@ -166,6 +166,20 @@ body.light .notice-banner{color:#b45309}
 .vehicle-card .vc-actions button:hover{background:rgba(139,92,246,0.15);color:var(--purpleB)}
 .vehicle-card .vc-active-badge{display:inline-block;background:rgba(46,204,113,0.2);color:#2ecc71;font-size:0.6rem;font-weight:800;padding:2px 8px;border-radius:6px;margin-left:6px;text-transform:uppercase;letter-spacing:0.5px}
 .vehicle-card .vc-builtin-badge{display:inline-block;background:rgba(148,163,184,0.2);color:var(--dim);font-size:0.6rem;font-weight:800;padding:2px 8px;border-radius:6px;margin-left:6px;text-transform:uppercase;letter-spacing:0.5px}
+/* Station status */
+.station-status-badge{display:inline-flex;align-items:center;gap:4px;font-size:0.7rem;padding:4px 10px;border-radius:8px;font-weight:800;margin-bottom:8px}
+.station-status-badge.working{background:rgba(46,204,113,0.2);color:#2ecc71;border:1px solid rgba(46,204,113,0.4)}
+.station-status-badge.slow{background:rgba(245,158,11,0.2);color:#fbbf24;border:1px solid rgba(245,158,11,0.4)}
+.station-status-badge.broken{background:rgba(248,113,113,0.2);color:#f87171;border:1px solid rgba(248,113,113,0.4)}
+.station-status-badge.blocked{background:rgba(148,163,184,0.2);color:#94a3b8;border:1px solid rgba(148,163,184,0.4)}
+.station-status-badge.stale{background:rgba(139,92,246,0.15);color:var(--faint);border:1px solid rgba(139,92,246,0.25)}
+.report-row{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.report-btn{flex:1;min-width:60px;padding:8px 6px;border-radius:10px;border:1px solid rgba(139,92,246,0.3);background:rgba(139,92,246,0.1);color:var(--purpleB);font-family:inherit;font-size:0.7rem;font-weight:700;cursor:pointer;transition:all 0.15s}
+.report-btn:active{transform:scale(0.96)}
+.report-btn.r-working{border-color:rgba(46,204,113,0.4);background:rgba(46,204,113,0.15);color:#2ecc71}
+.report-btn.r-slow{border-color:rgba(245,158,11,0.4);background:rgba(245,158,11,0.15);color:#fbbf24}
+.report-btn.r-broken{border-color:rgba(248,113,113,0.4);background:rgba(248,113,113,0.15);color:#f87171}
+.report-btn.r-blocked{border-color:rgba(148,163,184,0.4);background:rgba(148,163,184,0.15);color:#94a3b8}
 @media(max-width:480px){body{padding-left:88px;padding-right:12px}.app{max-width:100%}.sidebar{width:72px}.nav-item{width:56px}.nav-icon{font-size:1.2rem}.nav-label{font-size:0.5rem}.compare-table{font-size:0.72rem}}
 </style>
 </head>
@@ -197,11 +211,6 @@ body.light .notice-banner{color:#b45309}
 <div class="field"><label>Email</label><input type="email" id="resetEmail" placeholder="you@example.com" autocomplete="email"></div>
 <button type="button" class="auth-btn" id="resetBtn">Send Reset Link</button>
 <div style="text-align:center"><button type="button" class="link-btn" id="backToLoginBtn">← Back to Sign In</button></div>
-</div>
-<div id="migrationCard" style="display:none;margin-top:16px;padding:14px;background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.3);border-radius:12px">
-<div style="font-size:0.8rem;color:#93c5fd;margin-bottom:10px;line-height:1.5">📦 We found <strong id="migrationCount">0</strong> old charging sessions on this device. Upload them to your account?</div>
-<button type="button" id="migrateYes" style="width:100%;padding:10px;border-radius:10px;border:none;font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;margin-bottom:6px">Upload to Cloud</button>
-<button type="button" id="migrateNo" style="width:100%;padding:10px;border-radius:10px;border:1px solid rgba(148,163,184,0.3);background:transparent;color:var(--dim);font-size:0.85rem;font-weight:600;cursor:pointer;font-family:inherit">Keep on Device Only</button>
 </div>
 <p class="auth-notice">Your charging history is stored securely in your own account and syncs across all your devices.</p>
 </div>
@@ -501,7 +510,7 @@ body.light .notice-banner{color:#b45309}
 <!-- STATIONS PAGE -->
 <div class="page" id="page-stations">
 <h1>🔌 Charging Networks</h1>
-<p style="text-align:center;font-size:0.8rem;color:var(--dim);margin-bottom:16px">Tap to call or open in Maps</p>
+<p style="text-align:center;font-size:0.8rem;color:var(--dim);margin-bottom:16px">Tap a status to report what you see — helps other drivers</p>
 <div id="stationsList"></div>
 </div>
 
@@ -554,6 +563,7 @@ body.light .notice-banner{color:#b45309}
 <div class="tip-row"><span class="tip-icon">4️⃣</span><div class="tip-text"><strong>Read the result</strong> — cost, time, and range are shown at the top. Tap "Compare with other options" to see network and petrol comparisons.</div></div>
 <div class="tip-row"><span class="tip-icon">5️⃣</span><div class="tip-text"><strong>Save it</strong> — tap "💾 Save this charge" to log it. Find it under 📊 History.</div></div>
 <div class="tip-row"><span class="tip-icon">🚗</span><div class="tip-text"><strong>Add your car</strong> — go to the 🚗 Garage tab and tap "➕ Add" to save your vehicle with its exact specs.</div></div>
+<div class="tip-row"><span class="tip-icon">🔌</span><div class="tip-text"><strong>Report a station</strong> — on the Stations tab, tap a status (Working/Slow/Broken/Blocked) to help other drivers know what to expect.</div></div>
 </div>
 <div class="card">
 <div class="card-title">Quick tips</div>
@@ -584,7 +594,6 @@ body.light .notice-banner{color:#b45309}
 
 </div>
 </div>
-
 <script>
 var $=function(id){return document.getElementById(id)};
 var auth=null,db=null,fbFuncs=null,currentUser=null;
@@ -597,14 +606,32 @@ var confirmCallback=null;
 var builtInVehicles={};
 var providerRates=[];
 
+// Stations config (used for reporting)
+var stationList=[
+{id:'volt-charge',name:'Volt Charge',badge:'LARGEST',detail:'Flat: <strong style="color:var(--blueB)">LKR 150/kWh</strong>',tel:'+94766700280',map:'Volt+Charge+Charging+Station+Sri+Lanka'},
+{id:'chargenet',name:'chargeNET',badge:'PRIVATE',detail:'DC: <strong style="color:var(--blueB)">120</strong> · AC: <strong style="color:var(--blueB)">70</strong> LKR/kWh',tel:'+9415551551',map:'chargeNET+Sri+Lanka'},
+{id:'leco',name:'LECO',badge:'GOV',detail:'Day: <strong style="color:var(--blueB)">89.23</strong> · Peak: <strong style="color:var(--blueB)">113.85</strong> · Off: <strong style="color:var(--blueB)">54.36</strong>',tel:'+94112345678',map:'LECO+Charging+Station'},
+{id:'chargeup',name:'ChargeUP (Lanka IOC)',badge:'EXPANDING',detail:'Partnered with Lanka IOC. Rates vary.',tel:'+94112345678',map:'ChargeUP+EV+Charging+Sri+Lanka'},
+{id:'ceb',name:'CEB',badge:'GRID',detail:'Day: <strong style="color:var(--blueB)">83.08</strong> · Peak: <strong style="color:var(--blueB)">107.70</strong> · Off: <strong style="color:var(--blueB)">51.29</strong>',tel:'+94112345678',map:'CEB+EV+Charging+Station'}
+];
+
+var reportLabels={
+working:{icon:'✅',label:'Working'},
+slow:{icon:'⚠️',label:'Slow'},
+broken:{icon:'❌',label:'Broken'},
+blocked:{icon:'🅿️',label:'Blocked'}
+};
+
+// Cache of latest report per station (id -> {status, ts, name, uid})
+var stationReports={};
+
 var infos={
 charged:{title:'What you\'ll pay for',text:'Charging isn\'t 100% efficient — some energy is lost as heat. The station bills you for the total energy delivered, which is slightly more than what actually lands in your battery.'},
 efficiency:{title:'Charging efficiency',text:'DC fast: 90–95%. AC home: 85–90%. The rest is lost as heat.'}
 };
 
-// ============ LOAD CONFIG FROM FIRESTORE ============
+// ============ CONFIG FROM FIRESTORE ============
 function loadConfig(cb){
-// Try localStorage cache first for instant load
 try{
 var cached=localStorage.getItem('evConfig');
 if(cached){
@@ -614,7 +641,6 @@ if(c.rates&&c.rates.length>0)providerRates=c.rates;
 }
 }catch(e){}
 
-// Now fetch from Firestore
 if(!db){if(cb)cb();return}
 Promise.all([
 fbFuncs.getDoc(fbFuncs.doc(db,'config','vehicles')),
@@ -629,7 +655,6 @@ if(rDoc.exists()){
 var rData=rDoc.data();
 if(rData.list&&Array.isArray(rData.list))providerRates=rData.list;
 }
-// Cache for offline
 try{localStorage.setItem('evConfig',JSON.stringify({vehicles:builtInVehicles,rates:providerRates}))}catch(e){}
 if(cb)cb();
 }).catch(function(e){
@@ -638,12 +663,10 @@ if(cb)cb();
 });
 }
 
-// Build vehicle dropdown from loaded config
 function buildVehicleDropdown(){
 var sel=$('vehicleSelect');
 var curVal=sel.value;
 sel.innerHTML='<option value="">— Choose your vehicle —</option>';
-// Group by brand prefix
 var byBrand={};
 Object.keys(builtInVehicles).forEach(function(k){
 var v=builtInVehicles[k];
@@ -668,12 +691,10 @@ grp.appendChild(o);
 });
 sel.appendChild(grp);
 });
-// My Garage group
 var garageGrp=document.createElement('optgroup');
 garageGrp.label='My Garage';
 garageGrp.id='garageOptGroup';
 sel.appendChild(garageGrp);
-// Custom
 var otherGrp=document.createElement('optgroup');
 otherGrp.label='Other';
 var customOpt=document.createElement('option');
@@ -684,7 +705,6 @@ sel.appendChild(otherGrp);
 sel.value=curVal;
 }
 
-// Build rate dropdown from loaded config
 function buildRateDropdown(){
 var sel=$('quickRate');
 var curVal=sel.value;
@@ -705,12 +725,121 @@ sel.appendChild(grp);
 sel.value=curVal;
 }
 
+// ============ STATION REPORTS ============
+function loadStationReports(cb){
+if(!currentUser){if(cb)cb();return}
+fbFuncs.getDocs(fbFuncs.collection(db,'station_reports'))
+.then(function(snap){
+var all=[];
+snap.forEach(function(d){
+var data=d.data();
+data._docId=d.id;
+all.push(data);
+});
+// Find latest report per station
+stationReports={};
+all.forEach(function(r){
+var existing=stationReports[r.stationId];
+if(!existing||r.ts>existing.ts){
+stationReports[r.stationId]=r;
+}
+});
+if(cb)cb();
+}).catch(function(e){
+console.warn('Reports load failed:',e);
+if(cb)cb();
+});
+}
+
+function renderStations(){
+var html='';
+var now=Date.now();
+var STALE_MS=24*60*60*1000;
+
+stationList.forEach(function(s){
+var report=stationReports[s.id];
+var badgeHtml='';
+if(report){
+var age=now-report.ts;
+var stale=age>STALE_MS;
+if(stale){
+badgeHtml='<div class="station-status-badge stale">🕐 No recent reports</div>';
+}else{
+var meta=reportLabels[report.status];
+if(meta){
+var ageMin=Math.round(age/60000);
+var ageTxt=ageMin<60?ageMin+'m ago':Math.round(ageMin/60)+'h ago';
+badgeHtml='<div class="station-status-badge '+report.status+'">'+meta.icon+' '+meta.label+' — '+ageTxt+'</div>';
+}
+}
+}else{
+badgeHtml='<div class="station-status-badge stale">🕐 No reports yet</div>';
+}
+
+html+='<div style="background:var(--input-bg);border-radius:14px;padding:16px;margin-bottom:12px;border-left:3px solid var(--purple)">';
+html+='<div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-weight:700;color:var(--text)">'+s.name+'</span><span style="font-size:0.6rem;background:rgba(139,92,246,0.2);color:var(--purpleB);padding:3px 10px;border-radius:6px;font-weight:700">'+s.badge+'</span></div>';
+html+=badgeHtml;
+html+='<div style="font-size:0.8rem;color:var(--dim);line-height:1.6;margin:8px 0 12px">'+s.detail+'</div>';
+html+='<div style="display:flex;gap:8px;margin-bottom:10px"><a href="tel:'+s.tel+'" style="flex:1;text-align:center;padding:11px;border-radius:10px;background:rgba(139,92,246,0.15);color:var(--purpleB);text-decoration:none;font-weight:700;font-size:0.8rem;border:1px solid rgba(139,92,246,0.25)">📞 Call</a><a href="https://www.google.com/maps/search/'+s.map+'" target="_blank" style="flex:1;text-align:center;padding:11px;border-radius:10px;background:rgba(59,130,246,0.15);color:var(--blueB);text-decoration:none;font-weight:700;font-size:0.8rem;border:1px solid rgba(59,130,246,0.25)">📍 Map</a></div>';
+html+='<div style="font-size:0.7rem;color:var(--faint);font-weight:600;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px">Report current status</div>';
+html+='<div class="report-row">';
+html+='<button class="report-btn r-working" data-station="'+s.id+'" data-status="working">✅ Working</button>';
+html+='<button class="report-btn r-slow" data-station="'+s.id+'" data-status="slow">⚠️ Slow</button>';
+html+='<button class="report-btn r-broken" data-station="'+s.id+'" data-status="broken">❌ Broken</button>';
+html+='<button class="report-btn r-blocked" data-station="'+s.id+'" data-status="blocked">🅿️ Blocked</button>';
+html+='</div>';
+html+='</div>';
+});
+$('stationsList').innerHTML=html;
+
+// Attach report button handlers
+document.querySelectorAll('.report-btn').forEach(function(btn){
+btn.addEventListener('click',function(){
+var stationId=this.dataset.station;
+var status=this.dataset.status;
+submitReport(stationId,status,this);
+});
+});
+}
+
+function submitReport(stationId,status,btn){
+if(!currentUser){alert('Please sign in to report station status.');return}
+var meta=reportLabels[status];
+if(!meta)return;
+btn.disabled=true;
+var originalText=btn.textContent;
+btn.textContent='Sending…';
+fbFuncs.addDoc(fbFuncs.collection(db,'station_reports'),{
+stationId:stationId,
+status:status,
+uid:currentUser.uid,
+name:currentUser.email?currentUser.email.split('@')[0]:'User',
+ts:Date.now()
+}).then(function(){
+btn.textContent='✓ Reported';
+setTimeout(function(){
+btn.textContent=originalText;
+btn.disabled=false;
+},1200);
+// Refresh local cache
+loadStationReports(function(){renderStations()});
+}).catch(function(e){
+console.error('Report failed:',e);
+btn.textContent='⚠ Failed';
+setTimeout(function(){
+btn.textContent=originalText;
+btn.disabled=false;
+},1500);
+});
+}
+
 // ============ FIREBASE INIT ============
 function onFirebaseReady(){
 auth=window.fbAuth;db=window.fbDB;fbFuncs=window.fbFuncs;
 loadConfig(function(){
 buildVehicleDropdown();
 buildRateDropdown();
+renderStations();
 fbFuncs.onAuthStateChanged(auth,function(user){
 currentUser=user;
 if(user){
@@ -719,10 +848,13 @@ $('mainApp').style.display='block';
 $('userEmail').textContent=user.email;
 $('settingsEmail').textContent=user.email;
 loadUserVehicles(function(){renderGarage();renderHistory();updateVehicleDropdowns();calc()});
+loadStationReports(function(){renderStations()});
 }else{
 $('authScreen').style.display='flex';
 $('mainApp').style.display='none';
 userVehicles=[];
+stationReports={};
+renderStations();
 }
 });
 });
@@ -784,6 +916,7 @@ btn.classList.add('active');
 document.getElementById('page-'+btn.dataset.page).classList.add('active');
 if(btn.dataset.page==='garage')renderGarage();
 if(btn.dataset.page==='history')renderHistory();
+if(btn.dataset.page==='stations')loadStationReports(function(){renderStations()});
 });
 });
 
@@ -897,7 +1030,6 @@ if(p.homeRate)$('homeRate').value=p.homeRate;if(p.homeChargerPower){$('homeCharg
 if(p.homeEfficiency)$('homeEfficiency').value=p.homeEfficiency;if(p.customHomePower)$('customHomePower').value=p.customHomePower;if(p.customPublicPower)$('customPublicPower').value=p.customPublicPower;if(p.mode)currentMode=p.mode;
 if(p.theme==='light'){document.body.classList.add('light');$('themeKnob').style.left='32px'}
 if(p.setFuel92)$('setFuel92').value=p.setFuel92;if(p.setFuel95)$('setFuel95').value=p.setFuel95;if(p.setDiesel)$('setDiesel').value=p.setDiesel;if(p.setPetrolKm)$('setPetrolKm').value=p.setPetrolKm;
-// Restore vehicle after dropdown loads — deferred
 window._pendingVehicle=p.vehicle;
 }}catch(e){}
 
@@ -965,8 +1097,6 @@ $('exportBtn').addEventListener('click',function(){getAllRecords(function(h){if(
 
 $('themeToggle').addEventListener('click',function(){var l=document.body.classList.contains('light');if(l){document.body.classList.remove('light');$('themeKnob').style.left='2px'}else{document.body.classList.add('light');$('themeKnob').style.left='32px'}savePrefs()});
 
-(function(){var s=[{name:'Volt Charge',badge:'LARGEST',detail:'Flat: <strong style="color:var(--blueB)">LKR 150/kWh</strong>',tel:'+94766700280',map:'Volt+Charge+Charging+Station+Sri+Lanka'},{name:'chargeNET',badge:'PRIVATE',detail:'DC: <strong style="color:var(--blueB)">120</strong> · AC: <strong style="color:var(--blueB)">70</strong> LKR/kWh',tel:'+9415551551',map:'chargeNET+Sri+Lanka'},{name:'LECO',badge:'GOV',detail:'Day: <strong style="color:var(--blueB)">89.23</strong> · Peak: <strong style="color:var(--blueB)">113.85</strong> · Off: <strong style="color:var(--blueB)">54.36</strong>',tel:'+94112345678',map:'LECO+Charging+Station'},{name:'ChargeUP (Lanka IOC)',badge:'EXPANDING',detail:'Partnered with Lanka IOC. Rates vary.',tel:'+94112345678',map:'ChargeUP+EV+Charging+Sri+Lanka'},{name:'CEB',badge:'GRID',detail:'Day: <strong style="color:var(--blueB)">83.08</strong> · Peak: <strong style="color:var(--blueB)">107.70</strong> · Off: <strong style="color:var(--blueB)">51.29</strong>',tel:'+94112345678',map:'CEB+EV+Charging+Station'}];var html='';s.forEach(function(x){html+='<div style="background:var(--input-bg);border-radius:14px;padding:16px;margin-bottom:12px;border-left:3px solid var(--purple)">';html+='<div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-weight:700;color:var(--text)">'+x.name+'</span><span style="font-size:0.6rem;background:rgba(139,92,246,0.2);color:var(--purpleB);padding:3px 10px;border-radius:6px;font-weight:700">'+x.badge+'</span></div>';html+='<div style="font-size:0.8rem;color:var(--dim);line-height:1.6;margin-bottom:12px">'+x.detail+'</div>';html+='<div style="display:flex;gap:8px"><a href="tel:'+x.tel+'" style="flex:1;text-align:center;padding:11px;border-radius:10px;background:rgba(139,92,246,0.15);color:var(--purpleB);text-decoration:none;font-weight:700;font-size:0.8rem;border:1px solid rgba(139,92,246,0.25)">📞 Call</a><a href="https://www.google.com/maps/search/'+x.map+'" target="_blank" style="flex:1;text-align:center;padding:11px;border-radius:10px;background:rgba(59,130,246,0.15);color:var(--blueB);text-decoration:none;font-weight:700;font-size:0.8rem;border:1px solid rgba(59,130,246,0.25)">📍 Map</a></div>';html+='</div>'});$('stationsList').innerHTML=html})();
-
 var obStep=1;
 function showOnboard(){obStep=1;$('obStep').textContent='1';$('obStep1').style.display='block';$('obStep2').style.display='none';$('obStep3').style.display='none';$('obSkip').textContent='Skip setup';$('obNext').textContent='Next →';$('onboardOverlay').classList.add('show')}
 function hideOnboard(){$('onboardOverlay').classList.remove('show');localStorage.setItem('obDone','1')}
@@ -977,7 +1107,6 @@ $('rerunOnboard').addEventListener('click',function(){showOnboard()});
 calc();
 if(!localStorage.getItem('obDone')){setTimeout(showOnboard,1500)}
 
-// Restore saved vehicle selection once dropdown is populated
 window.addEventListener('firebase-ready',function(){
 setTimeout(function(){
 if(window._pendingVehicle){
