@@ -12,7 +12,7 @@
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, getDoc, query, where, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyB5dZG9i2ZSSO4LeurzZFI8Loku7R20rE8",
@@ -29,7 +29,7 @@ const db = getFirestore(fbApp);
 
 window.fbAuth = auth;
 window.fbDB = db;
-window.fbFuncs = { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, getDoc, query, where, orderBy, limit };
+window.fbFuncs = { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, getDoc };
 window.firebaseReady = true;
 window.dispatchEvent(new Event('firebase-ready'));
 </script>
@@ -166,7 +166,6 @@ body.light .notice-banner{color:#b45309}
 .vehicle-card .vc-actions button:hover{background:rgba(139,92,246,0.15);color:var(--purpleB)}
 .vehicle-card .vc-active-badge{display:inline-block;background:rgba(46,204,113,0.2);color:#2ecc71;font-size:0.6rem;font-weight:800;padding:2px 8px;border-radius:6px;margin-left:6px;text-transform:uppercase;letter-spacing:0.5px}
 .vehicle-card .vc-builtin-badge{display:inline-block;background:rgba(148,163,184,0.2);color:var(--dim);font-size:0.6rem;font-weight:800;padding:2px 8px;border-radius:6px;margin-left:6px;text-transform:uppercase;letter-spacing:0.5px}
-/* Station status */
 .station-status-badge{display:inline-flex;align-items:center;gap:4px;font-size:0.7rem;padding:4px 10px;border-radius:8px;font-weight:800;margin-bottom:8px}
 .station-status-badge.working{background:rgba(46,204,113,0.2);color:#2ecc71;border:1px solid rgba(46,204,113,0.4)}
 .station-status-badge.slow{background:rgba(245,158,11,0.2);color:#fbbf24;border:1px solid rgba(245,158,11,0.4)}
@@ -509,8 +508,14 @@ body.light .notice-banner{color:#b45309}
 
 <!-- STATIONS PAGE -->
 <div class="page" id="page-stations">
-<h1>🔌 Charging Networks</h1>
-<p style="text-align:center;font-size:0.8rem;color:var(--dim);margin-bottom:16px">Tap a status to report what you see — helps other drivers</p>
+<h1>🔌 Charging Stations</h1>
+<p style="text-align:center;font-size:0.8rem;color:var(--dim);margin-bottom:16px">Find the closest charger to your location</p>
+
+<div class="card">
+<button type="button" id="nearMeBtn" style="width:100%;padding:14px;border-radius:14px;border:none;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;box-shadow:0 4px 20px rgba(139,92,246,0.4)">📍 Find Stations Near Me</button>
+<div id="locationStatus" style="text-align:center;font-size:0.8rem;color:var(--dim);margin-top:10px;display:none"></div>
+</div>
+
 <div id="stationsList"></div>
 </div>
 
@@ -563,6 +568,7 @@ body.light .notice-banner{color:#b45309}
 <div class="tip-row"><span class="tip-icon">4️⃣</span><div class="tip-text"><strong>Read the result</strong> — cost, time, and range are shown at the top. Tap "Compare with other options" to see network and petrol comparisons.</div></div>
 <div class="tip-row"><span class="tip-icon">5️⃣</span><div class="tip-text"><strong>Save it</strong> — tap "💾 Save this charge" to log it. Find it under 📊 History.</div></div>
 <div class="tip-row"><span class="tip-icon">🚗</span><div class="tip-text"><strong>Add your car</strong> — go to the 🚗 Garage tab and tap "➕ Add" to save your vehicle with its exact specs.</div></div>
+<div class="tip-row"><span class="tip-icon">📍</span><div class="tip-text"><strong>Find nearby chargers</strong> — on the 🔌 Stations tab, tap "Find Stations Near Me" to see chargers sorted by distance.</div></div>
 <div class="tip-row"><span class="tip-icon">🔌</span><div class="tip-text"><strong>Report a station</strong> — on the Stations tab, tap a status (Working/Slow/Broken/Blocked) to help other drivers know what to expect.</div></div>
 </div>
 <div class="card">
@@ -605,15 +611,9 @@ var confirmCallback=null;
 // Loaded from Firestore
 var builtInVehicles={};
 var providerRates=[];
-
-// Stations config (used for reporting)
-var stationList=[
-{id:'volt-charge',name:'Volt Charge',badge:'LARGEST',detail:'Flat: <strong style="color:var(--blueB)">LKR 150/kWh</strong>',tel:'+94766700280',map:'Volt+Charge+Charging+Station+Sri+Lanka'},
-{id:'chargenet',name:'chargeNET',badge:'PRIVATE',detail:'DC: <strong style="color:var(--blueB)">120</strong> · AC: <strong style="color:var(--blueB)">70</strong> LKR/kWh',tel:'+9415551551',map:'chargeNET+Sri+Lanka'},
-{id:'leco',name:'LECO',badge:'GOV',detail:'Day: <strong style="color:var(--blueB)">89.23</strong> · Peak: <strong style="color:var(--blueB)">113.85</strong> · Off: <strong style="color:var(--blueB)">54.36</strong>',tel:'+94112345678',map:'LECO+Charging+Station'},
-{id:'chargeup',name:'ChargeUP (Lanka IOC)',badge:'EXPANDING',detail:'Partnered with Lanka IOC. Rates vary.',tel:'+94112345678',map:'ChargeUP+EV+Charging+Sri+Lanka'},
-{id:'ceb',name:'CEB',badge:'GRID',detail:'Day: <strong style="color:var(--blueB)">83.08</strong> · Peak: <strong style="color:var(--blueB)">107.70</strong> · Off: <strong style="color:var(--blueB)">51.29</strong>',tel:'+94112345678',map:'CEB+EV+Charging+Station'}
-];
+var stationData=[];
+var stationReports={};
+var userLocation=null;
 
 var reportLabels={
 working:{icon:'✅',label:'Working'},
@@ -621,9 +621,6 @@ slow:{icon:'⚠️',label:'Slow'},
 broken:{icon:'❌',label:'Broken'},
 blocked:{icon:'🅿️',label:'Blocked'}
 };
-
-// Cache of latest report per station (id -> {status, ts, name, uid})
-var stationReports={};
 
 var infos={
 charged:{title:'What you\'ll pay for',text:'Charging isn\'t 100% efficient — some energy is lost as heat. The station bills you for the total energy delivered, which is slightly more than what actually lands in your battery.'},
@@ -725,30 +722,69 @@ sel.appendChild(grp);
 sel.value=curVal;
 }
 
-// ============ STATION REPORTS ============
+// ============ STATIONS ============
+function loadStations(cb){
+if(!db){if(cb)cb([]);return}
+try{
+var cached=localStorage.getItem('evStations');
+if(cached){
+var c=JSON.parse(cached);
+if(c&&c.length>0)stationData=c;
+}
+}catch(e){}
+fbFuncs.getDoc(fbFuncs.doc(db,'config','stations')).then(function(d){
+if(d.exists()&&d.data().list){
+stationData=d.data().list;
+try{localStorage.setItem('evStations',JSON.stringify(stationData))}catch(e){}
+}
+if(cb)cb(stationData);
+}).catch(function(e){
+console.warn('Stations load failed:',e);
+if(cb)cb(stationData);
+});
+}
+
 function loadStationReports(cb){
 if(!currentUser){if(cb)cb();return}
 fbFuncs.getDocs(fbFuncs.collection(db,'station_reports'))
 .then(function(snap){
 var all=[];
-snap.forEach(function(d){
-var data=d.data();
-data._docId=d.id;
-all.push(data);
-});
-// Find latest report per station
+snap.forEach(function(d){var data=d.data();data._docId=d.id;all.push(data)});
 stationReports={};
 all.forEach(function(r){
-var existing=stationReports[r.stationId];
-if(!existing||r.ts>existing.ts){
-stationReports[r.stationId]=r;
+var key=r.stationId;
+var existing=stationReports[key];
+if(!existing||r.ts>existing.ts)stationReports[key]=r;
+});
+if(cb)cb();
+}).catch(function(e){console.warn('Reports load failed:',e);if(cb)cb()});
 }
-});
-if(cb)cb();
-}).catch(function(e){
-console.warn('Reports load failed:',e);
-if(cb)cb();
-});
+
+function getUserLocation(cb){
+if(!navigator.geolocation){cb(null,'Geolocation not supported');return}
+$('locationStatus').style.display='block';
+$('locationStatus').textContent='📍 Getting your location…';
+navigator.geolocation.getCurrentPosition(
+function(pos){
+$('locationStatus').textContent='✓ Location found';
+cb({lat:pos.coords.latitude,lng:pos.coords.longitude});
+},
+function(err){
+var msg='Location access denied. Enable GPS or location permission.';
+$('locationStatus').textContent='⚠ '+msg;
+cb(null,msg);
+},
+{enableHighAccuracy:true,timeout:10000,maximumAge:300000}
+);
+}
+
+function haversine(lat1,lng1,lat2,lng2){
+var R=6371;
+var dLat=(lat2-lat1)*Math.PI/180;
+var dLng=(lng2-lng1)*Math.PI/180;
+var a=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLng/2)*Math.sin(dLng/2);
+var c=2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+return R*c;
 }
 
 function renderStations(){
@@ -756,8 +792,34 @@ var html='';
 var now=Date.now();
 var STALE_MS=24*60*60*1000;
 
-stationList.forEach(function(s){
-var report=stationReports[s.id];
+if(!stationData||stationData.length===0){
+$('stationsList').innerHTML='<div class="empty-state"><div class="es-icon">🔌</div><div class="es-text">Station data not loaded yet. Please sign in and refresh.</div></div>';
+return;
+}
+
+var flat=[];
+stationData.forEach(function(station){
+var locs=station.locations||[];
+if(locs.length===0){
+flat.push({station:station,loc:{name:station.name,address:'',lat:null,lng:null},dist:null,report:stationReports[station.id]});
+}else{
+locs.forEach(function(loc){
+var dist=null;
+if(userLocation&&loc.lat!=null&&loc.lng!=null){
+dist=haversine(userLocation.lat,userLocation.lng,loc.lat,loc.lng);
+}
+var reportKey=station.id+'_'+loc.name;
+flat.push({station:station,loc:loc,dist:dist,report:stationReports[reportKey]});
+});
+}
+});
+
+if(userLocation){
+flat.sort(function(a,b){return (a.dist==null?9999:a.dist)-(b.dist==null?9999:b.dist)});
+}
+
+flat.forEach(function(item){
+var s=item.station,loc=item.loc,report=item.report;
 var badgeHtml='';
 if(report){
 var age=now-report.ts;
@@ -776,28 +838,42 @@ badgeHtml='<div class="station-status-badge '+report.status+'">'+meta.icon+' '+m
 badgeHtml='<div class="station-status-badge stale">🕐 No reports yet</div>';
 }
 
+var distHtml='';
+if(item.dist!==null){
+var d=item.dist<1?(item.dist*1000).toFixed(0)+' m':item.dist.toFixed(1)+' km';
+distHtml='<div style="font-size:0.85rem;font-weight:800;color:#2ecc71;margin-bottom:6px">📏 '+d+' away</div>';
+}
+
+var reportKey=s.id+'_'+loc.name;
+var dirUrl='';
+if(loc.lat!=null&&loc.lng!=null){
+dirUrl='https://www.google.com/maps/dir/?api=1&destination='+loc.lat+','+loc.lng;
+}else{
+dirUrl='https://www.google.com/maps/search/'+encodeURIComponent(s.name+' '+loc.name);
+}
+
 html+='<div style="background:var(--input-bg);border-radius:14px;padding:16px;margin-bottom:12px;border-left:3px solid var(--purple)">';
-html+='<div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-weight:700;color:var(--text)">'+s.name+'</span><span style="font-size:0.6rem;background:rgba(139,92,246,0.2);color:var(--purpleB);padding:3px 10px;border-radius:6px;font-weight:700">'+s.badge+'</span></div>';
+html+='<div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-weight:700;color:var(--text);font-size:0.9rem">'+s.name+'</span><span style="font-size:0.6rem;background:rgba(139,92,246,0.2);color:var(--purpleB);padding:3px 10px;border-radius:6px;font-weight:700">'+s.badge+'</span></div>';
+html+='<div style="font-size:0.8rem;color:var(--dim);margin-bottom:6px">'+loc.name+'</div>';
+if(loc.address){html+='<div style="font-size:0.72rem;color:var(--faint);margin-bottom:6px">'+loc.address+'</div>'}
+html+=distHtml;
 html+=badgeHtml;
 html+='<div style="font-size:0.8rem;color:var(--dim);line-height:1.6;margin:8px 0 12px">'+s.detail+'</div>';
-html+='<div style="display:flex;gap:8px;margin-bottom:10px"><a href="tel:'+s.tel+'" style="flex:1;text-align:center;padding:11px;border-radius:10px;background:rgba(139,92,246,0.15);color:var(--purpleB);text-decoration:none;font-weight:700;font-size:0.8rem;border:1px solid rgba(139,92,246,0.25)">📞 Call</a><a href="https://www.google.com/maps/search/'+s.map+'" target="_blank" style="flex:1;text-align:center;padding:11px;border-radius:10px;background:rgba(59,130,246,0.15);color:var(--blueB);text-decoration:none;font-weight:700;font-size:0.8rem;border:1px solid rgba(59,130,246,0.25)">📍 Map</a></div>';
-html+='<div style="font-size:0.7rem;color:var(--faint);font-weight:600;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px">Report current status</div>';
+html+='<div style="display:flex;gap:8px;margin-bottom:10px"><a href="tel:'+s.tel+'" style="flex:1;text-align:center;padding:11px;border-radius:10px;background:rgba(139,92,246,0.15);color:var(--purpleB);text-decoration:none;font-weight:700;font-size:0.8rem;border:1px solid rgba(139,92,246,0.25)">📞 Call</a><a href="'+dirUrl+'" target="_blank" style="flex:1;text-align:center;padding:11px;border-radius:10px;background:rgba(59,130,246,0.15);color:var(--blueB);text-decoration:none;font-weight:700;font-size:0.8rem;border:1px solid rgba(59,130,246,0.25)">📍 Directions</a></div>';
+html+='<div style="font-size:0.7rem;color:var(--faint);font-weight:600;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px">Report this location</div>';
 html+='<div class="report-row">';
-html+='<button class="report-btn r-working" data-station="'+s.id+'" data-status="working">✅ Working</button>';
-html+='<button class="report-btn r-slow" data-station="'+s.id+'" data-status="slow">⚠️ Slow</button>';
-html+='<button class="report-btn r-broken" data-station="'+s.id+'" data-status="broken">❌ Broken</button>';
-html+='<button class="report-btn r-blocked" data-station="'+s.id+'" data-status="blocked">🅿️ Blocked</button>';
+html+='<button class="report-btn r-working" data-station="'+reportKey+'" data-status="working">✅ Working</button>';
+html+='<button class="report-btn r-slow" data-station="'+reportKey+'" data-status="slow">⚠️ Slow</button>';
+html+='<button class="report-btn r-broken" data-station="'+reportKey+'" data-status="broken">❌ Broken</button>';
+html+='<button class="report-btn r-blocked" data-station="'+reportKey+'" data-status="blocked">🅿️ Blocked</button>';
 html+='</div>';
 html+='</div>';
 });
 $('stationsList').innerHTML=html;
 
-// Attach report button handlers
 document.querySelectorAll('.report-btn').forEach(function(btn){
 btn.addEventListener('click',function(){
-var stationId=this.dataset.station;
-var status=this.dataset.status;
-submitReport(stationId,status,this);
+submitReport(this.dataset.station,this.dataset.status,this);
 });
 });
 }
@@ -807,22 +883,21 @@ if(!currentUser){alert('Please sign in to report station status.');return}
 var meta=reportLabels[status];
 if(!meta)return;
 
-// Rate limit: check last report time for this station by this user
 var rateKey='lastReport_'+currentUser.uid+'_'+stationId;
 var lastTs=parseInt(localStorage.getItem(rateKey)||'0');
 var now=Date.now();
-var COOLDOWN_MS=60*60*1000; // 1 hour
+var COOLDOWN_MS=60*60*1000;
+
 if(now-lastTs<COOLDOWN_MS){
 var remaining=Math.ceil((COOLDOWN_MS-(now-lastTs))/60000);
-alert('You already reported this station recently. Please wait '+remaining+' more minute'+(remaining===1?'':'s')+'.');
+alert('You already reported this location recently. Please wait '+remaining+' more minute'+(remaining===1?'':'s')+'.');
 return;
 }
 
-// Also check against the fetched reports to prevent duplicate reporting from other devices
 var existing=stationReports[stationId];
 if(existing&&existing.uid===currentUser.uid&&(now-existing.ts)<COOLDOWN_MS){
-var remaining=Math.ceil((COOLDOWN_MS-(now-existing.ts))/60000);
-alert('You already reported this station recently. Please wait '+remaining+' more minute'+(remaining===1?'':'s')+'.');
+var remaining2=Math.ceil((COOLDOWN_MS-(now-existing.ts))/60000);
+alert('You already reported this location recently. Please wait '+remaining2+' more minute'+(remaining2===1?'':'s')+'.');
 return;
 }
 
@@ -837,7 +912,6 @@ uid:currentUser.uid,
 name:currentUser.email?currentUser.email.split('@')[0]:'User',
 ts:now
 }).then(function(){
-// Remember when this user last reported this station
 try{localStorage.setItem(rateKey,String(now))}catch(e){}
 btn.textContent='✓ Reported';
 setTimeout(function(){
@@ -855,12 +929,29 @@ btn.disabled=false;
 });
 }
 
+$('nearMeBtn').addEventListener('click',function(){
+var btn=this;
+btn.disabled=true;
+btn.textContent='📍 Locating…';
+getUserLocation(function(loc,err){
+btn.disabled=false;
+btn.textContent='📍 Find Stations Near Me';
+if(loc){
+userLocation=loc;
+renderStations();
+}else{
+alert(err||'Could not get your location.');
+}
+});
+});
+
 // ============ FIREBASE INIT ============
 function onFirebaseReady(){
 auth=window.fbAuth;db=window.fbDB;fbFuncs=window.fbFuncs;
 loadConfig(function(){
 buildVehicleDropdown();
 buildRateDropdown();
+loadStations(function(){
 renderStations();
 fbFuncs.onAuthStateChanged(auth,function(user){
 currentUser=user;
@@ -878,6 +969,7 @@ userVehicles=[];
 stationReports={};
 renderStations();
 }
+});
 });
 });
 }
