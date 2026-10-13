@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +12,7 @@
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyB5dZG9i2ZSSO4LeurzZFI8Loku7R20rE8",
@@ -28,7 +29,7 @@ const db = getFirestore(fbApp);
 
 window.fbAuth = auth;
 window.fbDB = db;
-window.fbFuncs = { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, setDoc };
+window.fbFuncs = { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail, collection, addDoc, getDocs, deleteDoc, doc, updateDoc };
 window.firebaseReady = true;
 window.dispatchEvent(new Event('firebase-ready'));
 </script>
@@ -156,7 +157,6 @@ body.light .notice-banner{color:#b45309}
 .modal-box .modal-actions button{flex:1;padding:12px;border-radius:12px;font-size:0.9rem;font-weight:700;cursor:pointer;font-family:inherit;border:none}
 .modal-box .modal-actions .m-cancel{background:transparent;color:var(--dim);border:1px solid rgba(148,163,184,0.3)}
 .modal-box .modal-actions .m-ok{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff}
-/* Vehicle cards */
 .vehicle-card{background:var(--input-bg);border-radius:14px;padding:14px;margin-bottom:10px;border:1px solid rgba(139,92,246,0.15);border-left:3px solid var(--purple);position:relative}
 .vehicle-card.active{border-left-color:#2ecc71;background:linear-gradient(135deg,rgba(46,204,113,0.08),var(--input-bg))}
 .vehicle-card .vc-name{font-weight:700;color:var(--text);font-size:0.95rem;margin-bottom:4px;padding-right:60px}
@@ -223,14 +223,44 @@ body.light .notice-banner{color:#b45309}
 <option value="60.48">BYD Dolphin Premium — 60.48 kWh</option>
 <option value="49.92">BYD Atto 3 Advanced — 49.92 kWh</option>
 <option value="60.48">BYD Atto 3 Superior — 60.48 kWh</option>
+<option value="82.5">BYD Seal — 82.5 kWh</option>
+<option value="71.8">BYD M6 — 71.8 kWh</option>
+<option value="43.2">BYD Atto 2 — 43.2 kWh</option>
+<option value="18.3">BYD Sealion 6 DM-i — 18.3 kWh (PHEV)</option>
+<option value="12.9">BYD Sealion 5 DM-i — 12.9 kWh (PHEV)</option>
+<option value="29.58">BYD Shark 6 — 29.58 kWh (PHEV)</option>
+</optgroup>
+<optgroup label="MG (Sri Lanka)">
+<option value="64">MG4 EV Long Range — 64 kWh</option>
+<option value="51">MG4 EV Urban — 51 kWh</option>
+<option value="50.3">MG ZS EV — 50.3 kWh</option>
+<option value="17.3">MG Comet EV — 17.3 kWh</option>
+<option value="31.9">MG Binguo EV — 31.9 kWh</option>
+<option value="49">MG S5 EV — 49 kWh</option>
+<option value="70">MG Cyberster — 70 kWh</option>
+<option value="18.1">MG Hector PHEV — 18.1 kWh (PHEV)</option>
+</optgroup>
+<optgroup label="Evolution Auto">
+<option value="90.4">AVATR 11 — 90.4 kWh</option>
+<option value="75">IM5 — 75 kWh</option>
+<option value="75">IM6 — 75 kWh</option>
+<option value="66">XPENG G6 — 66 kWh</option>
+<option value="77">Riddara RD6 — 77 kWh</option>
+<option value="53.6">DFSK Glory E3 — 53.6 kWh</option>
+<option value="70.38">JMEV EWIND — 70.38 kWh</option>
+</optgroup>
+<optgroup label="Wuling / BAW (Browns EV)">
+<option value="37.9">Wuling Cloud — 37.9 kWh</option>
+<option value="31.9">Wuling Binguo — 31.9 kWh</option>
+<option value="29">BAW E6 — 29 kWh</option>
+<option value="41">BAW E7 — 41 kWh</option>
 </optgroup>
 <optgroup label="Dongfeng">
 <option value="43.89">Dongfeng Box — 43.89 kWh</option>
 <option value="51.87">Dongfeng Vigo — 51.87 kWh</option>
 <option value="56.83">Dongfeng 007 — 56.83 kWh</option>
 </optgroup>
-<optgroup label="Other">
-<option value="64">MG4 EV (Long Range) — 64 kWh</option>
+<optgroup label="Other Brands">
 <option value="61.06">OMODA E5 — 61.06 kWh</option>
 </optgroup>
 </select></div>
@@ -298,7 +328,7 @@ body.light .notice-banner{color:#b45309}
 </div>
 </div>
 
-<!-- CONFIRM DELETE MODAL -->
+<!-- CONFIRM MODAL -->
 <div class="modal-overlay" id="confirmModal">
 <div class="modal-box">
 <h3 id="confirmTitle">Confirm</h3>
@@ -340,6 +370,37 @@ body.light .notice-banner{color:#b45309}
 <option value="60.48">BYD Dolphin Premium — 60.48 kWh</option>
 <option value="49.92">BYD Atto 3 Advanced — 49.92 kWh</option>
 <option value="60.48">BYD Atto 3 Superior — 60.48 kWh</option>
+<option value="82.5">BYD Seal — 82.5 kWh</option>
+<option value="71.8">BYD M6 — 71.8 kWh</option>
+<option value="43.2">BYD Atto 2 — 43.2 kWh</option>
+<option value="18.3">BYD Sealion 6 DM-i — 18.3 kWh (PHEV)</option>
+<option value="12.9">BYD Sealion 5 DM-i — 12.9 kWh (PHEV)</option>
+<option value="29.58">BYD Shark 6 — 29.58 kWh (PHEV)</option>
+</optgroup>
+<optgroup label="MG (Sri Lanka)">
+<option value="64">MG4 EV Long Range — 64 kWh</option>
+<option value="51">MG4 EV Urban — 51 kWh</option>
+<option value="50.3">MG ZS EV — 50.3 kWh</option>
+<option value="17.3">MG Comet EV — 17.3 kWh</option>
+<option value="31.9">MG Binguo EV — 31.9 kWh</option>
+<option value="49">MG S5 EV — 49 kWh</option>
+<option value="70">MG Cyberster — 70 kWh</option>
+<option value="18.1">MG Hector PHEV — 18.1 kWh (PHEV)</option>
+</optgroup>
+<optgroup label="Evolution Auto">
+<option value="90.4">AVATR 11 — 90.4 kWh</option>
+<option value="75">IM5 — 75 kWh</option>
+<option value="75">IM6 — 75 kWh</option>
+<option value="66">XPENG G6 — 66 kWh</option>
+<option value="77">Riddara RD6 — 77 kWh</option>
+<option value="53.6">DFSK Glory E3 — 53.6 kWh</option>
+<option value="70.38">JMEV EWIND — 70.38 kWh</option>
+</optgroup>
+<optgroup label="Wuling / BAW (Browns EV)">
+<option value="37.9">Wuling Cloud — 37.9 kWh</option>
+<option value="31.9">Wuling Binguo — 31.9 kWh</option>
+<option value="29">BAW E6 — 29 kWh</option>
+<option value="41">BAW E7 — 41 kWh</option>
 </optgroup>
 <optgroup label="Dongfeng (Euro Motors)">
 <option value="43.89">Dongfeng Box — 43.89 kWh</option>
@@ -347,7 +408,6 @@ body.light .notice-banner{color:#b45309}
 <option value="56.83">Dongfeng 007 — 56.83 kWh</option>
 </optgroup>
 <optgroup label="Other Brands">
-<option value="64">MG4 EV (Long Range) — 64 kWh</option>
 <option value="61.06">OMODA E5 — 61.06 kWh</option>
 </optgroup>
 <optgroup label="My Garage" id="garageOptGroup" style="display:none"></optgroup>
@@ -553,7 +613,6 @@ body.light .notice-banner{color:#b45309}
 <!-- GARAGE PAGE -->
 <div class="page" id="page-garage">
 <h1>🚗 My Garage</h1>
-
 <div class="user-bar"><span class="email" id="userEmail">—</span><button type="button" class="signout" id="signoutBtn">Sign Out</button></div>
 
 <div class="card">
@@ -579,13 +638,10 @@ body.light .notice-banner{color:#b45309}
 <!-- HISTORY PAGE -->
 <div class="page" id="page-history">
 <h1>📊 Charging History</h1>
-
 <div class="card">
 <div class="field" style="margin-bottom:0">
 <label>Filter by vehicle</label>
-<select id="historyVehicleFilter">
-<option value="all">All vehicles</option>
-</select>
+<select id="historyVehicleFilter"><option value="all">All vehicles</option></select>
 </div>
 </div>
 
@@ -639,8 +695,8 @@ body.light .notice-banner{color:#b45309}
 <div class="card-title">Fuel prices (for comparison)</div>
 <p style="font-size:0.78rem;color:var(--dim);line-height:1.6;margin-bottom:12px">Sri Lankan fuel prices change monthly. Update these when they change.</p>
 <div class="field"><label>Petrol 92 Octane <span class="hint">(LKR/L)</span></label><input type="number" id="setFuel92" value="414" step="0.01" min="0" inputmode="decimal"></div>
-<div class="field"><label>Petrol 95 Octane <span class="hint">(LKR/L)</span></label><input type="number" id="setFuel95" value="450" step="0.01" min="0" inputmode="decimal"></div>
-<div class="field"><label>Auto Diesel <span class="hint">(LKR/L)</span></label><input type="number" id="setDiesel" value="380" step="0.01" min="0" inputmode="decimal"></div>
+<div class="field"><label>Petrol 95 Octane <span class="hint">(LKR/L)</span></label><input type="number" id="setFuel95" value="475" step="0.01" min="0" inputmode="decimal"></div>
+<div class="field"><label>Auto Diesel <span class="hint">(LKR/L)</span></label><input type="number" id="setDiesel" value="392" step="0.01" min="0" inputmode="decimal"></div>
 <div class="field"><label>Petrol car efficiency <span class="hint">(km/L)</span></label><input type="number" id="setPetrolKm" value="12" step="0.1" min="1" inputmode="decimal"></div>
 </div>
 
@@ -664,7 +720,6 @@ body.light .notice-banner{color:#b45309}
 <p style="font-size:0.85rem;color:var(--dim);line-height:1.7">This app helps Sri Lankan EV owners figure out <strong style="color:var(--purpleB)">how much a charge will cost, how long it will take, and how far you can drive afterwards</strong> — before you plug in. It supports all major local charging networks plus home charging with your domestic tariff.</p>
 <p style="font-size:0.85rem;color:var(--dim);line-height:1.7;margin-top:10px">You can add your own vehicles to your garage with custom specs, and the app will use them for all calculations.</p>
 </div>
-
 <div class="card">
 <div class="card-title">How to use it — step by step</div>
 <div class="tip-row"><span class="tip-icon">1️⃣</span><div class="tip-text"><strong>Pick your car</strong> — tap the vehicle name on the Home page. Use "My Garage" for custom vehicles, or pick from the built-in list.</div></div>
@@ -674,7 +729,6 @@ body.light .notice-banner{color:#b45309}
 <div class="tip-row"><span class="tip-icon">5️⃣</span><div class="tip-text"><strong>Save it</strong> — tap "💾 Save this charge" to log it. Find it under 📊 History.</div></div>
 <div class="tip-row"><span class="tip-icon">🚗</span><div class="tip-text"><strong>Add your car</strong> — go to the 🚗 Garage tab and tap "➕ Add" to save your vehicle with its exact specs.</div></div>
 </div>
-
 <div class="card">
 <div class="card-title">Quick tips</div>
 <div class="tip-row"><span class="tip-icon">⚡</span><div class="tip-text"><strong>Above 80% is slow.</strong> DC charging tapers off dramatically past 80%. For daily driving, stop at 80%.</div></div>
@@ -682,7 +736,6 @@ body.light .notice-banner{color:#b45309}
 <div class="tip-row"><span class="tip-icon">🌡️</span><div class="tip-text"><strong>Heat affects range.</strong> In Sri Lanka, expect 15–25% less range than the manufacturer rating.</div></div>
 <div class="tip-row"><span class="tip-icon">⛽</span><div class="tip-text"><strong>Update fuel prices.</strong> Set current petrol/diesel prices in Settings so the petrol comparison stays accurate.</div></div>
 </div>
-
 <div class="card">
 <div class="card-title">The math behind it</div>
 <p style="font-size:0.82rem;color:var(--dim);line-height:1.7;margin-bottom:10px"><strong style="color:var(--purpleB)">Energy you'll add:</strong></p>
@@ -694,7 +747,6 @@ body.light .notice-banner{color:#b45309}
 <p style="font-size:0.82rem;color:var(--dim);line-height:1.7;margin-bottom:10px"><strong style="color:var(--purpleB)">Petrol comparison:</strong></p>
 <div style="background:var(--input-bg);padding:14px;border-radius:10px;font-family:monospace;font-size:0.8rem;color:var(--blueB);margin:8px 0;border-left:3px solid var(--blue)">Distance = Range × (Target% ÷ 100)<br>Petrol cost = Distance ÷ km/L × fuel price</div>
 </div>
-
 <div class="card">
 <div class="card-title">Rate disclaimer</div>
 <p style="font-size:0.82rem;color:var(--dim);line-height:1.7">Network rates are based on published tariffs and may change. Always verify the rate shown at the charger. The calculator lets you enter any custom rate.</p>
@@ -709,7 +761,6 @@ var $=function(id){return document.getElementById(id)};
 var auth=null,db=null,fbFuncs=null,currentUser=null;
 var currentMode='public';
 var userVehicles=[];
-var activeVehicleId=null;
 var editingVehicleId=null;
 var confirmCallback=null;
 
@@ -719,11 +770,33 @@ var builtInVehicles={
 '44.9':{name:'BYD Dolphin Dynamic 49',capacity:44.9,range:405,dc:60},
 '60.48':{name:'BYD Dolphin Premium',capacity:60.48,range:427,dc:80},
 '49.92':{name:'BYD Atto 3 Advanced',capacity:49.92,range:410,dc:70},
+'82.5':{name:'BYD Seal',capacity:82.5,range:520,dc:150},
+'71.8':{name:'BYD M6',capacity:71.8,range:420,dc:115},
+'43.2':{name:'BYD Atto 2',capacity:43.2,range:410,dc:65},
+'18.3':{name:'BYD Sealion 6 DM-i',capacity:18.3,range:92,dc:18},
+'12.9':{name:'BYD Sealion 5 DM-i',capacity:12.9,range:71,dc:18},
+'29.58':{name:'BYD Shark 6',capacity:29.58,range:100,dc:40},
+'64':{name:'MG4 EV Long Range',capacity:64,range:450,dc:135},
+'51':{name:'MG4 EV Urban',capacity:51,range:350,dc:88},
+'50.3':{name:'MG ZS EV',capacity:50.3,range:320,dc:76},
+'17.3':{name:'MG Comet EV',capacity:17.3,range:230,dc:25},
+'31.9':{name:'MG Binguo EV',capacity:31.9,range:333,dc:40},
+'49':{name:'MG S5 EV',capacity:49,range:340,dc:120},
+'70':{name:'MG Cyberster',capacity:70,range:520,dc:140},
+'18.1':{name:'MG Hector PHEV',capacity:18.1,range:65,dc:18},
+'90.4':{name:'AVATR 11',capacity:90.4,range:575,dc:240},
+'75':{name:'IM5 / IM6',capacity:75,range:530,dc:120},
+'66':{name:'XPENG G6',capacity:66,range:435,dc:280},
+'77':{name:'Riddara RD6',capacity:77,range:424,dc:120},
+'53.6':{name:'DFSK Glory E3',capacity:53.6,range:405,dc:80},
+'70.38':{name:'JMEV EWIND',capacity:70.38,range:610,dc:80},
+'37.9':{name:'Wuling Cloud',capacity:37.9,range:460,dc:50},
+'29':{name:'BAW E6',capacity:29,range:290,dc:40},
+'41':{name:'BAW E7',capacity:41,range:400,dc:50},
 '43.89':{name:'Dongfeng Box',capacity:43.89,range:320,dc:40},
 '51.87':{name:'Dongfeng Vigo',capacity:51.87,range:340,dc:60},
 '56.83':{name:'Dongfeng 007',capacity:56.83,range:480,dc:100},
-'64':{name:'MG4 EV Long Range',capacity:64,range:450,dc:135},
-'61.06':{name:'OMODA E5',capacity:61.06,range:420,dc:80}
+'61.06':{name:'OMODA E5',capacity:61.06,range:430,dc:80}
 };
 
 var providerRates=[{name:'Volt Charge',rate:150},{name:'ChargeNET Fast',rate:120},{name:'LECO Day',rate:89.23},{name:'LECO Peak',rate:113.85},{name:'LECO Off-Peak',rate:54.36},{name:'CEB Day',rate:83.08},{name:'CEB Peak',rate:107.70},{name:'CEB Off-Peak',rate:51.29}];
@@ -775,62 +848,24 @@ function clearAllRecords(cb){getAllRecords(function(a){var p=a.map(function(x){r
 
 // CLOUD VEHICLES
 function getUserVehiclesRef(){return fbFuncs.collection(db,'users',currentUser.uid,'vehicles')}
-function loadUserVehicles(cb){
-if(!currentUser){userVehicles=[];if(cb)cb();return}
-fbFuncs.getDocs(getUserVehiclesRef()).then(function(s){
-userVehicles=[];
-s.forEach(function(d){var data=d.data();data._docId=d.id;userVehicles.push(data)});
-if(cb)cb();
-}).catch(function(e){console.error(e);userVehicles=[];if(cb)cb()});
-}
-function addUserVehicle(v,cb){
-if(!currentUser){if(cb)cb(false);return}
-fbFuncs.addDoc(getUserVehiclesRef(),v).then(function(ref){v._docId=ref.id;userVehicles.push(v);if(cb)cb(true)}).catch(function(e){console.error(e);if(cb)cb(false)});
-}
-function updateUserVehicle(id,updates,cb){
-fbFuncs.updateDoc(fbFuncs.doc(db,'users',currentUser.uid,'vehicles',id),updates).then(function(){var idx=userVehicles.findIndex(function(v){return v._docId===id});if(idx>=0)Object.assign(userVehicles[idx],updates);if(cb)cb(true)}).catch(function(e){console.error(e);if(cb)cb(false)});
-}
-function deleteUserVehicle(id,cb){
-fbFuncs.deleteDoc(fbFuncs.doc(db,'users',currentUser.uid,'vehicles',id)).then(function(){userVehicles=userVehicles.filter(function(v){return v._docId!==id});if(cb)cb(true)}).catch(function(e){console.error(e);if(cb)cb(false)});
-}
+function loadUserVehicles(cb){if(!currentUser){userVehicles=[];if(cb)cb();return}fbFuncs.getDocs(getUserVehiclesRef()).then(function(s){userVehicles=[];s.forEach(function(d){var data=d.data();data._docId=d.id;userVehicles.push(data)});if(cb)cb()}).catch(function(e){console.error(e);userVehicles=[];if(cb)cb()})}
+function addUserVehicle(v,cb){if(!currentUser){if(cb)cb(false);return}fbFuncs.addDoc(getUserVehiclesRef(),v).then(function(ref){v._docId=ref.id;userVehicles.push(v);if(cb)cb(true)}).catch(function(e){console.error(e);if(cb)cb(false)})}
+function updateUserVehicle(id,updates,cb){fbFuncs.updateDoc(fbFuncs.doc(db,'users',currentUser.uid,'vehicles',id),updates).then(function(){var idx=userVehicles.findIndex(function(v){return v._docId===id});if(idx>=0)Object.assign(userVehicles[idx],updates);if(cb)cb(true)}).catch(function(e){console.error(e);if(cb)cb(false)})}
+function deleteUserVehicle(id,cb){fbFuncs.deleteDoc(fbFuncs.doc(db,'users',currentUser.uid,'vehicles',id)).then(function(){userVehicles=userVehicles.filter(function(v){return v._docId!==id});if(cb)cb(true)}).catch(function(e){console.error(e);if(cb)cb(false)})}
 
-// VEHICLE DROPDOWNS
 function updateVehicleDropdowns(){
-// Main vehicle select
-var grp=$('garageOptGroup');
-grp.innerHTML='';
-if(userVehicles.length>0){
-grp.style.display='';
-userVehicles.forEach(function(v){
-var opt=document.createElement('option');
-opt.value='custom_'+v._docId;
-opt.textContent=v.name+' — '+v.capacity+' kWh';
-grp.appendChild(opt);
-});
-}else{grp.style.display='none'}
-
-// History filter
-var hf=$('historyVehicleFilter');
-var curHf=hf.value;
+var grp=$('garageOptGroup');grp.innerHTML='';
+if(userVehicles.length>0){grp.style.display='';userVehicles.forEach(function(v){var opt=document.createElement('option');opt.value='custom_'+v._docId;opt.textContent=v.name+' — '+v.capacity+' kWh';grp.appendChild(opt)})}else{grp.style.display='none'}
+var hf=$('historyVehicleFilter');var curHf=hf.value;
 hf.innerHTML='<option value="all">All vehicles</option>';
-userVehicles.forEach(function(v){
-var o=document.createElement('option');o.value='custom_'+v._docId;o.textContent=v.name;hf.appendChild(o);
-});
-Object.keys(builtInVehicles).forEach(function(k){
-var v=builtInVehicles[k];
-var o=document.createElement('option');o.value=k;o.textContent=v.name;hf.appendChild(o);
-});
+userVehicles.forEach(function(v){var o=document.createElement('option');o.value='custom_'+v._docId;o.textContent=v.name;hf.appendChild(o)});
+Object.keys(builtInVehicles).forEach(function(k){var v=builtInVehicles[k];var o=document.createElement('option');o.value=k;o.textContent=v.name;hf.appendChild(o)});
 hf.value=curHf;
 }
 
 function getVehicleByKey(key){
 if(!key)return null;
-if(key.indexOf('custom_')===0){
-var id=key.substring(7);
-var v=userVehicles.find(function(x){return x._docId===id});
-if(v)return{name:v.name,capacity:v.capacity,range:v.range||0,dc:v.dc||0,custom:true,id:id};
-return null;
-}
+if(key.indexOf('custom_')===0){var id=key.substring(7);var v=userVehicles.find(function(x){return x._docId===id});if(v)return{name:v.name,capacity:v.capacity,range:v.range||0,dc:v.dc||0,custom:true,id:id};return null}
 if(builtInVehicles[key]){var b=builtInVehicles[key];return{name:b.name,capacity:b.capacity,range:b.range,dc:b.dc,custom:false,id:key}}
 return null;
 }
@@ -847,36 +882,13 @@ if(btn.dataset.page==='history')renderHistory();
 });
 });
 
-// TOGGLES
-$('advToggle').addEventListener('click',function(){
-this.classList.toggle('open');
-var c=$('advContent');
-c.style.display=c.style.display==='none'?'block':'none';
-});
-$('compareToggle').addEventListener('click',function(){
-this.classList.toggle('open');
-var c=$('compareContent');
-var a=$('compareArrow');
-if(c.style.display==='none'){c.style.display='block';a.style.transform='rotate(90deg)'}
-else{c.style.display='none';a.style.transform='rotate(0)'}
-});
+$('advToggle').addEventListener('click',function(){this.classList.toggle('open');var c=$('advContent');c.style.display=c.style.display==='none'?'block':'none'});
+$('compareToggle').addEventListener('click',function(){this.classList.toggle('open');var c=$('compareContent'),a=$('compareArrow');if(c.style.display==='none'){c.style.display='block';a.style.transform='rotate(90deg)'}else{c.style.display='none';a.style.transform='rotate(0)'}});
 
-// INFO MODAL
-document.addEventListener('click',function(e){
-if(e.target.classList&&e.target.classList.contains('info-i')){
-var k=e.target.dataset.info;var i=infos[k];
-if(i){$('infoTitle').textContent=i.title;$('infoText').textContent=i.text;$('infoModal').classList.add('show')}
-}
-});
+document.addEventListener('click',function(e){if(e.target.classList&&e.target.classList.contains('info-i')){var k=e.target.dataset.info;var i=infos[k];if(i){$('infoTitle').textContent=i.title;$('infoText').textContent=i.text;$('infoModal').classList.add('show')}}});
 $('infoOk').addEventListener('click',function(){$('infoModal').classList.remove('show')});
 
-// MODE
-function setMode(m){
-currentMode=m;
-if(m==='home'){$('tabHome').classList.add('active');$('tabPublic').classList.remove('active');$('homeFields').style.display='block';$('publicFields').style.display='none'}
-else{$('tabPublic').classList.add('active');$('tabHome').classList.remove('active');$('homeFields').style.display='none';$('publicFields').style.display='block'}
-calc();savePrefs();
-}
+function setMode(m){currentMode=m;if(m==='home'){$('tabHome').classList.add('active');$('tabPublic').classList.remove('active');$('homeFields').style.display='block';$('publicFields').style.display='none'}else{$('tabPublic').classList.add('active');$('tabHome').classList.remove('active');$('homeFields').style.display='none';$('publicFields').style.display='block'}calc();savePrefs()}
 $('tabHome').addEventListener('click',function(){setMode('home')});
 $('tabPublic').addEventListener('click',function(){setMode('public')});
 
@@ -894,42 +906,22 @@ var tgt=parseFloat($('target').value)||0;
 var fee=parseFloat($('sessionFee').value)||0;
 var taxPct=parseFloat($('tax').value)||0;
 $('currentNum').value=cur;$('targetNum').value=tgt;
-
 var r,eff,power;
 if(currentMode==='home'){r=parseFloat($('homeRate').value)||0;eff=parseFloat($('homeEfficiency').value)||88;power=getHomePower()}
 else{r=parseFloat($('rate').value)||0;eff=parseFloat($('efficiency').value)||90;power=getPublicPower()}
-
 var needed=(tgt>cur)?((tgt-cur)/100)*cap:0;
 var billed=needed/(eff/100);
-var baseCost=billed*r;
-var taxAmount=baseCost*(taxPct/100);
-baseCost+=taxAmount;
-var total=baseCost+fee;
+var baseCost=billed*r;var taxAmount=baseCost*(taxPct/100);baseCost+=taxAmount;var total=baseCost+fee;
 var battAtTarget=(tgt/100)*cap;
-
-$('totalCost').textContent=lkr(total);
-$('energyAdd').textContent=needed.toFixed(1);
-$('energyBilled').textContent=billed.toFixed(2)+' kWh';
-$('batteryTarget').textContent=battAtTarget.toFixed(2)+' kWh';
-
-if(needed>0&&power>0){var hrs=needed/power;if(hrs>=1){var h=Math.floor(hrs);var m=Math.round((hrs-h)*60);$('chargeTime').textContent=h+'h '+m+'m'}else{$('chargeTime').textContent=Math.round(hrs*60)+'m'}}
-else{$('chargeTime').textContent='—'}
-
-var vehicleKey=$('vehicleSelect').value;
-var vehicle=getVehicleByKey(vehicleKey);
-var rp=vehicle?vehicle.range:0;
-if(rp>0){$('rangeAtTarget').textContent=((tgt/100)*rp).toFixed(0)+' km'}
-else{$('rangeAtTarget').textContent='—'}
-
+$('totalCost').textContent=lkr(total);$('energyAdd').textContent=needed.toFixed(1);$('energyBilled').textContent=billed.toFixed(2)+' kWh';$('batteryTarget').textContent=battAtTarget.toFixed(2)+' kWh';
+if(needed>0&&power>0){var hrs=needed/power;if(hrs>=1){var h=Math.floor(hrs);var m=Math.round((hrs-h)*60);$('chargeTime').textContent=h+'h '+m+'m'}else{$('chargeTime').textContent=Math.round(hrs*60)+'m'}}else{$('chargeTime').textContent='—'}
+var vehicleKey=$('vehicleSelect').value;var vehicle=getVehicleByKey(vehicleKey);var rp=vehicle?vehicle.range:0;
+if(rp>0){$('rangeAtTarget').textContent=((tgt/100)*rp).toFixed(0)+' km'}else{$('rangeAtTarget').textContent='—'}
 if(fee>0){$('feeRow').style.display='flex';$('feeVal').textContent=lkr(fee)}else{$('feeRow').style.display='none'}
 if(taxAmount>0){$('taxRow').style.display='flex';$('taxVal').textContent=lkr(taxAmount)}else{$('taxRow').style.display='none'}
-
 if(tgt>80){$('taperHint').style.display='block'}else{$('taperHint').style.display='none'}
-
 currentCalc={cap:cap,cur:cur,tgt:tgt,r:r,needed:needed,billed:billed,total:total,mode:currentMode,vehicleKey:vehicleKey,vehicleName:vehicle?vehicle.name:'—'};
-$('saveBtn').disabled=needed<=0;
-$('saveBtn').style.opacity=needed<=0?'0.5':'1';
-
+$('saveBtn').disabled=needed<=0;$('saveBtn').style.opacity=needed<=0?'0.5':'1';
 if(currentMode==='public')updateComparison(billed,taxPct,fee);
 updatePetrolComparison(needed,total,vehicle);
 }
@@ -943,80 +935,36 @@ body.innerHTML=res.map(function(x){var bd=x.cost===mn?'<span class="best-badge">
 }
 
 function updatePetrolComparison(needed,totalCost,vehicle){
-if(!vehicle||!vehicle.range||needed<=0){
-$('petrolEvCost').textContent=lkr(totalCost);
-$('petrolCost92').textContent='—';$('petrolCost95').textContent='—';$('dieselCost').textContent='—';
-$('savingsBanner').style.display='none';
-$('co2Saved').textContent='—';
-return;
-}
+if(!vehicle||!vehicle.range||needed<=0){$('petrolEvCost').textContent=lkr(totalCost);$('petrolCost92').textContent='—';$('petrolCost95').textContent='—';$('dieselCost').textContent='—';$('savingsBanner').style.display='none';$('co2Saved').textContent='—';return}
 var tgt=parseFloat($('target').value)||0;
 var distance=vehicle.range*(tgt/100);
-var fuel92=parseFloat($('setFuel92').value)||414;
-var fuel95=parseFloat($('setFuel95').value)||450;
-var diesel=parseFloat($('setDiesel').value)||380;
-var kmPerL=parseFloat($('setPetrolKm').value)||12;
-
-var litres=distance/kmPerL;
-var cost92=litres*fuel92;
-var cost95=litres*fuel95;
-var dieselCost=litres*diesel;
-
-$('petrolEvCost').textContent=lkr(totalCost);
-$('petrolCost92').textContent=lkr(cost92);
-$('petrolCost95').textContent=lkr(cost95);
-$('dieselCost').textContent=lkr(dieselCost);
-
+var fuel92=parseFloat($('setFuel92').value)||414;var fuel95=parseFloat($('setFuel95').value)||475;var diesel=parseFloat($('setDiesel').value)||392;var kmPerL=parseFloat($('setPetrolKm').value)||12;
+var litres=distance/kmPerL;var cost92=litres*fuel92;var cost95=litres*fuel95;var dieselCost=litres*diesel;
+$('petrolEvCost').textContent=lkr(totalCost);$('petrolCost92').textContent=lkr(cost92);$('petrolCost95').textContent=lkr(cost95);$('dieselCost').textContent=lkr(dieselCost);
 var savings=cost92-totalCost;
-if(savings>0){
-$('savingsBanner').style.display='block';
-$('savingsAmount').textContent=lkr(savings);
-$('savingsDetail').textContent='For '+distance.toFixed(0)+' km, vs Petrol 92 Octane.';
-}else{
-$('savingsBanner').style.display='none';
-}
-var co2=litres*2.31;
-$('co2Saved').textContent=co2.toFixed(1)+' kg';
+if(savings>0){$('savingsBanner').style.display='block';$('savingsAmount').textContent=lkr(savings);$('savingsDetail').textContent='For '+distance.toFixed(0)+' km, vs Petrol 92 Octane.'}else{$('savingsBanner').style.display='none'}
+var co2=litres*2.31;$('co2Saved').textContent=co2.toFixed(1)+' kg';
 }
 
-// PRESETS
-document.querySelectorAll('.preset-btn[data-preset]').forEach(function(b){
-b.addEventListener('click',function(){
-var p=this.dataset.preset.split(',');
-$('current').value=p[0];$('target').value=p[1];
-$('currentNum').value=p[0];$('targetNum').value=p[1];
-calc();savePrefs();
-});
-});
+document.querySelectorAll('.preset-btn[data-preset]').forEach(function(b){b.addEventListener('click',function(){var p=this.dataset.preset.split(',');$('current').value=p[0];$('target').value=p[1];$('currentNum').value=p[0];$('targetNum').value=p[1];calc();savePrefs()})});
 
-// REMINDERS
 document.querySelectorAll('.preset-btn[data-reminder]').forEach(function(b){
 b.addEventListener('click',function(){
 var v=this.dataset.reminder,mins;
-if(v==='auto'){var cap=parseFloat($('capacity').value)||0;var cur=parseFloat($('current').value)||0;var tgt=parseFloat($('target').value)||0;var needed=(tgt>cur)?((tgt-cur)/100)*cap:0;var power=currentMode==='home'?getHomePower():getPublicPower();mins=Math.max(5,Math.round((needed/power)*60))}
-else mins=parseInt(v);
+if(v==='auto'){var cap=parseFloat($('capacity').value)||0;var cur=parseFloat($('current').value)||0;var tgt=parseFloat($('target').value)||0;var needed=(tgt>cur)?((tgt-cur)/100)*cap:0;var power=currentMode==='home'?getHomePower():getPublicPower();mins=Math.max(5,Math.round((needed/power)*60))}else mins=parseInt(v);
 if(!('Notification' in window)){alert('Notifications not supported.');return}
 Notification.requestPermission().then(function(p){if(p==='granted'){setTimeout(function(){try{new Notification('⚡ Charging Reminder',{body:'Your estimated charge time is up.'})}catch(e){}},mins*60*1000);alert('Reminder set for '+mins+' minutes. Keep the tab open.')}else{alert('Notifications blocked.')}});
 });
 });
 
-// VEHICLE SELECT
-$('vehicleSelect').addEventListener('change',function(){
-var v=this.value;
-if(v==='custom'){$('customCapacityField').style.display='block';return}
-$('customCapacityField').style.display='none';
-if(v&&v!==''){var vehicle=getVehicleByKey(v);if(vehicle){$('capacity').value=vehicle.capacity}}
-calc();savePrefs();
-});
+$('vehicleSelect').addEventListener('change',function(){var v=this.value;if(v==='custom'){$('customCapacityField').style.display='block';return}$('customCapacityField').style.display='none';if(v&&v!==''){var vehicle=getVehicleByKey(v);if(vehicle){$('capacity').value=vehicle.capacity}}calc();savePrefs()});
 $('customCapacity').addEventListener('input',function(){$('capacity').value=this.value;calc();savePrefs()});
 
-// RATE SELECTS
 $('quickRate').addEventListener('change',function(){if(this.value&&this.value!=='custom'){$('rate').value=this.value;calc();savePrefs()}else if(this.value==='custom'){$('rate').value='';$('rate').focus();calc()}});
 $('homeRateSelect').addEventListener('change',function(){if(this.value&&this.value!=='custom'){$('homeRate').value=this.value;calc();savePrefs()}else if(this.value==='custom'){$('homeRate').value='';$('homeRate').focus();calc()}});
 $('homeChargerPower').addEventListener('change',function(){if(this.value==='custom'){$('customHomePowerField').style.display='block';$('customHomePower').focus()}else{$('customHomePowerField').style.display='none'}calc();savePrefs()});
 $('chargerPower').addEventListener('change',function(){if(this.value==='custom'){$('customPublicPowerField').style.display='block';$('customPublicPower').focus()}else{$('customPublicPowerField').style.display='none'}calc();savePrefs()});
 
-// PERCENTAGE
 $('currentNum').addEventListener('input',function(){var v=clamp(this.value,1,100);$('current').value=v;calc();savePrefs()});
 $('currentNum').addEventListener('blur',function(){var v=clamp(this.value,1,100);this.value=v;$('current').value=v;calc();savePrefs()});
 $('targetNum').addEventListener('input',function(){var v=clamp(this.value,1,100);$('target').value=v;calc();savePrefs()});
@@ -1024,12 +972,8 @@ $('targetNum').addEventListener('blur',function(){var v=clamp(this.value,1,100);
 $('current').addEventListener('input',function(){$('currentNum').value=this.value;calc()});
 $('target').addEventListener('input',function(){$('targetNum').value=this.value;calc()});
 
-// SETTINGS
-['setFuel92','setFuel95','setDiesel','setPetrolKm'].forEach(function(id){
-$(id).addEventListener('change',function(){savePrefs();calc()});
-});
+['setFuel92','setFuel95','setDiesel','setPetrolKm'].forEach(function(id){$(id).addEventListener('change',function(){savePrefs();calc()})});
 
-// SAVE PREFS
 function savePrefs(){
 try{localStorage.setItem('evPrefs',JSON.stringify({
 capacity:$('capacity').value,current:$('current').value,target:$('target').value,rate:$('rate').value,efficiency:$('efficiency').value,sessionFee:$('sessionFee').value,tax:$('tax').value,vehicle:$('vehicleSelect').value,chargerPower:$('chargerPower').value,
@@ -1041,233 +985,87 @@ setFuel92:$('setFuel92').value,setFuel95:$('setFuel95').value,setDiesel:$('setDi
 }
 
 try{var s=localStorage.getItem('evPrefs');if(s){var p=JSON.parse(s);
-if(p.capacity)$('capacity').value=p.capacity;
-if(p.current)$('current').value=p.current;
-if(p.target)$('target').value=p.target;
-if(p.rate)$('rate').value=p.rate;
-if(p.efficiency)$('efficiency').value=p.efficiency;
-if(p.sessionFee)$('sessionFee').value=p.sessionFee;
-if(p.tax)$('tax').value=p.tax;
-if(p.vehicle)$('vehicleSelect').value=p.vehicle;
+if(p.capacity)$('capacity').value=p.capacity;if(p.current)$('current').value=p.current;if(p.target)$('target').value=p.target;if(p.rate)$('rate').value=p.rate;if(p.efficiency)$('efficiency').value=p.efficiency;if(p.sessionFee)$('sessionFee').value=p.sessionFee;if(p.tax)$('tax').value=p.tax;if(p.vehicle)$('vehicleSelect').value=p.vehicle;
 if(p.chargerPower){$('chargerPower').value=p.chargerPower;if(p.chargerPower==='custom')$('customPublicPowerField').style.display='block'}
-if(p.homeRate)$('homeRate').value=p.homeRate;
-if(p.homeChargerPower){$('homeChargerPower').value=p.homeChargerPower;if(p.homeChargerPower==='custom')$('customHomePowerField').style.display='block'}
-if(p.homeEfficiency)$('homeEfficiency').value=p.homeEfficiency;
-if(p.customHomePower)$('customHomePower').value=p.customHomePower;
-if(p.customPublicPower)$('customPublicPower').value=p.customPublicPower;
-if(p.mode)currentMode=p.mode;
+if(p.homeRate)$('homeRate').value=p.homeRate;if(p.homeChargerPower){$('homeChargerPower').value=p.homeChargerPower;if(p.homeChargerPower==='custom')$('customHomePowerField').style.display='block'}
+if(p.homeEfficiency)$('homeEfficiency').value=p.homeEfficiency;if(p.customHomePower)$('customHomePower').value=p.customHomePower;if(p.customPublicPower)$('customPublicPower').value=p.customPublicPower;if(p.mode)currentMode=p.mode;
 if(p.theme==='light'){document.body.classList.add('light');$('themeKnob').style.left='32px'}
-if(p.setFuel92)$('setFuel92').value=p.setFuel92;
-if(p.setFuel95)$('setFuel95').value=p.setFuel95;
-if(p.setDiesel)$('setDiesel').value=p.setDiesel;
-if(p.setPetrolKm)$('setPetrolKm').value=p.setPetrolKm;
+if(p.setFuel92)$('setFuel92').value=p.setFuel92;if(p.setFuel95)$('setFuel95').value=p.setFuel95;if(p.setDiesel)$('setDiesel').value=p.setDiesel;if(p.setPetrolKm)$('setPetrolKm').value=p.setPetrolKm;
 }}catch(e){}
 
 if(currentMode==='home'){$('tabHome').classList.add('active');$('tabPublic').classList.remove('active');$('homeFields').style.display='block';$('publicFields').style.display='none'}
 
-// GARAGE RENDER
 function renderGarage(){
 var list=$('garageList');
-if(!userVehicles||userVehicles.length===0){
-list.innerHTML='<div class="empty-state"><div class="es-icon">🚗</div><div class="es-text"><strong>Your garage is empty.</strong><br>Tap "➕ Add" to save your first vehicle with its exact specs. It will appear in the vehicle dropdown on the Home page.</div></div>';
-}else{
-list.innerHTML=userVehicles.map(function(v){
-var active=($('vehicleSelect').value==='custom_'+v._docId)?' active':'';
-var activeBadge=active?'<span class="vc-active-badge">Active</span>':'';
-var specs=v.capacity+' kWh';
-if(v.range)specs+=' · '+v.range+' km';
-if(v.dc)specs+=' · '+v.dc+' kW DC';
-return '<div class="vehicle-card'+active+'"><div class="vc-name">'+v.name+activeBadge+'</div><div class="vc-specs">'+specs+'</div><div class="vc-actions"><button data-edit="'+v._docId+'" title="Edit">✏️</button><button data-delete="'+v._docId+'" title="Delete">🗑️</button></div></div>';
-}).join('');
+if(!userVehicles||userVehicles.length===0){list.innerHTML='<div class="empty-state"><div class="es-icon">🚗</div><div class="es-text"><strong>Your garage is empty.</strong><br>Tap "➕ Add" to save your first vehicle with its exact specs. It will appear in the vehicle dropdown on the Home page.</div></div>'}
+else{list.innerHTML=userVehicles.map(function(v){var active=($('vehicleSelect').value==='custom_'+v._docId)?' active':'';var activeBadge=active?'<span class="vc-active-badge">Active</span>':'';var specs=v.capacity+' kWh';if(v.range)specs+=' · '+v.range+' km';if(v.dc)specs+=' · '+v.dc+' kW DC';return '<div class="vehicle-card'+active+'"><div class="vc-name">'+v.name+activeBadge+'</div><div class="vc-specs">'+specs+'</div><div class="vc-actions"><button data-edit="'+v._docId+'" title="Edit">✏️</button><button data-delete="'+v._docId+'" title="Delete">🗑️</button></div></div>'}).join('');
 list.querySelectorAll('[data-edit]').forEach(function(b){b.addEventListener('click',function(){openVehicleModal(this.dataset.edit)})});
-list.querySelectorAll('[data-delete]').forEach(function(b){b.addEventListener('click',function(){askConfirm('Delete Vehicle','Are you sure you want to delete this vehicle? This cannot be undone.',function(){deleteUserVehicle(this.dataset.delete,function(ok){if(ok){renderGarage();updateVehicleDropdowns()}}) }.bind(this))})});
+list.querySelectorAll('[data-delete]').forEach(function(b){b.addEventListener('click',function(){var id=this.dataset.delete;askConfirm('Delete Vehicle','Are you sure you want to delete this vehicle? This cannot be undone.',function(){deleteUserVehicle(id,function(ok){if(ok){renderGarage();updateVehicleDropdowns()}})})})});
 }
-
-// Summary
 var sc=$('garageSummaryCard');
-if(userVehicles.length>0){
-sc.style.display='block';
-var totalKwh=0,totalRange=0;
-userVehicles.forEach(function(v){totalKwh+=v.capacity;totalRange+=(v.range||0)});
-var html='<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(139,92,246,0.1);font-size:0.85rem"><span style="color:var(--dim)">Vehicles in garage</span><span style="color:var(--text);font-weight:700">'+userVehicles.length+'</span></div>';
-html+='<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(139,92,246,0.1);font-size:0.85rem"><span style="color:var(--dim)">Total battery capacity</span><span style="color:var(--text);font-weight:700">'+totalKwh.toFixed(1)+' kWh</span></div>';
-html+='<div style="display:flex;justify-content:space-between;padding:8px 0;font-size:0.85rem"><span style="color:var(--dim)">Total rated range</span><span style="color:var(--text);font-weight:700">'+totalRange.toFixed(0)+' km</span></div>';
-$('garageSummary').innerHTML=html;
-}else{sc.style.display='none'}
-
-// Built-in list
+if(userVehicles.length>0){sc.style.display='block';var totalKwh=0,totalRange=0;userVehicles.forEach(function(v){totalKwh+=v.capacity;totalRange+=(v.range||0)});var html='<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(139,92,246,0.1);font-size:0.85rem"><span style="color:var(--dim)">Vehicles in garage</span><span style="color:var(--text);font-weight:700">'+userVehicles.length+'</span></div>';html+='<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(139,92,246,0.1);font-size:0.85rem"><span style="color:var(--dim)">Total battery capacity</span><span style="color:var(--text);font-weight:700">'+totalKwh.toFixed(1)+' kWh</span></div>';html+='<div style="display:flex;justify-content:space-between;padding:8px 0;font-size:0.85rem"><span style="color:var(--dim)">Total rated range</span><span style="color:var(--text);font-weight:700">'+totalRange.toFixed(0)+' km</span></div>';$('garageSummary').innerHTML=html}else{sc.style.display='none'}
 var bl=$('builtInList');
-bl.innerHTML=Object.keys(builtInVehicles).map(function(k){
-var v=builtInVehicles[k];
-return '<div class="vehicle-card" style="border-left-color:rgba(148,163,184,0.5)"><div class="vc-name">'+v.name+'<span class="vc-builtin-badge">Built-in</span></div><div class="vc-specs">'+v.capacity+' kWh · '+v.range+' km · '+v.dc+' kW DC</div></div>';
-}).join('');
+bl.innerHTML=Object.keys(builtInVehicles).map(function(k){var v=builtInVehicles[k];return '<div class="vehicle-card" style="border-left-color:rgba(148,163,184,0.5)"><div class="vc-name">'+v.name+'<span class="vc-builtin-badge">Built-in</span></div><div class="vc-specs">'+v.capacity+' kWh · '+v.range+' km · '+v.dc+' kW DC</div></div>'}).join('');
 }
 
-// VEHICLE MODAL
 function openVehicleModal(id){
 editingVehicleId=id||null;
-if(id){
-var v=userVehicles.find(function(x){return x._docId===id});
-if(!v)return;
-$('vehicleModalTitle').textContent='Edit Vehicle';
-$('vmName').value=v.name||'';
-$('vmMake').value=v.make||'';
-$('vmModel').value=v.model||'';
-$('vmCapacity').value=v.capacity||30.08;
-$('vmRange').value=v.range||'';
-$('vmDC').value=v.dc||'';
-}else{
-$('vehicleModalTitle').textContent='Add Vehicle';
-$('vmName').value='';$('vmMake').value='';$('vmModel').value='';
-$('vmCapacity').value=30.08;$('vmRange').value='';$('vmDC').value='';
-}
+if(id){var v=userVehicles.find(function(x){return x._docId===id});if(!v)return;$('vehicleModalTitle').textContent='Edit Vehicle';$('vmName').value=v.name||'';$('vmMake').value=v.make||'';$('vmModel').value=v.model||'';$('vmCapacity').value=v.capacity||30.08;$('vmRange').value=v.range||'';$('vmDC').value=v.dc||''}
+else{$('vehicleModalTitle').textContent='Add Vehicle';$('vmName').value='';$('vmMake').value='';$('vmModel').value='';$('vmCapacity').value=30.08;$('vmRange').value='';$('vmDC').value=''}
 $('vehicleModal').classList.add('show');
 }
 $('addVehicleBtn').addEventListener('click',function(){openVehicleModal()});
 $('vmCancel').addEventListener('click',function(){$('vehicleModal').classList.remove('show')});
 $('vmSave').addEventListener('click',function(){
-var name=$('vmName').value.trim();
-var make=$('vmMake').value.trim();
-var model=$('vmModel').value.trim();
-var cap=parseFloat($('vmCapacity').value);
-var range=parseFloat($('vmRange').value)||0;
-var dc=parseFloat($('vmDC').value)||0;
+var name=$('vmName').value.trim();var make=$('vmMake').value.trim();var model=$('vmModel').value.trim();var cap=parseFloat($('vmCapacity').value);var range=parseFloat($('vmRange').value)||0;var dc=parseFloat($('vmDC').value)||0;
 if(!name&&!make&&!model){alert('Please enter a name for the vehicle.');return}
 if(!name){name=(make+' '+model).trim()}
 if(!cap||cap<=0){alert('Please enter a valid battery capacity.');return}
 var payload={name:name,make:make,model:model,capacity:cap,range:range,dc:dc};
-if(editingVehicleId){
-updateUserVehicle(editingVehicleId,payload,function(ok){if(ok){$('vehicleModal').classList.remove('show');renderGarage();updateVehicleDropdowns();calc()}});
-}else{
-addUserVehicle(payload,function(ok){if(ok){$('vehicleModal').classList.remove('show');renderGarage();updateVehicleDropdowns();calc()}});
-}
+if(editingVehicleId){updateUserVehicle(editingVehicleId,payload,function(ok){if(ok){$('vehicleModal').classList.remove('show');renderGarage();updateVehicleDropdowns();calc()}})}
+else{addUserVehicle(payload,function(ok){if(ok){$('vehicleModal').classList.remove('show');renderGarage();updateVehicleDropdowns();calc()}})}
 });
 
-// CONFIRM MODAL
-function askConfirm(title,text,cb){
-$('confirmTitle').textContent=title;
-$('confirmText').textContent=text;
-confirmCallback=cb;
-$('confirmModal').classList.add('show');
-}
+function askConfirm(title,text,cb){$('confirmTitle').textContent=title;$('confirmText').textContent=text;confirmCallback=cb;$('confirmModal').classList.add('show')}
 $('confirmCancel').addEventListener('click',function(){$('confirmModal').classList.remove('show');confirmCallback=null});
 $('confirmOk').addEventListener('click',function(){$('confirmModal').classList.remove('show');if(confirmCallback){var cb=confirmCallback;confirmCallback=null;cb()}});
 
-// HISTORY
 function renderHistory(){
 if(!currentUser)return;
 getAllRecords(function(hist){
-var filter=$('historyVehicleFilter').value;
-var filtered=hist;
+var filter=$('historyVehicleFilter').value;var filtered=hist;
 if(filter!=='all'){filtered=hist.filter(function(x){return x.vehicleKey===filter})}
 var list=$('historyList'),stats=$('historyStats'),cb=$('clearBtn'),er=$('exportRow'),sc=$('summaryCard');
-if(filtered.length===0){
-list.innerHTML='<div class="empty-state"><div class="es-icon">📭</div><div class="es-text"><strong>No charges'+(filter!=='all'?' for this filter':'')+'.</strong><br>Save a charge from the Home page to start your history.</div></div>';
-stats.style.display='none';cb.style.display='none';er.style.display='none';sc.style.display='none';
-return;
-}
+if(filtered.length===0){list.innerHTML='<div class="empty-state"><div class="es-icon">📭</div><div class="es-text"><strong>No charges'+(filter!=='all'?' for this filter':'')+'.</strong><br>Save a charge from the Home page to start your history.</div></div>';stats.style.display='none';cb.style.display='none';er.style.display='none';sc.style.display='none';return}
 var tc=0,te=0;filtered.forEach(function(x){tc+=x.total;te+=x.needed});
-$('statCount').textContent=filtered.length;$('statEnergy').textContent=te.toFixed(0);$('statCost').textContent=tc.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',');
-stats.style.display='flex';cb.style.display='block';er.style.display='block';
-
-var now=new Date(),monthStart=new Date(now.getFullYear(),now.getMonth(),1).getTime();
-var monthRecs=filtered.filter(function(x){return x.ts>=monthStart});
-if(monthRecs.length>0){
-sc.style.display='block';
-var mC=0,mE=0;monthRecs.forEach(function(x){mC+=x.total;mE+=x.needed});
-$('sumSessions').textContent=monthRecs.length;
-$('sumEnergy').textContent=mE.toFixed(0)+' kWh';
-$('sumCost').textContent='LKR '+mC.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',');
-var km=mE*6,co2=km/8*2.31;
-$('sumCO2').textContent=co2.toFixed(0)+' kg';
-}else{sc.style.display='none'}
-
+$('statCount').textContent=filtered.length;$('statEnergy').textContent=te.toFixed(0);$('statCost').textContent=tc.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',');stats.style.display='flex';cb.style.display='block';er.style.display='block';
+var now=new Date(),monthStart=new Date(now.getFullYear(),now.getMonth(),1).getTime();var monthRecs=filtered.filter(function(x){return x.ts>=monthStart});
+if(monthRecs.length>0){sc.style.display='block';var mC=0,mE=0;monthRecs.forEach(function(x){mC+=x.total;mE+=x.needed});$('sumSessions').textContent=monthRecs.length;$('sumEnergy').textContent=mE.toFixed(0)+' kWh';$('sumCost').textContent='LKR '+mC.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',');var km=mE*6,co2=km/8*2.31;$('sumCO2').textContent=co2.toFixed(0)+' kg'}else{sc.style.display='none'}
 var sorted=filtered.slice().sort(function(a,b){return b.ts-a.ts});
-list.innerHTML=sorted.map(function(item){
-var d=new Date(item.ts),mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-var dt=d.getDate()+' '+mo[d.getMonth()]+' · '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
-var mIcon=item.mode==='home'?'🏠':'🔌';
-var vname=item.vehicleName||'';
-return '<div style="background:var(--input-bg);border-radius:12px;padding:14px 16px;margin-bottom:10px;border:1px solid rgba(139,92,246,0.15);border-left:3px solid #8b5cf6;position:relative"><button data-id="'+item.ts+'" class="delBtn" style="position:absolute;top:10px;right:10px;background:none;border:none;color:#6a5a9e;font-size:1.2rem;cursor:pointer">×</button><div style="display:flex;justify-content:space-between;margin-bottom:8px;padding-right:24px"><span style="font-size:1.05rem;font-weight:800;color:#7c3aed">'+lkr(item.total)+'</span><span style="font-size:0.7rem;color:#6a5a9e">'+dt+'</span></div>'+(vname?'<div style="font-size:0.72rem;color:var(--purpleB);font-weight:700;margin-bottom:4px">🚗 '+vname+'</div>':'')+'<div style="font-size:0.78rem;color:var(--dim);line-height:1.6">'+mIcon+' <span style="color:var(--text);font-weight:600">'+item.cur+'% → '+item.tgt+'%</span> · ⚡ <span style="color:var(--text);font-weight:600">+'+item.needed.toFixed(2)+' kWh</span> · 💵 <span style="color:var(--text);font-weight:600">'+item.r.toFixed(2)+' LKR/kWh</span></div></div>'
-}).join('');
+list.innerHTML=sorted.map(function(item){var d=new Date(item.ts),mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];var dt=d.getDate()+' '+mo[d.getMonth()]+' · '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');var mIcon=item.mode==='home'?'🏠':'🔌';var vname=item.vehicleName||'';return '<div style="background:var(--input-bg);border-radius:12px;padding:14px 16px;margin-bottom:10px;border:1px solid rgba(139,92,246,0.15);border-left:3px solid #8b5cf6;position:relative"><button data-id="'+item.ts+'" class="delBtn" style="position:absolute;top:10px;right:10px;background:none;border:none;color:#6a5a9e;font-size:1.2rem;cursor:pointer">×</button><div style="display:flex;justify-content:space-between;margin-bottom:8px;padding-right:24px"><span style="font-size:1.05rem;font-weight:800;color:#7c3aed">'+lkr(item.total)+'</span><span style="font-size:0.7rem;color:#6a5a9e">'+dt+'</span></div>'+(vname?'<div style="font-size:0.72rem;color:var(--purpleB);font-weight:700;margin-bottom:4px">🚗 '+vname+'</div>':'')+'<div style="font-size:0.78rem;color:var(--dim);line-height:1.6">'+mIcon+' <span style="color:var(--text);font-weight:600">'+item.cur+'% → '+item.tgt+'%</span> · ⚡ <span style="color:var(--text);font-weight:600">+'+item.needed.toFixed(2)+' kWh</span> · 💵 <span style="color:var(--text);font-weight:600">'+item.r.toFixed(2)+' LKR/kWh</span></div></div>'}).join('');
 list.querySelectorAll('.delBtn').forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();var id=parseInt(b.dataset.id);deleteRecord(id,function(){renderHistory()})})});
 });
 }
 
 $('historyVehicleFilter').addEventListener('change',function(){renderHistory()});
 
-$('saveBtn').addEventListener('click',function(){
-if(!currentCalc||currentCalc.needed<=0||!currentUser)return;
-var rec={ts:Date.now(),cap:currentCalc.cap,cur:currentCalc.cur,tgt:currentCalc.tgt,r:currentCalc.r,needed:currentCalc.needed,billed:currentCalc.billed,total:currentCalc.total,mode:currentCalc.mode,vehicleKey:currentCalc.vehicleKey,vehicleName:currentCalc.vehicleName};
-addRecord(rec,function(ok){
-if(ok){renderHistory();$('saveBtn').textContent='✓ Saved!';$('saveBtn').style.background='#2ecc71';setTimeout(function(){$('saveBtn').textContent='💾 Save this charge';$('saveBtn').style.background='linear-gradient(135deg,#3b82f6,#8b5cf6)'},1200)}
-else{$('saveBtn').textContent='⚠ Failed';$('saveBtn').style.background='#e74c3c';setTimeout(function(){$('saveBtn').textContent='💾 Save this charge';$('saveBtn').style.background='linear-gradient(135deg,#3b82f6,#8b5cf6)'},1500)}
-});
-});
+$('saveBtn').addEventListener('click',function(){if(!currentCalc||currentCalc.needed<=0||!currentUser)return;var rec={ts:Date.now(),cap:currentCalc.cap,cur:currentCalc.cur,tgt:currentCalc.tgt,r:currentCalc.r,needed:currentCalc.needed,billed:currentCalc.billed,total:currentCalc.total,mode:currentCalc.mode,vehicleKey:currentCalc.vehicleKey,vehicleName:currentCalc.vehicleName};addRecord(rec,function(ok){if(ok){renderHistory();$('saveBtn').textContent='✓ Saved!';$('saveBtn').style.background='#2ecc71';setTimeout(function(){$('saveBtn').textContent='💾 Save this charge';$('saveBtn').style.background='linear-gradient(135deg,#3b82f6,#8b5cf6)'},1200)}else{$('saveBtn').textContent='⚠ Failed';$('saveBtn').style.background='#e74c3c';setTimeout(function(){$('saveBtn').textContent='💾 Save this charge';$('saveBtn').style.background='linear-gradient(135deg,#3b82f6,#8b5cf6)'},1500)}})});
 
-$('clearBtn').addEventListener('click',function(){
-if(confirm('Delete all history? Cannot be undone.'))clearAllRecords(function(){renderHistory()});
-});
+$('clearBtn').addEventListener('click',function(){if(confirm('Delete all history? Cannot be undone.'))clearAllRecords(function(){renderHistory()})});
 
-$('exportBtn').addEventListener('click',function(){
-getAllRecords(function(h){
-if(h.length===0)return;
-var rows=[['Date','Time','Vehicle','Mode','Capacity','From %','To %','Energy (kWh)','Billed (kWh)','Rate (LKR/kWh)','Total (LKR)']];
-h.slice().sort(function(a,b){return a.ts-b.ts}).forEach(function(x){
-var d=new Date(x.ts);
-var dt=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-var tm=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
-rows.push([dt,tm,x.vehicleName||'—',x.mode||'public',x.cap,x.cur,x.tgt,x.needed.toFixed(2),x.billed.toFixed(2),x.r.toFixed(2),x.total.toFixed(2)]);
-});
-var csv=rows.map(function(r){return r.map(function(c){return '"'+String(c).replace(/"/g,'""')+'"'}).join(',')}).join('\n');
-var blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
-var url=URL.createObjectURL(blob);
-var a=document.createElement('a');a.href=url;a.download='ev-history-'+new Date().toISOString().slice(0,10)+'.csv';
-document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
-});
-});
+$('exportBtn').addEventListener('click',function(){getAllRecords(function(h){if(h.length===0)return;var rows=[['Date','Time','Vehicle','Mode','Capacity','From %','To %','Energy (kWh)','Billed (kWh)','Rate (LKR/kWh)','Total (LKR)']];h.slice().sort(function(a,b){return a.ts-b.ts}).forEach(function(x){var d=new Date(x.ts);var dt=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');var tm=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');rows.push([dt,tm,x.vehicleName||'—',x.mode||'public',x.cap,x.cur,x.tgt,x.needed.toFixed(2),x.billed.toFixed(2),x.r.toFixed(2),x.total.toFixed(2)])});var csv=rows.map(function(r){return r.map(function(c){return '"'+String(c).replace(/"/g,'""')+'"'}).join(',')}).join('\n');var blob=new Blob([csv],{type:'text/csv;charset=utf-8'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='ev-history-'+new Date().toISOString().slice(0,10)+'.csv';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url)})});
 
-// THEME
-$('themeToggle').addEventListener('click',function(){
-var l=document.body.classList.contains('light');
-if(l){document.body.classList.remove('light');$('themeKnob').style.left='2px'}
-else{document.body.classList.add('light');$('themeKnob').style.left='32px'}
-savePrefs();
-});
+$('themeToggle').addEventListener('click',function(){var l=document.body.classList.contains('light');if(l){document.body.classList.remove('light');$('themeKnob').style.left='2px'}else{document.body.classList.add('light');$('themeKnob').style.left='32px'}savePrefs()});
 
-// STATIONS BUILD
-(function(){
-var s=[
-{name:'Volt Charge',badge:'LARGEST',detail:'Flat: <strong style="color:var(--blueB)">LKR 150/kWh</strong>',tel:'+94766700280',map:'Volt+Charge+Charging+Station+Sri+Lanka'},
-{name:'chargeNET',badge:'PRIVATE',detail:'DC: <strong style="color:var(--blueB)">120</strong> · AC: <strong style="color:var(--blueB)">70</strong> LKR/kWh',tel:'+9415551551',map:'chargeNET+Sri+Lanka'},
-{name:'LECO',badge:'GOV',detail:'Day: <strong style="color:var(--blueB)">89.23</strong> · Peak: <strong style="color:var(--blueB)">113.85</strong> · Off: <strong style="color:var(--blueB)">54.36</strong>',tel:'+94112345678',map:'LECO+Charging+Station'},
-{name:'ChargeUP (Lanka IOC)',badge:'EXPANDING',detail:'Partnered with Lanka IOC. Rates vary.',tel:'+94112345678',map:'ChargeUP+EV+Charging+Sri+Lanka'},
-{name:'CEB',badge:'GRID',detail:'Day: <strong style="color:var(--blueB)">83.08</strong> · Peak: <strong style="color:var(--blueB)">107.70</strong> · Off: <strong style="color:var(--blueB)">51.29</strong>',tel:'+94112345678',map:'CEB+EV+Charging+Station'}
-];
-var html='';
-s.forEach(function(x){
-html+='<div style="background:var(--input-bg);border-radius:14px;padding:16px;margin-bottom:12px;border-left:3px solid var(--purple)">';
-html+='<div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-weight:700;color:var(--text)">'+x.name+'</span><span style="font-size:0.6rem;background:rgba(139,92,246,0.2);color:var(--purpleB);padding:3px 10px;border-radius:6px;font-weight:700">'+x.badge+'</span></div>';
-html+='<div style="font-size:0.8rem;color:var(--dim);line-height:1.6;margin-bottom:12px">'+x.detail+'</div>';
-html+='<div style="display:flex;gap:8px"><a href="tel:'+x.tel+'" style="flex:1;text-align:center;padding:11px;border-radius:10px;background:rgba(139,92,246,0.15);color:var(--purpleB);text-decoration:none;font-weight:700;font-size:0.8rem;border:1px solid rgba(139,92,246,0.25)">📞 Call</a><a href="https://www.google.com/maps/search/'+x.map+'" target="_blank" style="flex:1;text-align:center;padding:11px;border-radius:10px;background:rgba(59,130,246,0.15);color:var(--blueB);text-decoration:none;font-weight:700;font-size:0.8rem;border:1px solid rgba(59,130,246,0.25)">📍 Map</a></div>';
-html+='</div>';
-});
-$('stationsList').innerHTML=html;
-})();
+(function(){var s=[{name:'Volt Charge',badge:'LARGEST',detail:'Flat: <strong style="color:var(--blueB)">LKR 150/kWh</strong>',tel:'+94766700280',map:'Volt+Charge+Charging+Station+Sri+Lanka'},{name:'chargeNET',badge:'PRIVATE',detail:'DC: <strong style="color:var(--blueB)">120</strong> · AC: <strong style="color:var(--blueB)">70</strong> LKR/kWh',tel:'+9415551551',map:'chargeNET+Sri+Lanka'},{name:'LECO',badge:'GOV',detail:'Day: <strong style="color:var(--blueB)">89.23</strong> · Peak: <strong style="color:var(--blueB)">113.85</strong> · Off: <strong style="color:var(--blueB)">54.36</strong>',tel:'+94112345678',map:'LECO+Charging+Station'},{name:'ChargeUP (Lanka IOC)',badge:'EXPANDING',detail:'Partnered with Lanka IOC. Rates vary.',tel:'+94112345678',map:'ChargeUP+EV+Charging+Sri+Lanka'},{name:'CEB',badge:'GRID',detail:'Day: <strong style="color:var(--blueB)">83.08</strong> · Peak: <strong style="color:var(--blueB)">107.70</strong> · Off: <strong style="color:var(--blueB)">51.29</strong>',tel:'+94112345678',map:'CEB+EV+Charging+Station'}];var html='';s.forEach(function(x){html+='<div style="background:var(--input-bg);border-radius:14px;padding:16px;margin-bottom:12px;border-left:3px solid var(--purple)">';html+='<div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-weight:700;color:var(--text)">'+x.name+'</span><span style="font-size:0.6rem;background:rgba(139,92,246,0.2);color:var(--purpleB);padding:3px 10px;border-radius:6px;font-weight:700">'+x.badge+'</span></div>';html+='<div style="font-size:0.8rem;color:var(--dim);line-height:1.6;margin-bottom:12px">'+x.detail+'</div>';html+='<div style="display:flex;gap:8px"><a href="tel:'+x.tel+'" style="flex:1;text-align:center;padding:11px;border-radius:10px;background:rgba(139,92,246,0.15);color:var(--purpleB);text-decoration:none;font-weight:700;font-size:0.8rem;border:1px solid rgba(139,92,246,0.25)">📞 Call</a><a href="https://www.google.com/maps/search/'+x.map+'" target="_blank" style="flex:1;text-align:center;padding:11px;border-radius:10px;background:rgba(59,130,246,0.15);color:var(--blueB);text-decoration:none;font-weight:700;font-size:0.8rem;border:1px solid rgba(59,130,246,0.25)">📍 Map</a></div>';html+='</div>'});$('stationsList').innerHTML=html})();
 
-// ONBOARDING
 var obStep=1;
 function showOnboard(){obStep=1;$('obStep').textContent='1';$('obStep1').style.display='block';$('obStep2').style.display='none';$('obStep3').style.display='none';$('obSkip').textContent='Skip setup';$('obNext').textContent='Next →';$('onboardOverlay').classList.add('show')}
 function hideOnboard(){$('onboardOverlay').classList.remove('show');localStorage.setItem('obDone','1')}
-$('obNext').addEventListener('click',function(){
-if(obStep===1){var v=$('obVehicle').value;if(v)$('vehicleSelect').value=v;obStep=2;$('obStep').textContent='2';$('obStep1').style.display='none';$('obStep2').style.display='block'}
-else if(obStep===2){var m=$('obMode').value;if(m==='home')setMode('home');else if(m==='public')setMode('public');obStep=3;$('obStep').textContent='3';$('obStep2').style.display='none';$('obStep3').style.display='block';$('obNext').textContent='Finish ✓'}
-else{var hr=$('obHomeRate').value;if(hr){$('homeRate').value=hr;$('homeRateSelect').value=hr}hideOnboard();calc();savePrefs()}
-});
+$('obNext').addEventListener('click',function(){if(obStep===1){var v=$('obVehicle').value;if(v)$('vehicleSelect').value=v;obStep=2;$('obStep').textContent='2';$('obStep1').style.display='none';$('obStep2').style.display='block'}else if(obStep===2){var m=$('obMode').value;if(m==='home')setMode('home');else if(m==='public')setMode('public');obStep=3;$('obStep').textContent='3';$('obStep2').style.display='none';$('obStep3').style.display='block';$('obNext').textContent='Finish ✓'}else{var hr=$('obHomeRate').value;if(hr){$('homeRate').value=hr;$('homeRateSelect').value=hr}hideOnboard();calc();savePrefs()}});
 $('obSkip').addEventListener('click',function(){hideOnboard()});
 $('rerunOnboard').addEventListener('click',function(){showOnboard()});
 
-// INIT
 calc();
 if(!localStorage.getItem('obDone')){setTimeout(showOnboard,1500)}
 </script>
