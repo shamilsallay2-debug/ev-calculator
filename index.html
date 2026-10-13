@@ -8,10 +8,9 @@
 <link rel="manifest" href="manifest.json">
 <script>if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');</script>
 
-<!-- Firebase SDK -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -27,7 +26,6 @@ const fbApp = initializeApp(firebaseConfig);
 const auth = getAuth(fbApp);
 const db = getFirestore(fbApp);
 
-// Expose to global scope so the main script can use them
 window.fbAuth = auth;
 window.fbDB = db;
 window.fbFuncs = {
@@ -35,6 +33,7 @@ window.fbFuncs = {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
+  sendPasswordResetEmail,
   collection,
   addDoc,
   getDocs,
@@ -98,9 +97,8 @@ body.light select option{background:#fff;color:#1a1033}
 .mode-tabs{display:flex;gap:6px;margin-bottom:16px;background:var(--input-bg);padding:4px;border-radius:12px;border:1px solid rgba(139,92,246,0.15)}
 .mode-tab{flex:1;padding:10px;border-radius:9px;border:none;background:none;color:var(--faint);font-family:inherit;font-weight:700;font-size:0.8rem;cursor:pointer;transition:all 0.2s}
 .mode-tab.active{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;box-shadow:0 4px 12px rgba(139,92,246,0.4)}
-/* Auth styles */
 .auth-container{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);background-image:radial-gradient(circle at 15% 0%,rgba(59,130,246,0.18),transparent 45%),radial-gradient(circle at 85% 100%,rgba(139,92,246,0.18),transparent 45%);display:flex;align-items:center;justify-content:center;padding:20px;z-index:9999;overflow-y:auto}
-.auth-box{background:var(--card);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:24px;padding:32px 24px;width:100%;max-width:380px;border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,0.5)}
+.auth-box{background:var(--card);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:24px;padding:32px 24px;width:100%;max-width:380px;border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,0.5);margin:auto}
 .auth-box h1{font-size:1.6rem;margin-bottom:8px}
 .auth-box .subtitle{text-align:center;color:var(--dim);font-size:0.85rem;margin-bottom:28px}
 .auth-tabs{display:flex;gap:6px;margin-bottom:20px;background:var(--input-bg);padding:4px;border-radius:12px;border:1px solid rgba(139,92,246,0.15)}
@@ -109,9 +107,11 @@ body.light select option{background:#fff;color:#1a1033}
 .auth-btn{width:100%;padding:15px;border-radius:14px;border:none;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;box-shadow:0 4px 20px rgba(139,92,246,0.4);margin-top:8px;transition:all 0.2s}
 .auth-btn:active{transform:scale(0.98)}
 .auth-btn:disabled{opacity:0.5;cursor:not-allowed}
-.auth-error{background:rgba(248,113,113,0.15);border:1px solid rgba(248,113,113,0.3);color:#fca5a5;padding:12px;border-radius:10px;font-size:0.8rem;margin-bottom:14px;display:none}
-.auth-info{background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.3);color:#93c5fd;padding:12px;border-radius:10px;font-size:0.8rem;margin-bottom:14px;display:none}
+.auth-error{background:rgba(248,113,113,0.15);border:1px solid rgba(248,113,113,0.3);color:#fca5a5;padding:12px;border-radius:10px;font-size:0.8rem;margin-bottom:14px;display:none;line-height:1.5}
+.auth-info{background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.3);color:#93c5fd;padding:12px;border-radius:10px;font-size:0.8rem;margin-bottom:14px;display:none;line-height:1.5}
 .auth-notice{text-align:center;font-size:0.7rem;color:var(--faint);margin-top:16px;line-height:1.5}
+.link-btn{background:none;border:none;color:var(--purpleB);font-size:0.8rem;cursor:pointer;font-family:inherit;text-decoration:underline;padding:8px 0;font-weight:600}
+.link-btn:hover{color:var(--blueB)}
 .user-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--input-bg);border-radius:14px;border:1px solid rgba(139,92,246,0.15);margin-bottom:14px}
 .user-bar .email{font-size:0.8rem;color:var(--dim);word-break:break-all;padding-right:10px}
 .user-bar .signout{background:transparent;color:#f87171;border:1px solid rgba(248,113,113,0.3);font-size:0.75rem;padding:6px 12px;border-radius:8px;cursor:pointer;font-weight:600;font-family:inherit;white-space:nowrap}
@@ -124,9 +124,9 @@ body.light select option{background:#fff;color:#1a1033}
 <div class="auth-container" id="authScreen">
 <div class="auth-box">
 <h1>⚡ EV Calc</h1>
-<p class="subtitle">Sign in to sync your charging history</p>
+<p class="subtitle" id="authSubtitle">Sign in to sync your charging history</p>
 
-<div class="auth-tabs">
+<div class="auth-tabs" id="authTabs">
 <button type="button" class="auth-tab active" id="tabLogin">Sign In</button>
 <button type="button" class="auth-tab" id="tabSignup">Sign Up</button>
 </div>
@@ -144,6 +144,7 @@ body.light select option{background:#fff;color:#1a1033}
 <input type="password" id="loginPassword" placeholder="Your password" autocomplete="current-password">
 </div>
 <button type="button" class="auth-btn" id="loginBtn">Sign In</button>
+<div style="text-align:center"><button type="button" class="link-btn" id="forgotBtn">Forgot password?</button></div>
 </div>
 
 <div id="signupForm" style="display:none">
@@ -158,11 +159,26 @@ body.light select option{background:#fff;color:#1a1033}
 <button type="button" class="auth-btn" id="signupBtn">Create Account</button>
 </div>
 
+<div id="resetForm" style="display:none">
+<div class="field">
+<label>Email</label>
+<input type="email" id="resetEmail" placeholder="you@example.com" autocomplete="email">
+</div>
+<button type="button" class="auth-btn" id="resetBtn">Send Reset Link</button>
+<div style="text-align:center"><button type="button" class="link-btn" id="backToLoginBtn">← Back to Sign In</button></div>
+</div>
+
+<div id="migrationCard" style="display:none;margin-top:16px;padding:14px;background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.3);border-radius:12px">
+<div style="font-size:0.8rem;color:#93c5fd;margin-bottom:10px;line-height:1.5">📦 We found <strong id="migrationCount">0</strong> old charging sessions saved on this device. Would you like to upload them to your new account?</div>
+<button type="button" id="migrateYes" style="width:100%;padding:10px;border-radius:10px;border:none;font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;margin-bottom:6px">Upload to Cloud</button>
+<button type="button" id="migrateNo" style="width:100%;padding:10px;border-radius:10px;border:1px solid rgba(148,163,184,0.3);background:transparent;color:var(--dim);font-size:0.85rem;font-weight:600;cursor:pointer;font-family:inherit">Keep on Device Only</button>
+</div>
+
 <p class="auth-notice">Your charging history is stored securely in your own account and syncs across all your devices.</p>
 </div>
 </div>
 
-<!-- MAIN APP (hidden until signed in) -->
+<!-- MAIN APP -->
 <div id="mainApp" style="display:none">
 
 <div class="sidebar">
@@ -174,7 +190,6 @@ body.light select option{background:#fff;color:#1a1033}
 
 <div class="app">
 
-<!-- PAGE: CALCULATOR -->
 <div class="page active" id="page-calc">
 <h1>⚡ Charge Calculator</h1>
 
@@ -265,7 +280,6 @@ body.light select option{background:#fff;color:#1a1033}
 <option value="custom">Custom Home Rate — Enter Manually</option>
 </optgroup>
 </select>
-<div class="hint">Sri Lanka domestic tariff increases with monthly usage. Pick the tier that matches your bill.</div>
 </div>
 <div class="field">
 <label>Home Rate per kWh <span class="hint">(LKR)</span></label>
@@ -356,6 +370,10 @@ body.light select option{background:#fff;color:#1a1033}
 <label>Tax / VAT <span class="hint">(%)</span></label>
 <input type="number" id="tax" value="0" step="0.1" min="0" inputmode="decimal">
 </div>
+<div class="field">
+<label>DC Charging Efficiency <span class="hint">(%)</span></label>
+<input type="number" id="efficiency" value="90" step="1" min="50" max="100" inputmode="numeric">
+</div>
 </div>
 </div>
 
@@ -412,7 +430,6 @@ body.light select option{background:#fff;color:#1a1033}
 </div>
 </div>
 
-<!-- PAGE: STATIONS -->
 <div class="page" id="page-stations">
 <h1>🔌 Charging Stations</h1>
 <div style="background:var(--input-bg);border-radius:14px;padding:16px;margin-bottom:12px;border-left:3px solid var(--purple)">
@@ -442,7 +459,6 @@ body.light select option{background:#fff;color:#1a1033}
 </div>
 </div>
 
-<!-- PAGE: VEHICLE -->
 <div class="page" id="page-vehicle">
 <h1>🚗 Vehicle Info</h1>
 <div class="card">
@@ -458,7 +474,6 @@ body.light select option{background:#fff;color:#1a1033}
 </div>
 </div>
 
-<!-- PAGE: HELP -->
 <div class="page" id="page-help">
 <h1>❓ Help</h1>
 <div class="card">
@@ -474,8 +489,9 @@ body.light select option{background:#fff;color:#1a1033}
 <p style="font-size:0.85rem;color:var(--dim);line-height:1.7"><strong style="color:var(--purpleB)">Range at Target:</strong> Rated range × (Target% ÷ 100)</p>
 </div>
 <div class="card">
-<div class="card-title">Cloud Sync</div>
+<div class="card-title">Account & Cloud Sync</div>
 <p style="font-size:0.85rem;color:var(--dim);line-height:1.7">Your charging history is stored in your personal Firebase account. Sign in on any device with the same email and password to see your history. Each user's data is private and secure.</p>
+<p style="font-size:0.85rem;color:var(--dim);line-height:1.7;margin-top:10px"><strong style="color:var(--purpleB)">Password reset:</strong> Tap "Forgot password?" on the sign-in screen and we'll email you a reset link.</p>
 </div>
 </div>
 
@@ -519,12 +535,24 @@ else{window.addEventListener('firebase-ready',onFirebaseReady);}
 // ============ AUTH UI ============
 $('tabLogin').addEventListener('click',function(){
 $('tabLogin').classList.add('active');$('tabSignup').classList.remove('active');
-$('loginForm').style.display='block';$('signupForm').style.display='none';
+$('loginForm').style.display='block';$('signupForm').style.display='none';$('resetForm').style.display='none';
+$('authTabs').style.display='flex';$('authSubtitle').textContent='Sign in to sync your charging history';
 $('authError').style.display='none';$('authInfo').style.display='none';
 });
 $('tabSignup').addEventListener('click',function(){
 $('tabSignup').classList.add('active');$('tabLogin').classList.remove('active');
-$('signupForm').style.display='block';$('loginForm').style.display='none';
+$('signupForm').style.display='block';$('loginForm').style.display='none';$('resetForm').style.display='none';
+$('authTabs').style.display='flex';$('authSubtitle').textContent='Create an account to save your history';
+$('authError').style.display='none';$('authInfo').style.display='none';
+});
+$('forgotBtn').addEventListener('click',function(){
+$('loginForm').style.display='none';$('signupForm').style.display='none';$('resetForm').style.display='block';
+$('authTabs').style.display='none';$('authSubtitle').textContent='Reset your password';
+$('authError').style.display='none';$('authInfo').style.display='none';
+});
+$('backToLoginBtn').addEventListener('click',function(){
+$('resetForm').style.display='none';$('loginForm').style.display='block';
+$('authTabs').style.display='flex';$('authSubtitle').textContent='Sign in to sync your charging history';
 $('authError').style.display='none';$('authInfo').style.display='none';
 });
 
@@ -549,10 +577,10 @@ $('loginBtn').addEventListener('click',function(){
 var email=$('loginEmail').value.trim();
 var pass=$('loginPassword').value;
 if(!email||!pass){showAuthError('Please enter email and password.');return}
-this.disabled=true;this.textContent='Signing in...';
+var btn=this;btn.disabled=true;btn.textContent='Signing in...';
 fbFuncs.signInWithEmailAndPassword(auth,email,pass)
-.then(function(){this.disabled=false;this.textContent='Sign In'}.bind(this))
-.catch(function(err){this.disabled=false;this.textContent='Sign In';showAuthError(friendlyAuthError(err.code))}.bind(this));
+.then(function(){btn.disabled=false;btn.textContent='Sign In'})
+.catch(function(err){btn.disabled=false;btn.textContent='Sign In';showAuthError(friendlyAuthError(err.code))});
 });
 
 $('signupBtn').addEventListener('click',function(){
@@ -560,10 +588,25 @@ var email=$('signupEmail').value.trim();
 var pass=$('signupPassword').value;
 if(!email||!pass){showAuthError('Please enter email and password.');return}
 if(pass.length<6){showAuthError('Password must be at least 6 characters.');return}
-this.disabled=true;this.textContent='Creating account...';
+var btn=this;btn.disabled=true;btn.textContent='Creating account...';
 fbFuncs.createUserWithEmailAndPassword(auth,email,pass)
-.then(function(){this.disabled=false;this.textContent='Create Account'}.bind(this))
-.catch(function(err){this.disabled=false;this.textContent='Create Account';showAuthError(friendlyAuthError(err.code))}.bind(this));
+.then(function(){btn.disabled=false;btn.textContent='Create Account'})
+.catch(function(err){btn.disabled=false;btn.textContent='Create Account';showAuthError(friendlyAuthError(err.code))});
+});
+
+$('resetBtn').addEventListener('click',function(){
+var email=$('resetEmail').value.trim();
+if(!email){showAuthError('Please enter your email.');return}
+var btn=this;btn.disabled=true;btn.textContent='Sending...';
+fbFuncs.sendPasswordResetEmail(auth,email)
+.then(function(){
+btn.disabled=false;btn.textContent='Send Reset Link';
+showAuthInfo('✓ Reset link sent! Check your email inbox (and spam folder).');
+})
+.catch(function(err){
+btn.disabled=false;btn.textContent='Send Reset Link';
+showAuthError(friendlyAuthError(err.code));
+});
 });
 
 $('signoutBtn').addEventListener('click',function(){
@@ -610,6 +653,158 @@ Promise.all(promises).then(function(){if(cb)cb(true)}).catch(function(){if(cb)cb
 });
 }
 
+// ============ MIGRATION ============
+function checkLocalMigration(){
+// Check for old localStorage and IndexedDB data
+var localCount=0;
+try{
+var oldHist=JSON.parse(localStorage.getItem('evHist')||'[]');
+localCount=oldHist.length;
+}catch(e){}
+
+// Also check IndexedDB (evCalcDB from earlier version)
+var req=indexedDB.open('evCalcDB',1);
+req.onsuccess=function(e){
+var idb=e.target.result;
+if(idb.objectStoreNames.contains('history')){
+var tx=idb.transaction(['history'],'readonly');
+var store=tx.objectStore('history');
+var countReq=store.count();
+countReq.onsuccess=function(){
+var idbCount=countReq.result;
+var total=localCount+idbCount;
+if(total>0){
+$('migrationCount').textContent=total;
+$('migrationCard').style.display='block';
+}
+};
+}else{
+if(localCount>0){$('migrationCount').textContent=localCount;$('migrationCard').style.display='block'}
+}
+};
+req.onerror=function(){
+if(localCount>0){$('migrationCount').textContent=localCount;$('migrationCard').style.display='block'}
+};
+}
+
+function performMigration(callback){
+var allRecords=[];
+var pendingSources=0;
+var completed=0;
+
+function tryFinish(){
+completed++;
+if(completed>=pendingSources){
+finishMigration(allRecords,callback);
+}
+}
+
+// Source 1: localStorage
+try{
+var localHist=JSON.parse(localStorage.getItem('evHist')||'[]');
+if(localHist.length>0){
+pendingSources++;
+localHist.forEach(function(r){allRecords.push(r)});
+tryFinish();
+}
+}catch(e){}
+
+// Source 2: IndexedDB
+var req=indexedDB.open('evCalcDB',1);
+req.onsuccess=function(e){
+var idb=e.target.result;
+if(idb.objectStoreNames.contains('history')){
+pendingSources++;
+var tx=idb.transaction(['history'],'readonly');
+var store=tx.objectStore('history');
+var getAllReq=store.getAll();
+getAllReq.onsuccess=function(){
+var idbRecords=getAllReq.result||[];
+idbRecords.forEach(function(r){allRecords.push(r)});
+tryFinish();
+};
+getAllReq.onerror=function(){tryFinish()};
+}else{
+// no source to add
+}
+};
+req.onerror=function(){};
+
+// If no sources found, finish immediately
+setTimeout(function(){
+if(pendingSources===0){
+// Could be that IDB async hasn't fired yet; wait a bit more
+setTimeout(function(){
+if(pendingSources===0)finishMigration([],callback);
+},500);
+}
+},100);
+}
+
+function finishMigration(records,callback){
+if(records.length===0){if(callback)callback(0);return}
+var ref=getUserHistoryRef();
+var promises=records.map(function(r){
+// Strip out the _docId field if it exists
+var clean={ts:r.ts,cap:r.cap,cur:r.cur,tgt:r.tgt,r:r.r,needed:r.needed,billed:r.billed,total:r.total,mode:r.mode||'public'};
+return fbFuncs.addDoc(ref,clean);
+});
+Promise.all(promises).then(function(){
+// Clear the old sources after successful upload
+try{localStorage.removeItem('evHist')}catch(e){}
+var delReq=indexedDB.deleteDatabase('evCalcDB');
+delReq.onsuccess=function(){};
+if(callback)callback(records.length);
+}).catch(function(e){
+console.error('Migration failed:',e);
+if(callback)callback(-1);
+});
+}
+
+$('migrateYes').addEventListener('click',function(){
+var btn=this;btn.disabled=true;btn.textContent='Uploading...';
+performMigration(function(count){
+if(count>0){
+showAuthInfo('✓ Uploaded '+count+' sessions to your account.');
+$('migrationCard').style.display='none';
+renderHistory();
+}else if(count===0){
+showAuthInfo('No old data to migrate.');
+$('migrationCard').style.display='none';
+}else{
+showAuthError('Upload failed. Please try again.');
+btn.disabled=false;btn.textContent='Upload to Cloud';
+}
+});
+});
+
+$('migrateNo').addEventListener('click',function(){
+if(confirm('This will permanently delete the old local history. Continue?')){
+try{localStorage.removeItem('evHist')}catch(e){}
+var delReq=indexedDB.deleteDatabase('evCalcDB');
+delReq.onsuccess=function(){};
+$('migrationCard').style.display='none';
+}
+});
+
+// Check for local data when auth screen shows
+var origAuthObserver=function(user){
+if(user){checkLocalMigration();}
+};
+window.addEventListener('firebase-ready',function(){
+setTimeout(function(){
+// Slight delay to let auth state settle
+var checkInterval=setInterval(function(){
+if(currentUser){
+checkLocalMigration();
+clearInterval(checkInterval);
+}
+},500);
+// Stop checking after 10 seconds
+setTimeout(function(){clearInterval(checkInterval)},10000);
+},1000);
+});
+
 // ============ MAIN APP LOGIC ============
 var capacity=$('capacity'),current=$('current'),target=$('target'),rate=$('rate'),quickRate=$('quickRate'),efficiency=$('efficiency'),sessionFee=$('sessionFee'),tax=$('tax'),chargerPower=$('chargerPower');
 var currentNum=$('currentNum'),targetNum=$('targetNum');
@@ -621,17 +816,6 @@ var homeRateSelect=$('homeRateSelect'),homeRate=$('homeRate'),homeChargerPower=$
 var customHomePower=$('customHomePower'),customHomePowerField=$('customHomePowerField');
 var customPublicPower=$('customPublicPower'),customPublicPowerField=$('customPublicPowerField');
 var tabHome=$('tabHome'),tabPublic=$('tabPublic'),homeFields=$('homeFields'),publicFields=$('publicFields'),compareCard=$('compareCard');
-
-// Define efficiency field (missing in original)
-var efficiency=document.getElementById('efficiency');
-if(!efficiency){
-  // Add a hidden efficiency input for public DC if not present
-  var effInput=document.createElement('input');
-  effInput.type='number';effInput.id='efficiency';effInput.value='90';
-  effInput.style.display='none';
-  document.body.appendChild(effInput);
-  efficiency=effInput;
-}
 
 document.querySelectorAll('.nav-item').forEach(function(btn){
 btn.addEventListener('click',function(){
