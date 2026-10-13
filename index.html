@@ -5,8 +5,49 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#0a0612">
 <title>EV Charge Calculator — Sri Lanka</title>
-<link rel="manifest" href="/ev-calculator/manifest.json">
-<script>if('serviceWorker' in navigator) navigator.serviceWorker.register('/ev-calculator/sw.js');</script>
+<link rel="manifest" href="manifest.json">
+<script>if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');</script>
+
+<!-- Firebase SDK -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB5dZG9i2ZSSO4LeurzZFI8Loku7R20rE8",
+  authDomain: "ev-charge-calculator-e0212.firebaseapp.com",
+  projectId: "ev-charge-calculator-e0212",
+  storageBucket: "ev-charge-calculator-e0212.firebasestorage.app",
+  messagingSenderId: "455028494799",
+  appId: "1:455028494799:web:96ba0508765a21d85082ba"
+};
+
+const fbApp = initializeApp(firebaseConfig);
+const auth = getAuth(fbApp);
+const db = getFirestore(fbApp);
+
+// Expose to global scope so the main script can use them
+window.fbAuth = auth;
+window.fbDB = db;
+window.fbFuncs = {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  doc,
+  query,
+  orderBy,
+  serverTimestamp
+};
+window.firebaseReady = true;
+window.dispatchEvent(new Event('firebase-ready'));
+</script>
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{--bg:#0a0612;--card:rgba(30,20,60,0.55);--border:rgba(120,80,255,0.18);--blue:#3b82f6;--blueB:#60a5fa;--purple:#8b5cf6;--purpleB:#a78bfa;--text:#ede9fe;--dim:#a29ac4;--faint:#6a5a9e;--input-bg:rgba(10,6,18,0.7);--shadow:rgba(0,0,0,0.4)}
@@ -26,7 +67,7 @@ h1{font-size:1.4rem;font-weight:800;text-align:center;margin-bottom:22px;backgro
 .field label{display:flex;justify-content:space-between;align-items:center;font-size:0.85rem;color:var(--dim);margin-bottom:8px;font-weight:500}
 input[type=range]{-webkit-appearance:none;width:100%;height:6px;border-radius:3px;background:linear-gradient(90deg,var(--blue),var(--purple));outline:none}
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;background:#fff;cursor:pointer;border:3px solid var(--purple);box-shadow:0 0 12px rgba(139,92,246,0.8),0 2px 8px rgba(0,0,0,0.5)}
-input[type=number],select{width:100%;padding:13px 16px;border-radius:12px;border:1px solid rgba(139,92,246,0.2);background:var(--input-bg);color:var(--text);font-size:1rem;outline:none;font-family:inherit}
+input[type=number],input[type=email],input[type=password],select{width:100%;padding:13px 16px;border-radius:12px;border:1px solid rgba(139,92,246,0.2);background:var(--input-bg);color:var(--text);font-size:1rem;outline:none;font-family:inherit}
 input:focus,select:focus{border-color:var(--purpleB);box-shadow:0 0 0 3px rgba(139,92,246,0.15)}
 input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 input[type=number]{-moz-appearance:textfield}
@@ -57,10 +98,72 @@ body.light select option{background:#fff;color:#1a1033}
 .mode-tabs{display:flex;gap:6px;margin-bottom:16px;background:var(--input-bg);padding:4px;border-radius:12px;border:1px solid rgba(139,92,246,0.15)}
 .mode-tab{flex:1;padding:10px;border-radius:9px;border:none;background:none;color:var(--faint);font-family:inherit;font-weight:700;font-size:0.8rem;cursor:pointer;transition:all 0.2s}
 .mode-tab.active{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;box-shadow:0 4px 12px rgba(139,92,246,0.4)}
+/* Auth styles */
+.auth-container{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);background-image:radial-gradient(circle at 15% 0%,rgba(59,130,246,0.18),transparent 45%),radial-gradient(circle at 85% 100%,rgba(139,92,246,0.18),transparent 45%);display:flex;align-items:center;justify-content:center;padding:20px;z-index:9999;overflow-y:auto}
+.auth-box{background:var(--card);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:24px;padding:32px 24px;width:100%;max-width:380px;border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,0.5)}
+.auth-box h1{font-size:1.6rem;margin-bottom:8px}
+.auth-box .subtitle{text-align:center;color:var(--dim);font-size:0.85rem;margin-bottom:28px}
+.auth-tabs{display:flex;gap:6px;margin-bottom:20px;background:var(--input-bg);padding:4px;border-radius:12px;border:1px solid rgba(139,92,246,0.15)}
+.auth-tab{flex:1;padding:10px;border-radius:9px;border:none;background:none;color:var(--faint);font-family:inherit;font-weight:700;font-size:0.85rem;cursor:pointer;transition:all 0.2s}
+.auth-tab.active{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff}
+.auth-btn{width:100%;padding:15px;border-radius:14px;border:none;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;box-shadow:0 4px 20px rgba(139,92,246,0.4);margin-top:8px;transition:all 0.2s}
+.auth-btn:active{transform:scale(0.98)}
+.auth-btn:disabled{opacity:0.5;cursor:not-allowed}
+.auth-error{background:rgba(248,113,113,0.15);border:1px solid rgba(248,113,113,0.3);color:#fca5a5;padding:12px;border-radius:10px;font-size:0.8rem;margin-bottom:14px;display:none}
+.auth-info{background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.3);color:#93c5fd;padding:12px;border-radius:10px;font-size:0.8rem;margin-bottom:14px;display:none}
+.auth-notice{text-align:center;font-size:0.7rem;color:var(--faint);margin-top:16px;line-height:1.5}
+.user-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--input-bg);border-radius:14px;border:1px solid rgba(139,92,246,0.15);margin-bottom:14px}
+.user-bar .email{font-size:0.8rem;color:var(--dim);word-break:break-all;padding-right:10px}
+.user-bar .signout{background:transparent;color:#f87171;border:1px solid rgba(248,113,113,0.3);font-size:0.75rem;padding:6px 12px;border-radius:8px;cursor:pointer;font-weight:600;font-family:inherit;white-space:nowrap}
 @media(max-width:480px){body{padding-left:88px;padding-right:12px}.app{max-width:100%}.sidebar{width:72px}.nav-item{width:56px}.nav-icon{font-size:1.25rem}.nav-label{font-size:0.55rem}.compare-table{font-size:0.72rem}}
 </style>
 </head>
 <body>
+
+<!-- AUTH SCREEN -->
+<div class="auth-container" id="authScreen">
+<div class="auth-box">
+<h1>⚡ EV Calc</h1>
+<p class="subtitle">Sign in to sync your charging history</p>
+
+<div class="auth-tabs">
+<button type="button" class="auth-tab active" id="tabLogin">Sign In</button>
+<button type="button" class="auth-tab" id="tabSignup">Sign Up</button>
+</div>
+
+<div class="auth-error" id="authError"></div>
+<div class="auth-info" id="authInfo"></div>
+
+<div id="loginForm">
+<div class="field">
+<label>Email</label>
+<input type="email" id="loginEmail" placeholder="you@example.com" autocomplete="email">
+</div>
+<div class="field">
+<label>Password</label>
+<input type="password" id="loginPassword" placeholder="Your password" autocomplete="current-password">
+</div>
+<button type="button" class="auth-btn" id="loginBtn">Sign In</button>
+</div>
+
+<div id="signupForm" style="display:none">
+<div class="field">
+<label>Email</label>
+<input type="email" id="signupEmail" placeholder="you@example.com" autocomplete="email">
+</div>
+<div class="field">
+<label>Password <span class="hint">(min 6 characters)</span></label>
+<input type="password" id="signupPassword" placeholder="Create a password" autocomplete="new-password">
+</div>
+<button type="button" class="auth-btn" id="signupBtn">Create Account</button>
+</div>
+
+<p class="auth-notice">Your charging history is stored securely in your own account and syncs across all your devices.</p>
+</div>
+</div>
+
+<!-- MAIN APP (hidden until signed in) -->
+<div id="mainApp" style="display:none">
 
 <div class="sidebar">
 <button type="button" class="nav-item active" data-page="calc"><span class="nav-icon">⚡</span><span class="nav-label">Calc</span></button>
@@ -74,6 +177,11 @@ body.light select option{background:#fff;color:#1a1033}
 <!-- PAGE: CALCULATOR -->
 <div class="page active" id="page-calc">
 <h1>⚡ Charge Calculator</h1>
+
+<div class="user-bar">
+<span class="email" id="userEmail">—</span>
+<button type="button" class="signout" id="signoutBtn">Sign Out</button>
+</div>
 
 <div class="card">
 <div class="card-title">Vehicle</div>
@@ -132,7 +240,6 @@ body.light select option{background:#fff;color:#1a1033}
 <button type="button" class="mode-tab active" id="tabPublic">🔌 Public DC</button>
 </div>
 
-<!-- Home mode fields -->
 <div id="homeFields" style="display:none">
 <div class="field">
 <label>Home Electricity Rate <span class="hint">(LKR/kWh)</span></label>
@@ -182,11 +289,9 @@ body.light select option{background:#fff;color:#1a1033}
 <div class="field">
 <label>Home Charging Efficiency <span class="hint">(%)</span></label>
 <input type="number" id="homeEfficiency" value="88" step="1" min="50" max="100" inputmode="numeric">
-<div class="hint">AC home charging is typically 85–90% efficient.</div>
 </div>
 </div>
 
-<!-- Public mode fields -->
 <div id="publicFields">
 <div class="field">
 <label>Quick Select</label>
@@ -270,7 +375,7 @@ body.light select option{background:#fff;color:#1a1033}
 </div>
 <div id="feeRow" style="display:none;justify-content:space-between;padding:10px 0;font-size:0.9rem"><span style="color:var(--dim)">Session fee</span><span id="feeVal" style="font-weight:600;color:var(--text)">LKR 0.00</span></div>
 <div id="taxRow" style="display:none;justify-content:space-between;padding:10px 0;font-size:0.9rem"><span style="color:var(--dim)">Tax</span><span id="taxVal" style="font-weight:600;color:var(--text)">LKR 0.00</span></div>
-<div style="margin-top:18px"><button type="button" id="saveBtn" style="width:100%;padding:15px;border-radius:14px;border:none;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;box-shadow:0 4px 20px rgba(139,92,246,0.4)">💾 Save to History</button></div>
+<div style="margin-top:18px"><button type="button" id="saveBtn" style="width:100%;padding:15px;border-radius:14px;border:none;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;box-shadow:0 4px 20px rgba(139,92,246,0.4)">💾 Save to Cloud</button></div>
 </div>
 
 <div class="card" id="compareCard">
@@ -369,99 +474,164 @@ body.light select option{background:#fff;color:#1a1033}
 <p style="font-size:0.85rem;color:var(--dim);line-height:1.7"><strong style="color:var(--purpleB)">Range at Target:</strong> Rated range × (Target% ÷ 100)</p>
 </div>
 <div class="card">
-<div class="card-title">Home vs Public Charging</div>
-<p style="font-size:0.85rem;color:var(--dim);line-height:1.7">Switch between <strong style="color:var(--purpleB)">Home</strong> and <strong style="color:var(--purpleB)">Public DC</strong> at the top of the Charging Mode card. Home mode uses your CEB/LECO domestic tariff and slower AC charger. Public mode uses DC fast charger rates. Home charging is usually 3–5× cheaper per kWh but takes longer.</p>
-<p style="font-size:0.85rem;color:var(--dim);line-height:1.7;margin-top:10px"><strong style="color:var(--purpleB)">Custom Power:</strong> If your charger isn't in the list, pick <strong>Custom Power — Enter Manually</strong> and type your exact kW rating.</p>
+<div class="card-title">Cloud Sync</div>
+<p style="font-size:0.85rem;color:var(--dim);line-height:1.7">Your charging history is stored in your personal Firebase account. Sign in on any device with the same email and password to see your history. Each user's data is private and secure.</p>
 </div>
 </div>
 
+</div>
 </div>
 
 <script>
 var $=function(id){return document.getElementById(id)};
+var auth=null,db=null,fbFuncs=null;
+var currentUser=null;
+var currentMode='public';
+var vehicleRanges={'30.08':300,'38.88':380,'44.9':405,'60.48':427,'49.92':410,'43.89':320,'51.87':340,'56.83':480,'64':450,'61.06':420};
+var vehicleDCPower={'30.08':30,'38.88':40,'44.9':60,'60.48':80,'49.92':70,'43.89':40,'51.87':60,'56.83':100,'64':135,'61.06':80};
+var providerRates=[
+{name:'Volt Charge',rate:150},{name:'ChargeNET Fast',rate:120},
+{name:'LECO Day',rate:89.23},{name:'LECO Peak',rate:113.85},{name:'LECO Off-Peak',rate:54.36},
+{name:'CEB Day',rate:83.08},{name:'CEB Peak',rate:107.70},{name:'CEB Off-Peak',rate:51.29}
+];
+
+// ============ FIREBASE INIT ============
+function onFirebaseReady(){
+  auth=window.fbAuth;db=window.fbDB;fbFuncs=window.fbFuncs;
+  
+  fbFuncs.onAuthStateChanged(auth,function(user){
+    currentUser=user;
+    if(user){
+      $('authScreen').style.display='none';
+      $('mainApp').style.display='block';
+      $('userEmail').textContent=user.email;
+      renderHistory();
+    }else{
+      $('authScreen').style.display='flex';
+      $('mainApp').style.display='none';
+    }
+  });
+}
+
+if(window.firebaseReady){onFirebaseReady();}
+else{window.addEventListener('firebase-ready',onFirebaseReady);}
+
+// ============ AUTH UI ============
+$('tabLogin').addEventListener('click',function(){
+$('tabLogin').classList.add('active');$('tabSignup').classList.remove('active');
+$('loginForm').style.display='block';$('signupForm').style.display='none';
+$('authError').style.display='none';$('authInfo').style.display='none';
+});
+$('tabSignup').addEventListener('click',function(){
+$('tabSignup').classList.add('active');$('tabLogin').classList.remove('active');
+$('signupForm').style.display='block';$('loginForm').style.display='none';
+$('authError').style.display='none';$('authInfo').style.display='none';
+});
+
+function showAuthError(msg){$('authError').textContent=msg;$('authError').style.display='block';$('authInfo').style.display='none'}
+function showAuthInfo(msg){$('authInfo').textContent=msg;$('authInfo').style.display='block';$('authError').style.display='none'}
+
+function friendlyAuthError(code){
+var map={
+'auth/invalid-email':'Please enter a valid email address.',
+'auth/user-not-found':'No account found with that email.',
+'auth/wrong-password':'Incorrect password. Please try again.',
+'auth/invalid-credential':'Invalid email or password.',
+'auth/email-already-in-use':'That email is already registered. Try signing in.',
+'auth/weak-password':'Password must be at least 6 characters.',
+'auth/too-many-requests':'Too many attempts. Please wait and try again.',
+'auth/network-request-failed':'Network error. Check your connection.'
+};
+return map[code]||'Something went wrong. Please try again.';
+}
+
+$('loginBtn').addEventListener('click',function(){
+var email=$('loginEmail').value.trim();
+var pass=$('loginPassword').value;
+if(!email||!pass){showAuthError('Please enter email and password.');return}
+this.disabled=true;this.textContent='Signing in...';
+fbFuncs.signInWithEmailAndPassword(auth,email,pass)
+.then(function(){this.disabled=false;this.textContent='Sign In'}.bind(this))
+.catch(function(err){this.disabled=false;this.textContent='Sign In';showAuthError(friendlyAuthError(err.code))}.bind(this));
+});
+
+$('signupBtn').addEventListener('click',function(){
+var email=$('signupEmail').value.trim();
+var pass=$('signupPassword').value;
+if(!email||!pass){showAuthError('Please enter email and password.');return}
+if(pass.length<6){showAuthError('Password must be at least 6 characters.');return}
+this.disabled=true;this.textContent='Creating account...';
+fbFuncs.createUserWithEmailAndPassword(auth,email,pass)
+.then(function(){this.disabled=false;this.textContent='Create Account'}.bind(this))
+.catch(function(err){this.disabled=false;this.textContent='Create Account';showAuthError(friendlyAuthError(err.code))}.bind(this));
+});
+
+$('signoutBtn').addEventListener('click',function(){
+if(confirm('Sign out?')){fbFuncs.signOut(auth)}
+});
+
+// ============ CLOUD HISTORY ============
+function getUserHistoryRef(){
+return fbFuncs.collection(db,'users',currentUser.uid,'history');
+}
+
+function addRecord(record,cb){
+if(!currentUser){if(cb)cb(false);return}
+fbFuncs.addDoc(getUserHistoryRef(),record)
+.then(function(){if(cb)cb(true)})
+.catch(function(e){console.error('Add failed:',e);if(cb)cb(false)});
+}
+
+function getAllRecords(cb){
+if(!currentUser){cb([]);return}
+fbFuncs.getDocs(getUserHistoryRef())
+.then(function(snap){
+var arr=[];
+snap.forEach(function(d){var data=d.data();data._docId=d.id;arr.push(data)});
+cb(arr);
+})
+.catch(function(e){console.error('Get failed:',e);cb([])});
+}
+
+function deleteRecord(ts,cb){
+getAllRecords(function(arr){
+var target=arr.find(function(x){return x.ts===ts});
+if(!target){if(cb)cb(false);return}
+fbFuncs.deleteDoc(fbFuncs.doc(db,'users',currentUser.uid,'history',target._docId))
+.then(function(){if(cb)cb(true)})
+.catch(function(){if(cb)cb(false)});
+});
+}
+
+function clearAllRecords(cb){
+getAllRecords(function(arr){
+var promises=arr.map(function(x){return fbFuncs.deleteDoc(fbFuncs.doc(db,'users',currentUser.uid,'history',x._docId))});
+Promise.all(promises).then(function(){if(cb)cb(true)}).catch(function(){if(cb)cb(false)});
+});
+}
+
+// ============ MAIN APP LOGIC ============
 var capacity=$('capacity'),current=$('current'),target=$('target'),rate=$('rate'),quickRate=$('quickRate'),efficiency=$('efficiency'),sessionFee=$('sessionFee'),tax=$('tax'),chargerPower=$('chargerPower');
 var currentNum=$('currentNum'),targetNum=$('targetNum');
 var vehicleSelect=$('vehicleSelect'),customCapacity=$('customCapacity'),customCapacityField=$('customCapacityField');
 var totalCost=$('totalCost'),energyAdd=$('energyAdd'),energyBilled=$('energyBilled'),batteryTarget=$('batteryTarget'),chargeTime=$('chargeTime');
 var rangeAtTarget=$('rangeAtTarget');
 var feeRow=$('feeRow'),feeVal=$('feeVal'),taxRow=$('taxRow'),taxVal=$('taxVal'),saveBtn=$('saveBtn');
-
 var homeRateSelect=$('homeRateSelect'),homeRate=$('homeRate'),homeChargerPower=$('homeChargerPower'),homeEfficiency=$('homeEfficiency');
 var customHomePower=$('customHomePower'),customHomePowerField=$('customHomePowerField');
 var customPublicPower=$('customPublicPower'),customPublicPowerField=$('customPublicPowerField');
 var tabHome=$('tabHome'),tabPublic=$('tabPublic'),homeFields=$('homeFields'),publicFields=$('publicFields'),compareCard=$('compareCard');
 
-var currentMode='public';
-
-var vehicleRanges={'30.08':300,'38.88':380,'44.9':405,'60.48':427,'49.92':410,'43.89':320,'51.87':340,'56.83':480,'64':450,'61.06':420};
-var vehicleDCPower={'30.08':30,'38.88':40,'44.9':60,'60.48':80,'49.92':70,'43.89':40,'51.87':60,'56.83':100,'64':135,'61.06':80};
-
-var providerRates=[
-{name:'Volt Charge',rate:150},
-{name:'ChargeNET Fast',rate:120},
-{name:'LECO Day',rate:89.23},
-{name:'LECO Peak',rate:113.85},
-{name:'LECO Off-Peak',rate:54.36},
-{name:'CEB Day',rate:83.08},
-{name:'CEB Peak',rate:107.70},
-{name:'CEB Off-Peak',rate:51.29}
-];
-
-// ============ INDEXEDDB ============
-var DB_NAME='evCalcDB';
-var DB_VERSION=1;
-var STORE_NAME='history';
-var db=null;
-
-function openDB(callback){
-var req=indexedDB.open(DB_NAME,DB_VERSION);
-req.onupgradeneeded=function(e){
-var database=e.target.result;
-if(!database.objectStoreNames.contains(STORE_NAME)){
-var store=database.createObjectStore(STORE_NAME,{keyPath:'ts'});
-store.createIndex('ts','ts',{unique:true});
+// Define efficiency field (missing in original)
+var efficiency=document.getElementById('efficiency');
+if(!efficiency){
+  // Add a hidden efficiency input for public DC if not present
+  var effInput=document.createElement('input');
+  effInput.type='number';effInput.id='efficiency';effInput.value='90';
+  effInput.style.display='none';
+  document.body.appendChild(effInput);
+  efficiency=effInput;
 }
-};
-req.onsuccess=function(e){db=e.target.result;if(callback)callback()};
-req.onerror=function(e){console.error('IndexedDB error:',e.target.error);if(callback)callback()};
-}
-
-function addRecord(record,cb){
-if(!db){if(cb)cb(false);return}
-var tx=db.transaction([STORE_NAME],'readwrite');
-var req=tx.objectStore(STORE_NAME).add(record);
-req.onsuccess=function(){if(cb)cb(true)};
-req.onerror=function(e){console.error('Add failed:',e.target.error);if(cb)cb(false)};
-}
-
-function getAllRecords(cb){
-if(!db){cb([]);return}
-var tx=db.transaction([STORE_NAME],'readonly');
-var req=tx.objectStore(STORE_NAME).getAll();
-req.onsuccess=function(){cb(req.result||[])};
-req.onerror=function(e){console.error('Get failed:',e.target.error);cb([])};
-}
-
-function deleteRecord(ts,cb){
-if(!db){if(cb)cb(false);return}
-var tx=db.transaction([STORE_NAME],'readwrite');
-var req=tx.objectStore(STORE_NAME).delete(ts);
-req.onsuccess=function(){if(cb)cb(true)};
-req.onerror=function(){if(cb)cb(false)};
-}
-
-function clearAllRecords(cb){
-if(!db){if(cb)cb(false);return}
-var tx=db.transaction([STORE_NAME],'readwrite');
-var req=tx.objectStore(STORE_NAME).clear();
-req.onsuccess=function(){if(cb)cb(true)};
-req.onerror=function(){if(cb)cb(false)};
-}
-
-if(navigator.storage&&navigator.storage.persist){
-navigator.storage.persist().then(function(p){console.log('Persistent storage:',p?'granted':'denied')});
-}
-// =================================
 
 document.querySelectorAll('.nav-item').forEach(function(btn){
 btn.addEventListener('click',function(){
@@ -500,16 +670,11 @@ function clamp(v,min,max){v=parseInt(v);if(isNaN(v))return min;if(v<min)return m
 var currentCalc=null;
 
 function getHomePower(){
-if(homeChargerPower.value==='custom'){
-return parseFloat(customHomePower.value)||7;
-}
+if(homeChargerPower.value==='custom'){return parseFloat(customHomePower.value)||7}
 return parseFloat(homeChargerPower.value)||7;
 }
-
 function getPublicPower(){
-if(chargerPower.value==='custom'){
-return parseFloat(customPublicPower.value)||30;
-}
+if(chargerPower.value==='custom'){return parseFloat(customPublicPower.value)||30}
 return parseFloat(chargerPower.value)||30;
 }
 
@@ -519,9 +684,7 @@ var cur=parseFloat(current.value)||0;
 var tgt=parseFloat(target.value)||0;
 var fee=parseFloat(sessionFee.value)||0;
 var taxPct=parseFloat(tax.value)||0;
-
-currentNum.value=cur;
-targetNum.value=tgt;
+currentNum.value=cur;targetNum.value=tgt;
 
 var r,eff,power;
 if(currentMode==='home'){
@@ -549,20 +712,13 @@ batteryTarget.textContent=battAtTarget.toFixed(2)+' kWh';
 
 if(needed>0&&power>0){
 var hours=needed/power;
-if(hours>=1){
-var h=Math.floor(hours);
-var m=Math.round((hours-h)*60);
-chargeTime.textContent=h+'h '+m+'m';
-}else{
-var mins=Math.round(hours*60);
-chargeTime.textContent=mins+' min';
-}
+if(hours>=1){var h=Math.floor(hours);var m=Math.round((hours-h)*60);chargeTime.textContent=h+'h '+m+'m'}
+else{var mins=Math.round(hours*60);chargeTime.textContent=mins+' min'}
 }else{chargeTime.textContent='—'}
 
 var rangePerFull=vehicleRanges[capacity.value]||0;
-if(rangePerFull>0){
-rangeAtTarget.textContent=((tgt/100)*rangePerFull).toFixed(0)+' km';
-}else{rangeAtTarget.textContent='—'}
+if(rangePerFull>0){rangeAtTarget.textContent=((tgt/100)*rangePerFull).toFixed(0)+' km'}
+else{rangeAtTarget.textContent='—'}
 
 if(fee>0){feeRow.style.display='flex';feeVal.textContent=lkr(fee)}else{feeRow.style.display='none'}
 if(taxAmount>0){taxRow.style.display='flex';taxVal.textContent=lkr(taxAmount)}else{taxRow.style.display='none'}
@@ -612,39 +768,25 @@ var v=this.value;
 if(v==='custom'){customCapacityField.style.display='block'}
 else{customCapacityField.style.display='none';if(v){capacity.value=v;calc();savePrefs()}}
 });
-
 customCapacity.addEventListener('input',function(){capacity.value=this.value;calc();savePrefs()});
-
 quickRate.addEventListener('change',function(){
 if(this.value&&this.value!=='custom'){rate.value=this.value;calc();savePrefs()}
 else if(this.value==='custom'){rate.value='';rate.focus();calc()}
 });
-
 homeRateSelect.addEventListener('change',function(){
 if(this.value&&this.value!=='custom'){homeRate.value=this.value;calc();savePrefs()}
 else if(this.value==='custom'){homeRate.value='';homeRate.focus();calc()}
 });
-
 homeChargerPower.addEventListener('change',function(){
-if(this.value==='custom'){
-customHomePowerField.style.display='block';
-customHomePower.focus();
-}else{
-customHomePowerField.style.display='none';
-}
+if(this.value==='custom'){customHomePowerField.style.display='block';customHomePower.focus()}
+else{customHomePowerField.style.display='none'}
 calc();savePrefs();
 });
-
 chargerPower.addEventListener('change',function(){
-if(this.value==='custom'){
-customPublicPowerField.style.display='block';
-customPublicPower.focus();
-}else{
-customPublicPowerField.style.display='none';
-}
+if(this.value==='custom'){customPublicPowerField.style.display='block';customPublicPower.focus()}
+else{customPublicPowerField.style.display='none'}
 calc();savePrefs();
 });
-
 currentNum.addEventListener('input',function(){var v=clamp(this.value,1,100);current.value=v;calc();savePrefs()});
 currentNum.addEventListener('blur',function(){var v=clamp(this.value,1,100);this.value=v;current.value=v;calc();savePrefs()});
 targetNum.addEventListener('input',function(){var v=clamp(this.value,1,100);target.value=v;calc();savePrefs()});
@@ -657,8 +799,7 @@ try{localStorage.setItem('evPrefs',JSON.stringify({
 capacity:capacity.value,current:current.value,target:target.value,rate:rate.value,efficiency:efficiency.value,sessionFee:sessionFee.value,tax:tax.value,vehicle:vehicleSelect.value,chargerPower:chargerPower.value,
 homeRate:homeRate.value,homeChargerPower:homeChargerPower.value,homeEfficiency:homeEfficiency.value,
 customHomePower:customHomePower.value,customPublicPower:customPublicPower.value,
-mode:currentMode,
-theme:document.body.classList.contains('light')?'light':'dark'
+mode:currentMode,theme:document.body.classList.contains('light')?'light':'dark'
 }))}catch(e){}
 }
 
@@ -688,6 +829,7 @@ compareCard.style.display='none';
 }
 
 function renderHistory(){
+if(!currentUser)return;
 getAllRecords(function(hist){
 var list=$('historyList'),stats=$('historyStats'),cb=$('clearBtn'),er=$('exportRow');
 if(hist.length===0){list.innerHTML='<div style="text-align:center;padding:28px 12px;color:#6a5a9e;font-size:0.85rem;font-style:italic">No charges logged yet.</div>';stats.style.display='none';cb.style.display='none';er.style.display='none';return}
@@ -706,16 +848,16 @@ list.querySelectorAll('.delBtn').forEach(function(b){b.addEventListener('click',
 }
 
 saveBtn.addEventListener('click',function(){
-if(!currentCalc||currentCalc.needed<=0)return;
+if(!currentCalc||currentCalc.needed<=0||!currentUser)return;
 var record={ts:Date.now(),cap:currentCalc.cap,cur:currentCalc.cur,tgt:currentCalc.tgt,r:currentCalc.r,needed:currentCalc.needed,billed:currentCalc.billed,total:currentCalc.total,mode:currentCalc.mode};
 addRecord(record,function(ok){
 if(ok){
 renderHistory();
-saveBtn.textContent='✓ Saved!';saveBtn.style.background='#2ecc71';
-setTimeout(function(){saveBtn.textContent='💾 Save to History';saveBtn.style.background='linear-gradient(135deg,#3b82f6,#8b5cf6)'},1200);
+saveBtn.textContent='✓ Saved to Cloud!';saveBtn.style.background='#2ecc71';
+setTimeout(function(){saveBtn.textContent='💾 Save to Cloud';saveBtn.style.background='linear-gradient(135deg,#3b82f6,#8b5cf6)'},1200);
 }else{
 saveBtn.textContent='⚠ Save failed';saveBtn.style.background='#e74c3c';
-setTimeout(function(){saveBtn.textContent='💾 Save to History';saveBtn.style.background='linear-gradient(135deg,#3b82f6,#8b5cf6)'},1500);
+setTimeout(function(){saveBtn.textContent='💾 Save to Cloud';saveBtn.style.background='linear-gradient(135deg,#3b82f6,#8b5cf6)'},1500);
 }
 });
 });
@@ -756,7 +898,7 @@ el.addEventListener('input',calc);
 el.addEventListener('change',function(){calc();savePrefs()});
 });
 
-openDB(function(){calc();renderHistory()});
+calc();
 </script>
 </body>
 </html>
