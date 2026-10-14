@@ -62,10 +62,6 @@ select{-webkit-appearance:none;appearance:none;background-image:url("data:image/
 select optgroup{background:#1e1b4b;color:var(--purpleB)}
 select option{background:#120a24;color:#fff}
 body.light select option{background:#fff;color:#1a1033}
-.range-pill{background:linear-gradient(135deg,rgba(59,130,246,0.25),rgba(139,92,246,0.25));border:1px solid rgba(139,92,246,0.4);border-radius:12px;padding:12px 16px;margin-top:14px;display:flex;justify-content:space-between;align-items:center}
-.range-pill .rl{font-size:0.7rem;text-transform:uppercase;letter-spacing:1.2px;color:var(--dim);font-weight:700}
-.range-pill .rv{font-size:1.3rem;font-weight:800;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-body.light .range-pill .rv{background:none;-webkit-text-fill-color:initial;color:#5b21b6}
 .hint{font-size:0.7rem;color:var(--faint);margin-top:6px;font-style:italic}
 .pct-input{width:70px;text-align:center;font-weight:700;color:var(--text);font-size:0.95rem;background:rgba(139,92,246,0.2);border:1px solid rgba(139,92,246,0.3);padding:4px 8px;border-radius:8px;font-family:inherit;outline:none}
 .pct-input:focus{border-color:var(--purpleB);box-shadow:0 0 0 3px rgba(139,92,246,0.15)}
@@ -158,6 +154,7 @@ body.light .notice-banner{color:#b45309}
 .modal-box .modal-actions button{flex:1;padding:12px;border-radius:12px;font-size:0.9rem;font-weight:700;cursor:pointer;font-family:inherit;border:none}
 .modal-box .modal-actions .m-cancel{background:transparent;color:var(--dim);border:1px solid rgba(148,163,184,0.3)}
 .modal-box .modal-actions .m-ok{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff}
+.modal-box .modal-actions .m-ok:disabled{opacity:0.4;cursor:not-allowed}
 .vehicle-card{background:var(--input-bg);border-radius:14px;padding:14px;margin-bottom:10px;border:1px solid rgba(139,92,246,0.15);border-left:3px solid var(--purple);position:relative}
 .vehicle-card.active{border-left-color:#2ecc71;background:linear-gradient(135deg,rgba(46,204,113,0.08),var(--input-bg))}
 .vehicle-card .vc-name{font-weight:700;color:var(--text);font-size:0.95rem;margin-bottom:4px;padding-right:60px}
@@ -187,10 +184,8 @@ body.light .notice-banner{color:#b45309}
 </head>
 <body>
 
-<!-- OFFLINE BANNER -->
 <div class="offline-banner" id="offlineBanner">⚠ Offline — showing cached data</div>
 
-<!-- AUTH SCREEN -->
 <div class="auth-container" id="authScreen">
 <div class="auth-box">
 <h1>⚡ EV Calc</h1>
@@ -221,7 +216,6 @@ body.light .notice-banner{color:#b45309}
 </div>
 </div>
 
-<!-- INFO MODAL -->
 <div class="modal-overlay" id="infoModal">
 <div class="modal-box">
 <h3 id="infoTitle">Info</h3>
@@ -230,7 +224,6 @@ body.light .notice-banner{color:#b45309}
 </div>
 </div>
 
-<!-- VEHICLE EDIT MODAL -->
 <div class="modal-overlay" id="vehicleModal">
 <div class="modal-box">
 <h3 id="vehicleModalTitle">Add Vehicle</h3>
@@ -247,7 +240,6 @@ body.light .notice-banner{color:#b45309}
 </div>
 </div>
 
-<!-- CONFIRM MODAL -->
 <div class="modal-overlay" id="confirmModal">
 <div class="modal-box">
 <h3 id="confirmTitle">Confirm</h3>
@@ -259,7 +251,6 @@ body.light .notice-banner{color:#b45309}
 </div>
 </div>
 
-<!-- BANK DETAILS MODAL -->
 <div class="modal-overlay" id="bankModal">
 <div class="modal-box">
 <h3>🏦 Bank Transfer Details</h3>
@@ -276,7 +267,55 @@ body.light .notice-banner{color:#b45309}
 </div>
 </div>
 
-<!-- MAIN APP -->
+<div class="modal-overlay" id="submitStationModal">
+<div class="modal-box">
+<h3>Submit a Station</h3>
+<div class="field">
+<label>Network / provider <span class="info-i" data-info="subStationNetwork">i</span></label>
+<select id="subNetwork">
+<option value="">— Choose a network —</option>
+<option value="Volt Charge">Volt Charge</option>
+<option value="chargeNET">chargeNET</option>
+<option value="LECO">LECO</option>
+<option value="CEB">CEB</option>
+<option value="ChargeUP">ChargeUP (Lanka IOC)</option>
+<option value="Other">Other / Independent</option>
+</select>
+</div>
+<div class="field">
+<label>Station name <span class="hint">(e.g. Volt Charge – Keells Kandy)</span></label>
+<input type="text" id="subName" placeholder="Station name">
+</div>
+<div class="field">
+<label>Address <span class="hint">(optional)</span></label>
+<input type="text" id="subAddress" placeholder="Street, city">
+</div>
+<div class="field">
+<label>Charger type <span class="info-i" data-info="subStationType">i</span></label>
+<select id="subType">
+<option value="DC Fast">DC Fast (CCS2)</option>
+<option value="AC">AC (Type 2)</option>
+<option value="Both">Both DC and AC available</option>
+<option value="Unknown">Not sure</option>
+</select>
+</div>
+<div class="field">
+<label>Rate per kWh <span class="hint">(LKR, optional)</span></label>
+<input type="number" id="subRate" step="0.01" min="0" inputmode="decimal" placeholder="e.g. 150">
+</div>
+<div style="background:var(--input-bg);border-radius:12px;padding:14px;margin-top:14px">
+<div style="font-size:0.75rem;color:var(--dim);line-height:1.6;margin-bottom:8px">📍 Your current location will be used for this station. Make sure you're standing at the charger.</div>
+<div id="subLocationStatus" style="font-size:0.8rem;font-weight:600;color:var(--dim)">Tap "Get My Location" to continue</div>
+<div id="subCoords" style="font-size:0.72rem;color:var(--faint);margin-top:4px;font-family:monospace"></div>
+</div>
+<button type="button" id="subGetLocationBtn" style="width:100%;padding:12px;margin-top:12px;border-radius:12px;border:1px solid rgba(59,130,246,0.4);background:rgba(59,130,246,0.15);color:var(--blueB);font-size:0.9rem;font-weight:700;cursor:pointer;font-family:inherit">📍 Get My Location</button>
+<div class="modal-actions">
+<button type="button" class="m-cancel" id="subCancel">Cancel</button>
+<button type="button" class="m-ok" id="subSubmit" disabled>Submit</button>
+</div>
+</div>
+</div>
+
 <div id="mainApp" style="display:none">
 
 <div class="sidebar">
@@ -291,7 +330,6 @@ body.light .notice-banner{color:#b45309}
 
 <div class="app">
 
-<!-- HOME -->
 <div class="page active" id="page-calc">
 <h1>⚡ Charge Calculator</h1>
 
@@ -468,11 +506,9 @@ body.light .notice-banner{color:#b45309}
 </div>
 </div>
 
-<!-- GARAGE PAGE -->
 <div class="page" id="page-garage">
 <h1>🚗 My Garage</h1>
 <div class="user-bar"><span class="email" id="userEmail">—</span><button type="button" class="signout" id="signoutBtn">Sign Out</button></div>
-
 <div class="card">
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
 <div class="card-title" style="margin-bottom:0">My Vehicles</div>
@@ -480,12 +516,10 @@ body.light .notice-banner{color:#b45309}
 </div>
 <div id="garageList"></div>
 </div>
-
 <div class="card" id="garageSummaryCard" style="display:none">
 <div class="card-title">Garage Overview</div>
 <div id="garageSummary"></div>
 </div>
-
 <div class="card">
 <div class="card-title">Built-in Vehicles</div>
 <p style="font-size:0.75rem;color:var(--dim);margin-bottom:12px;line-height:1.5">These come pre-loaded with verified Sri Lankan specs. To use one, just select it from the dropdown on the Home page.</p>
@@ -493,7 +527,6 @@ body.light .notice-banner{color:#b45309}
 </div>
 </div>
 
-<!-- HISTORY PAGE -->
 <div class="page" id="page-history">
 <h1>📊 Charging History</h1>
 <div class="card">
@@ -502,7 +535,6 @@ body.light .notice-banner{color:#b45309}
 <select id="historyVehicleFilter"><option value="all">All vehicles</option></select>
 </div>
 </div>
-
 <div id="summaryCard" class="summary-card" style="display:none">
 <div class="sc-title">This Month</div>
 <div class="sc-grid">
@@ -512,7 +544,6 @@ body.light .notice-banner{color:#b45309}
 <div class="sc-item"><div class="sc-val" id="sumSavings">LKR 0</div><div class="sc-lbl">Saved vs petrol</div></div>
 </div>
 </div>
-
 <div class="card">
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
 <div class="card-title" style="margin-bottom:0">Sessions</div>
@@ -530,7 +561,6 @@ body.light .notice-banner{color:#b45309}
 </div>
 </div>
 
-<!-- STATIONS PAGE -->
 <div class="page" id="page-stations">
 <h1>🔌 Charging Stations</h1>
 <p style="text-align:center;font-size:0.8rem;color:var(--dim);margin-bottom:16px">Find the closest charger to your location</p>
@@ -540,10 +570,15 @@ body.light .notice-banner{color:#b45309}
 <div id="locationStatus" style="text-align:center;font-size:0.8rem;color:var(--dim);margin-top:10px;display:none"></div>
 </div>
 
+<div class="card">
+<div class="card-title">Know a charger we're missing?</div>
+<p style="font-size:0.8rem;color:var(--dim);line-height:1.6;margin-bottom:12px">Help the community by adding charging stations you find. Your submission will be reviewed before appearing in the app.</p>
+<button type="button" id="submitStationBtn" style="width:100%;padding:14px;border-radius:14px;border:1px solid rgba(46,204,113,0.4);background:rgba(46,204,113,0.15);color:#2ecc71;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit">➕ Submit a Station</button>
+</div>
+
 <div id="stationsList"></div>
 </div>
 
-<!-- SETTINGS PAGE -->
 <div class="page" id="page-settings">
 <h1>⚙️ Settings</h1>
 
@@ -567,18 +602,9 @@ body.light .notice-banner{color:#b45309}
 
 <div class="card">
 <div class="card-title">Change password</div>
-<div class="field">
-<label>Current password</label>
-<input type="password" id="cpCurrent" placeholder="Your current password" autocomplete="current-password">
-</div>
-<div class="field">
-<label>New password <span class="hint">(min 6 characters)</span></label>
-<input type="password" id="cpNew" placeholder="New password" autocomplete="new-password">
-</div>
-<div class="field">
-<label>Confirm new password</label>
-<input type="password" id="cpConfirm" placeholder="Re-enter new password" autocomplete="new-password">
-</div>
+<div class="field"><label>Current password</label><input type="password" id="cpCurrent" placeholder="Your current password" autocomplete="current-password"></div>
+<div class="field"><label>New password <span class="hint">(min 6 characters)</span></label><input type="password" id="cpNew" placeholder="New password" autocomplete="new-password"></div>
+<div class="field"><label>Confirm new password</label><input type="password" id="cpConfirm" placeholder="Re-enter new password" autocomplete="new-password"></div>
 <button type="button" id="cpBtn" style="width:100%;padding:14px;border-radius:12px;border:none;font-size:0.95rem;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff">Update Password</button>
 <div id="cpMsg" style="margin-top:12px;font-size:0.82rem;line-height:1.6;text-align:center"></div>
 </div>
@@ -617,7 +643,6 @@ body.light .notice-banner{color:#b45309}
 </div>
 </div>
 
-<!-- HELP PAGE -->
 <div class="page" id="page-help">
 <h1>❓ Help & About</h1>
 <div class="card">
@@ -633,6 +658,7 @@ body.light .notice-banner{color:#b45309}
 <div class="tip-row"><span class="tip-icon">4️⃣</span><div class="tip-text"><strong>Read the result</strong> — cost, time, and range. Tap "Compare" for network and petrol comparisons.</div></div>
 <div class="tip-row"><span class="tip-icon">5️⃣</span><div class="tip-text"><strong>Save it</strong> — tap "💾 Save this charge" to log it. View savings in 📊 History.</div></div>
 <div class="tip-row"><span class="tip-icon">📍</span><div class="tip-text"><strong>Find nearby chargers</strong> — on the 🔌 Stations tab, tap "Find Stations Near Me."</div></div>
+<div class="tip-row"><span class="tip-icon">➕</span><div class="tip-text"><strong>Submit a missing charger</strong> — on the Stations tab, tap "Submit a Station" and share its GPS location.</div></div>
 <div class="tip-row"><span class="tip-icon">🔌</span><div class="tip-text"><strong>Report a station</strong> — tap Working / Slow / Broken / Blocked to help other drivers.</div></div>
 <div class="tip-row"><span class="tip-icon">ⓘ</span><div class="tip-text"><strong>Need help with a field?</strong> — tap any small "i" icon next to a label.</div></div>
 </div>
@@ -678,6 +704,7 @@ var providerRates=[];
 var stationData=[];
 var stationReports={};
 var userLocation=null;
+var subCoordinates=null;
 
 var reportLabels={
 working:{icon:'✅',label:'Working'},
@@ -704,17 +731,15 @@ capacity:{title:'Battery capacity',text:'Your car\'s usable battery size in kWh.
 charged:{title:'What you\'ll pay for',text:'Charging is not 100% efficient — some energy is lost as heat. The station bills you for the total energy delivered, which is slightly more than what actually lands in your battery.'},
 defaultVehicle:{title:'Default vehicle',text:'The car that auto-selects when you open the app. Choose your main vehicle here.'},
 historyFilter:{title:'Filter by vehicle',text:'Show only charging sessions for one specific car, or all vehicles combined.'},
-fuel92:{title:'Petrol 92 Octane',text:'Current price per litre of Petrol 92 Octane in Sri Lanka. Update this when the government revises fuel prices.'}
+fuel92:{title:'Petrol 92 Octane',text:'Current price per litre of Petrol 92 Octane in Sri Lanka. Update this when the government revises fuel prices.'},
+subStationNetwork:{title:'Network',text:'Which charging network operates this station? Pick "Other" if it is independent or not listed.'},
+subStationType:{title:'Charger type',text:'DC Fast chargers (CCS2) charge in 30–60 minutes. AC (Type 2) chargers take several hours. Pick "Both" if the station has both.'}
 };
 
 // ============ OFFLINE BANNER ============
 function updateOnlineStatus(){
 var banner=$('offlineBanner');
-if(!navigator.onLine){
-banner.classList.add('show');
-}else{
-banner.classList.remove('show');
-}
+if(!navigator.onLine){banner.classList.add('show')}else{banner.classList.remove('show')}
 }
 window.addEventListener('online',updateOnlineStatus);
 window.addEventListener('offline',updateOnlineStatus);
@@ -723,7 +748,6 @@ updateOnlineStatus();
 // ============ DEFAULT VEHICLE ============
 function getDefaultVehicle(){try{return localStorage.getItem('evDefaultVehicle')||''}catch(e){return ''}}
 function setDefaultVehicle(v){try{if(v)localStorage.setItem('evDefaultVehicle',v);else localStorage.removeItem('evDefaultVehicle')}catch(e){}}
-
 function applyDefaultVehicle(){
 var def=getDefaultVehicle();
 if(def&&$('vehicleSelect').querySelector('option[value="'+def+'"]')){
@@ -736,15 +760,12 @@ if(v)$('capacity').value=v.capacity;
 // ============ LAST-USED RATE ============
 function getLastRate(networkKey){try{return localStorage.getItem('evLastRate_'+networkKey)||''}catch(e){return ''}}
 function setLastRate(networkKey,r){try{if(networkKey&&r)localStorage.setItem('evLastRate_'+networkKey,String(r))}catch(e){}}
-
 function applyLastRate(){
 var sel=$('quickRate');
 var v=sel.value;
 if(!v||v==='custom')return;
 var saved=getLastRate(v);
-if(saved){
-$('rate').value=saved;
-}
+if(saved){$('rate').value=saved}
 }
 
 // ============ CONFIG FROM FIRESTORE ============
@@ -785,13 +806,11 @@ var sel=$('vehicleSelect');
 var curVal=sel.value;
 sel.innerHTML='<option value="">— Choose your vehicle —</option>';
 
-// My Garage FIRST
 var garageGrp=document.createElement('optgroup');
 garageGrp.label='⭐ My Garage';
 garageGrp.id='garageOptGroup';
 sel.appendChild(garageGrp);
 
-// Then brands, alphabetical, with models alphabetical
 var byBrand={};
 Object.keys(builtInVehicles).forEach(function(k){
 var v=builtInVehicles[k];
@@ -875,10 +894,7 @@ function loadStations(cb){
 if(!db){if(cb)cb([]);return}
 try{
 var cached=localStorage.getItem('evStations');
-if(cached){
-var c=JSON.parse(cached);
-if(c&&c.length>0)stationData=c;
-}
+if(cached){var c=JSON.parse(cached);if(c&&c.length>0)stationData=c}
 }catch(e){}
 fbFuncs.getDoc(fbFuncs.doc(db,'config','stations')).then(function(d){
 if(d.exists()&&d.data().list){
@@ -1070,12 +1086,8 @@ btn.textContent='📍 Locating…';
 getUserLocation(function(loc,err){
 btn.disabled=false;
 btn.textContent='📍 Find Stations Near Me';
-if(loc){
-userLocation=loc;
-renderStations();
-}else{
-alert(err||'Could not get your location.');
-}
+if(loc){userLocation=loc;renderStations()}
+else{alert(err||'Could not get your location.')}
 });
 });
 
@@ -1114,14 +1126,11 @@ var seed=[
 {id:'leco',name:'LECO',badge:'GOV',detail:'Day: <strong style="color:var(--blueB)">89.23</strong> · Peak: <strong style="color:var(--blueB)">113.85</strong> · Off: <strong style="color:var(--blueB)">54.36</strong>',tel:'+94112345678',locations:[
 {name:'LECO – Nugegoda',lat:6.8649,lng:79.8997,address:'Mirihana Rd, Nugegoda'},
 {name:'LECO – Ambalangoda',lat:6.2355,lng:80.0535,address:'Maha Ambalangoda Rd, Ambalangoda'},
-{name:'LECO – Kandana',lat:7.0480,lng:79.8938,address:'Circular Rd, Kandana'},
-{name:'LECO – Matara',lat:5.9485,lng:80.5353,address:'Matara'},
-{name:'LECO – Kurunegala',lat:7.4867,lng:80.3647,address:'Kurunegala'}
+{name:'LECO – Kandana',lat:7.0480,lng:79.8938,address:'Circular Rd, Kandana'}
 ]},
 {id:'ceb',name:'CEB',badge:'GRID',detail:'Day: <strong style="color:var(--blueB)">83.08</strong> · Peak: <strong style="color:var(--blueB)">107.70</strong> · Off: <strong style="color:var(--blueB)">51.29</strong>',tel:'+94112345678',locations:[
 {name:'CEB – Dambulla',lat:7.8696,lng:80.6482,address:'Kurunegala Rd, Dambulla'},
-{name:'CEB – Kandy',lat:7.2906,lng:80.6337,address:'Thilak Ratnayake Mawatha, Kandy'},
-{name:'CEB – Anuradhapura',lat:8.3114,lng:80.4037,address:'Anuradhapura'}
+{name:'CEB – Kandy',lat:7.2906,lng:80.6337,address:'Thilak Ratnayake Mawatha, Kandy'}
 ]},
 {id:'chargeup',name:'ChargeUP (Lanka IOC)',badge:'EXPANDING',detail:'Partnered with Lanka IOC. Rates vary.',tel:'+94112345678',locations:[
 {name:'ChargeUP – Colombo (verify)',lat:6.9271,lng:79.8612,address:'Colombo area'}
@@ -1135,13 +1144,120 @@ stationData=seed;
 renderStations();
 btn.textContent='✓ Seeded';
 setTimeout(function(){btn.textContent='📍 Re-seed stations (admin)';btn.disabled=false;},1500);
-alert('Stations updated with expanded locations.');
+alert('Stations updated. Note: LECO and CEB coordinates are approximate — use Submit a Station to correct them.');
 })
 .catch(function(e){
 console.error('Seed failed:',e);
-alert('Seed failed: '+e.message+'\n\nCheck that your Firestore rules temporarily allow writes to config (allow write: if request.auth != null).');
+alert('Seed failed: '+e.message+'\n\nYou need to temporarily allow writes to the config collection in Firestore rules.');
 btn.textContent='📍 Re-seed stations (admin)';
 btn.disabled=false;
+});
+});
+
+// ============ SUBMIT A STATION — HANDLERS ============
+$('submitStationBtn').addEventListener('click',function(){
+if(!currentUser){alert('Please sign in to submit a station.');return}
+var today=new Date().toISOString().slice(0,10);
+var rateKey='submissions_'+currentUser.uid+'_'+today;
+var count=parseInt(localStorage.getItem(rateKey)||'0');
+if(count>=5){
+alert('You can submit up to 5 stations per day. Please try again tomorrow.');
+return;
+}
+subCoordinates=null;
+$('subNetwork').value='';
+$('subName').value='';
+$('subAddress').value='';
+$('subType').value='DC Fast';
+$('subRate').value='';
+$('subLocationStatus').textContent='Tap "Get My Location" to continue';
+$('subLocationStatus').style.color='var(--dim)';
+$('subCoords').textContent='';
+$('subSubmit').disabled=true;
+$('submitStationModal').classList.add('show');
+});
+
+$('subCancel').addEventListener('click',function(){
+$('submitStationModal').classList.remove('show');
+});
+
+$('subGetLocationBtn').addEventListener('click',function(){
+var btn=this;
+btn.disabled=true;
+btn.textContent='📍 Getting location…';
+$('subLocationStatus').textContent='Requesting GPS…';
+$('subLocationStatus').style.color='var(--dim)';
+getUserLocation(function(loc,err){
+btn.disabled=false;
+btn.textContent='📍 Get My Location';
+if(loc){
+subCoordinates=loc;
+$('subLocationStatus').textContent='✓ Location captured';
+$('subLocationStatus').style.color='#2ecc71';
+$('subCoords').textContent=loc.lat.toFixed(6)+', '+loc.lng.toFixed(6);
+checkSubmitReady();
+}else{
+$('subLocationStatus').textContent='⚠ '+(err||'Could not get location');
+$('subLocationStatus').style.color='#f87171';
+$('subSubmit').disabled=true;
+}
+});
+});
+
+function checkSubmitReady(){
+var ok=subCoordinates&&$('subNetwork').value&&$('subName').value.trim().length>=3;
+$('subSubmit').disabled=!ok;
+}
+
+$('subNetwork').addEventListener('change',checkSubmitReady);
+$('subName').addEventListener('input',checkSubmitReady);
+
+$('subSubmit').addEventListener('click',function(){
+if(!currentUser){alert('Please sign in first.');return}
+if(!subCoordinates){alert('Please capture your location first.');return}
+if(!$('subNetwork').value){alert('Please select a network.');return}
+if($('subName').value.trim().length<3){alert('Please enter a station name.');return}
+
+var rate=$('subRate').value?parseFloat($('subRate').value):null;
+var sub={
+uid:currentUser.uid,
+email:currentUser.email,
+network:$('subNetwork').value,
+name:$('subName').value.trim(),
+address:$('subAddress').value.trim(),
+type:$('subType').value,
+rate:rate,
+lat:subCoordinates.lat,
+lng:subCoordinates.lng,
+ts:Date.now(),
+status:'pending'
+};
+
+var btn=this;
+btn.disabled=true;
+btn.textContent='Submitting…';
+
+fbFuncs.addDoc(fbFuncs.collection(db,'station_submissions'),sub)
+.then(function(){
+try{
+var today=new Date().toISOString().slice(0,10);
+var rateKey='submissions_'+currentUser.uid+'_'+today;
+var count=parseInt(localStorage.getItem(rateKey)||'0');
+localStorage.setItem(rateKey,String(count+1));
+}catch(e){}
+btn.textContent='✓ Submitted!';
+setTimeout(function(){
+$('submitStationModal').classList.remove('show');
+btn.textContent='Submit';
+btn.disabled=false;
+alert('Thank you! Your station has been submitted for review. It will be added to the app once verified.');
+},1200);
+})
+.catch(function(e){
+console.error('Submission failed:',e);
+btn.textContent='⚠ Failed';
+setTimeout(function(){btn.textContent='Submit';btn.disabled=false;},1500);
+alert('Could not submit. Please try again.');
 });
 });
 
@@ -1274,7 +1390,6 @@ return null;
 document.querySelectorAll('.nav-item').forEach(function(btn){
 btn.addEventListener('click',function(){
 if(this.id==='supportNavBtn'){
-// Scroll to support card in settings
 document.querySelectorAll('.nav-item').forEach(function(b){b.classList.remove('active')});
 document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
 var setBtn=document.querySelector('.nav-item[data-page="settings"]');
@@ -1335,9 +1450,7 @@ if(rp>0){$('rangeAtTarget').textContent=((tgt/100)*rp).toFixed(0)+' km'}else{$('
 if(fee>0){$('feeRow').style.display='flex';$('feeVal').textContent=lkr(fee)}else{$('feeRow').style.display='none'}
 if(taxAmount>0){$('taxRow').style.display='flex';$('taxVal').textContent=lkr(taxAmount)}else{$('taxRow').style.display='none'}
 
-// Dynamic taper warning
 if(tgt>80){
-var over=tgt-80;
 var msg;
 if(tgt>=100)msg='⚠️ You\'re charging to 100%. The last 10% can take as long as the first 50% — and it stresses your battery.';
 else if(tgt>=95)msg='⚠️ Above 95%, charging slows dramatically. Expect the final push to take a while.';
@@ -1416,7 +1529,6 @@ $('homeRateSelect').addEventListener('change',function(){if(this.value&&this.val
 $('homeChargerPower').addEventListener('change',function(){if(this.value==='custom'){$('customHomePowerField').style.display='block';$('customHomePower').focus()}else{$('customHomePowerField').style.display='none'}calc();savePrefs()});
 $('chargerPower').addEventListener('change',function(){if(this.value==='custom'){$('customPublicPowerField').style.display='block';$('customPublicPower').focus()}else{$('customPublicPowerField').style.display='none'}calc();savePrefs()});
 
-// Battery percent inputs — allow clearing
 $('currentNum').addEventListener('input',function(){
 var raw=this.value;
 if(raw===''||raw==='-'){return}
@@ -1513,7 +1625,6 @@ function askConfirm(title,text,cb){$('confirmTitle').textContent=title;$('confir
 $('confirmCancel').addEventListener('click',function(){$('confirmModal').classList.remove('show');confirmCallback=null});
 $('confirmOk').addEventListener('click',function(){$('confirmModal').classList.remove('show');if(confirmCallback){var cb=confirmCallback;confirmCallback=null;cb()}});
 
-// ============ SAVINGS HELPER ============
 function calculatePetrolSavings(item){
 var vehicle=getVehicleByKey(item.vehicleKey);
 if(!vehicle||!vehicle.range)return null;
@@ -1562,7 +1673,6 @@ $('exportBtn').addEventListener('click',function(){getAllRecords(function(h){if(
 
 $('themeToggle').addEventListener('click',function(){var l=document.body.classList.contains('light');if(l){document.body.classList.remove('light');$('themeKnob').style.left='2px'}else{document.body.classList.add('light');$('themeKnob').style.left='32px'}savePrefs()});
 
-// SUPPORT / DONATE
 var SUPPORT_CONFIG={
 payhereLink:'https://www.payhere.lk/pay/YOUR_LINK_HERE',
 bankName:'Shamil Sallay',
@@ -1578,7 +1688,6 @@ $('bankOk').addEventListener('click',function(){$('bankModal').classList.remove(
 $('shareAppBtn').addEventListener('click',function(){var text=SUPPORT_CONFIG.shareMessage+'\n\n'+SUPPORT_CONFIG.shareUrl;if(navigator.share){navigator.share({title:'EV Charge Calculator',text:text,url:SUPPORT_CONFIG.shareUrl}).catch(function(e){if(e.name!=='AbortError')console.warn(e)})}else{var waUrl='https://wa.me/?text='+encodeURIComponent(text);window.open(waUrl,'_blank')}});
 $('rateAppBtn').addEventListener('click',function(){alert('Ratings will be available once the app is published on the Google Play Store. For now, please share it with other EV owners!')});
 
-// ONBOARDING
 var obStep=1;
 function showOnboard(){obStep=1;$('obStep').textContent='1';$('obStep1').style.display='block';$('obStep2').style.display='none';$('obStep3').style.display='none';$('obSkip').textContent='Skip setup';$('obNext').textContent='Next →';$('onboardOverlay').classList.add('show')}
 function hideOnboard(){$('onboardOverlay').classList.remove('show');localStorage.setItem('obDone','1')}
