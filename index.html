@@ -226,6 +226,154 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 .time-toggle button.active{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff}
 .computed-duration{font-size:0.8rem;color:var(--purpleB);font-weight:700;text-align:center;margin-top:10px;line-height:1.5}
 @media(max-width:480px){body{padding-left:88px;padding-right:12px}.app{max-width:100%}.sidebar{width:72px}.nav-item{width:56px}.nav-icon{font-size:1.2rem}.nav-label{font-size:0.5rem}.big-num .bn-val{font-size:2.2rem}.intro-icon{font-size:3.5rem}.intro-title{font-size:1.3rem}.battery-wrap{flex-direction:column;align-items:stretch;gap:8px}.battery-visual-big{width:100%}.battery-shape{height:28px}.battery-shape::after{display:none}.pct-input{width:68px;font-size:0.9rem}.result-tile .tile-val{font-size:0.9rem}}
+/* Light mode contrast fixes */
+body.light { color: #1a0f2e; }
+body.light .card { background: rgba(255,255,255,0.95); border-color: rgba(80,40,180,0.3); }
+body.light .card-title { color: #5b21b6; }
+body.light .card::before { background: linear-gradient(90deg,transparent,rgba(91,33,182,0.3),transparent); }
+body.light h1 { color: #4c1d95; background: none; -webkit-text-fill-color: initial; }
+body.light .field > label,
+body.light .field-hdr .lbl,
+body.light .field label { color: #2a1a4a; font-weight: 600; }
+body.light .hint { color: #5a4a8a; }
+body.light .mode-desc { color: #4a3a7a; }
+
+/* Text on gradient elements — force solid readable color */
+body.light .big-num .bn-val,
+body.light .result-tile .tile-val,
+body.light .summary-card .sc-val,
+body.light .stat .num,
+body.light .battery-pct,
+body.light .history-item .cost,
+body.light .modal-box h3,
+body.light .info-i { background: none; -webkit-text-fill-color: initial; }
+body.light .big-num .bn-val { color: #4c1d95; }
+body.light .result-tile .tile-val { color: #5b21b6; }
+body.light .summary-card .sc-val { color: #5b21b6; }
+body.light .history-item .cost { color: #5b21b6; }
+body.light .modal-box h3 { color: #5b21b6; }
+body.light .info-i { color: #5b21b6; background: rgba(91,33,182,0.15); }
+
+/* Labels and small text */
+body.light .big-num .bn-lbl,
+body.light .result-tile .tile-lbl,
+body.light .summary-card .sc-lbl,
+body.light .hint,
+body.light .compare-bar-hdr .name,
+body.light .history-chart-title { color: #3a2a6a; }
+body.light .compare-bar-hdr .cost { color: #5b21b6; font-weight: 800; }
+
+/* Mode cards */
+body.light .mode-card { background: rgba(91,33,182,0.08); color: #3a2a6a; border-color: rgba(91,33,182,0.3); }
+body.light .mode-card.active { background: linear-gradient(135deg,#5b21b6,#7c3aed); color: #fff; }
+body.light .mode-card.active .mc-icon { filter: brightness(1.3); }
+
+/* Mode tabs */
+body.light .mode-tab { color: #3a2a6a; }
+body.light .mode-tab.active { background: linear-gradient(135deg,#5b21b6,#7c3aed); color: #fff; }
+
+/* Buttons and presets */
+body.light .preset-btn { background: rgba(91,33,182,0.08); color: #5b21b6; border-color: rgba(91,33,182,0.35); font-weight: 700; }
+body.light .preset-btn:active { background: rgba(91,33,182,0.2); }
+body.light .adv-toggle { color: #5b21b6; }
+body.light .adv-toggle .arrow { color: #5b21b6; }
+
+/* Primary button */
+body.light #saveBtn,
+body.light .auth-btn,
+body.light .intro-next { background: linear-gradient(135deg,#5b21b6,#7c3aed); color: #fff; }
+
+/* Slider — brighter track in light mode */
+body.light input[type=range] { background: linear-gradient(90deg,#dc2626 0%,#f59e0b 40%,#059669 70%,#16a34a 100%); }
+body.light input[type=range]::-webkit-slider-thumb { border-color: #5b21b6; box-shadow: 0 0 0 3px rgba(91,33,182,0.15), 0 2px 8px rgba(0,0,0,0.3); }
+
+/* Battery shape */
+body.light .battery-shape { border-color: #5b21b6; background: rgba(255,255,255,0.9); }
+body.light .battery-shape::after { background: #5b21b6; }
+body.light .battery-pct { color: #1a0f2e; text-shadow: 0 1px 2px rgba(255,255,255,0.8); font-weight: 800; }
+
+/* Compare bars */
+body.light .compare-bar-track { background: rgba(91,33,182,0.12); }
+body.light .compare-bar-fill { background: linear-gradient(90deg,#7c3aed,#a78bfa); }
+body.light .compare-bar-fill.best { background: linear-gradient(90deg,#16a34a,#22c55e); }
+body.light .best-badge { background: rgba(22,163,74,0.15); color: #15803d; }
+
+/* History */
+body.light .history-item { background: rgba(255,255,255,0.9); border-color: rgba(91,33,182,0.2); }
+body.light .history-item .date,
+body.light .history-item .detail { color: #3a2a6a; }
+body.light .history-item .detail span { color: #1a0f2e; }
+body.light .history-item .hi-edit-hint { color: #5a4a8a; }
+
+/* History chart */
+body.light .history-chart .hc-bar { background: linear-gradient(180deg,#7c3aed,#5b21b6); }
+body.light .history-chart .hc-bar.best { background: linear-gradient(180deg,#22c55e,#16a34a); }
+body.light .history-chart-labels { color: #4a3a7a; }
+
+/* Energy flow */
+body.light .energy-flow { background: rgba(255,255,255,0.85); border-color: rgba(91,33,182,0.2); }
+body.light .energy-flow .ef-labels { color: #3a2a6a; }
+body.light .energy-flow .ef-track { background: rgba(91,33,182,0.1); }
+body.light .energy-flow .ef-legend { color: #4a3a7a; }
+
+/* Notices */
+body.light .notice-banner { background: rgba(245,158,11,0.15); color: #78350f; border-color: rgba(245,158,11,0.5); }
+
+/* Inputs */
+body.light input[type=number],
+body.light input[type=email],
+body.light input[type=password],
+body.light input[type=text],
+body.light input[type=time],
+body.light select { background: #fff; color: #1a0f2e; border-color: rgba(91,33,182,0.3); }
+body.light input::placeholder { color: #8a7ab0; }
+body.light select option { background: #fff; color: #1a0f2e; }
+body.light select optgroup { background: #f4f2fc; color: #5b21b6; }
+body.light .pct-input { background: rgba(91,33,182,0.1); border-color: rgba(91,33,182,0.35); color: #1a0f2e; }
+
+/* Sidebar */
+body.light .sidebar { background: rgba(255,255,255,0.95); border-right-color: rgba(91,33,182,0.2); }
+body.light .nav-item { color: #4a3a7a; }
+body.light .nav-item.active { color: #5b21b6; background: rgba(91,33,182,0.12); }
+body.light .nav-item.active .nav-icon { filter: none; }
+
+/* Modal */
+body.light .modal-box { background: rgba(255,255,255,0.98); border-color: rgba(91,33,182,0.3); }
+body.light .modal-box p { color: #3a2a6a; }
+body.light .modal-actions .m-cancel { color: #4a3a7a; border-color: rgba(91,33,182,0.3); }
+
+/* Vehicle cards */
+body.light .vehicle-card { background: rgba(255,255,255,0.9); border-color: rgba(91,33,182,0.2); }
+body.light .vehicle-card .vc-name { color: #1a0f2e; }
+body.light .vehicle-card .vc-specs { color: #4a3a7a; }
+body.light .vehicle-card.active { background: rgba(22,163,74,0.08); }
+
+/* Station cards */
+body.light .station-status-badge.stale { background: rgba(91,33,182,0.1); color: #5a4a8a; border-color: rgba(91,33,182,0.25); }
+
+/* Auth screen */
+body.light .auth-box { background: rgba(255,255,255,0.98); }
+body.light .auth-box h1 { color: #4c1d95; }
+body.light .auth-box .subtitle { color: #4a3a7a; }
+body.light .auth-tab { color: #4a3a7a; }
+body.light .auth-tab.active { background: linear-gradient(135deg,#5b21b6,#7c3aed); color: #fff; }
+body.light .link-btn { color: #5b21b6; }
+
+/* Intro slides */
+body.light .intro-container { background: #f4f2fc; background-image: radial-gradient(circle at 15% 0%,rgba(91,33,182,0.15),transparent 45%),radial-gradient(circle at 85% 100%,rgba(91,33,182,0.15),transparent 45%); }
+body.light .intro-title { color: #1a0f2e; }
+body.light .intro-body { color: #3a2a6a; }
+body.light .intro-body b { color: #5b21b6 !important; }
+body.light .intro-skip { color: #4a3a7a; border-color: rgba(91,33,182,0.3) !important; }
+body.light .intro-dot { background: rgba(91,33,182,0.25); }
+body.light .intro-dot.active { background: #5b21b6; }
+body.light .intro-slide .ob-field label { color: #3a2a6a; }
+
+/* Toast */
+body.light .toast { background: #1a0f2e; color: #fff; }
+
+/* Offline banner */
+body.light .offline-icon { background: #dc2626; color: #fff; }
 </style>
 </head>
 <body>
