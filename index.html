@@ -111,40 +111,49 @@ body.light .result-tile .tile-val{background:none;-webkit-text-fill-color:initia
 .presets{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
 .preset-btn{padding:8px 12px;border-radius:10px;border:1px solid rgba(139,92,246,0.3);background:rgba(139,92,246,0.1);color:var(--purpleB);font-family:inherit;font-size:0.75rem;font-weight:700;cursor:pointer;transition:all 0.15s}
 .preset-btn:active{background:rgba(139,92,246,0.25);transform:scale(0.97)}
-.onboard-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(10,6,18,0.85);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:20px;z-index:9998;overflow-y:auto}
-.onboard-overlay.show{display:flex}
-.onboard-box{background:var(--card);backdrop-filter:blur(20px);border-radius:24px;padding:28px 24px;width:100%;max-width:420px;border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,0.6);margin:auto}
-.onboard-box h2{font-size:1.3rem;font-weight:800;margin-bottom:6px;text-align:center;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-body.light .onboard-box h2{background:none;-webkit-text-fill-color:initial;color:#5b21b6}
-.onboard-box .step{text-align:center;color:var(--dim);font-size:0.75rem;margin-bottom:20px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase}
-.onboard-box .ob-field{margin-bottom:16px}
-.onboard-box .ob-field label{display:block;font-size:0.85rem;color:var(--dim);margin-bottom:8px;font-weight:600}
-.onboard-actions{display:flex;gap:8px;margin-top:20px}
-.onboard-actions button{flex:1;padding:13px;border-radius:12px;border:none;font-size:0.9rem;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.2s}
-.ob-skip{background:transparent;color:var(--dim);border:1px solid rgba(148,163,184,0.3)}
-.ob-next{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;box-shadow:0 4px 20px rgba(139,92,246,0.4)}
-.empty-state{text-align:center;padding:24px 16px;background:var(--input-bg);border-radius:12px;border:1px dashed rgba(139,92,246,0.3);margin-top:10px}
-.empty-state .es-icon{font-size:2rem;margin-bottom:8px;opacity:0.6}
-.empty-state .es-text{font-size:0.8rem;color:var(--dim);line-height:1.6}
-.summary-card{background:linear-gradient(135deg,rgba(59,130,246,0.2),rgba(139,92,246,0.2));border:1px solid rgba(139,92,246,0.35);border-radius:14px;padding:16px;margin-bottom:14px}
-.summary-card .sc-title{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--purpleB);margin-bottom:10px}
-.summary-card .sc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.summary-card .sc-item{text-align:left}
-.summary-card .sc-val{font-size:1.15rem;font-weight:800;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-body.light .summary-card .sc-val{background:none;-webkit-text-fill-color:initial;color:#5b21b6}
-.summary-card .sc-lbl{font-size:0.65rem;color:var(--dim);margin-top:2px}
-.tip-row{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid rgba(139,92,246,0.08);align-items:flex-start}
-.tip-row:last-child{border-bottom:none}
-.tip-row .tip-icon{font-size:1.1rem;flex-shrink:0}
-.tip-row .tip-text{font-size:0.82rem;color:var(--dim);line-height:1.6}
-.tip-row .tip-text strong{color:var(--purpleB)}
-.notice-banner{background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(234,88,12,0.15));border:1px solid rgba(245,158,11,0.35);border-radius:12px;padding:12px 14px;margin-top:10px;font-size:0.78rem;color:#fbbf24;line-height:1.5}
-body.light .notice-banner{color:#b45309}
-.info-i{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:rgba(139,92,246,0.25);color:var(--purpleB);font-size:0.65rem;font-weight:800;margin-left:6px;cursor:pointer;vertical-align:middle;flex-shrink:0}
-.info-i:hover{background:rgba(139,92,246,0.4)}
-.adv-toggle{background:none;border:none;color:var(--purpleB);font-size:0.85rem;cursor:pointer;padding:10px 0;font-weight:700;font-family:inherit;display:flex;align-items:center;gap:8px;width:100%}
-.adv-toggle .arrow{transition:transform 0.3s;display:inline-block;font-size:0.7rem}
-.adv-toggle.open .arrow{transform:rotate(90deg)}
+/* Intro slides */
+.intro-container{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);background-image:radial-gradient(circle at 15% 0%,rgba(59,130,246,0.18),transparent 45%),radial-gradient(circle at 85% 100%,rgba(139,92,246,0.18),transparent 45%);z-index:10000;display:none;overflow-y:auto;padding:20px}
+.intro-container.show{display:flex;flex-direction:column;align-items:center;justify-content:center}
+.intro-slide{max-width:420px;width:100%;text-align:center;display:none;margin:auto}
+.intro-slide.active{display:block;animation:introFade 0.35s}
+@keyframes introFade{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+.intro-icon{font-size:5rem;margin-bottom:24px;line-height:1}
+.intro-title{font-size:1.5rem;font-weight:800;margin-bottom:16px;color:var(--text);line-height:1.3}
+.intro-body{font-size:1rem;color:var(--dim);line-height:1.7;margin-bottom:32px}
+.intro-actions{display:flex;gap:10px;max-width:420px;width:100%;margin-top:20px}
+.intro-actions button{flex:1;padding:15px;border-radius:14px;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;border:none;transition:all 0.2s}
+.intro-skip{background:transparent;color:var(--dim);border:1px solid rgba(148,163,184,0.3)!important}
+.intro-next{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;box-shadow:0 4px 20px rgba(139,92,246,0.4)}
+.intro-dots{display:flex;justify-content:center;gap:8px;margin-top:24px}
+.intro-dot{width:8px;height:8px;border-radius:50%;background:rgba(139,92,246,0.3);transition:all 0.2s}
+.intro-dot.active{background:var(--purpleB);width:24px;border-radius:4px}
+.intro-slide .ob-field{text-align:left;margin-top:20px}
+.intro-slide .ob-field label{display:block;font-size:0.85rem;color:var(--dim);margin-bottom:8px;font-weight:600;text-align:left}
+/* Mode grid */
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.mode-card{padding:16px 10px;border-radius:12px;border:1px solid rgba(139,92,246,0.25);background:rgba(139,92,246,0.08);color:var(--dim);font-family:inherit;font-size:0.85rem;font-weight:700;cursor:pointer;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:6px}
+.mode-card .mc-icon{font-size:1.5rem}
+.mode-card.active{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;border-color:transparent;box-shadow:0 4px 16px rgba(139,92,246,0.4)}
+.mode-desc{font-size:0.82rem;color:var(--dim);text-align:center;margin-bottom:14px;line-height:1.5;font-style:italic}
+/* Vehicle inline */
+.vehicle-inline{display:flex;justify-content:space-between;align-items:center;padding:6px 0}
+.vehicle-inline .vi-name{font-size:1rem;font-weight:700;color:var(--text)}
+.vehicle-inline .vi-change{background:none;border:none;color:var(--purpleB);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;padding:6px 12px;border-radius:8px;border:1px solid rgba(139,92,246,0.3)}
+.vehicle-inline .vi-change:active{background:rgba(139,92,246,0.15)}
+/* Toast */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:#1a1a2e;color:#fff;padding:12px 20px;border-radius:12px;font-size:0.85rem;font-weight:600;z-index:10001;box-shadow:0 8px 24px rgba(0,0,0,0.4);opacity:0;transition:all 0.3s;border:1px solid rgba(139,92,246,0.3);max-width:90%}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.toast.success{border-color:rgba(46,204,113,0.5)}
+.toast.error{border-color:rgba(248,113,113,0.5)}
+/* Offline indicator */
+.offline-icon{position:fixed;top:16px;right:16px;background:#f59e0b;color:#000;width:32px;height:32px;border-radius:50%;display:none;align-items:center;justify-content:center;font-weight:700;font-size:0.9rem;z-index:150;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.3)}
+.offline-icon.show{display:flex}
+/* Battery visual */
+.battery-visual{display:inline-flex;align-items:center;gap:4px;margin-left:8px}
+.battery-body{width:32px;height:14px;border:2px solid var(--dim);border-radius:3px;position:relative;background:var(--input-bg)}
+.battery-body::after{content:'';position:absolute;right:-5px;top:3px;width:3px;height:6px;background:var(--dim);border-radius:0 2px 2px 0}
+.battery-fill{height:100%;background:linear-gradient(90deg,#3b82f6,#8b5cf6);border-radius:1px;transition:width 0.2s}
+/* Modal */
 .modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(10,6,18,0.85);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:20px;z-index:9998;overflow-y:auto}
 .modal-overlay.show{display:flex}
 .modal-box{background:var(--card);border-radius:20px;padding:22px;max-width:440px;width:100%;border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,0.5);margin:auto}
@@ -163,7 +172,6 @@ body.light .notice-banner{color:#b45309}
 .vehicle-card .vc-actions button{background:none;border:none;cursor:pointer;padding:4px 6px;font-size:0.9rem;color:var(--faint);border-radius:6px}
 .vehicle-card .vc-actions button:hover{background:rgba(139,92,246,0.15);color:var(--purpleB)}
 .vehicle-card .vc-active-badge{display:inline-block;background:rgba(46,204,113,0.2);color:#2ecc71;font-size:0.6rem;font-weight:800;padding:2px 8px;border-radius:6px;margin-left:6px;text-transform:uppercase;letter-spacing:0.5px}
-.vehicle-card .vc-builtin-badge{display:inline-block;background:rgba(148,163,184,0.2);color:var(--dim);font-size:0.6rem;font-weight:800;padding:2px 8px;border-radius:6px;margin-left:6px;text-transform:uppercase;letter-spacing:0.5px}
 .station-status-badge{display:inline-flex;align-items:center;gap:4px;font-size:0.7rem;padding:4px 10px;border-radius:8px;font-weight:800;margin-bottom:8px}
 .station-status-badge.working{background:rgba(46,204,113,0.2);color:#2ecc71;border:1px solid rgba(46,204,113,0.4)}
 .station-status-badge.slow{background:rgba(245,158,11,0.2);color:#fbbf24;border:1px solid rgba(245,158,11,0.4)}
@@ -177,23 +185,100 @@ body.light .notice-banner{color:#b45309}
 .report-btn.r-slow{border-color:rgba(245,158,11,0.4);background:rgba(245,158,11,0.15);color:#fbbf24}
 .report-btn.r-broken{border-color:rgba(248,113,113,0.4);background:rgba(248,113,113,0.15);color:#f87171}
 .report-btn.r-blocked{border-color:rgba(148,163,184,0.4);background:rgba(148,163,184,0.15);color:#94a3b8}
-.offline-banner{position:fixed;top:0;left:80px;right:0;background:#f59e0b;color:#000;text-align:center;padding:8px;font-size:0.8rem;font-weight:700;z-index:200;display:none}
-.offline-banner.show{display:block}
 .history-item{background:var(--input-bg);border-radius:12px;padding:14px 16px;margin-bottom:10px;border:1px solid rgba(139,92,246,0.15);border-left:3px solid #8b5cf6;position:relative;cursor:pointer;transition:all 0.15s}
 .history-item:active{transform:scale(0.99);background:rgba(139,92,246,0.05)}
 .history-item .hi-edit-hint{position:absolute;bottom:6px;right:12px;font-size:0.6rem;color:var(--faint);font-weight:600}
-.time-big{text-align:center;padding:10px 0 4px}
-.time-big .tb-lbl{font-size:0.7rem;text-transform:uppercase;letter-spacing:2px;color:var(--dim);margin-bottom:6px;font-weight:600}
-.time-big .tb-val{font-size:3rem;font-weight:800;line-height:1;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-body.light .time-big .tb-val{background:none;-webkit-text-fill-color:initial;color:#5b21b6}
-.time-big .tb-sub{font-size:0.85rem;color:var(--dim);margin-top:8px;font-weight:500}
-@media(max-width:480px){.offline-banner{left:72px}body{padding-left:88px;padding-right:12px}.app{max-width:100%}.sidebar{width:72px}.nav-item{width:56px}.nav-icon{font-size:1.2rem}.nav-label{font-size:0.5rem}.compare-table{font-size:0.72rem}.time-big .tb-val{font-size:2.4rem}}
+.history-mode-badge{display:inline-block;background:rgba(139,92,246,0.15);color:var(--purpleB);font-size:0.6rem;font-weight:800;padding:2px 8px;border-radius:6px;text-transform:uppercase;letter-spacing:0.5px;margin-left:8px}
+.summary-card{background:linear-gradient(135deg,rgba(59,130,246,0.2),rgba(139,92,246,0.2));border:1px solid rgba(139,92,246,0.35);border-radius:14px;padding:16px;margin-bottom:14px}
+.summary-card .sc-title{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--purpleB);margin-bottom:10px}
+.summary-card .sc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.summary-card .sc-item{text-align:left}
+.summary-card .sc-val{font-size:1.15rem;font-weight:800;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+body.light .summary-card .sc-val{background:none;-webkit-text-fill-color:initial;color:#5b21b6}
+.summary-card .sc-lbl{font-size:0.65rem;color:var(--dim);margin-top:2px}
+.empty-state{text-align:center;padding:24px 16px;background:var(--input-bg);border-radius:12px;border:1px dashed rgba(139,92,246,0.3);margin-top:10px}
+.empty-state .es-icon{font-size:2rem;margin-bottom:8px;opacity:0.6}
+.empty-state .es-text{font-size:0.8rem;color:var(--dim);line-height:1.6}
+.notice-banner{background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(234,88,12,0.15));border:1px solid rgba(245,158,11,0.35);border-radius:12px;padding:12px 14px;margin-top:10px;font-size:0.78rem;color:#fbbf24;line-height:1.5}
+body.light .notice-banner{color:#b45309}
+.info-i{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:rgba(139,92,246,0.25);color:var(--purpleB);font-size:0.65rem;font-weight:800;margin-left:6px;cursor:pointer;vertical-align:middle;flex-shrink:0}
+.adv-toggle{background:none;border:none;color:var(--purpleB);font-size:0.85rem;cursor:pointer;padding:10px 0;font-weight:700;font-family:inherit;display:flex;align-items:center;gap:8px;width:100%}
+.adv-toggle .arrow{transition:transform 0.3s;display:inline-block;font-size:0.7rem}
+.adv-toggle.open .arrow{transform:rotate(90deg)}
+.big-num{text-align:center;padding:8px 0 12px}
+.big-num .bn-lbl{font-size:0.7rem;text-transform:uppercase;letter-spacing:2px;color:var(--dim);margin-bottom:6px;font-weight:600}
+.big-num .bn-val{font-size:2.6rem;font-weight:800;line-height:1.1;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;color:#5b21b6}
+@media(max-width:480px){body{padding-left:88px;padding-right:12px}.app{max-width:100%}.sidebar{width:72px}.nav-item{width:56px}.nav-icon{font-size:1.2rem}.nav-label{font-size:0.5rem}.compare-table{font-size:0.72rem}.big-num .bn-val{font-size:2.2rem}.intro-icon{font-size:3.5rem}.intro-title{font-size:1.3rem}}
 </style>
 </head>
 <body>
 
-<div class="offline-banner" id="offlineBanner">⚠ Offline — showing cached data</div>
+<div class="offline-icon" id="offlineIcon" title="Offline">⚠</div>
 
+<div class="toast" id="toast"></div>
+
+<!-- INTRO SLIDES -->
+<div class="intro-container" id="introContainer">
+<div class="intro-slide active" id="introSlide1">
+<div class="intro-icon">⚡</div>
+<div class="intro-title">Calculate your EV charge in seconds</div>
+<div class="intro-body">Know how much a charge costs, how long it takes, and how far you can drive afterward — before you plug in.</div>
+</div>
+<div class="intro-slide" id="introSlide2">
+<div class="intro-icon">🚗</div>
+<div class="intro-title">Pick your car, set your range</div>
+<div class="intro-body" style="margin-bottom:16px">Choose your vehicle and set your charge range.</div>
+<div class="ob-field">
+<label>Your vehicle</label>
+<select id="introVehicle"><option value="">— Choose —</option></select>
+</div>
+<div class="ob-field">
+<label>Home electricity rate <span style="font-weight:400;color:var(--faint)">(optional)</span></label>
+<select id="introHomeRate">
+<option value="">— Skip —</option>
+<optgroup label="CEB">
+<option value="30">CEB 0–30 units — 30</option>
+<option value="37">CEB 31–60 units — 37</option>
+<option value="42">CEB 61–90 units — 42</option>
+<option value="50">CEB 91–120 units — 50</option>
+<option value="65">CEB 121–180 units — 65</option>
+<option value="85">CEB >180 units — 85</option>
+</optgroup>
+<optgroup label="LECO">
+<option value="32">LECO 0–30 units — 32</option>
+<option value="39">LECO 31–60 units — 39</option>
+<option value="44">LECO 61–90 units — 44</option>
+<option value="52">LECO 91–120 units — 52</option>
+<option value="68">LECO 121–180 units — 68</option>
+<option value="88">LECO >180 units — 88</option>
+</optgroup>
+</select>
+</div>
+</div>
+<div class="intro-slide" id="introSlide3">
+<div class="intro-icon">🎯</div>
+<div class="intro-title">Four ways to calculate</div>
+<div class="intro-body">Pick what you know and the app figures out the rest:<br><br>💰 <b style="color:var(--purpleB)">Cost</b> — how much will this cost?<br>💵 <b style="color:var(--purpleB)">Money</b> — how much charge for LKR X?<br>⏱️ <b style="color:var(--purpleB)">Time</b> — how long to reach X%?<br>⏳ <b style="color:var(--purpleB)">Duration</b> — how much for X minutes?</div>
+</div>
+<div class="intro-slide" id="introSlide4">
+<div class="intro-icon">💾</div>
+<div class="intro-title">Save, compare, report</div>
+<div class="intro-body">Tap "Save this charge" after each session to track your history and see savings vs petrol. On the Stations tab, find nearby chargers and report their status.</div>
+</div>
+<div class="intro-dots" id="introDots">
+<div class="intro-dot active"></div>
+<div class="intro-dot"></div>
+<div class="intro-dot"></div>
+<div class="intro-dot"></div>
+</div>
+<div class="intro-actions">
+<button type="button" class="intro-skip" id="introSkip">Skip</button>
+<button type="button" class="intro-next" id="introNext">Next →</button>
+</div>
+</div>
+
+<!-- AUTH -->
 <div class="auth-container" id="authScreen">
 <div class="auth-box">
 <h1>⚡ EV Calc</h1>
@@ -220,10 +305,11 @@ body.light .time-big .tb-val{background:none;-webkit-text-fill-color:initial;col
 <button type="button" class="auth-btn" id="resetBtn">Send Reset Link</button>
 <div style="text-align:center"><button type="button" class="link-btn" id="backToLoginBtn">← Back to Sign In</button></div>
 </div>
-<p class="auth-notice">Your charging history is stored securely in your own account and syncs across all your devices.</p>
+<p class="auth-notice">Your charging history is stored securely in your own account.</p>
 </div>
 </div>
 
+<!-- MODALS -->
 <div class="modal-overlay" id="infoModal">
 <div class="modal-box">
 <h3 id="infoTitle">Info</h3>
@@ -232,15 +318,27 @@ body.light .time-big .tb-val{background:none;-webkit-text-fill-color:initial;col
 </div>
 </div>
 
+<div class="modal-overlay" id="vehiclePickModal">
+<div class="modal-box">
+<h3>Select your vehicle</h3>
+<div class="field"><label>Vehicle</label><select id="modalVehicleSelect"></select></div>
+<div class="field"><label>Or add custom capacity <span class="hint">(kWh)</span></label><input type="number" id="modalCustomCapacity" placeholder="Leave empty if using vehicle" step="0.01" min="1" inputmode="decimal"></div>
+<div class="modal-actions">
+<button type="button" class="m-cancel" id="vpCancel">Cancel</button>
+<button type="button" class="m-ok" id="vpSave">Apply</button>
+</div>
+</div>
+</div>
+
 <div class="modal-overlay" id="vehicleModal">
 <div class="modal-box">
 <h3 id="vehicleModalTitle">Add Vehicle</h3>
-<div class="field"><label>Name <span class="hint">e.g. My Atto 1</span></label><input type="text" id="vmName" placeholder="Vehicle name"></div>
-<div class="field"><label>Make / Brand <span class="hint">e.g. BYD</span></label><input type="text" id="vmMake" placeholder="BYD"></div>
-<div class="field"><label>Model <span class="hint">e.g. Atto 1 Dynamic</span></label><input type="text" id="vmModel" placeholder="Atto 1 Dynamic"></div>
-<div class="field"><label>Battery capacity <span class="hint">(kWh) — required</span></label><input type="number" id="vmCapacity" value="30.08" step="0.01" min="1" inputmode="decimal"></div>
-<div class="field"><label>Range <span class="hint">(km, optional)</span></label><input type="number" id="vmRange" value="" step="1" min="0" inputmode="numeric" placeholder="e.g. 300"></div>
-<div class="field"><label>Max DC power <span class="hint">(kW, optional)</span></label><input type="number" id="vmDC" value="" step="1" min="0" inputmode="numeric" placeholder="e.g. 30"></div>
+<div class="field"><label>Name</label><input type="text" id="vmName" placeholder="e.g. My Atto 1"></div>
+<div class="field"><label>Make / Brand</label><input type="text" id="vmMake" placeholder="BYD"></div>
+<div class="field"><label>Model</label><input type="text" id="vmModel" placeholder="Atto 1 Dynamic"></div>
+<div class="field"><label>Battery capacity <span class="hint">(kWh)</span></label><input type="number" id="vmCapacity" value="30.08" step="0.01" min="1" inputmode="decimal"></div>
+<div class="field"><label>Range <span class="hint">(km, optional)</span></label><input type="number" id="vmRange" step="1" min="0" inputmode="numeric" placeholder="e.g. 300"></div>
+<div class="field"><label>Max DC power <span class="hint">(kW, optional)</span></label><input type="number" id="vmDC" step="1" min="0" inputmode="numeric" placeholder="e.g. 30"></div>
 <div class="modal-actions">
 <button type="button" class="m-cancel" id="vmCancel">Cancel</button>
 <button type="button" class="m-ok" id="vmSave">Save</button>
@@ -259,18 +357,28 @@ body.light .time-big .tb-val{background:none;-webkit-text-fill-color:initial;col
 </div>
 </div>
 
-<div class="modal-overlay" id="bankModal">
+<div class="modal-overlay" id="editHistoryModal">
 <div class="modal-box">
-<h3>🏦 Bank Transfer Details</h3>
-<p style="font-size:0.82rem;color:var(--dim);line-height:1.6;margin-bottom:12px">You can make a direct bank transfer to support development:</p>
-<div style="background:var(--input-bg);border-radius:12px;padding:14px;font-size:0.82rem;line-height:1.8">
-<div><strong style="color:var(--purpleB)">Account Name:</strong> <span id="bankName">—</span></div>
-<div><strong style="color:var(--purpleB)">Bank:</strong> <span id="bankBank">—</span></div>
-<div><strong style="color:var(--purpleB)">Account No:</strong> <span id="bankAcct">—</span></div>
-<div><strong style="color:var(--purpleB)">Branch:</strong> <span id="bankBranch">—</span></div>
-</div>
+<h3>Edit Charge</h3>
+<p style="font-size:0.8rem;color:var(--dim);line-height:1.6;margin-bottom:14px">Adjust values if the actual charge differed from what was saved.</p>
+<div class="field"><label>From % <span class="hint">(1–100)</span></label><input type="number" id="ehFrom" min="1" max="100" step="1" inputmode="numeric"></div>
+<div class="field"><label>To % <span class="hint">(1–100)</span></label><input type="number" id="ehTo" min="1" max="100" step="1" inputmode="numeric"></div>
+<div class="field"><label>Battery capacity <span class="hint">(kWh)</span></label><input type="number" id="ehCap" step="0.01" min="1" inputmode="decimal"></div>
+<div class="field"><label>Rate per kWh <span class="hint">(LKR)</span></label><input type="number" id="ehRate" step="0.01" min="0" inputmode="decimal"></div>
+<div class="field" id="ehTotalField" style="display:none"><label>Actual total spent <span class="hint">(LKR)</span></label><input type="number" id="ehTotal" step="0.01" min="0" inputmode="decimal"><div class="hint">Update if you spent a different amount than planned.</div></div>
 <div class="modal-actions">
-<button type="button" class="m-ok" id="bankOk" style="width:100%">Got it</button>
+<button type="button" class="m-cancel" id="ehCancel">Cancel</button>
+<button type="button" class="m-ok" id="ehSave">Save Changes</button>
+</div>
+</div>
+</div>
+
+<div class="modal-overlay" id="compareHistoryModal">
+<div class="modal-box">
+<h3>Compare this charge</h3>
+<div id="chContent"></div>
+<div class="modal-actions">
+<button type="button" class="m-ok" id="chOk" style="width:100%">Close</button>
 </div>
 </div>
 </div>
@@ -278,8 +386,7 @@ body.light .time-big .tb-val{background:none;-webkit-text-fill-color:initial;col
 <div class="modal-overlay" id="submitStationModal">
 <div class="modal-box">
 <h3>Submit a Station</h3>
-<div class="field">
-<label>Network / provider <span class="info-i" data-info="subStationNetwork">i</span></label>
+<div class="field"><label>Network / provider</label>
 <select id="subNetwork">
 <option value="">— Choose a network —</option>
 <option value="Volt Charge">Volt Charge</option>
@@ -290,19 +397,19 @@ body.light .time-big .tb-val{background:none;-webkit-text-fill-color:initial;col
 <option value="Other">Other / Independent</option>
 </select>
 </div>
-<div class="field"><label>Station name <span class="hint">(e.g. Volt Charge – Keells Kandy)</span></label><input type="text" id="subName" placeholder="Station name"></div>
+<div class="field"><label>Station name</label><input type="text" id="subName" placeholder="e.g. Volt Charge – Keells Kandy"></div>
 <div class="field"><label>Address <span class="hint">(optional)</span></label><input type="text" id="subAddress" placeholder="Street, city"></div>
-<div class="field"><label>Charger type <span class="info-i" data-info="subStationType">i</span></label>
+<div class="field"><label>Charger type</label>
 <select id="subType">
 <option value="DC Fast">DC Fast (CCS2)</option>
 <option value="AC">AC (Type 2)</option>
-<option value="Both">Both DC and AC available</option>
+<option value="Both">Both DC and AC</option>
 <option value="Unknown">Not sure</option>
 </select>
 </div>
-<div class="field"><label>Rate per kWh <span class="hint">(LKR, optional)</span></label><input type="number" id="subRate" step="0.01" min="0" inputmode="decimal" placeholder="e.g. 150"></div>
+<div class="field"><label>Rate per kWh <span class="hint">(LKR, optional)</span></label><input type="number" id="subRate" step="0.01" min="0" inputmode="decimal"></div>
 <div style="background:var(--input-bg);border-radius:12px;padding:14px;margin-top:14px">
-<div style="font-size:0.75rem;color:var(--dim);line-height:1.6;margin-bottom:8px">📍 Your current location will be used for this station. Make sure you're standing at the charger.</div>
+<div style="font-size:0.75rem;color:var(--dim);line-height:1.6;margin-bottom:8px">📍 Your current location will be used for this station.</div>
 <div id="subLocationStatus" style="font-size:0.8rem;font-weight:600;color:var(--dim)">Tap "Get My Location" to continue</div>
 <div id="subCoords" style="font-size:0.72rem;color:var(--faint);margin-top:4px;font-family:monospace"></div>
 </div>
@@ -314,65 +421,46 @@ body.light .time-big .tb-val{background:none;-webkit-text-fill-color:initial;col
 </div>
 </div>
 
-<div class="modal-overlay" id="editHistoryModal">
-<div class="modal-box">
-<h3>Edit Charge</h3>
-<p style="font-size:0.8rem;color:var(--dim);line-height:1.6;margin-bottom:14px">Adjust the values if the actual charge differed from what was saved.</p>
-<div class="field"><label>From % <span class="hint">(1–100)</span></label><input type="number" id="ehFrom" value="20" min="1" max="100" step="1" inputmode="numeric"></div>
-<div class="field"><label>To % <span class="hint">(1–100)</span></label><input type="number" id="ehTo" value="80" min="1" max="100" step="1" inputmode="numeric"></div>
-<div class="field"><label>Battery capacity <span class="hint">(kWh)</span></label><input type="number" id="ehCap" value="30.08" step="0.01" min="1" inputmode="decimal"></div>
-<div class="field"><label>Rate per kWh <span class="hint">(LKR)</span></label><input type="number" id="ehRate" value="150" step="0.01" min="0" inputmode="decimal"></div>
-<div class="modal-actions">
-<button type="button" class="m-cancel" id="ehCancel">Cancel</button>
-<button type="button" class="m-ok" id="ehSave">Save Changes</button>
-</div>
-</div>
-</div>
-
 <div id="mainApp" style="display:none">
 
 <div class="sidebar">
-<button type="button" class="nav-item active" data-page="calc"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></button>
-<button type="button" class="nav-item" data-page="time"><span class="nav-icon">⏱️</span><span class="nav-label">Time</span></button>
-<button type="button" class="nav-item" data-page="garage"><span class="nav-icon">🚗</span><span class="nav-label">Garage</span></button>
+<button type="button" class="nav-item active" data-page="calc"><span class="nav-icon">⚡</span><span class="nav-label">Calculate</span></button>
 <button type="button" class="nav-item" data-page="history"><span class="nav-icon">📊</span><span class="nav-label">History</span></button>
 <button type="button" class="nav-item" data-page="stations"><span class="nav-icon">🔌</span><span class="nav-label">Stations</span></button>
 <button type="button" class="nav-item" data-page="settings"><span class="nav-icon">⚙️</span><span class="nav-label">Settings</span></button>
-<button type="button" class="nav-item" data-page="help"><span class="nav-icon">❓</span><span class="nav-label">Help</span></button>
-<button type="button" class="nav-item" id="supportNavBtn" style="margin-top:auto"><span class="nav-icon">❤️</span><span class="nav-label">Support</span></button>
 </div>
 
 <div class="app">
 
+<!-- CALCULATE PAGE -->
 <div class="page active" id="page-calc">
-<h1>⚡ Charge Calculator</h1>
+<h1>⚡ Calculate</h1>
 
 <div class="card">
-<div class="field" style="margin-bottom:8px">
-<label style="font-size:0.85rem;font-weight:600">Your vehicle <span class="info-i" data-info="vehicleSelect">i</span></label>
-<select id="vehicleSelect"><option value="">— Loading vehicles… —</option></select>
+<div class="vehicle-inline">
+<div>
+<div style="font-size:0.7rem;color:var(--dim);text-transform:uppercase;letter-spacing:1.2px;font-weight:700;margin-bottom:4px">Your vehicle</div>
+<div class="vi-name" id="currentVehicleName">—</div>
 </div>
-<div class="field" id="customCapacityField" style="display:none">
-<label>Custom Capacity <span class="info-i" data-info="capacity">i</span> <span class="hint">(kWh)</span></label>
-<input type="number" id="customCapacity" value="30.08" step="0.01" min="1" inputmode="decimal">
+<button type="button" class="vi-change" id="changeVehicleBtn">Change ▾</button>
 </div>
 </div>
 
 <div class="card">
 <div class="card-title">Charge Level</div>
 <div class="field">
-<label>Current charge <span class="info-i" data-info="currentCharge">i</span> <input type="number" class="pct-input" id="currentNum" value="20" min="1" max="100" step="1" inputmode="numeric"></label>
+<label>Current <span class="battery-visual"><span class="battery-body"><span class="battery-fill" id="curBatteryFill" style="width:20%"></span></span></span> <input type="number" class="pct-input" id="currentNum" value="20" min="1" max="100" step="1" inputmode="numeric"></label>
 <input type="range" id="current" min="1" max="100" value="20" step="1">
 </div>
 <div class="field">
-<label>Target charge <span class="info-i" data-info="targetCharge">i</span> <input type="number" class="pct-input" id="targetNum" value="80" min="1" max="100" step="1" inputmode="numeric"></label>
+<label>Target <span class="battery-visual"><span class="battery-body"><span class="battery-fill" id="tgtBatteryFill" style="width:80%"></span></span></span> <input type="number" class="pct-input" id="targetNum" value="80" min="1" max="100" step="1" inputmode="numeric"></label>
 <input type="range" id="target" min="1" max="100" value="80" step="1">
 </div>
 <div class="presets">
-<button type="button" class="preset-btn" data-preset="20,80">20→80 Daily</button>
-<button type="button" class="preset-btn" data-preset="10,100">10→100 Road Trip</button>
-<button type="button" class="preset-btn" data-preset="50,80">50→80 Top Up</button>
-<button type="button" class="preset-btn" data-preset="30,90">30→90 Standard</button>
+<button type="button" class="preset-btn" data-preset="20,80">20→80</button>
+<button type="button" class="preset-btn" data-preset="10,100">10→100</button>
+<button type="button" class="preset-btn" data-preset="50,80">50→80</button>
+<button type="button" class="preset-btn" data-preset="30,90">30→90</button>
 </div>
 <div id="taperHint" class="notice-banner" style="display:none"></div>
 </div>
@@ -383,6 +471,7 @@ body.light .time-big .tb-val{background:none;-webkit-text-fill-color:initial;col
 <button type="button" class="mode-tab" id="tabHome">🏠 Home</button>
 <button type="button" class="mode-tab active" id="tabPublic">🔌 Public DC</button>
 </div>
+
 <div id="homeFields" style="display:none">
 <div class="field"><label>Home rate <span class="info-i" data-info="homeRateSelect">i</span></label>
 <select id="homeRateSelect">
@@ -407,7 +496,7 @@ body.light .time-big .tb-val{background:none;-webkit-text-fill-color:initial;col
 <option value="custom">Custom — Enter manually</option>
 </optgroup>
 </select></div>
-<div class="field"><label>Rate per kWh <span class="info-i" data-info="homeRate">i</span> <span class="hint">(LKR)</span></label><input type="number" id="homeRate" value="42" step="0.01" min="0" inputmode="decimal"></div>
+<div class="field"><label>Rate per kWh <span class="hint">(LKR)</span></label><input type="number" id="homeRate" value="42" step="0.01" min="0" inputmode="decimal"></div>
 <div class="field"><label>Charger power <span class="info-i" data-info="homeChargerPower">i</span> <span class="hint">(kW)</span></label>
 <select id="homeChargerPower">
 <option value="2.3">2.3 kW standard outlet</option>
@@ -418,12 +507,13 @@ body.light .time-big .tb-val{background:none;-webkit-text-fill-color:initial;col
 <option value="custom">Custom — Enter manually</option>
 </select></div>
 <div class="field" id="customHomePowerField" style="display:none"><label>Custom power <span class="hint">(kW)</span></label><input type="number" id="customHomePower" value="7" step="0.1" min="0.5" max="50" inputmode="decimal"></div>
-<div class="field"><label>Charging efficiency <span class="info-i" data-info="homeEfficiency">i</span> <span class="hint">(%)</span></label><input type="number" id="homeEfficiency" value="88" step="1" min="50" max="100" inputmode="numeric"></div>
+<div class="field"><label>Charging efficiency <span class="hint">(%)</span></label><input type="number" id="homeEfficiency" value="88" step="1" min="50" max="100" inputmode="numeric"></div>
 </div>
+
 <div id="publicFields">
-<div class="field"><label>Network / station <span class="info-i" data-info="quickRate">i</span></label>
+<div class="field"><label>Network / station</label>
 <select id="quickRate"><option value="">— Loading networks… —</option></select></div>
-<div class="field"><label>Rate per kWh <span class="info-i" data-info="rate">i</span> <span class="hint">(LKR)</span></label><input type="number" id="rate" value="150" step="0.01" min="0" inputmode="decimal"></div>
+<div class="field"><label>Rate per kWh <span class="hint">(LKR)</span></label><input type="number" id="rate" value="150" step="0.01" min="0" inputmode="decimal"></div>
 <div class="field"><label>Charger power <span class="info-i" data-info="chargerPower">i</span> <span class="hint">(kW)</span></label>
 <select id="chargerPower">
 <option value="30" selected>DC 30 kW</option>
@@ -437,75 +527,82 @@ body.light .time-big .tb-val{background:none;-webkit-text-fill-color:initial;col
 <option value="custom">Custom — Enter manually</option>
 </select></div>
 <div class="field" id="customPublicPowerField" style="display:none"><label>Custom power <span class="hint">(kW)</span></label><input type="number" id="customPublicPower" value="30" step="0.1" min="0.5" max="500" inputmode="decimal"></div>
+<div class="field"><label>Charging efficiency <span class="hint">(%)</span></label><input type="number" id="efficiency" value="90" step="1" min="50" max="100" inputmode="numeric"></div>
 </div>
 </div>
 
 <div class="card">
-<button type="button" class="adv-toggle" id="advToggle"><span class="arrow">▶</span> Advanced options <span style="font-size:0.7rem;color:var(--faint);font-weight:500;margin-left:auto">session fee, tax, efficiency</span></button>
-<div id="advContent" style="display:none;padding-top:16px;border-top:1px solid rgba(139,92,246,0.15);margin-top:8px">
-<div class="field"><label>Session fee <span class="info-i" data-info="sessionFee">i</span> <span class="hint">(LKR, optional)</span></label><input type="number" id="sessionFee" value="0" step="1" min="0" inputmode="numeric"></div>
-<div class="field"><label>Tax / VAT <span class="info-i" data-info="tax">i</span> <span class="hint">(%, optional)</span></label><input type="number" id="tax" value="0" step="0.1" min="0" inputmode="decimal"></div>
-<div class="field"><label>DC charging efficiency <span class="info-i" data-info="efficiency">i</span> <span class="hint">(%)</span></label><input type="number" id="efficiency" value="90" step="1" min="50" max="100" inputmode="numeric"></div>
-<div class="field"><label>Battery capacity <span class="info-i" data-info="capacity">i</span> <span class="hint">(kWh)</span></label><input type="number" id="capacity" value="30.08" step="0.01" min="1" inputmode="decimal"></div>
+<div class="card-title">What do you want to know?</div>
+<div class="mode-grid">
+<button type="button" class="mode-card active" data-mode="cost"><span class="mc-icon">💰</span><span>Cost</span></button>
+<button type="button" class="mode-card" data-mode="money"><span class="mc-icon">💵</span><span>Money</span></button>
+<button type="button" class="mode-card" data-mode="time"><span class="mc-icon">⏱️</span><span>Time</span></button>
+<button type="button" class="mode-card" data-mode="duration"><span class="mc-icon">⏳</span><span>Duration</span></button>
+</div>
+<div class="mode-desc" id="modeDesc">How much will this charge cost?</div>
+
+<div id="moneyInputs" style="display:none">
+<div class="field"><label>Amount to spend <span class="hint">(LKR)</span></label><input type="number" id="moneyAmount" value="500" step="1" min="1" inputmode="decimal"></div>
+<div id="moneyWarning" class="notice-banner" style="display:none"></div>
+</div>
+
+<div id="durationInputs" style="display:none">
+<div class="field"><label>Charging duration <span class="hint">(minutes)</span></label><input type="number" id="durationMin" value="60" step="1" min="1" inputmode="numeric"></div>
+<div class="presets">
+<button type="button" class="preset-btn" data-duration="30">30 min</button>
+<button type="button" class="preset-btn" data-duration="60">1 hr</button>
+<button type="button" class="preset-btn" data-duration="120">2 hr</button>
+<button type="button" class="preset-btn" data-duration="180">3 hr</button>
+<button type="button" class="preset-btn" data-duration="360">6 hr</button>
+<button type="button" class="preset-btn" data-duration="480">8 hr</button>
+<button type="button" class="preset-btn" data-duration="600">Overnight</button>
+</div>
+<div id="durationWarning" class="notice-banner" style="display:none"></div>
 </div>
 </div>
 
 <div class="card" style="background:linear-gradient(135deg,rgba(59,130,246,0.15),rgba(139,92,246,0.1),rgba(10,6,18,0.6));border:1px solid rgba(139,92,246,0.3)">
-<div class="card-title">Your Charge</div>
-<div style="text-align:center;padding:4px 0 12px">
-<div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:2px;color:var(--dim);margin-bottom:6px;font-weight:600">Total Cost</div>
-<div id="totalCost" style="font-size:2.6rem;font-weight:800;line-height:1.1;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">LKR 0.00</div>
+<div class="card-title">Your Result</div>
+<div class="big-num">
+<div class="bn-lbl" id="resultLabel">Total Cost</div>
+<div class="bn-val" id="resultValue">LKR 0.00</div>
 </div>
-<div class="result-grid">
-<div class="result-tile"><div class="tile-icon">⚡</div><div class="tile-val" id="energyAdd">0.00</div><div class="tile-lbl">kWh Added</div></div>
-<div class="result-tile"><div class="tile-icon">⏱️</div><div class="tile-val" id="chargeTime">—</div><div class="tile-lbl">Time</div></div>
-<div class="result-tile"><div class="tile-icon">🛣️</div><div class="tile-val" id="rangeAtTarget">—</div><div class="tile-lbl">Range</div></div>
+<div class="result-grid" id="resultTiles">
+<div class="result-tile"><div class="tile-icon">⚡</div><div class="tile-val" id="tile1">0.00</div><div class="tile-lbl" id="tile1Lbl">kWh</div></div>
+<div class="result-tile"><div class="tile-icon">⏱️</div><div class="tile-val" id="tile2">—</div><div class="tile-lbl" id="tile2Lbl">Time</div></div>
+<div class="result-tile"><div class="tile-icon">🛣️</div><div class="tile-val" id="tile3">—</div><div class="tile-lbl" id="tile3Lbl">Range</div></div>
 </div>
-<div style="display:flex;justify-content:space-between;padding:10px 0;font-size:0.85rem;border-top:1px solid rgba(139,92,246,0.1);margin-top:14px;padding-top:14px"><span style="color:var(--dim)">What you'll pay for <span class="info-i" data-info="charged">i</span></span><span id="energyBilled" style="font-weight:600;color:var(--text)">0.00 kWh</span></div>
-<div style="display:flex;justify-content:space-between;padding:8px 0;font-size:0.85rem"><span style="color:var(--dim)">Battery at target</span><span id="batteryTarget" style="font-weight:600;color:var(--text)">0.00 kWh</span></div>
-<div id="feeRow" style="display:none;justify-content:space-between;padding:6px 0;font-size:0.85rem"><span style="color:var(--dim)">Session fee</span><span id="feeVal" style="font-weight:600;color:var(--text)">LKR 0.00</span></div>
-<div id="taxRow" style="display:none;justify-content:space-between;padding:6px 0;font-size:0.85rem"><span style="color:var(--dim)">Tax</span><span id="taxVal" style="font-weight:600;color:var(--text)">LKR 0.00</span></div>
-<div style="margin-top:18px"><button type="button" id="saveBtn" style="width:100%;padding:15px;border-radius:14px;border:none;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;box-shadow:0 4px 20px rgba(139,92,246,0.4)">💾 Save this charge</button></div>
+<div id="resultDetail" style="font-size:0.8rem;color:var(--dim);text-align:center;margin-top:12px;line-height:1.6"></div>
+<div style="margin-top:16px"><button type="button" id="saveBtn" style="width:100%;padding:15px;border-radius:14px;border:none;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;box-shadow:0 4px 20px rgba(139,92,246,0.4)">💾 Save this charge</button></div>
 </div>
 
 <div class="card">
 <button type="button" class="adv-toggle" id="compareToggle"><span class="arrow" id="compareArrow">▶</span> Compare with other options</button>
 <div id="compareContent" style="display:none;padding-top:14px;border-top:1px solid rgba(139,92,246,0.15);margin-top:8px">
-<div id="compareCard">
 <div class="card-title" style="margin-top:8px">Cost at other networks</div>
 <table class="compare-table">
 <thead><tr><th>Network</th><th style="text-align:right">Cost</th></tr></thead>
 <tbody id="compareBody"></tbody>
 </table>
-</div>
 <div style="margin-top:18px;padding-top:14px;border-top:1px solid rgba(139,92,246,0.1)">
 <div class="card-title">vs Petrol Car</div>
-<p style="font-size:0.75rem;color:var(--dim);margin-bottom:10px;line-height:1.5">How much you'd pay for the same distance in a petrol car.</p>
 <table class="compare-table">
-<thead><tr><th>Fuel</th><th style="text-align:right">Cost for this trip</th></tr></thead>
+<thead><tr><th>Fuel</th><th style="text-align:right">Cost</th></tr></thead>
 <tbody>
 <tr><td class="name">⚡ Your EV charge</td><td class="cost" id="petrolEvCost">LKR 0.00</td></tr>
-<tr><td class="name">⛽ Petrol 92 Octane</td><td class="cost" id="petrolCost92" style="background:none;-webkit-text-fill-color:initial;color:var(--text)">LKR 0.00</td></tr>
-<tr><td class="name">⛽ Petrol 95 Octane</td><td class="cost" id="petrolCost95" style="background:none;-webkit-text-fill-color:initial;color:var(--text)">LKR 0.00</td></tr>
+<tr><td class="name">⛽ Petrol 92</td><td class="cost" id="petrolCost92" style="background:none;-webkit-text-fill-color:initial;color:var(--text)">LKR 0.00</td></tr>
+<tr><td class="name">⛽ Petrol 95</td><td class="cost" id="petrolCost95" style="background:none;-webkit-text-fill-color:initial;color:var(--text)">LKR 0.00</td></tr>
 <tr><td class="name">🚗 Auto Diesel</td><td class="cost" id="dieselCost" style="background:none;-webkit-text-fill-color:initial;color:var(--text)">LKR 0.00</td></tr>
 </tbody>
 </table>
-<div id="savingsBanner" style="display:none;margin-top:14px;padding:14px;border-radius:12px;background:linear-gradient(135deg,rgba(46,204,113,0.15),rgba(22,163,74,0.15));border:1px solid rgba(46,204,113,0.4)">
-<div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;color:#2ecc71;font-weight:800;margin-bottom:4px">You save</div>
-<div id="savingsAmount" style="font-size:1.6rem;font-weight:800;color:#2ecc71">LKR 0.00</div>
-<div id="savingsDetail" style="font-size:0.75rem;color:var(--dim);margin-top:4px;line-height:1.5">Compared to driving the same distance on petrol.</div>
-</div>
-<div id="co2Banner" style="margin-top:10px;padding:12px;border-radius:12px;background:rgba(59,130,246,0.12);border:1px solid rgba(59,130,246,0.3);display:flex;justify-content:space-between;align-items:center">
-<span style="font-size:0.8rem;color:var(--dim)">🌱 CO₂ avoided</span>
-<span id="co2Saved" style="font-size:1rem;font-weight:800;color:var(--blueB)">0 kg</span>
-</div>
 </div>
 </div>
 </div>
 
 <div class="card">
-<div class="card-title">Charging Timer</div>
-<p style="font-size:0.8rem;color:var(--dim);margin-bottom:12px;line-height:1.6">Get a reminder so you don't overstay at the charger.</p>
+<button type="button" class="adv-toggle" id="timerToggle"><span class="arrow" id="timerArrow">▶</span> Set a charging reminder</button>
+<div id="timerContent" style="display:none;padding-top:14px;border-top:1px solid rgba(139,92,246,0.15);margin-top:8px">
+<p style="font-size:0.8rem;color:var(--dim);margin-bottom:12px;line-height:1.6">Get a notification so you don't overstay at the charger.</p>
 <div style="display:flex;gap:8px;flex-wrap:wrap">
 <button type="button" class="preset-btn" data-reminder="30">30 min</button>
 <button type="button" class="preset-btn" data-reminder="45">45 min</button>
@@ -515,114 +612,14 @@ body.light .time-big .tb-val{background:none;-webkit-text-fill-color:initial;col
 </div>
 </div>
 </div>
-
-<div class="page" id="page-time">
-<h1>⏱️ Charge Time</h1>
-<p style="text-align:center;font-size:0.8rem;color:var(--dim);margin-bottom:16px">Calculate how long it takes to charge — no cost involved</p>
-
-<div class="card">
-<div class="field" style="margin-bottom:8px">
-<label style="font-size:0.85rem;font-weight:600">Your vehicle <span class="info-i" data-info="vehicleSelect">i</span></label>
-<select id="timeVehicleSelect"><option value="">— Loading vehicles… —</option></select>
-</div>
-<div class="field">
-<label>Battery capacity <span class="info-i" data-info="capacity">i</span> <span class="hint">(kWh)</span></label>
-<input type="number" id="timeCapacity" value="30.08" step="0.01" min="1" inputmode="decimal">
-</div>
 </div>
 
-<div class="card">
-<div class="card-title">Charge Level</div>
-<div class="field">
-<label>Current charge <span class="info-i" data-info="currentCharge">i</span> <input type="number" class="pct-input" id="timeCurrentNum" value="20" min="1" max="100" step="1" inputmode="numeric"></label>
-<input type="range" id="timeCurrent" min="1" max="100" value="20" step="1">
-</div>
-<div class="field">
-<label>Target charge <span class="info-i" data-info="targetCharge">i</span> <input type="number" class="pct-input" id="timeTargetNum" value="80" min="1" max="100" step="1" inputmode="numeric"></label>
-<input type="range" id="timeTarget" min="1" max="100" value="80" step="1">
-</div>
-</div>
-
-<div class="card">
-<div class="card-title">Charger</div>
-<div class="mode-tabs">
-<button type="button" class="mode-tab active" id="timeTabHome">🏠 Home</button>
-<button type="button" class="mode-tab" id="timeTabPublic">🔌 Public DC</button>
-</div>
-<div id="timeHomeFields">
-<div class="field"><label>Charger power <span class="info-i" data-info="homeChargerPower">i</span> <span class="hint">(kW)</span></label>
-<select id="timeHomeChargerPower">
-<option value="2.3">2.3 kW standard outlet</option>
-<option value="3.3">3.3 kW standard outlet</option>
-<option value="7" selected>7 kW AC wallbox (default)</option>
-<option value="11">11 kW AC wallbox</option>
-<option value="22">22 kW AC wallbox</option>
-<option value="custom">Custom — Enter manually</option>
-</select></div>
-<div class="field" id="timeCustomHomePowerField" style="display:none"><label>Custom power <span class="hint">(kW)</span></label><input type="number" id="timeCustomHomePower" value="7" step="0.1" min="0.5" max="50" inputmode="decimal"></div>
-<div class="field"><label>Charging efficiency <span class="info-i" data-info="homeEfficiency">i</span> <span class="hint">(%)</span></label><input type="number" id="timeHomeEfficiency" value="88" step="1" min="50" max="100" inputmode="numeric"></div>
-</div>
-<div id="timePublicFields" style="display:none">
-<div class="field"><label>Charger power <span class="info-i" data-info="chargerPower">i</span> <span class="hint">(kW)</span></label>
-<select id="timeChargerPower">
-<option value="30" selected>DC 30 kW</option>
-<option value="50">DC 50 kW</option>
-<option value="60">DC 60 kW</option>
-<option value="100">DC 100 kW</option>
-<option value="120">DC 120 kW</option>
-<option value="150">DC 150 kW</option>
-<option value="180">DC 180 kW</option>
-<option value="240">DC 240 kW</option>
-<option value="custom">Custom — Enter manually</option>
-</select></div>
-<div class="field" id="timeCustomPublicPowerField" style="display:none"><label>Custom power <span class="hint">(kW)</span></label><input type="number" id="timeCustomPublicPower" value="30" step="0.1" min="0.5" max="500" inputmode="decimal"></div>
-<div class="field"><label>Charging efficiency <span class="info-i" data-info="efficiency">i</span> <span class="hint">(%)</span></label><input type="number" id="timeEfficiency" value="90" step="1" min="50" max="100" inputmode="numeric"></div>
-</div>
-</div>
-
-<div class="card" style="background:linear-gradient(135deg,rgba(59,130,246,0.15),rgba(139,92,246,0.1),rgba(10,6,18,0.6));border:1px solid rgba(139,92,246,0.3)">
-<div class="time-big">
-<div class="tb-lbl">Estimated Time</div>
-<div class="tb-val" id="timeBigVal">—</div>
-<div class="tb-sub" id="timeBigSub">Enter values to calculate</div>
-</div>
-<div style="display:flex;justify-content:space-between;padding:10px 0;font-size:0.85rem;border-top:1px solid rgba(139,92,246,0.1);margin-top:14px;padding-top:14px"><span style="color:var(--dim)">Energy to add</span><span id="timeEnergy" style="font-weight:600;color:var(--text)">0.00 kWh</span></div>
-<div style="display:flex;justify-content:space-between;padding:8px 0;font-size:0.85rem"><span style="color:var(--dim)">Effective charging rate</span><span id="timeRate" style="font-weight:600;color:var(--text)">— kW</span></div>
-</div>
-
-<div class="card">
-<div class="card-title">Charging Timer</div>
-<p style="font-size:0.8rem;color:var(--dim);margin-bottom:12px;line-height:1.6">Start a reminder for the estimated time.</p>
-<button type="button" id="timeStartTimer" style="width:100%;padding:13px;border-radius:12px;border:none;font-size:0.95rem;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff">🔔 Remind me when done</button>
-</div>
-</div>
-
-<div class="page" id="page-garage">
-<h1>🚗 My Garage</h1>
-<div class="user-bar"><span class="email" id="userEmail">—</span><button type="button" class="signout" id="signoutBtn">Sign Out</button></div>
-<div class="card">
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-<div class="card-title" style="margin-bottom:0">My Vehicles</div>
-<button type="button" id="addVehicleBtn" style="background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;border:none;padding:8px 14px;border-radius:10px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:inherit">➕ Add</button>
-</div>
-<div id="garageList"></div>
-</div>
-<div class="card" id="garageSummaryCard" style="display:none">
-<div class="card-title">Garage Overview</div>
-<div id="garageSummary"></div>
-</div>
-<div class="card">
-<div class="card-title">Built-in Vehicles</div>
-<p style="font-size:0.75rem;color:var(--dim);margin-bottom:12px;line-height:1.5">These come pre-loaded with verified Sri Lankan specs. Select one from the Home or Time page.</p>
-<div id="builtInList"></div>
-</div>
-</div>
-
+<!-- HISTORY -->
 <div class="page" id="page-history">
-<h1>📊 Charging History</h1>
+<h1>📊 History</h1>
 <div class="card">
 <div class="field" style="margin-bottom:0">
-<label>Filter by vehicle <span class="info-i" data-info="historyFilter">i</span></label>
+<label>Filter by vehicle</label>
 <select id="historyVehicleFilter"><option value="all">All vehicles</option></select>
 </div>
 </div>
@@ -630,8 +627,8 @@ body.light .time-big .tb-val{background:none;-webkit-text-fill-color:initial;col
 <div class="sc-title">This Month</div>
 <div class="sc-grid">
 <div class="sc-item"><div class="sc-val" id="sumSessions">0</div><div class="sc-lbl">Charges</div></div>
-<div class="sc-item"><div class="sc-val" id="sumEnergy">0 kWh</div><div class="sc-lbl">Energy added</div></div>
-<div class="sc-item"><div class="sc-val" id="sumCost">LKR 0</div><div class="sc-lbl">Total spent</div></div>
+<div class="sc-item"><div class="sc-val" id="sumEnergy">0 kWh</div><div class="sc-lbl">Energy</div></div>
+<div class="sc-item"><div class="sc-val" id="sumCost">LKR 0</div><div class="sc-lbl">Spent</div></div>
 <div class="sc-item"><div class="sc-val" id="sumSavings">LKR 0</div><div class="sc-lbl">Saved vs petrol</div></div>
 </div>
 </div>
@@ -652,8 +649,9 @@ body.light .time-big .tb-val{background:none;-webkit-text-fill-color:initial;col
 </div>
 </div>
 
+<!-- STATIONS -->
 <div class="page" id="page-stations">
-<h1>🔌 Charging Stations</h1>
+<h1>🔌 Stations</h1>
 <p style="text-align:center;font-size:0.8rem;color:var(--dim);margin-bottom:16px">Find the closest charger to your location</p>
 <div class="card">
 <button type="button" id="nearMeBtn" style="width:100%;padding:14px;border-radius:14px;border:none;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;box-shadow:0 4px 20px rgba(139,92,246,0.4)">📍 Find Stations Near Me</button>
@@ -661,14 +659,24 @@ body.light .time-big .tb-val{background:none;-webkit-text-fill-color:initial;col
 </div>
 <div class="card">
 <div class="card-title">Know a charger we're missing?</div>
-<p style="font-size:0.8rem;color:var(--dim);line-height:1.6;margin-bottom:12px">Help the community by adding charging stations you find. Your submission will be reviewed before appearing in the app.</p>
+<p style="font-size:0.8rem;color:var(--dim);line-height:1.6;margin-bottom:12px">Help the community by adding charging stations you find.</p>
 <button type="button" id="submitStationBtn" style="width:100%;padding:14px;border-radius:14px;border:1px solid rgba(46,204,113,0.4);background:rgba(46,204,113,0.15);color:#2ecc71;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit">➕ Submit a Station</button>
 </div>
 <div id="stationsList"></div>
 </div>
 
+<!-- SETTINGS -->
 <div class="page" id="page-settings">
 <h1>⚙️ Settings</h1>
+
+<div class="card">
+<div class="card-title">My Vehicles</div>
+<div style="display:flex;justify-content:flex-end;margin-bottom:10px">
+<button type="button" id="addVehicleBtn" style="background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;border:none;padding:8px 14px;border-radius:10px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:inherit">➕ Add</button>
+</div>
+<div id="garageList"></div>
+</div>
+
 <div class="card">
 <div class="card-title">Appearance</div>
 <div style="display:flex;justify-content:space-between;align-items:center">
@@ -676,13 +684,30 @@ body.light .time-big .tb-val{background:none;-webkit-text-fill-color:initial;col
 <button type="button" id="themeToggle" style="width:60px;height:32px;border-radius:16px;border:1px solid rgba(139,92,246,0.4);background:rgba(139,92,246,0.15);cursor:pointer;position:relative;transition:background 0.3s;font-family:inherit"><span id="themeKnob" style="position:absolute;top:2px;left:2px;width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#8b5cf6);transition:left 0.3s;box-shadow:0 2px 8px rgba(139,92,246,0.5)"></span></button>
 </div>
 </div>
+
 <div class="card">
 <div class="card-title">Default vehicle</div>
 <div class="field" style="margin-bottom:0">
-<label>Pre-selected on launch <span class="info-i" data-info="defaultVehicle">i</span></label>
+<label>Pre-selected on launch</label>
 <select id="settingsDefaultVehicle"><option value="">— None —</option></select>
 </div>
 </div>
+
+<div class="card">
+<div class="card-title">Default rates & fees</div>
+<p style="font-size:0.78rem;color:var(--dim);line-height:1.6;margin-bottom:12px">These apply every time unless you override on Calculate.</p>
+<div class="field"><label>Session fee <span class="hint">(LKR, optional)</span></label><input type="number" id="sessionFee" value="0" step="1" min="0" inputmode="numeric"></div>
+<div class="field"><label>Tax / VAT <span class="hint">(%, optional)</span></label><input type="number" id="tax" value="0" step="0.1" min="0" inputmode="decimal"></div>
+</div>
+
+<div class="card">
+<div class="card-title">Fuel prices (for comparison)</div>
+<div class="field"><label>Petrol 92 Octane <span class="hint">(LKR/L)</span></label><input type="number" id="setFuel92" value="414" step="0.01" min="0" inputmode="decimal"></div>
+<div class="field"><label>Petrol 95 Octane <span class="hint">(LKR/L)</span></label><input type="number" id="setFuel95" value="475" step="0.01" min="0" inputmode="decimal"></div>
+<div class="field"><label>Auto Diesel <span class="hint">(LKR/L)</span></label><input type="number" id="setDiesel" value="392" step="0.01" min="0" inputmode="decimal"></div>
+<div class="field"><label>Petrol car efficiency <span class="hint">(km/L)</span></label><input type="number" id="setPetrolKm" value="12" step="0.1" min="1" inputmode="decimal"></div>
+</div>
+
 <div class="card">
 <div class="card-title">Change password</div>
 <div class="field"><label>Current password</label><input type="password" id="cpCurrent" placeholder="Your current password" autocomplete="current-password"></div>
@@ -691,30 +716,24 @@ body.light .time-big .tb-val{background:none;-webkit-text-fill-color:initial;col
 <button type="button" id="cpBtn" style="width:100%;padding:14px;border-radius:12px;border:none;font-size:0.95rem;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff">Update Password</button>
 <div id="cpMsg" style="margin-top:12px;font-size:0.82rem;line-height:1.6;text-align:center"></div>
 </div>
-<div class="card">
-<div class="card-title">Fuel prices (for comparison)</div>
-<p style="font-size:0.78rem;color:var(--dim);line-height:1.6;margin-bottom:12px">Sri Lankan fuel prices change monthly. Update these when they change.</p>
-<div class="field"><label>Petrol 92 Octane <span class="info-i" data-info="fuel92">i</span> <span class="hint">(LKR/L)</span></label><input type="number" id="setFuel92" value="414" step="0.01" min="0" inputmode="decimal"></div>
-<div class="field"><label>Petrol 95 Octane <span class="hint">(LKR/L)</span></label><input type="number" id="setFuel95" value="475" step="0.01" min="0" inputmode="decimal"></div>
-<div class="field"><label>Auto Diesel <span class="hint">(LKR/L)</span></label><input type="number" id="setDiesel" value="392" step="0.01" min="0" inputmode="decimal"></div>
-<div class="field"><label>Petrol car efficiency <span class="hint">(km/L)</span></label><input type="number" id="setPetrolKm" value="12" step="0.1" min="1" inputmode="decimal"></div>
-</div>
+
 <div class="card">
 <div class="card-title">Setup</div>
-<button type="button" id="rerunOnboard" style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(139,92,246,0.3);background:rgba(139,92,246,0.1);color:var(--purpleB);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:8px">🔄 Re-run setup wizard</button>
+<button type="button" id="rerunIntro" style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(139,92,246,0.3);background:rgba(139,92,246,0.1);color:var(--purpleB);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:8px">🔄 Show intro slides again</button>
 <button type="button" id="reseedStationsBtn" style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(245,158,11,0.3);background:rgba(245,158,11,0.1);color:#fbbf24;font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit">📍 Re-seed stations (admin)</button>
-<div class="hint" style="margin-top:8px">Use only if station data is missing.</div>
 </div>
+
+<div class="card">
+<div class="card-title">How to use & about</div>
+<button type="button" id="showHelpBtn" style="width:100%;padding:13px;border-radius:12px;border:1px solid rgba(139,92,246,0.3);background:rgba(139,92,246,0.1);color:var(--purpleB);font-size:0.9rem;font-weight:700;cursor:pointer;font-family:inherit">❓ Help, tips & the math</button>
+</div>
+
 <div class="card">
 <div class="card-title">Support the Developer</div>
-<p style="font-size:0.82rem;color:var(--dim);line-height:1.7;margin-bottom:14px">This app is free and built by one person for the Sri Lankan EV community. If it saves you time or money, consider supporting its development.</p>
-<button type="button" id="donateBtn" style="width:100%;padding:14px;border-radius:12px;border:none;font-size:0.95rem;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;box-shadow:0 4px 20px rgba(245,158,11,0.4);margin-bottom:10px">❤️ Support via PayHere</button>
-<button type="button" id="bankBtn" style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(139,92,246,0.3);background:rgba(139,92,246,0.1);color:var(--purpleB);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:10px">🏦 Bank Transfer Details</button>
-<div style="display:flex;gap:8px">
-<button type="button" id="shareAppBtn" style="flex:1;padding:12px;border-radius:12px;border:1px solid rgba(59,130,246,0.3);background:rgba(59,130,246,0.1);color:var(--blueB);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit">📤 Share</button>
-<button type="button" id="rateAppBtn" style="flex:1;padding:12px;border-radius:12px;border:1px solid rgba(46,204,113,0.3);background:rgba(46,204,113,0.1);color:#2ecc71;font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit">⭐ Rate</button>
+<p style="font-size:0.82rem;color:var(--dim);line-height:1.7;margin-bottom:14px">This app is free and built by one person. If it saves you time, consider supporting its development.</p>
+<button type="button" id="shareAppBtn" style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(59,130,246,0.3);background:rgba(59,130,246,0.1);color:var(--blueB);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit">📤 Share with a friend</button>
 </div>
-</div>
+
 <div class="card">
 <div class="card-title">Account</div>
 <p style="font-size:0.85rem;color:var(--dim);line-height:1.6;margin-bottom:10px">Signed in as <strong id="settingsEmail" style="color:var(--text)">—</strong></p>
@@ -722,40 +741,32 @@ body.light .time-big .tb-val{background:none;-webkit-text-fill-color:initial;col
 </div>
 </div>
 
+<!-- HELP (opened from settings) -->
 <div class="page" id="page-help">
-<h1>❓ Help & About</h1>
+<h1>❓ Help & Tips</h1>
+<button type="button" id="backFromHelp" style="background:none;border:none;color:var(--purpleB);font-size:0.9rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:16px;padding:6px 0">← Back to Settings</button>
 <div class="card">
-<div class="card-title">What this app does</div>
-<p style="font-size:0.85rem;color:var(--dim);line-height:1.7">This app helps Sri Lankan EV owners figure out <strong style="color:var(--purpleB)">how much a charge will cost, how long it will take, and how far you can drive afterwards</strong> — before you plug in.</p>
-<p style="font-size:0.85rem;color:var(--dim);line-height:1.7;margin-top:10px">Use the <strong style="color:var(--purpleB)">⏱️ Time</strong> tab if you only care about how long a charge will take, without any cost calculation.</p>
-</div>
-<div class="card">
-<div class="card-title">How to use it — step by step</div>
-<div class="tip-row"><span class="tip-icon">1️⃣</span><div class="tip-text"><strong>Pick your car</strong> — tap the vehicle name on Home or Time. Your choice is remembered for next time.</div></div>
-<div class="tip-row"><span class="tip-icon">2️⃣</span><div class="tip-text"><strong>Set your charge range</strong> — drag the sliders or tap the number to type directly.</div></div>
-<div class="tip-row"><span class="tip-icon">3️⃣</span><div class="tip-text"><strong>Choose where you're charging</strong> — 🏠 Home or 🔌 Public DC. Your last-used rate is remembered.</div></div>
-<div class="tip-row"><span class="tip-icon">4️⃣</span><div class="tip-text"><strong>Read the result</strong> — cost, time, and range. Tap "Compare" for network and petrol comparisons.</div></div>
-<div class="tip-row"><span class="tip-icon">5️⃣</span><div class="tip-text"><strong>Save it</strong> — tap "💾 Save this charge." If the actual result differs, tap any history entry to edit its end % or values.</div></div>
-<div class="tip-row"><span class="tip-icon">📍</span><div class="tip-text"><strong>Find nearby chargers</strong> — on the 🔌 Stations tab, tap "Find Stations Near Me."</div></div>
-<div class="tip-row"><span class="tip-icon">➕</span><div class="tip-text"><strong>Submit a missing charger</strong> — Stations tab → "Submit a Station" with GPS.</div></div>
-<div class="tip-row"><span class="tip-icon">ⓘ</span><div class="tip-text"><strong>Need help with a field?</strong> — tap any small "i" icon next to a label.</div></div>
+<div class="card-title">How the four modes work</div>
+<div class="tip-row"><span class="tip-icon">💰</span><div class="tip-text"><strong>Cost</strong> — Enter your start and target %. The app tells you how much it costs, how long, and how far you can go.</div></div>
+<div class="tip-row"><span class="tip-icon">💵</span><div class="tip-text"><strong>Money</strong> — Enter how much you want to spend. The app tells you what % you'll reach, kWh added, and time.</div></div>
+<div class="tip-row"><span class="tip-icon">⏱️</span><div class="tip-text"><strong>Time</strong> — Enter your start and target %. The app tells you how long it takes.</div></div>
+<div class="tip-row"><span class="tip-icon">⏳</span><div class="tip-text"><strong>Duration</strong> — Enter how many minutes you'll charge. The app tells you what % you'll reach and how much it costs.</div></div>
 </div>
 <div class="card">
 <div class="card-title">Quick tips</div>
 <div class="tip-row"><span class="tip-icon">⚡</span><div class="tip-text"><strong>Above 80% is slow.</strong> DC charging tapers off dramatically past 80%.</div></div>
 <div class="tip-row"><span class="tip-icon">💰</span><div class="tip-text"><strong>Home is cheaper.</strong> Typically 3–5× cheaper than public DC.</div></div>
-<div class="tip-row"><span class="tip-icon">⏱️</span><div class="tip-text"><strong>Time-only check.</strong> Use the Time tab if you just want to know how long, without cost.</div></div>
-<div class="tip-row"><span class="tip-icon">🌡️</span><div class="tip-text"><strong>Heat affects range.</strong> Expect 15–25% less than the rated range.</div></div>
-<div class="tip-row"><span class="tip-icon">✏️</span><div class="tip-text"><strong>Edit history.</strong> Tap any saved charge to fix the end % if it differs from what you planned.</div></div>
+<div class="tip-row"><span class="tip-icon">🌡️</span><div class="tip-text"><strong>Heat affects range.</strong> Expect 15–25% less than rated range in Sri Lanka.</div></div>
+<div class="tip-row"><span class="tip-icon">✏️</span><div class="tip-text"><strong>Edit history.</strong> Tap any saved charge to fix values if the actual differs.</div></div>
 </div>
 <div class="card">
-<div class="card-title">The math behind it</div>
-<p style="font-size:0.82rem;color:var(--dim);line-height:1.7;margin-bottom:10px"><strong style="color:var(--purpleB)">Energy you'll add:</strong></p>
-<div style="background:var(--input-bg);padding:14px;border-radius:10px;font-family:monospace;font-size:0.8rem;color:var(--blueB);margin:8px 0;border-left:3px solid var(--blue)">kWh = (Target% − Current%) ÷ 100 × Capacity</div>
-<p style="font-size:0.82rem;color:var(--dim);line-height:1.7;margin-bottom:10px"><strong style="color:var(--purpleB)">Charging time:</strong></p>
-<div style="background:var(--input-bg);padding:14px;border-radius:10px;font-family:monospace;font-size:0.8rem;color:var(--blueB);margin:8px 0;border-left:3px solid var(--blue)">Time (h) = Energy needed ÷ Effective charger power</div>
-<p style="font-size:0.82rem;color:var(--dim);line-height:1.7;margin-bottom:10px"><strong style="color:var(--purpleB)">Total cost:</strong></p>
-<div style="background:var(--input-bg);padding:14px;border-radius:10px;font-family:monospace;font-size:0.8rem;color:var(--blueB);margin:8px 0;border-left:3px solid var(--blue)">Cost = (Billed × Rate) + Tax + Session Fee</div>
+<div class="card-title">The math</div>
+<div style="background:var(--input-bg);padding:14px;border-radius:10px;font-family:monospace;font-size:0.78rem;color:var(--blueB);border-left:3px solid var(--blue);line-height:1.8">
+kWh = (Target% − Current%) ÷ 100 × Capacity<br>
+Billed = kWh ÷ Efficiency<br>
+Cost = Billed × Rate + Tax + Session Fee<br>
+Time = kWh ÷ Effective Charger Power
+</div>
 </div>
 <div class="card" style="text-align:center;padding:16px">
 <p style="font-size:0.75rem;color:var(--faint);line-height:1.6;margin:0">© 2026 Shamil Sallay. All rights reserved.<br>EV Charge Calculator — Sri Lanka</p>
@@ -767,11 +778,12 @@ body.light .time-big .tb-val{background:none;-webkit-text-fill-color:initial;col
 <script>
 var $=function(id){return document.getElementById(id)};
 var auth=null,db=null,fbFuncs=null,currentUser=null;
-var currentMode='public';
+var currentMode='public'; // home or public
+var currentCalcMode='cost'; // cost, money, time, duration
 var userVehicles=[];
 var editingVehicleId=null;
-var confirmCallback=null;
 var editingHistoryId=null;
+var confirmCallback=null;
 
 var builtInVehicles={};
 var providerRates=[];
@@ -780,8 +792,6 @@ var stationReports={};
 var userLocation=null;
 var subCoordinates=null;
 
-var timeMode='home';
-
 var reportLabels={
 working:{icon:'✅',label:'Working'},
 slow:{icon:'⚠️',label:'Slow'},
@@ -789,37 +799,38 @@ broken:{icon:'❌',label:'Broken'},
 blocked:{icon:'🅿️',label:'Blocked'}
 };
 
-var infos={
-vehicleSelect:{title:'Your vehicle',text:'Pick the car you are charging. The app remembers your choice for next time.'},
-currentCharge:{title:'Current charge',text:'How full your battery is right now. Check your car\'s dashboard before setting this. You can type directly into the box (1–100).'},
-targetCharge:{title:'Target charge',text:'How full you want the battery to be when you unplug. Charging to 80% is best for daily driving. Above 80% is slow and stresses the battery. Maximum is 100%.'},
-homeRateSelect:{title:'Home electricity rate',text:'Your cost per unit (kWh) from your CEB or LECO bill. Pick the tariff tier that matches your monthly usage.'},
-homeRate:{title:'Home rate',text:'Exact cost per kWh. If you selected a tier above, this is auto-filled. Otherwise enter your actual rate.'},
-homeChargerPower:{title:'Home charger power',text:'The kW rating of your home charger. A standard 3-pin outlet is ~2.3 kW. A dedicated wallbox is usually 7 kW. 7 kW is the default.'},
-homeEfficiency:{title:'Home charging efficiency',text:'Energy lost as heat during AC charging. 85–90% is normal. This makes your billed amount slightly higher than what enters the battery.'},
-quickRate:{title:'Network rate',text:'The per-kWh rate at the charging station you\'re using. Pick from the list, or enter a custom rate if your station differs.'},
-rate:{title:'Rate per kWh',text:'The exact LKR cost per kilowatt-hour at this charger. Check the charger screen or network app.'},
-chargerPower:{title:'Charger power',text:'The power output of the charger. Higher kW = faster charging. Your car may cap below the charger\'s rating. 30 kW is typical for Sri Lankan DC.'},
-sessionFee:{title:'Session fee',text:'Some stations charge a flat starting fee on top of the per-kWh rate. Leave at 0 if your network does not.'},
-tax:{title:'Tax / VAT',text:'If the rate shown excludes tax, enter the tax percentage here. Most Sri Lankan EV charging rates already include tax.'},
-efficiency:{title:'Charging efficiency',text:'Energy lost as heat during charging. DC fast: 90–95%. The remaining energy reaches your battery.'},
-capacity:{title:'Battery capacity',text:'Your car\'s usable battery size in kWh. This is auto-filled when you pick a vehicle but you can override it here.'},
-charged:{title:'What you\'ll pay for',text:'Charging is not 100% efficient — some energy is lost as heat. The station bills you for the total energy delivered, which is slightly more than what actually lands in your battery.'},
-defaultVehicle:{title:'Default vehicle',text:'The car that auto-selects when you open the app. Choose your main vehicle here.'},
-historyFilter:{title:'Filter by vehicle',text:'Show only charging sessions for one specific car, or all vehicles combined.'},
-fuel92:{title:'Petrol 92 Octane',text:'Current price per litre of Petrol 92 Octane in Sri Lanka. Update this when the government revises fuel prices.'},
-subStationNetwork:{title:'Network',text:'Which charging network operates this station? Pick "Other" if it is independent or not listed.'},
-subStationType:{title:'Charger type',text:'DC Fast chargers (CCS2) charge in 30–60 minutes. AC (Type 2) chargers take several hours. Pick "Both" if the station has both.'}
+var modeDescriptions={
+cost:'How much will this charge cost?',
+money:'How far will your budget take you?',
+time:'How long to reach your target?',
+duration:'How much charge in a set time?'
 };
 
-// ============ OFFLINE BANNER ============
+var infos={
+homeRateSelect:{title:'Home electricity rate',text:'Your cost per unit (kWh) from your CEB or LECO bill. Pick the tariff tier matching your monthly usage.'},
+homeChargerPower:{title:'Home charger power',text:'The kW rating of your charger. Standard outlet ~2.3 kW. Wallbox usually 7 kW.'},
+chargerPower:{title:'Charger power',text:'The power output of the charger. Higher = faster. 30 kW is typical for Sri Lankan DC.'}
+};
+
+// ============ TOAST ============
+var toastTimer=null;
+function showToast(msg,type){
+var t=$('toast');
+t.textContent=msg;
+t.className='toast show'+(type?' '+type:'');
+clearTimeout(toastTimer);
+toastTimer=setTimeout(function(){t.className='toast'},2200);
+}
+
+// ============ OFFLINE ============
 function updateOnlineStatus(){
-var banner=$('offlineBanner');
-if(!navigator.onLine){banner.classList.add('show')}else{banner.classList.remove('show')}
+var icon=$('offlineIcon');
+if(!navigator.onLine){icon.classList.add('show')}else{icon.classList.remove('show')}
 }
 window.addEventListener('online',updateOnlineStatus);
 window.addEventListener('offline',updateOnlineStatus);
 updateOnlineStatus();
+$('offlineIcon').addEventListener('click',function(){alert('You are offline. The app is using cached data. Some features like saving charges may not work until you reconnect.')});
 
 // ============ DEFAULT VEHICLE ============
 function getDefaultVehicle(){try{return localStorage.getItem('evDefaultVehicle')||''}catch(e){return ''}}
@@ -827,25 +838,29 @@ function setDefaultVehicle(v){try{if(v)localStorage.setItem('evDefaultVehicle',v
 
 function applyDefaultVehicle(){
 var def=getDefaultVehicle();
-if(def&&$('vehicleSelect').querySelector('option[value="'+def+'"]')){
-$('vehicleSelect').value=def;
+if(def){
 var v=getVehicleByKey(def);
-if(v)$('capacity').value=v.capacity;
+if(v){
+$('currentVehicleName').textContent=v.name;
+$('capacity')&&null;
+$('capacity').value=v.capacity;
 }
+}
+updateVehicleLabel();
+}
+
+function updateVehicleLabel(){
+var def=getDefaultVehicle();
+var v=getVehicleByKey(def);
+if(v){$('currentVehicleName').textContent=v.name}
+else{$('currentVehicleName').textContent='— No vehicle selected —'}
 }
 
 // ============ LAST-USED RATE ============
 function getLastRate(networkKey){try{return localStorage.getItem('evLastRate_'+networkKey)||''}catch(e){return ''}}
 function setLastRate(networkKey,r){try{if(networkKey&&r)localStorage.setItem('evLastRate_'+networkKey,String(r))}catch(e){}}
-function applyLastRate(){
-var sel=$('quickRate');
-var v=sel.value;
-if(!v||v==='custom')return;
-var saved=getLastRate(v);
-if(saved){$('rate').value=saved}
-}
 
-// ============ CONFIG FROM FIRESTORE ============
+// ============ CONFIG ============
 function loadConfig(cb){
 try{
 var cached=localStorage.getItem('evConfig');
@@ -865,7 +880,7 @@ if(vDoc.exists()){var vData=vDoc.data();if(vData.list&&typeof vData.list==='obje
 if(rDoc.exists()){var rData=rDoc.data();if(rData.list&&Array.isArray(rData.list))providerRates=rData.list;}
 try{localStorage.setItem('evConfig',JSON.stringify({vehicles:builtInVehicles,rates:providerRates}))}catch(e){}
 if(cb)cb();
-}).catch(function(e){console.warn('Config load failed, using cache:',e);if(cb)cb()});
+}).catch(function(e){console.warn('Config load failed:',e);if(cb)cb()});
 }
 
 function brandForName(n){
@@ -878,18 +893,10 @@ if(n.indexOf('Dongfeng')===0)return 'Dongfeng';
 return 'Other';
 }
 
-function buildVehicleDropdowns(){
-['vehicleSelect','timeVehicleSelect'].forEach(function(selId){
-var sel=$(selId);
+function buildVehicleModalSelect(){
+var sel=$('modalVehicleSelect');
 if(!sel)return;
-var curVal=sel.value;
-sel.innerHTML='<option value="">— Choose your vehicle —</option>';
-
-var garageGrp=document.createElement('optgroup');
-garageGrp.label='⭐ My Garage';
-garageGrp.id=selId==='vehicleSelect'?'garageOptGroup':'timeGarageOptGroup';
-sel.appendChild(garageGrp);
-
+sel.innerHTML='<option value="">— Choose —</option>';
 var byBrand={};
 Object.keys(builtInVehicles).forEach(function(k){
 var v=builtInVehicles[k];
@@ -897,12 +904,21 @@ var brand=brandForName(v.name);
 if(!byBrand[brand])byBrand[brand]=[];
 byBrand[brand].push({key:k,v:v});
 });
-var sortedBrands=Object.keys(byBrand).sort();
-sortedBrands.forEach(function(brand){
-byBrand[brand].sort(function(a,b){return (a.v.name||'').localeCompare(b.v.name||'')});
+if(userVehicles.length>0){
+var grp=document.createElement('optgroup');
+grp.label='⭐ My Garage';
+userVehicles.slice().sort(function(a,b){return (a.name||'').localeCompare(b.name||'')}).forEach(function(v){
+var o=document.createElement('option');
+o.value='custom_'+v._docId;
+o.textContent=v.name+' — '+v.capacity+' kWh';
+grp.appendChild(o);
+});
+sel.appendChild(grp);
+}
+Object.keys(byBrand).sort().forEach(function(brand){
 var grp=document.createElement('optgroup');
 grp.label=brand;
-byBrand[brand].forEach(function(item){
+byBrand[brand].sort(function(a,b){return (a.v.name||'').localeCompare(b.v.name||'')}).forEach(function(item){
 var o=document.createElement('option');
 o.value=item.key;
 o.textContent=item.v.name+' — '+item.v.capacity+' kWh';
@@ -910,9 +926,30 @@ grp.appendChild(o);
 });
 sel.appendChild(grp);
 });
-sel.value=curVal;
+}
+
+function buildIntroVehicleSelect(){
+var sel=$('introVehicle');
+if(!sel)return;
+sel.innerHTML='<option value="">— Choose —</option>';
+var byBrand={};
+Object.keys(builtInVehicles).forEach(function(k){
+var v=builtInVehicles[k];
+var brand=brandForName(v.name);
+if(!byBrand[brand])byBrand[brand]=[];
+byBrand[brand].push({key:k,v:v});
 });
-applyDefaultVehicle();
+Object.keys(byBrand).sort().forEach(function(brand){
+var grp=document.createElement('optgroup');
+grp.label=brand;
+byBrand[brand].sort(function(a,b){return (a.v.name||'').localeCompare(b.v.name||'')}).forEach(function(item){
+var o=document.createElement('option');
+o.value=item.key;
+o.textContent=item.v.name+' — '+item.v.capacity+' kWh';
+grp.appendChild(o);
+});
+sel.appendChild(grp);
+});
 }
 
 function buildRateDropdown(){
@@ -933,7 +970,6 @@ cust.textContent='Custom — Enter manually';
 grp.appendChild(cust);
 sel.appendChild(grp);
 sel.value=curVal;
-applyLastRate();
 }
 
 function populateSettingsVehicleDropdown(){
@@ -948,15 +984,15 @@ var brand=brandForName(v.name);
 if(!byBrand[brand])byBrand[brand]=[];
 byBrand[brand].push({key:k,v:v});
 });
+if(userVehicles.length>0){
+var grp=document.createElement('optgroup');grp.label='⭐ My Garage';
+userVehicles.forEach(function(v){var o=document.createElement('option');o.value='custom_'+v._docId;o.textContent=v.name;grp.appendChild(o)});
+sel.appendChild(grp);
+}
 Object.keys(byBrand).sort().forEach(function(brand){
 var grp=document.createElement('optgroup');grp.label=brand;
-byBrand[brand].sort(function(a,b){return (a.v.name||'').localeCompare(b.v.name||'')}).forEach(function(item){
-var o=document.createElement('option');o.value=item.key;o.textContent=item.v.name;grp.appendChild(o);
-});
+byBrand[brand].sort(function(a,b){return (a.v.name||'').localeCompare(b.v.name||'')}).forEach(function(item){var o=document.createElement('option');o.value=item.key;o.textContent=item.v.name;grp.appendChild(o)});
 sel.appendChild(grp);
-});
-userVehicles.forEach(function(v){
-var o=document.createElement('option');o.value='custom_'+v._docId;o.textContent='⭐ '+v.name;sel.appendChild(o);
 });
 sel.value=cur;
 }
@@ -1003,7 +1039,7 @@ $('locationStatus').textContent='✓ Location found';
 cb({lat:pos.coords.latitude,lng:pos.coords.longitude});
 },
 function(err){
-var msg='Location access denied. Enable GPS or location permission.';
+var msg='Location access denied.';
 $('locationStatus').textContent='⚠ '+msg;
 cb(null,msg);
 },
@@ -1047,9 +1083,7 @@ flat.push({station:station,loc:loc,dist:dist,report:stationReports[reportKey]});
 }
 });
 
-if(userLocation){
-flat.sort(function(a,b){return (a.dist==null?9999:a.dist)-(b.dist==null?9999:b.dist)});
-}
+if(userLocation){flat.sort(function(a,b){return (a.dist==null?9999:a.dist)-(b.dist==null?9999:b.dist)})}
 
 flat.forEach(function(item){
 var s=item.station,loc=item.loc,report=item.report;
@@ -1057,9 +1091,8 @@ var badgeHtml='';
 if(report){
 var age=now-report.ts;
 var stale=age>STALE_MS;
-if(stale){
-badgeHtml='<div class="station-status-badge stale">🕐 No recent reports</div>';
-}else{
+if(stale){badgeHtml='<div class="station-status-badge stale">🕐 No recent reports</div>'}
+else{
 var meta=reportLabels[report.status];
 if(meta){
 var ageMin=Math.round(age/60000);
@@ -1067,9 +1100,7 @@ var ageTxt=ageMin<60?ageMin+'m ago':Math.round(ageMin/60)+'h ago';
 badgeHtml='<div class="station-status-badge '+report.status+'">'+meta.icon+' '+meta.label+' — '+ageTxt+'</div>';
 }
 }
-}else{
-badgeHtml='<div class="station-status-badge stale">🕐 No reports yet</div>';
-}
+}else{badgeHtml='<div class="station-status-badge stale">🕐 No reports yet</div>'}
 
 var distHtml='';
 if(item.dist!==null){
@@ -1079,11 +1110,8 @@ distHtml='<div style="font-size:0.85rem;font-weight:800;color:#2ecc71;margin-bot
 
 var reportKey=s.id+'_'+loc.name;
 var dirUrl='';
-if(loc.lat!=null&&loc.lng!=null){
-dirUrl='https://www.google.com/maps/dir/?api=1&destination='+loc.lat+','+loc.lng;
-}else{
-dirUrl='https://www.google.com/maps/search/'+encodeURIComponent(s.name+' '+loc.name);
-}
+if(loc.lat!=null&&loc.lng!=null){dirUrl='https://www.google.com/maps/dir/?api=1&destination='+loc.lat+','+loc.lng}
+else{dirUrl='https://www.google.com/maps/search/'+encodeURIComponent(s.name+' '+loc.name)}
 
 html+='<div style="background:var(--input-bg);border-radius:14px;padding:16px;margin-bottom:12px;border-left:3px solid var(--purple)">';
 html+='<div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-weight:700;color:var(--text);font-size:0.9rem">'+s.name+'</span><span style="font-size:0.6rem;background:rgba(139,92,246,0.2);color:var(--purpleB);padding:3px 10px;border-radius:6px;font-weight:700">'+s.badge+'</span></div>';
@@ -1112,40 +1140,31 @@ submitReport(this.dataset.station,this.dataset.status,this);
 }
 
 function submitReport(stationId,status,btn){
-if(!currentUser){alert('Please sign in to report station status.');return}
-var meta=reportLabels[status];
-if(!meta)return;
+if(!currentUser){alert('Please sign in to report.');return}
+var meta=reportLabels[status];if(!meta)return;
 var rateKey='lastReport_'+currentUser.uid+'_'+stationId;
 var lastTs=parseInt(localStorage.getItem(rateKey)||'0');
 var now=Date.now();
 var COOLDOWN_MS=60*60*1000;
 if(now-lastTs<COOLDOWN_MS){
 var remaining=Math.ceil((COOLDOWN_MS-(now-lastTs))/60000);
-alert('You already reported this location recently. Please wait '+remaining+' more minute'+(remaining===1?'':'s')+'.');
-return;
-}
-var existing=stationReports[stationId];
-if(existing&&existing.uid===currentUser.uid&&(now-existing.ts)<COOLDOWN_MS){
-var remaining2=Math.ceil((COOLDOWN_MS-(now-existing.ts))/60000);
-alert('You already reported this location recently. Please wait '+remaining2+' more minute'+(remaining2===1?'':'s')+'.');
+alert('Please wait '+remaining+' more minute'+(remaining===1?'':'s')+' before reporting this again.');
 return;
 }
 btn.disabled=true;
 var originalText=btn.textContent;
 btn.textContent='Sending…';
 fbFuncs.addDoc(fbFuncs.collection(db,'station_reports'),{
-stationId:stationId,
-status:status,
-uid:currentUser.uid,
-name:currentUser.email?currentUser.email.split('@')[0]:'User',
-ts:now
+stationId:stationId,status:status,uid:currentUser.uid,
+name:currentUser.email?currentUser.email.split('@')[0]:'User',ts:now
 }).then(function(){
 try{localStorage.setItem(rateKey,String(now))}catch(e){}
 btn.textContent='✓ Reported';
+showToast('Status reported. Thanks!','success');
 setTimeout(function(){btn.textContent=originalText;btn.disabled=false;},1200);
 loadStationReports(function(){renderStations()});
 }).catch(function(e){
-console.error('Report failed:',e);
+console.error(e);
 btn.textContent='⚠ Failed';
 setTimeout(function(){btn.textContent=originalText;btn.disabled=false;},1500);
 });
@@ -1163,10 +1182,10 @@ else{alert(err||'Could not get your location.')}
 });
 });
 
-// ============ STATION RE-SEED ============
+// ============ RE-SEED ============
 $('reseedStationsBtn').addEventListener('click',function(){
 if(!currentUser){alert('Please sign in first.');return}
-if(!confirm('This will overwrite the stations list in Firestore. Continue?'))return;
+if(!confirm('Overwrite stations list in Firestore? Continue?'))return;
 var btn=this;
 btn.disabled=true;
 btn.textContent='Seeding…';
@@ -1212,23 +1231,22 @@ var seed=[
 fbFuncs.setDoc(fbFuncs.doc(db,'config','stations'),{list:seed})
 .then(function(){
 try{localStorage.setItem('evStations',JSON.stringify(seed))}catch(e){}
-stationData=seed;
-renderStations();
+stationData=seed;renderStations();
 btn.textContent='✓ Seeded';
+showToast('Stations updated.','success');
 setTimeout(function(){btn.textContent='📍 Re-seed stations (admin)';btn.disabled=false;},1500);
-alert('Stations updated.');
 })
 .catch(function(e){
-console.error('Seed failed:',e);
-alert('Seed failed: '+e.message);
+console.error(e);
+alert('Seed failed: '+e.message+'\n\nYou need to temporarily allow writes to the config collection.');
 btn.textContent='📍 Re-seed stations (admin)';
 btn.disabled=false;
 });
 });
 
-// ============ SUBMIT A STATION ============
+// ============ SUBMIT STATION ============
 $('submitStationBtn').addEventListener('click',function(){
-if(!currentUser){alert('Please sign in to submit a station.');return}
+if(!currentUser){alert('Please sign in.');return}
 var today=new Date().toISOString().slice(0,10);
 var rateKey='submissions_'+currentUser.uid+'_'+today;
 var count=parseInt(localStorage.getItem(rateKey)||'0');
@@ -1246,13 +1264,10 @@ $('subCancel').addEventListener('click',function(){$('submitStationModal').class
 
 $('subGetLocationBtn').addEventListener('click',function(){
 var btn=this;
-btn.disabled=true;
-btn.textContent='📍 Getting location…';
+btn.disabled=true;btn.textContent='📍 Getting location…';
 $('subLocationStatus').textContent='Requesting GPS…';
-$('subLocationStatus').style.color='var(--dim)';
 getUserLocation(function(loc,err){
-btn.disabled=false;
-btn.textContent='📍 Get My Location';
+btn.disabled=false;btn.textContent='📍 Get My Location';
 if(loc){
 subCoordinates=loc;
 $('subLocationStatus').textContent='✓ Location captured';
@@ -1275,8 +1290,8 @@ $('subNetwork').addEventListener('change',checkSubmitReady);
 $('subName').addEventListener('input',checkSubmitReady);
 
 $('subSubmit').addEventListener('click',function(){
-if(!currentUser){alert('Please sign in first.');return}
-if(!subCoordinates){alert('Please capture your location first.');return}
+if(!currentUser){alert('Please sign in.');return}
+if(!subCoordinates){alert('Please capture location.');return}
 if(!$('subNetwork').value){alert('Please select a network.');return}
 if($('subName').value.trim().length<3){alert('Please enter a station name.');return}
 
@@ -1288,8 +1303,7 @@ rate:rate,lat:subCoordinates.lat,lng:subCoordinates.lng,ts:Date.now(),status:'pe
 };
 
 var btn=this;
-btn.disabled=true;
-btn.textContent='Submitting…';
+btn.disabled=true;btn.textContent='Submitting…';
 
 fbFuncs.addDoc(fbFuncs.collection(db,'station_submissions'),sub)
 .then(function(){
@@ -1300,25 +1314,83 @@ var count=parseInt(localStorage.getItem(rateKey)||'0');
 localStorage.setItem(rateKey,String(count+1));
 }catch(e){}
 btn.textContent='✓ Submitted!';
+showToast('Station submitted for review.','success');
 setTimeout(function(){
 $('submitStationModal').classList.remove('show');
 btn.textContent='Submit';btn.disabled=false;
-alert('Thank you! Your station has been submitted for review.');
 },1200);
 })
 .catch(function(e){
-console.error('Submission failed:',e);
+console.error(e);
 btn.textContent='⚠ Failed';
 setTimeout(function(){btn.textContent='Submit';btn.disabled=false;},1500);
-alert('Could not submit. Please try again.');
 });
 });
 
-// ============ FIREBASE INIT ============
+// ============ INTRO SLIDES ============
+var introStep=1;
+var INTRO_TOTAL=4;
+
+function showIntro(){
+introStep=1;
+updateIntroSlide();
+$('introContainer').classList.add('show');
+}
+
+function updateIntroSlide(){
+for(var i=1;i<=INTRO_TOTAL;i++){
+$('introSlide'+i).classList.remove('active');
+}
+$('introSlide'+introStep).classList.add('active');
+var dots=$('introDots').children;
+for(var j=0;j<dots.length;j++){
+dots[j].classList.toggle('active',j===introStep-1);
+}
+$('introNext').textContent=introStep===INTRO_TOTAL?'Get Started →':'Next →';
+$('introSkip').textContent=introStep===1?'Skip':'Back';
+}
+
+$('introNext').addEventListener('click',function(){
+if(introStep<INTRO_TOTAL){
+introStep++;
+updateIntroSlide();
+}else{
+finishIntro();
+}
+});
+
+$('introSkip').addEventListener('click',function(){
+if(introStep===1){finishIntro()}
+else{introStep--;updateIntroSlide()}
+});
+
+function finishIntro(){
+var v=$('introVehicle').value;
+var hr=$('introHomeRate').value;
+if(v){
+setDefaultVehicle(v);
+var vehicle=getVehicleByKey(v);
+if(vehicle){
+$('capacity').value=vehicle.capacity;
+}
+}
+if(hr){
+$('homeRate').value=hr;
+$('homeRateSelect').value=hr;
+}
+try{localStorage.setItem('introDone','1')}catch(e){}
+$('introContainer').classList.remove('show');
+calc();
+savePrefs();
+showToast('Welcome to EV Calc!',(window.location?'success':undefined));
+}
+
+// ============ AUTH ============
 function onFirebaseReady(){
 auth=window.fbAuth;db=window.fbDB;fbFuncs=window.fbFuncs;
 loadConfig(function(){
-buildVehicleDropdowns();
+buildVehicleModalSelect();
+buildIntroVehicleSelect();
 buildRateDropdown();
 populateSettingsVehicleDropdown();
 loadStations(function(){
@@ -1328,19 +1400,18 @@ currentUser=user;
 if(user){
 $('authScreen').style.display='none';
 $('mainApp').style.display='block';
-$('userEmail').textContent=user.email;
 $('settingsEmail').textContent=user.email;
 loadUserVehicles(function(){
 renderGarage();
 renderHistory();
-updateVehicleDropdowns();
 populateSettingsVehicleDropdown();
+updateVehicleLabel();
 applyDefaultVehicle();
 calc();
-calcTime();
 });
 loadStationReports(function(){renderStations()});
-}else{
+}
+else{
 $('authScreen').style.display='flex';
 $('mainApp').style.display='none';
 userVehicles=[];
@@ -1353,7 +1424,6 @@ renderStations();
 }
 if(window.firebaseReady){onFirebaseReady();}else{window.addEventListener('firebase-ready',onFirebaseReady);}
 
-// AUTH UI
 $('tabLogin').addEventListener('click',function(){$('tabLogin').classList.add('active');$('tabSignup').classList.remove('active');$('loginForm').style.display='block';$('signupForm').style.display='none';$('resetForm').style.display='none';$('authTabs').style.display='flex';$('authSubtitle').textContent='Sign in to sync your charging history';$('authError').style.display='none';$('authInfo').style.display='none'});
 $('tabSignup').addEventListener('click',function(){$('tabSignup').classList.add('active');$('tabLogin').classList.remove('active');$('signupForm').style.display='block';$('loginForm').style.display='none';$('resetForm').style.display='none';$('authTabs').style.display='flex';$('authSubtitle').textContent='Create an account to save your history';$('authError').style.display='none';$('authInfo').style.display='none'});
 $('forgotBtn').addEventListener('click',function(){$('loginForm').style.display='none';$('signupForm').style.display='none';$('resetForm').style.display='block';$('authTabs').style.display='none';$('authSubtitle').textContent='Reset your password';$('authError').style.display='none';$('authInfo').style.display='none'});
@@ -1362,29 +1432,27 @@ function showAuthError(m){$('authError').textContent=m;$('authError').style.disp
 function showAuthInfo(m){$('authInfo').textContent=m;$('authInfo').style.display='block';$('authError').style.display='none'}
 function friendlyAuthError(c){var m={'auth/invalid-email':'Please enter a valid email.','auth/user-not-found':'No account found.','auth/wrong-password':'Incorrect password.','auth/invalid-credential':'Invalid email or password.','auth/email-already-in-use':'Email already registered.','auth/weak-password':'Password must be 6+ characters.','auth/too-many-requests':'Too many attempts. Please wait.','auth/network-request-failed':'Network error.'};return m[c]||'Something went wrong.'}
 $('loginBtn').addEventListener('click',function(){var e=$('loginEmail').value.trim(),p=$('loginPassword').value;if(!e||!p){showAuthError('Enter email and password.');return}var b=this;b.disabled=true;b.textContent='Signing in...';fbFuncs.signInWithEmailAndPassword(auth,e,p).then(function(){b.disabled=false;b.textContent='Sign In'}).catch(function(err){b.disabled=false;b.textContent='Sign In';showAuthError(friendlyAuthError(err.code))})});
-$('signupBtn').addEventListener('click',function(){var e=$('signupEmail').value.trim(),p=$('signupPassword').value;if(!e||!p){showAuthError('Enter email and password.');return}if(p.length<6){showAuthError('Password must be 6+ characters.');return}var b=this;b.disabled=true;b.textContent='Creating...';fbFuncs.createUserWithEmailAndPassword(auth,e,p).then(function(){b.disabled=false;b.textContent='Create Account'}).catch(function(err){b.disabled=false;b.textContent='Create Account';showAuthError(friendlyAuthError(err.code))})});
+$('signupBtn').addEventListener('click',function(){var e=$('signupEmail').value.trim(),p=$('signupPassword').value;if(!e||!p){showAuthError('Enter email and password.');return}if(p.length<6){showAuthError('Password must be 6+ characters.');return}var b=this;b.disabled=true;b.textContent='Creating...';fbFuncs.createUserWithEmailAndPassword(auth,e,p).then(function(){b.disabled=false;b.textContent='Create Account';if(!localStorage.getItem('introDone')){setTimeout(showIntro,500)}}).catch(function(err){b.disabled=false;b.textContent='Create Account';showAuthError(friendlyAuthError(err.code))})});
 $('resetBtn').addEventListener('click',function(){var e=$('resetEmail').value.trim();if(!e){showAuthError('Enter your email.');return}var b=this;b.disabled=true;b.textContent='Sending...';fbFuncs.sendPasswordResetEmail(auth,e).then(function(){b.disabled=false;b.textContent='Send Reset Link';showAuthInfo('✓ Reset link sent! Check your inbox.')}).catch(function(err){b.disabled=false;b.textContent='Send Reset Link';showAuthError(friendlyAuthError(err.code))})});
-$('signoutBtn').addEventListener('click',function(){if(confirm('Sign out?'))fbFuncs.signOut(auth)});
 $('signoutBtn2').addEventListener('click',function(){if(confirm('Sign out?'))fbFuncs.signOut(auth)});
 
-// CHANGE PASSWORD
+// PASSWORD CHANGE
 $('cpBtn').addEventListener('click',function(){
 var cur=$('cpCurrent').value,nw=$('cpNew').value,conf=$('cpConfirm').value,msg=$('cpMsg');
-if(!cur||!nw||!conf){msg.style.color='#f87171';msg.textContent='Please fill in all fields.';return}
-if(nw.length<6){msg.style.color='#f87171';msg.textContent='New password must be at least 6 characters.';return}
-if(nw!==conf){msg.style.color='#f87171';msg.textContent='New passwords do not match.';return}
+if(!cur||!nw||!conf){msg.style.color='#f87171';msg.textContent='Fill in all fields.';return}
+if(nw.length<6){msg.style.color='#f87171';msg.textContent='New password too short.';return}
+if(nw!==conf){msg.style.color='#f87171';msg.textContent='Passwords do not match.';return}
 if(!currentUser){msg.style.color='#f87171';msg.textContent='Not signed in.';return}
-var b=this;b.disabled=true;b.textContent='Updating...';
-msg.textContent='';
+var b=this;b.disabled=true;b.textContent='Updating...';msg.textContent='';
 var cred=fbFuncs.EmailAuthProvider.credential(currentUser.email,cur);
 fbFuncs.reauthenticateWithCredential(currentUser,cred)
 .then(function(){return fbFuncs.updatePassword(currentUser,nw)})
-.then(function(){msg.style.color='#2ecc71';msg.textContent='✓ Password updated successfully.';$('cpCurrent').value='';$('cpNew').value='';$('cpConfirm').value='';})
-.catch(function(err){var m='Could not update password.';if(err.code==='auth/wrong-password'||err.code==='auth/invalid-credential')m='Current password is incorrect.';else if(err.code==='auth/weak-password')m='New password is too weak.';else if(err.code==='auth/too-many-requests')m='Too many attempts. Please wait.';msg.style.color='#f87171';msg.textContent=m;})
-.then(function(){b.disabled=false;b.textContent='Update Password';});
+.then(function(){msg.style.color='#2ecc71';msg.textContent='✓ Password updated.';$('cpCurrent').value='';$('cpNew').value='';$('cpConfirm').value=''})
+.catch(function(err){var m='Could not update.';if(err.code==='auth/wrong-password'||err.code==='auth/invalid-credential')m='Current password incorrect.';else if(err.code==='auth/weak-password')m='Password too weak.';else if(err.code==='auth/too-many-requests')m='Too many attempts.';msg.style.color='#f87171';msg.textContent=m})
+.then(function(){b.disabled=false;b.textContent='Update Password'});
 });
 
-// Cloud history
+// ============ CLOUD DATA ============
 function getUserHistoryRef(){return fbFuncs.collection(db,'users',currentUser.uid,'history')}
 function addRecord(r,cb){if(!currentUser){if(cb)cb(false);return}fbFuncs.addDoc(getUserHistoryRef(),r).then(function(){if(cb)cb(true)}).catch(function(e){console.error(e);if(cb)cb(false)})}
 function getAllRecords(cb){if(!currentUser){cb([]);return}fbFuncs.getDocs(getUserHistoryRef()).then(function(s){var a=[];s.forEach(function(d){var data=d.data();data._docId=d.id;a.push(data)});cb(a)}).catch(function(e){console.error(e);cb([])})}
@@ -1392,39 +1460,11 @@ function updateRecord(docId,updates,cb){fbFuncs.updateDoc(fbFuncs.doc(db,'users'
 function deleteRecord(ts,cb){getAllRecords(function(a){var t=a.find(function(x){return x.ts===ts});if(!t){if(cb)cb(false);return}fbFuncs.deleteDoc(fbFuncs.doc(db,'users',currentUser.uid,'history',t._docId)).then(function(){if(cb)cb(true)}).catch(function(){if(cb)cb(false)})})}
 function clearAllRecords(cb){getAllRecords(function(a){var p=a.map(function(x){return fbFuncs.deleteDoc(fbFuncs.doc(db,'users',currentUser.uid,'history',x._docId))});Promise.all(p).then(function(){if(cb)cb(true)}).catch(function(){if(cb)cb(false)})})}
 
-// Cloud vehicles
 function getUserVehiclesRef(){return fbFuncs.collection(db,'users',currentUser.uid,'vehicles')}
 function loadUserVehicles(cb){if(!currentUser){userVehicles=[];if(cb)cb();return}fbFuncs.getDocs(getUserVehiclesRef()).then(function(s){userVehicles=[];s.forEach(function(d){var data=d.data();data._docId=d.id;userVehicles.push(data)});if(cb)cb()}).catch(function(e){console.error(e);userVehicles=[];if(cb)cb()})}
 function addUserVehicle(v,cb){if(!currentUser){if(cb)cb(false);return}fbFuncs.addDoc(getUserVehiclesRef(),v).then(function(ref){v._docId=ref.id;userVehicles.push(v);if(cb)cb(true)}).catch(function(e){console.error(e);if(cb)cb(false)})}
 function updateUserVehicle(id,updates,cb){fbFuncs.updateDoc(fbFuncs.doc(db,'users',currentUser.uid,'vehicles',id),updates).then(function(){var idx=userVehicles.findIndex(function(v){return v._docId===id});if(idx>=0)Object.assign(userVehicles[idx],updates);if(cb)cb(true)}).catch(function(e){console.error(e);if(cb)cb(false)})}
 function deleteUserVehicle(id,cb){fbFuncs.deleteDoc(fbFuncs.doc(db,'users',currentUser.uid,'vehicles',id)).then(function(){userVehicles=userVehicles.filter(function(v){return v._docId!==id});if(cb)cb(true)}).catch(function(e){console.error(e);if(cb)cb(false)})}
-
-function updateVehicleDropdowns(){
-var garageLists=[{grpId:'garageOptGroup',selId:'vehicleSelect'},{grpId:'timeGarageOptGroup',selId:'timeVehicleSelect'}];
-garageLists.forEach(function(item){
-var grp=$(item.grpId);
-if(!grp)return;
-grp.innerHTML='';
-if(userVehicles.length>0){
-var sorted=userVehicles.slice().sort(function(a,b){return (a.name||'').localeCompare(b.name||'')});
-sorted.forEach(function(v){var opt=document.createElement('option');opt.value='custom_'+v._docId;opt.textContent=v.name+' — '+v.capacity+' kWh';grp.appendChild(opt)});
-}else{grp.innerHTML='<option disabled>No custom vehicles yet</option>'}
-});
-
-var hf=$('historyVehicleFilter');if(!hf)return;var curHf=hf.value;
-hf.innerHTML='<option value="all">All vehicles</option>';
-if(userVehicles.length>0){
-userVehicles.forEach(function(v){var o=document.createElement('option');o.value='custom_'+v._docId;o.textContent='⭐ '+v.name;hf.appendChild(o)});
-}
-var byBrand={};
-Object.keys(builtInVehicles).forEach(function(k){var v=builtInVehicles[k];var brand=brandForName(v.name);if(!byBrand[brand])byBrand[brand]=[];byBrand[brand].push({key:k,v:v})});
-Object.keys(byBrand).sort().forEach(function(brand){
-var grp2=document.createElement('optgroup');grp2.label=brand;
-byBrand[brand].sort(function(a,b){return (a.v.name||'').localeCompare(b.v.name||'')}).forEach(function(item){var o=document.createElement('option');o.value=item.key;o.textContent=item.v.name;grp2.appendChild(o)});
-hf.appendChild(grp2);
-});
-hf.value=curHf;
-}
 
 function getVehicleByKey(key){
 if(!key)return null;
@@ -1433,21 +1473,9 @@ if(builtInVehicles[key]){var b=builtInVehicles[key];return{name:b.name,capacity:
 return null;
 }
 
-// NAV
+// ============ NAV ============
 document.querySelectorAll('.nav-item').forEach(function(btn){
 btn.addEventListener('click',function(){
-if(this.id==='supportNavBtn'){
-document.querySelectorAll('.nav-item').forEach(function(b){b.classList.remove('active')});
-document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
-var setBtn=document.querySelector('.nav-item[data-page="settings"]');
-if(setBtn)setBtn.classList.add('active');
-document.getElementById('page-settings').classList.add('active');
-setTimeout(function(){
-var cards=document.querySelectorAll('#page-settings .card');
-for(var i=0;i<cards.length;i++){if(cards[i].textContent.indexOf('Support the Developer')>-1){cards[i].scrollIntoView({behavior:'smooth'});break}}
-},100);
-return;
-}
 document.querySelectorAll('.nav-item').forEach(function(b){b.classList.remove('active')});
 document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
 btn.classList.add('active');
@@ -1455,219 +1483,251 @@ document.getElementById('page-'+btn.dataset.page).classList.add('active');
 if(btn.dataset.page==='garage')renderGarage();
 if(btn.dataset.page==='history')renderHistory();
 if(btn.dataset.page==='stations')loadStationReports(function(){renderStations()});
-if(btn.dataset.page==='time')calcTime();
 });
 });
 
+// ============ HELP ============
+$('showHelpBtn').addEventListener('click',function(){
+document.querySelectorAll('.nav-item').forEach(function(b){b.classList.remove('active')});
+document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+var s=document.querySelector('.nav-item[data-page="settings"]');if(s)s.classList.add('active');
+$('page-help').classList.add('active');
+});
+$('backFromHelp').addEventListener('click',function(){
+document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+var s=document.querySelector('.nav-item[data-page="settings"]');if(s)s.classList.add('active');
+$('page-settings').classList.add('active');
+});
+
+// ============ MODE SWITCHING ============
+$('tabHome').addEventListener('click',function(){setChargingMode('home')});
+$('tabPublic').addEventListener('click',function(){setChargingMode('public')});
+
+function setChargingMode(m){
+currentMode=m;
+if(m==='home'){$('tabHome').classList.add('active');$('tabPublic').classList.remove('active');$('homeFields').style.display='block';$('publicFields').style.display='none'}
+else{$('tabPublic').classList.add('active');$('tabHome').classList.remove('active');$('homeFields').style.display='none';$('publicFields').style.display='block'}
+calc();savePrefs();
+}
+
+document.querySelectorAll('.mode-card').forEach(function(btn){
+btn.addEventListener('click',function(){
+setCalcMode(this.dataset.mode);
+});
+});
+
+function setCalcMode(m){
+currentCalcMode=m;
+document.querySelectorAll('.mode-card').forEach(function(b){b.classList.toggle('active',b.dataset.mode===m)});
+$('modeDesc').textContent=modeDescriptions[m];
+$('moneyInputs').style.display=m==='money'?'block':'none';
+$('durationInputs').style.display=m==='duration'?'block':'none';
+try{localStorage.setItem('evCalcMode',m)}catch(e){}
+calc();savePrefs();
+}
+
 $('advToggle').addEventListener('click',function(){this.classList.toggle('open');var c=$('advContent');c.style.display=c.style.display==='none'?'block':'none'});
 $('compareToggle').addEventListener('click',function(){this.classList.toggle('open');var c=$('compareContent'),a=$('compareArrow');if(c.style.display==='none'){c.style.display='block';a.style.transform='rotate(90deg)'}else{c.style.display='none';a.style.transform='rotate(0)'}});
+$('timerToggle').addEventListener('click',function(){this.classList.toggle('open');var c=$('timerContent'),a=$('timerArrow');if(c.style.display==='none'){c.style.display='block';a.style.transform='rotate(90deg)'}else{c.style.display='none';a.style.transform='rotate(0)'}});
 
 document.addEventListener('click',function(e){if(e.target.classList&&e.target.classList.contains('info-i')){var k=e.target.dataset.info;var i=infos[k];if(i){$('infoTitle').textContent=i.title;$('infoText').textContent=i.text;$('infoModal').classList.add('show')}}});
 $('infoOk').addEventListener('click',function(){$('infoModal').classList.remove('show')});
 
-function setMode(m){currentMode=m;if(m==='home'){$('tabHome').classList.add('active');$('tabPublic').classList.remove('active');$('homeFields').style.display='block';$('publicFields').style.display='none'}else{$('tabPublic').classList.add('active');$('tabHome').classList.remove('active');$('homeFields').style.display='none';$('publicFields').style.display='block'}calc();savePrefs()}
-$('tabHome').addEventListener('click',function(){setMode('home')});
-$('tabPublic').addEventListener('click',function(){setMode('public')});
-
+// ============ UTILITY ============
 function lkr(n){return 'LKR '+n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',')}
 function clamp(v,mn,mx){v=parseInt(v);if(isNaN(v))return mn;if(v<mn)return mn;if(v>mx)return mx;return v}
 function getHomePower(){if($('homeChargerPower').value==='custom')return parseFloat($('customHomePower').value)||7;return parseFloat($('homeChargerPower').value)||7}
 function getPublicPower(){if($('chargerPower').value==='custom')return parseFloat($('customPublicPower').value)||30;return parseFloat($('chargerPower').value)||30}
+function getEffectivePower(){var p=currentMode==='home'?getHomePower():getPublicPower();var eff=currentMode==='home'?(parseFloat($('homeEfficiency').value)||88):(parseFloat($('efficiency').value)||90);return{power:p,eff:eff,effPower:p*(eff/100)}}
+function getRate(){return currentMode==='home'?(parseFloat($('homeRate').value)||0):(parseFloat($('rate').value)||0)}
+function getCapacity(){var def=getDefaultVehicle();var v=getVehicleByKey(def);return v?v.capacity:30.08}
 
+// ============ MAIN CALCULATION ============
 var currentCalc=null;
 
 function calc(){
-var cap=parseFloat($('capacity').value)||0;
+var capacity=getCapacity();
 var cur=parseFloat($('current').value)||0;
 var tgt=parseFloat($('target').value)||0;
-var fee=parseFloat($('sessionFee').value)||0;
-var taxPct=parseFloat($('tax').value)||0;
 if(document.activeElement!==$('currentNum'))$('currentNum').value=cur;
 if(document.activeElement!==$('targetNum'))$('targetNum').value=tgt;
-var r,eff,power;
-if(currentMode==='home'){r=parseFloat($('homeRate').value)||0;eff=parseFloat($('homeEfficiency').value)||88;power=getHomePower()}
-else{r=parseFloat($('rate').value)||0;eff=parseFloat($('efficiency').value)||90;power=getPublicPower()}
-var needed=(tgt>cur)?((tgt-cur)/100)*cap:0;
-var billed=needed/(eff/100);
-var baseCost=billed*r;var taxAmount=baseCost*(taxPct/100);baseCost+=taxAmount;var total=baseCost+fee;
-var battAtTarget=(tgt/100)*cap;
-$('totalCost').textContent=lkr(total);$('energyAdd').textContent=needed.toFixed(1);$('energyBilled').textContent=billed.toFixed(2)+' kWh';$('batteryTarget').textContent=battAtTarget.toFixed(2)+' kWh';
-if(needed>0&&power>0){var hrs=needed/power;if(hrs>=1){var h=Math.floor(hrs);var m=Math.round((hrs-h)*60);$('chargeTime').textContent=h+'h '+m+'m'}else{$('chargeTime').textContent=Math.round(hrs*60)+'m'}}else{$('chargeTime').textContent='—'}
-var vehicleKey=$('vehicleSelect').value;var vehicle=getVehicleByKey(vehicleKey);var rp=vehicle?vehicle.range:0;
-if(rp>0){$('rangeAtTarget').textContent=((tgt/100)*rp).toFixed(0)+' km'}else{$('rangeAtTarget').textContent='—'}
-if(fee>0){$('feeRow').style.display='flex';$('feeVal').textContent=lkr(fee)}else{$('feeRow').style.display='none'}
-if(taxAmount>0){$('taxRow').style.display='flex';$('taxVal').textContent=lkr(taxAmount)}else{$('taxRow').style.display='none'}
+$('curBatteryFill').style.width=cur+'%';
+$('tgtBatteryFill').style.width=tgt+'%';
 
-if(tgt>80){
-var msg;
-if(tgt>=100)msg='⚠️ You\'re charging to 100%. The last 10% can take as long as the first 50% — and it stresses your battery.';
-else if(tgt>=95)msg='⚠️ Above 95%, charging slows dramatically. Expect the final push to take a while.';
-else if(tgt>=90)msg='⚡ Charging above 90% is about 30% slower than below 80%.';
-else msg='⚡ Tip: Charging above 80% is slow (charging taper). Stop at 80% unless you need the extra range.';
-$('taperHint').textContent=msg;
-$('taperHint').style.display='block';
-}else{$('taperHint').style.display='none'}
+var eff=getEffectivePower();
+var rate=getRate();
+var fee=parseFloat($('sessionFee').value)||0;
+var taxPct=parseFloat($('tax').value)||0;
 
-currentCalc={cap:cap,cur:cur,tgt:tgt,r:r,needed:needed,billed:billed,total:total,mode:currentMode,vehicleKey:vehicleKey,vehicleName:vehicle?vehicle.name:'—'};
-$('saveBtn').disabled=needed<=0;$('saveBtn').style.opacity=needed<=0?'0.5':'1';
-if(currentMode==='public')updateComparison(billed,taxPct,fee);
-updatePetrolComparison(needed,total,vehicle);
+var vehicle=getVehicleByKey(getDefaultVehicle());
+var rangeMax=vehicle?vehicle.range:0;
+
+var result={};
+var label='Total Cost';
+var value='LKR 0.00';
+var t1='0.00',t1L='kWh';
+var t2='—',t2L='Time';
+var t3='—',t3L='Range';
+var detail='';
+
+if(currentCalcMode==='cost'){
+var needed=(tgt>cur)?((tgt-cur)/100)*capacity:0;
+var billed=needed/(eff.eff/100);
+var base=billed*rate;
+var taxAmt=base*(taxPct/100);
+var total=base+taxAmt+fee;
+label='Total Cost';
+value=lkr(total);
+t1=needed.toFixed(1);t1L='kWh Added';
+if(needed>0&&eff.effPower>0){
+var hrs=needed/eff.effPower;
+var h=Math.floor(hrs);var m=Math.round((hrs-h)*60);
+if(m===60){h++;m=0}
+t2=(h>=1?(h+'h '+m+'m'):(m+' min'));t2L='Time';
+}else{t2='—';t2L='Time'}
+if(rangeMax>0){t3=((tgt/100)*rangeMax).toFixed(0);t3L='km Range'}else{t3='—';t3L='Range'}
+detail='Billed '+billed.toFixed(2)+' kWh at LKR '+rate.toFixed(2)+'/kWh';
+result={mode:'cost',capacity:capacity,cur:cur,tgt:tgt,rate:rate,needed:needed,billed:billed,total:total,vehicleKey:getDefaultVehicle(),vehicleName:vehicle?vehicle.name:'—'};
 }
 
-function updateComparison(billed,taxPct,fee){
+else if(currentCalcMode==='money'){
+var money=parseFloat($('moneyAmount').value)||0;
+var kWhCanBuy=money/rate;
+var billedKwh=kWhCanBuy;
+var usableKwh=billedKwh*(eff.eff/100);
+var newPercent=cur+(usableKwh/capacity)*100;
+var capped=newPercent>100;
+var actualPercent=capped?100:newPercent;
+var actualUsable=(actualPercent-cur)/100*capacity;
+if(actualUsable<0)actualUsable=0;
+var actualBilled=actualUsable/(eff.eff/100);
+var actualCost=actualBilled*rate;
+var actualTime=eff.effPower>0?(actualUsable/eff.effPower):0;
+
+label='Target Reached';
+value=actualPercent.toFixed(0)+'%';
+t1=actualUsable.toFixed(1);t1L='kWh Added';
+if(actualTime>0){var hrs2=actualTime;var h2=Math.floor(hrs2);var m2=Math.round((hrs2-h2)*60);if(m2===60){h2++;m2=0}t2=(h2>=1?(h2+'h '+m2+'m'):(m2+' min'))}else{t2='—'}
+t2L='Time';
+if(rangeMax>0){t3=((actualPercent/100)*rangeMax).toFixed(0);t3L='km Range'}else{t3='—';t3L='Range'}
+
+var warning=$('moneyWarning');
+if(capped){
+var fullNeeded=(100-cur)/100*capacity;
+var fullBilled=fullNeeded/(eff.eff/100);
+var fullCost=fullBilled*rate;
+warning.style.display='block';
+warning.innerHTML='⚠️ LKR '+money.toFixed(0)+' is more than a full charge. You\'d reach 100% for about LKR '+fullCost.toFixed(0)+' — the rest wouldn\'t be used.<br><br><button type="button" class="preset-btn" style="margin-top:6px" onclick="document.getElementById(\'moneyAmount\').value=\''+fullCost.toFixed(0)+'\';calc()">Use LKR '+fullCost.toFixed(0)+'</button>';
+}else{warning.style.display='none'}
+
+detail='Spending LKR '+money.toFixed(0)+' at LKR '+rate.toFixed(2)+'/kWh';
+result={mode:'money',capacity:capacity,cur:cur,tgt:actualPercent,rate:rate,needed:actualUsable,billed:actualBilled,total:money,vehicleKey:getDefaultVehicle(),vehicleName:vehicle?vehicle.name:'—',moneyRequested:true};
+}
+
+else if(currentCalcMode==='time'){
+var needed3=(tgt>cur)?((tgt-cur)/100)*capacity:0;
+if(needed3>0&&eff.effPower>0){
+var hrs3=needed3/eff.effPower;
+var h3=Math.floor(hrs3);var m3=Math.round((hrs3-h3)*60);
+if(m3===60){h3++;m3=0}
+label='Time Required';
+value=h3>=1?(h3+'h '+m3+'m'):(m3+' min');
+}else{label='Time Required';value='—'}
+t1=needed3.toFixed(1);t1L='kWh';
+t2=tgt+'%';t2L='Target';
+if(rangeMax>0){t3=((tgt/100)*rangeMax).toFixed(0);t3L='km Range'}else{t3='—';t3L='Range'}
+detail='At '+eff.effPower.toFixed(1)+' kW effective rate';
+result={mode:'time',capacity:capacity,cur:cur,tgt:tgt,rate:rate,needed:needed3,total:0,vehicleKey:getDefaultVehicle(),vehicleName:vehicle?vehicle.name:'—'};
+}
+
+else if(currentCalcMode==='duration'){
+var mins=parseFloat($('durationMin').value)||0;
+var hrsInput=mins/60;
+var usableKwh=eff.effPower*hrsInput;
+var percentAdd=(usableKwh/capacity)*100;
+var newPercent2=cur+percentAdd;
+var capped2=newPercent2>100;
+var actualPercent2=capped2?100:newPercent2;
+var actualUsable2=(actualPercent2-cur)/100*capacity;
+if(actualUsable2<0)actualUsable2=0;
+var actualTime2=eff.effPower>0?(actualUsable2/eff.effPower):0;
+var billed2=actualUsable2/(eff.eff/100);
+var cost2=billed2*rate;
+
+label='Target Reached';
+value=actualPercent2.toFixed(0)+'%';
+t1=actualUsable2.toFixed(1);t1L='kWh Added';
+t2=lkr(cost2);t2L='Cost';
+if(rangeMax>0){t3=((actualPercent2/100)*rangeMax).toFixed(0);t3L='km Range'}else{t3='—';t3L='Range'}
+
+var warning2=$('durationWarning');
+if(capped2){
+var timeToFull=(actualUsable2/eff.effPower)*60;
+var h4=Math.floor(timeToFull/60);var m4=Math.round(timeToFull%60);
+warning2.style.display='block';
+warning2.innerHTML='⚠️ Your car will hit 100% at about '+(h4>=1?(h4+'h '+m4+'m'):(m4+' min'))+'. Any additional time won\'t add charge.';
+}else{warning2.style.display='none'}
+
+detail='Charging for '+(mins>=60?Math.round(mins/60*10)/10+' hr':mins+' min')+' at '+eff.effPower.toFixed(1)+' kW';
+result={mode:'duration',capacity:capacity,cur:cur,tgt:actualPercent2,rate:rate,needed:actualUsable2,billed:billed2,total:cost2,vehicleKey:getDefaultVehicle(),vehicleName:vehicle?vehicle.name:'—'};
+}
+
+$('resultLabel').textContent=label;
+$('resultValue').textContent=value;
+$('tile1').textContent=t1;$('tile1Lbl').textContent=t1L;
+$('tile2').textContent=t2;$('tile2Lbl').textContent=t2L;
+$('tile3').textContent=t3;$('tile3Lbl').textContent=t3L;
+$('resultDetail').textContent=detail;
+
+// Taper warning
+if(tgt>80&&(currentCalcMode==='cost'||currentCalcMode==='time')){
+var msg;
+if(tgt>=100)msg='⚠️ Charging to 100% — the last 10% can take as long as the first 50%.';
+else if(tgt>=90)msg='⚡ Charging above 90% is about 30% slower than below 80%.';
+else msg='⚡ Charging above 80% is slow (taper). Stop at 80% unless needed.';
+$('taperHint').textContent=msg;$('taperHint').style.display='block';
+}else{$('taperHint').style.display='none'}
+
+currentCalc=result;
+$('saveBtn').disabled=(result.needed<=0);
+$('saveBtn').style.opacity=(result.needed<=0)?'0.5':'1';
+
+// Compare only for cost and time
+if(currentCalcMode==='cost'||currentCalcMode==='time'){
+if(currentCalcMode==='cost')updateNetworkCompare(billed,taxPct,fee);
+updatePetrolCompare(result.needed,result.mode==='cost'?result.total:0,vehicle);
+}
+
+updateVehicleLabel();
+}
+
+function updateNetworkCompare(billed,taxPct,fee){
 var body=$('compareBody');
-if(billed<=0){body.innerHTML='<tr><td colspan="2" style="text-align:center;color:#6a5a9e;padding:14px;font-style:italic">Set target above current charge.</td></tr>';return}
-if(!providerRates||providerRates.length===0){body.innerHTML='<tr><td colspan="2" style="text-align:center;color:#6a5a9e;padding:14px;font-style:italic">Network data not loaded.</td></tr>';return}
+if(billed<=0||!providerRates||providerRates.length===0){body.innerHTML='<tr><td colspan="2" style="text-align:center;color:#6a5a9e;padding:14px;font-style:italic">Set target above current charge.</td></tr>';return}
 var res=providerRates.map(function(p){var b=billed*p.rate;var t=b*(taxPct/100);return{name:p.name,cost:b+t+fee}});
 var mn=Math.min.apply(null,res.map(function(x){return x.cost}));
 body.innerHTML=res.map(function(x){var bd=x.cost===mn?'<span class="best-badge">BEST</span>':'';return '<tr><td class="name">'+x.name+bd+'</td><td class="cost">'+lkr(x.cost)+'</td></tr>'}).join('');
 }
 
-function updatePetrolComparison(needed,totalCost,vehicle){
-if(!vehicle||!vehicle.range||needed<=0){$('petrolEvCost').textContent=lkr(totalCost);$('petrolCost92').textContent='—';$('petrolCost95').textContent='—';$('dieselCost').textContent='—';$('savingsBanner').style.display='none';$('co2Saved').textContent='—';return}
-var tgt=parseFloat($('target').value)||0;
+function updatePetrolCompare(needed,totalCost,vehicle){
+if(!vehicle||!vehicle.range||needed<=0){$('petrolEvCost').textContent=totalCost>0?lkr(totalCost):'—';$('petrolCost92').textContent='—';$('petrolCost95').textContent='—';$('dieselCost').textContent='—';return}
+var tgt=currentCalc?currentCalc.tgt:parseFloat($('target').value)||0;
 var distance=vehicle.range*(tgt/100);
-var fuel92=parseFloat($('setFuel92').value)||414;var fuel95=parseFloat($('setFuel95').value)||475;var diesel=parseFloat($('setDiesel').value)||392;var kmPerL=parseFloat($('setPetrolKm').value)||12;
-var litres=distance/kmPerL;var cost92=litres*fuel92;var cost95=litres*fuel95;var dieselCost=litres*diesel;
-$('petrolEvCost').textContent=lkr(totalCost);$('petrolCost92').textContent=lkr(cost92);$('petrolCost95').textContent=lkr(cost95);$('dieselCost').textContent=lkr(dieselCost);
-var savings=cost92-totalCost;
-if(savings>0){$('savingsBanner').style.display='block';$('savingsAmount').textContent=lkr(savings);$('savingsDetail').textContent='For '+distance.toFixed(0)+' km, vs Petrol 92 Octane.'}else{$('savingsBanner').style.display='none'}
-var co2=litres*2.31;$('co2Saved').textContent=co2.toFixed(1)+' kg';
+var fuel92=parseFloat($('setFuel92').value)||414;
+var fuel95=parseFloat($('setFuel95').value)||475;
+var diesel=parseFloat($('setDiesel').value)||392;
+var kmPerL=parseFloat($('setPetrolKm').value)||12;
+var litres=distance/kmPerL;
+$('petrolEvCost').textContent=totalCost>0?lkr(totalCost):'—';
+$('petrolCost92').textContent=lkr(litres*fuel92);
+$('petrolCost95').textContent=lkr(litres*fuel95);
+$('dieselCost').textContent=lkr(litres*diesel);
 }
 
-// ============ TIME CALCULATOR ============
-function setTimeMode(m){
-timeMode=m;
-if(m==='home'){$('timeTabHome').classList.add('active');$('timeTabPublic').classList.remove('active');$('timeHomeFields').style.display='block';$('timePublicFields').style.display='none'}
-else{$('timeTabPublic').classList.add('active');$('timeTabHome').classList.remove('active');$('timeHomeFields').style.display='none';$('timePublicFields').style.display='block'}
-calcTime();
-}
-$('timeTabHome').addEventListener('click',function(){setTimeMode('home')});
-$('timeTabPublic').addEventListener('click',function(){setTimeMode('public')});
-
-function getTimeHomePower(){if($('timeHomeChargerPower').value==='custom')return parseFloat($('timeCustomHomePower').value)||7;return parseFloat($('timeHomeChargerPower').value)||7}
-function getTimePublicPower(){if($('timeChargerPower').value==='custom')return parseFloat($('timeCustomPublicPower').value)||30;return parseFloat($('timeChargerPower').value)||30}
-
-function calcTime(){
-var cap=parseFloat($('timeCapacity').value)||0;
-var cur=parseFloat($('timeCurrent').value)||0;
-var tgt=parseFloat($('timeTarget').value)||0;
-if(document.activeElement!==$('timeCurrentNum'))$('timeCurrentNum').value=cur;
-if(document.activeElement!==$('timeTargetNum'))$('timeTargetNum').value=tgt;
-
-var power,eff;
-if(timeMode==='home'){power=getTimeHomePower();eff=parseFloat($('timeHomeEfficiency').value)||88}
-else{power=getTimePublicPower();eff=parseFloat($('timeEfficiency').value)||90}
-
-var needed=(tgt>cur)?((tgt-cur)/100)*cap:0;
-var billed=needed/(eff/100);
-var effPower=power*(eff/100);
-
-$('timeEnergy').textContent=needed.toFixed(2)+' kWh';
-$('timeRate').textContent=power.toFixed(1)+' kW ('+effPower.toFixed(1)+' kW effective)';
-
-if(needed>0&&effPower>0){
-var hrs=needed/effPower;
-var h=Math.floor(hrs);
-var m=Math.round((hrs-h)*60);
-if(m===60){h++;m=0}
-if(h>=1){
-$('timeBigVal').textContent=h+'h '+m+'m';
-}else{
-$('timeBigVal').textContent=m+' min';
-}
-$('timeBigSub').textContent=needed.toFixed(1)+' kWh at '+effPower.toFixed(1)+' kW effective';
-}else{
-$('timeBigVal').textContent='—';
-$('timeBigSub').textContent='Enter values to calculate';
-}
-}
-
-['timeCapacity','timeCurrent','timeTarget','timeCurrentNum','timeTargetNum','timeHomeChargerPower','timeCustomHomePower','timeHomeEfficiency','timeChargerPower','timeCustomPublicPower','timeEfficiency','timeVehicleSelect'].forEach(function(id){
-var el=$(id);
-if(!el)return;
-el.addEventListener('input',calcTime);
-el.addEventListener('change',calcTime);
-});
-
-$('timeHomeChargerPower').addEventListener('change',function(){if(this.value==='custom'){$('timeCustomHomePowerField').style.display='block';$('timeCustomHomePower').focus()}else{$('timeCustomHomePowerField').style.display='none'}calcTime()});
-$('timeChargerPower').addEventListener('change',function(){if(this.value==='custom'){$('timeCustomPublicPowerField').style.display='block';$('timeCustomPublicPower').focus()}else{$('timeCustomPublicPowerField').style.display='none'}calcTime()});
-
-$('timeCurrentNum').addEventListener('blur',function(){var v=clamp(this.value,1,100);this.value=v;$('timeCurrent').value=v;calcTime()});
-$('timeTargetNum').addEventListener('blur',function(){var v=clamp(this.value,1,100);this.value=v;$('timeTarget').value=v;calcTime()});
-$('timeCurrent').addEventListener('input',function(){$('timeCurrentNum').value=this.value;calcTime()});
-$('timeTarget').addEventListener('input',function(){$('timeTargetNum').value=this.value;calcTime()});
-$('timeVehicleSelect').addEventListener('change',function(){
-var v=this.value;
-if(v&&v!==''){
-var vehicle=getVehicleByKey(v);
-if(vehicle)$('timeCapacity').value=vehicle.capacity;
-}
-calcTime();
-});
-
-$('timeStartTimer').addEventListener('click',function(){
-var cap=parseFloat($('timeCapacity').value)||0;
-var cur=parseFloat($('timeCurrent').value)||0;
-var tgt=parseFloat($('timeTarget').value)||0;
-var power,eff;
-if(timeMode==='home'){power=getTimeHomePower();eff=parseFloat($('timeHomeEfficiency').value)||88}
-else{power=getTimePublicPower();eff=parseFloat($('timeEfficiency').value)||90}
-var effPower=power*(eff/100);
-var needed=(tgt>cur)?((tgt-cur)/100)*cap:0;
-if(needed<=0||effPower<=0){alert('Please enter valid values first.');return}
-var mins=Math.max(5,Math.round((needed/effPower)*60));
-if(!('Notification' in window)){alert('Notifications not supported.');return}
-Notification.requestPermission().then(function(p){if(p==='granted'){setTimeout(function(){try{new Notification('⚡ Charging Reminder',{body:'Your estimated charge time is up.'})}catch(e){}},mins*60*1000);alert('Reminder set for '+mins+' minutes. Keep the tab open.')}else{alert('Notifications blocked.')}});
-});
-
-// ============ PRESETS ============
-document.querySelectorAll('.preset-btn[data-preset]').forEach(function(b){b.addEventListener('click',function(){var p=this.dataset.preset.split(',');$('current').value=p[0];$('target').value=p[1];$('currentNum').value=p[0];$('targetNum').value=p[1];calc();savePrefs()})});
-
-document.querySelectorAll('.preset-btn[data-reminder]').forEach(function(b){
-b.addEventListener('click',function(){
-var v=this.dataset.reminder,mins;
-if(v==='auto'){var cap=parseFloat($('capacity').value)||0;var cur=parseFloat($('current').value)||0;var tgt=parseFloat($('target').value)||0;var needed=(tgt>cur)?((tgt-cur)/100)*cap:0;var power=currentMode==='home'?getHomePower():getPublicPower();mins=Math.max(5,Math.round((needed/power)*60))}else mins=parseInt(v);
-if(!('Notification' in window)){alert('Notifications not supported.');return}
-Notification.requestPermission().then(function(p){if(p==='granted'){setTimeout(function(){try{new Notification('⚡ Charging Reminder',{body:'Your estimated charge time is up.'})}catch(e){}},mins*60*1000);alert('Reminder set for '+mins+' minutes. Keep the tab open.')}else{alert('Notifications blocked.')}});
-});
-});
-
-// ============ VEHICLE / RATE INPUTS ============
-$('vehicleSelect').addEventListener('change',function(){
-var v=this.value;
-if(v==='custom'){$('customCapacityField').style.display='block';return}
-$('customCapacityField').style.display='none';
-if(v&&v!==''){var vehicle=getVehicleByKey(v);if(vehicle){$('capacity').value=vehicle.capacity}}
-if(v&&v!=='custom')setDefaultVehicle(v);
-calc();savePrefs();
-});
-$('customCapacity').addEventListener('input',function(){$('capacity').value=this.value;calc();savePrefs()});
-
-$('quickRate').addEventListener('change',function(){
-if(this.value&&this.value!=='custom'){
-$('rate').value=this.value;
-var saved=getLastRate(this.value);
-if(saved)$('rate').value=saved;
-calc();savePrefs();
-setLastRate(this.value,$('rate').value);
-}
-else if(this.value==='custom'){$('rate').value='';$('rate').focus();calc()}
-});
-
-$('rate').addEventListener('change',function(){
-var v=$('quickRate').value;
-if(v&&v!=='custom')setLastRate(v,this.value);
-calc();savePrefs();
-});
-
-$('homeRateSelect').addEventListener('change',function(){if(this.value&&this.value!=='custom'){$('homeRate').value=this.value;calc();savePrefs()}else if(this.value==='custom'){$('homeRate').value='';$('homeRate').focus();calc()}});
-$('homeChargerPower').addEventListener('change',function(){if(this.value==='custom'){$('customHomePowerField').style.display='block';$('customHomePower').focus()}else{$('customHomePowerField').style.display='none'}calc();savePrefs()});
-$('chargerPower').addEventListener('change',function(){if(this.value==='custom'){$('customPublicPowerField').style.display='block';$('customPublicPower').focus()}else{$('customPublicPowerField').style.display='none'}calc();savePrefs()});
-
+// ============ INPUTS ============
 $('currentNum').addEventListener('input',function(){
 var raw=this.value;
-if(raw===''||raw==='-'){return}
+if(raw===''||raw==='-')return;
 var v=parseInt(raw);
 if(isNaN(v))return;
 if(v<1)v=1;if(v>100)v=100;
@@ -1677,7 +1737,7 @@ calc();savePrefs();
 $('currentNum').addEventListener('blur',function(){var v=clamp(this.value,1,100);this.value=v;$('current').value=v;calc();savePrefs()});
 $('targetNum').addEventListener('input',function(){
 var raw=this.value;
-if(raw===''||raw==='-'){return}
+if(raw===''||raw==='-')return;
 var v=parseInt(raw);
 if(isNaN(v))return;
 if(v<1)v=1;if(v>100)v=100;
@@ -1688,62 +1748,117 @@ $('targetNum').addEventListener('blur',function(){var v=clamp(this.value,1,100);
 $('current').addEventListener('input',function(){$('currentNum').value=this.value;calc()});
 $('target').addEventListener('input',function(){$('targetNum').value=this.value;calc()});
 
-$('settingsDefaultVehicle').addEventListener('change',function(){setDefaultVehicle(this.value)});
-['setFuel92','setFuel95','setDiesel','setPetrolKm'].forEach(function(id){$(id).addEventListener('change',function(){savePrefs();calc();renderHistory()})});
+$('moneyAmount').addEventListener('input',calc);
+$('moneyAmount').addEventListener('change',savePrefs);
+$('durationMin').addEventListener('input',calc);
+$('durationMin').addEventListener('change',savePrefs);
 
-function savePrefs(){
-try{localStorage.setItem('evPrefs',JSON.stringify({
-capacity:$('capacity').value,current:$('current').value,target:$('target').value,rate:$('rate').value,efficiency:$('efficiency').value,sessionFee:$('sessionFee').value,tax:$('tax').value,vehicle:$('vehicleSelect').value,chargerPower:$('chargerPower').value,
-homeRate:$('homeRate').value,homeChargerPower:$('homeChargerPower').value,homeEfficiency:$('homeEfficiency').value,
-customHomePower:$('customHomePower').value,customPublicPower:$('customPublicPower').value,
-mode:currentMode,theme:document.body.classList.contains('light')?'light':'dark',
-setFuel92:$('setFuel92').value,setFuel95:$('setFuel95').value,setDiesel:$('setDiesel').value,setPetrolKm:$('setPetrolKm').value,
-timeCapacity:$('timeCapacity').value,timeCurrent:$('timeCurrent').value,timeTarget:$('timeTarget').value,
-timeHomeChargerPower:$('timeHomeChargerPower').value,timeCustomHomePower:$('timeCustomHomePower').value,timeHomeEfficiency:$('timeHomeEfficiency').value,
-timeChargerPower:$('timeChargerPower').value,timeCustomPublicPower:$('timeCustomPublicPower').value,timeEfficiency:$('timeEfficiency').value,
-timeMode:timeMode
-}))}catch(e){}
+document.querySelectorAll('.preset-btn[data-duration]').forEach(function(b){
+b.addEventListener('click',function(){
+$('durationMin').value=this.dataset.duration;
+calc();savePrefs();
+});
+});
+
+document.querySelectorAll('.preset-btn[data-preset]').forEach(function(b){
+b.addEventListener('click',function(){
+var p=this.dataset.preset.split(',');
+$('current').value=p[0];$('target').value=p[1];
+$('currentNum').value=p[0];$('targetNum').value=p[1];
+calc();savePrefs();
+});
+});
+
+document.querySelectorAll('.preset-btn[data-reminder]').forEach(function(b){
+b.addEventListener('click',function(){
+var v=this.dataset.reminder,mins;
+if(v==='auto'){
+var cap=getCapacity();
+var cur=parseFloat($('current').value)||0;
+var tgt=parseFloat($('target').value)||0;
+var needed=(tgt>cur)?((tgt-cur)/100)*cap:0;
+var eff=getEffectivePower();
+mins=eff.effPower>0?Math.max(5,Math.round((needed/eff.effPower)*60)):30;
+}else mins=parseInt(v);
+if(!('Notification' in window)){alert('Notifications not supported.');return}
+Notification.requestPermission().then(function(p){
+if(p==='granted'){
+setTimeout(function(){try{new Notification('⚡ Charging Reminder',{body:'Your estimated charge time is up.'})}catch(e){}},mins*60*1000);
+showToast('Reminder set for '+mins+' minutes','success');
+}else{alert('Notifications blocked.')}
+});
+});
+});
+
+$('quickRate').addEventListener('change',function(){
+if(this.value&&this.value!=='custom'){
+$('rate').value=this.value;
+calc();savePrefs();
+setLastRate(this.value,$('rate').value);
+}else if(this.value==='custom'){$('rate').value='';$('rate').focus();calc()}
+});
+$('rate').addEventListener('change',function(){
+var v=$('quickRate').value;
+if(v&&v!=='custom')setLastRate(v,this.value);
+calc();savePrefs();
+});
+$('homeRateSelect').addEventListener('change',function(){if(this.value&&this.value!=='custom'){$('homeRate').value=this.value;calc();savePrefs()}else if(this.value==='custom'){$('homeRate').value='';$('homeRate').focus();calc()}});
+$('homeChargerPower').addEventListener('change',function(){if(this.value==='custom'){$('customHomePowerField').style.display='block';$('customHomePower').focus()}else{$('customHomePowerField').style.display='none'}calc();savePrefs()});
+$('chargerPower').addEventListener('change',function(){if(this.value==='custom'){$('customPublicPowerField').style.display='block';$('customPublicPower').focus()}else{$('customPublicPowerField').style.display='none'}calc();savePrefs()});
+
+['setFuel92','setFuel95','setDiesel','setPetrolKm'].forEach(function(id){$(id).addEventListener('change',function(){savePrefs();calc()})});
+$('sessionFee').addEventListener('change',function(){savePrefs();calc()});
+$('tax').addEventListener('change',function(){savePrefs();calc()});
+$('settingsDefaultVehicle').addEventListener('change',function(){setDefaultVehicle(this.value);applyDefaultVehicle();calc()});
+
+// ============ VEHICLE MODAL ============
+$('changeVehicleBtn').addEventListener('click',function(){
+buildVehicleModalSelect();
+$('modalVehicleSelect').value=getDefaultVehicle();
+$('modalCustomCapacity').value='';
+$('vehiclePickModal').classList.add('show');
+});
+$('vpCancel').addEventListener('click',function(){$('vehiclePickModal').classList.remove('show')});
+$('vpSave').addEventListener('click',function(){
+var v=$('modalVehicleSelect').value;
+var custom=parseFloat($('modalCustomCapacity').value);
+if(v){setDefaultVehicle(v)}
+else if(custom&&custom>0){
+// Save custom one-off vehicle
+var payload={name:'Custom '+custom+' kWh',capacity:custom,range:0,dc:0};
+addUserVehicle(payload,function(ok){
+if(ok){
+setDefaultVehicle('custom_'+userVehicles[userVehicles.length-1]._docId);
+applyDefaultVehicle();
 }
-
-try{var s=localStorage.getItem('evPrefs');if(s){var p=JSON.parse(s);
-if(p.capacity)$('capacity').value=p.capacity;if(p.current)$('current').value=p.current;if(p.target)$('target').value=p.target;if(p.rate)$('rate').value=p.rate;if(p.efficiency)$('efficiency').value=p.efficiency;if(p.sessionFee)$('sessionFee').value=p.sessionFee;if(p.tax)$('tax').value=p.tax;
-if(p.chargerPower){$('chargerPower').value=p.chargerPower;if(p.chargerPower==='custom')$('customPublicPowerField').style.display='block'}
-if(p.homeRate)$('homeRate').value=p.homeRate;if(p.homeChargerPower){$('homeChargerPower').value=p.homeChargerPower;if(p.homeChargerPower==='custom')$('customHomePowerField').style.display='block'}
-if(p.homeEfficiency)$('homeEfficiency').value=p.homeEfficiency;if(p.customHomePower)$('customHomePower').value=p.customHomePower;if(p.customPublicPower)$('customPublicPower').value=p.customPublicPower;if(p.mode)currentMode=p.mode;
-if(p.theme==='light'){document.body.classList.add('light');$('themeKnob').style.left='32px'}
-if(p.setFuel92)$('setFuel92').value=p.setFuel92;if(p.setFuel95)$('setFuel95').value=p.setFuel95;if(p.setDiesel)$('setDiesel').value=p.setDiesel;if(p.setPetrolKm)$('setPetrolKm').value=p.setPetrolKm;
-if(p.timeCapacity)$('timeCapacity').value=p.timeCapacity;
-if(p.timeCurrent)$('timeCurrent').value=p.timeCurrent;
-if(p.timeTarget)$('timeTarget').value=p.timeTarget;
-if(p.timeHomeChargerPower){$('timeHomeChargerPower').value=p.timeHomeChargerPower;if(p.timeHomeChargerPower==='custom')$('timeCustomHomePowerField').style.display='block'}
-if(p.timeCustomHomePower)$('timeCustomHomePower').value=p.timeCustomHomePower;
-if(p.timeHomeEfficiency)$('timeHomeEfficiency').value=p.timeHomeEfficiency;
-if(p.timeChargerPower){$('timeChargerPower').value=p.timeChargerPower;if(p.timeChargerPower==='custom')$('timeCustomPublicPowerField').style.display='block'}
-if(p.timeCustomPublicPower)$('timeCustomPublicPower').value=p.timeCustomPublicPower;
-if(p.timeEfficiency)$('timeEfficiency').value=p.timeEfficiency;
-if(p.timeMode){timeMode=p.timeMode;if(p.timeMode==='public'){setTimeMode('public')}}
-window._pendingVehicle=p.vehicle;
-}}catch(e){}
-
-if(currentMode==='home'){$('tabHome').classList.add('active');$('tabPublic').classList.remove('active');$('homeFields').style.display='block';$('publicFields').style.display='none'}
-if(timeMode==='public'){$('timeTabPublic').classList.add('active');$('timeTabHome').classList.remove('active');$('timeHomeFields').style.display='none';$('timePublicFields').style.display='block'}
+});
+}
+$('vehiclePickModal').classList.remove('show');
+applyDefaultVehicle();
+calc();savePrefs();
+});
 
 // ============ GARAGE ============
 function renderGarage(){
 var list=$('garageList');
-if(!userVehicles||userVehicles.length===0){list.innerHTML='<div class="empty-state"><div class="es-icon">🚗</div><div class="es-text"><strong>Your garage is empty.</strong><br>Tap "➕ Add" to save your first vehicle with its exact specs. It will appear at the top of the vehicle dropdown on the Home page.</div></div>'}
+if(!userVehicles||userVehicles.length===0){list.innerHTML='<div class="empty-state"><div class="es-icon">🚗</div><div class="es-text"><strong>No custom vehicles yet.</strong><br>Tap "➕ Add" to save your car. It will appear in your vehicle selector.</div></div>'}
 else{
 var sorted=userVehicles.slice().sort(function(a,b){return (a.name||'').localeCompare(b.name||'')});
-list.innerHTML=sorted.map(function(v){var active=($('vehicleSelect').value==='custom_'+v._docId)?' active':'';var activeBadge=active?'<span class="vc-active-badge">Active</span>':'';var specs=v.capacity+' kWh';if(v.range)specs+=' · '+v.range+' km';if(v.dc)specs+=' · '+v.dc+' kW DC';return '<div class="vehicle-card'+active+'"><div class="vc-name">'+v.name+activeBadge+'</div><div class="vc-specs">'+specs+'</div><div class="vc-actions"><button data-edit="'+v._docId+'" title="Edit">✏️</button><button data-delete="'+v._docId+'" title="Delete">🗑️</button></div></div>'}).join('');
+list.innerHTML=sorted.map(function(v){var active=(getDefaultVehicle()==='custom_'+v._docId)?' active':'';var activeBadge=active?'<span class="vc-active-badge">Active</span>':'';var specs=v.capacity+' kWh';if(v.range)specs+=' · '+v.range+' km';if(v.dc)specs+=' · '+v.dc+' kW';return '<div class="vehicle-card'+active+'"><div class="vc-name">'+v.name+activeBadge+'</div><div class="vc-specs">'+specs+'</div><div class="vc-actions"><button data-edit="'+v._docId+'">✏️</button><button data-delete="'+v._docId+'">🗑️</button></div></div>'}).join('');
 list.querySelectorAll('[data-edit]').forEach(function(b){b.addEventListener('click',function(){openVehicleModal(this.dataset.edit)})});
-list.querySelectorAll('[data-delete]').forEach(function(b){b.addEventListener('click',function(){var id=this.dataset.delete;askConfirm('Delete Vehicle','Are you sure you want to delete this vehicle? This cannot be undone.',function(){deleteUserVehicle(id,function(ok){if(ok){renderGarage();updateVehicleDropdowns();populateSettingsVehicleDropdown()}})})})});
+list.querySelectorAll('[data-delete]').forEach(function(b){b.addEventListener('click',function(){
+var id=this.dataset.delete;
+askConfirm('Delete Vehicle','Delete this vehicle? This cannot be undone.',function(){
+deleteUserVehicle(id,function(ok){
+if(ok){
+if(getDefaultVehicle()==='custom_'+id)setDefaultVehicle('');
+renderGarage();populateSettingsVehicleDropdown();updateVehicleLabel();calc();
+showToast('Vehicle deleted','success');
 }
-var sc=$('garageSummaryCard');
-if(userVehicles.length>0){sc.style.display='block';var totalKwh=0,totalRange=0;userVehicles.forEach(function(v){totalKwh+=v.capacity;totalRange+=(v.range||0)});var html='<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(139,92,246,0.1);font-size:0.85rem"><span style="color:var(--dim)">Vehicles in garage</span><span style="color:var(--text);font-weight:700">'+userVehicles.length+'</span></div>';html+='<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(139,92,246,0.1);font-size:0.85rem"><span style="color:var(--dim)">Total battery capacity</span><span style="color:var(--text);font-weight:700">'+totalKwh.toFixed(1)+' kWh</span></div>';html+='<div style="display:flex;justify-content:space-between;padding:8px 0;font-size:0.85rem"><span style="color:var(--dim)">Total rated range</span><span style="color:var(--text);font-weight:700">'+totalRange.toFixed(0)+' km</span></div>';$('garageSummary').innerHTML=html}else{sc.style.display='none'}
-var bl=$('builtInList');
-var allBuilt=Object.keys(builtInVehicles).map(function(k){return {key:k,v:builtInVehicles[k]}});
-allBuilt.sort(function(a,b){var bA=brandForName(a.v.name),bB=brandForName(b.v.name);if(bA!==bB)return bA.localeCompare(bB);return (a.v.name||'').localeCompare(b.v.name||'')});
-bl.innerHTML=allBuilt.map(function(item){var v=item.v;return '<div class="vehicle-card" style="border-left-color:rgba(148,163,184,0.5)"><div class="vc-name">'+v.name+'<span class="vc-builtin-badge">Built-in</span></div><div class="vc-specs">'+v.capacity+' kWh · '+v.range+' km · '+v.dc+' kW DC</div></div>'}).join('');
+});
+});
+})});
+}
 }
 
 function openVehicleModal(id){
@@ -1755,13 +1870,21 @@ $('vehicleModal').classList.add('show');
 $('addVehicleBtn').addEventListener('click',function(){openVehicleModal()});
 $('vmCancel').addEventListener('click',function(){$('vehicleModal').classList.remove('show')});
 $('vmSave').addEventListener('click',function(){
-var name=$('vmName').value.trim();var make=$('vmMake').value.trim();var model=$('vmModel').value.trim();var cap=parseFloat($('vmCapacity').value);var range=parseFloat($('vmRange').value)||0;var dc=parseFloat($('vmDC').value)||0;
+var name=$('vmName').value.trim();var make=$('vmMake').value.trim();var model=$('vmModel').value.trim();
+var cap=parseFloat($('vmCapacity').value);var range=parseFloat($('vmRange').value)||0;var dc=parseFloat($('vmDC').value)||0;
 if(!name&&!make&&!model){alert('Please enter a name for the vehicle.');return}
 if(!name){name=(make+' '+model).trim()}
 if(!cap||cap<=0){alert('Please enter a valid battery capacity.');return}
 var payload={name:name,make:make,model:model,capacity:cap,range:range,dc:dc};
-if(editingVehicleId){updateUserVehicle(editingVehicleId,payload,function(ok){if(ok){$('vehicleModal').classList.remove('show');renderGarage();updateVehicleDropdowns();populateSettingsVehicleDropdown();calc()}})}
-else{addUserVehicle(payload,function(ok){if(ok){$('vehicleModal').classList.remove('show');renderGarage();updateVehicleDropdowns();populateSettingsVehicleDropdown();calc()}})}
+if(editingVehicleId){
+updateUserVehicle(editingVehicleId,payload,function(ok){
+if(ok){$('vehicleModal').classList.remove('show');renderGarage();populateSettingsVehicleDropdown();updateVehicleLabel();calc();showToast('Vehicle updated','success')}
+});
+}else{
+addUserVehicle(payload,function(ok){
+if(ok){$('vehicleModal').classList.remove('show');renderGarage();populateSettingsVehicleDropdown();showToast('Vehicle added','success')}
+});
+}
 });
 
 function askConfirm(title,text,cb){$('confirmTitle').textContent=title;$('confirmText').textContent=text;confirmCallback=cb;$('confirmModal').classList.add('show')}
@@ -1776,35 +1899,47 @@ var distance=vehicle.range*(item.tgt/100);
 var kmPerL=parseFloat($('setPetrolKm').value)||12;
 var litres=distance/kmPerL;
 var fuel92=parseFloat($('setFuel92').value)||414;
-var petrolCost=litres*fuel92;
-return petrolCost-item.total;
+return (litres*fuel92)-item.total;
 }
 
 function renderHistory(){
 if(!currentUser)return;
 getAllRecords(function(hist){
-var filter=$('historyVehicleFilter').value;var filtered=hist;
-if(filter!=='all'){filtered=hist.filter(function(x){return x.vehicleKey===filter})}
+var filter=$('historyVehicleFilter').value;
+var filtered=filter==='all'?hist:hist.filter(function(x){return x.vehicleKey===filter});
 var list=$('historyList'),stats=$('historyStats'),cb=$('clearBtn'),er=$('exportRow'),sc=$('summaryCard');
-if(filtered.length===0){list.innerHTML='<div class="empty-state"><div class="es-icon">📭</div><div class="es-text"><strong>No charges'+(filter!=='all'?' for this filter':'')+'.</strong><br>Save a charge from the Home page to start your history.</div></div>';stats.style.display='none';cb.style.display='none';er.style.display='none';sc.style.display='none';return}
+
+// Populate filter
+var hf=$('historyVehicleFilter');var curHf=hf.value;
+hf.innerHTML='<option value="all">All vehicles</option>';
+if(userVehicles.length>0){userVehicles.forEach(function(v){var o=document.createElement('option');o.value='custom_'+v._docId;o.textContent='⭐ '+v.name;hf.appendChild(o)})}
+var byBrand={};Object.keys(builtInVehicles).forEach(function(k){var v=builtInVehicles[k];var b=brandForName(v.name);if(!byBrand[b])byBrand[b]=[];byBrand[b].push({key:k,v:v})});
+Object.keys(byBrand).sort().forEach(function(b){var g=document.createElement('optgroup');g.label=b;byBrand[b].sort(function(a,b){return(a.v.name||'').localeCompare(b.v.name||'')}).forEach(function(i){var o=document.createElement('option');o.value=i.key;o.textContent=i.v.name;g.appendChild(o)});hf.appendChild(g)});
+hf.value=curHf;
+
+if(filtered.length===0){list.innerHTML='<div class="empty-state"><div class="es-icon">📭</div><div class="es-text"><strong>No charges'+(filter!=='all'?' for this filter':'')+'.</strong><br>Save a charge from Calculate to start your history.</div></div>';stats.style.display='none';cb.style.display='none';er.style.display='none';sc.style.display='none';return}
+
 var tc=0,te=0;filtered.forEach(function(x){tc+=x.total;te+=x.needed});
 $('statCount').textContent=filtered.length;$('statEnergy').textContent=te.toFixed(0);$('statCost').textContent=tc.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',');stats.style.display='flex';cb.style.display='block';er.style.display='block';
-var now=new Date(),monthStart=new Date(now.getFullYear(),now.getMonth(),1).getTime();var monthRecs=filtered.filter(function(x){return x.ts>=monthStart});
+
+var now=new Date(),monthStart=new Date(now.getFullYear(),now.getMonth(),1).getTime();
+var monthRecs=filtered.filter(function(x){return x.ts>=monthStart});
 if(monthRecs.length>0){sc.style.display='block';var mC=0,mE=0,mS=0;monthRecs.forEach(function(x){mC+=x.total;mE+=x.needed;var s=calculatePetrolSavings(x);if(s)mS+=s});$('sumSessions').textContent=monthRecs.length;$('sumEnergy').textContent=mE.toFixed(0)+' kWh';$('sumCost').textContent='LKR '+mC.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',');$('sumSavings').textContent='LKR '+mS.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',')}else{sc.style.display='none'}
+
 var sorted=filtered.slice().sort(function(a,b){return b.ts-a.ts});
 list.innerHTML=sorted.map(function(item){
 var d=new Date(item.ts),mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 var dt=d.getDate()+' '+mo[d.getMonth()]+' · '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
 var mIcon=item.mode==='home'?'🏠':'🔌';
 var vname=item.vehicleName||'';
+var modeBadge=item.calcMode?('<span class="history-mode-badge">'+item.calcMode+'</span>'):'';
 var savings=calculatePetrolSavings(item);
 var savingsHtml='';
 if(savings!==null&&savings>0){savingsHtml='<div style="font-size:0.72rem;color:#2ecc71;font-weight:700;margin-top:6px">💰 Saved '+lkr(savings)+' vs petrol</div>'}
-else if(savings!==null&&savings<0){savingsHtml='<div style="font-size:0.72rem;color:#f87171;font-weight:700;margin-top:6px">⚠ Petrol would have been '+lkr(Math.abs(savings))+' cheaper</div>'}
-return '<div class="history-item" data-docid="'+item._docId+'"><button data-id="'+item.ts+'" class="delBtn" style="position:absolute;top:10px;right:10px;background:none;border:none;color:#6a5a9e;font-size:1.2rem;cursor:pointer;z-index:2">×</button><div style="display:flex;justify-content:space-between;margin-bottom:8px;padding-right:24px"><span style="font-size:1.05rem;font-weight:800;color:#7c3aed">'+lkr(item.total)+'</span><span style="font-size:0.7rem;color:#6a5a9e">'+dt+'</span></div>'+(vname?'<div style="font-size:0.72rem;color:var(--purpleB);font-weight:700;margin-bottom:4px">🚗 '+vname+'</div>':'')+'<div style="font-size:0.78rem;color:var(--dim);line-height:1.6">'+mIcon+' <span style="color:var(--text);font-weight:600">'+item.cur+'% → '+item.tgt+'%</span> · ⚡ <span style="color:var(--text);font-weight:600">+'+item.needed.toFixed(2)+' kWh</span> · 💵 <span style="color:var(--text);font-weight:600">'+item.r.toFixed(2)+' LKR/kWh</span></div>'+savingsHtml+'<div class="hi-edit-hint">✏️ Tap to edit</div></div>'
+return '<div class="history-item" data-docid="'+item._docId+'"><button data-id="'+item.ts+'" class="delBtn" style="position:absolute;top:10px;right:10px;background:none;border:none;color:#6a5a9e;font-size:1.2rem;cursor:pointer;z-index:2">×</button><div style="display:flex;justify-content:space-between;margin-bottom:8px;padding-right:24px"><span style="font-size:1.05rem;font-weight:800;color:#7c3aed">'+lkr(item.total)+'</span><span style="font-size:0.7rem;color:#6a5a9e">'+dt+'</span></div>'+(vname?'<div style="font-size:0.72rem;color:var(--purpleB);font-weight:700;margin-bottom:4px">🚗 '+vname+modeBadge+'</div>':'')+'<div style="font-size:0.78rem;color:var(--dim);line-height:1.6">'+mIcon+' <span style="color:var(--text);font-weight:600">'+item.cur+'% → '+item.tgt+'%</span> · ⚡ <span style="color:var(--text);font-weight:600">+'+item.needed.toFixed(2)+' kWh</span> · 💵 <span style="color:var(--text);font-weight:600">'+item.r.toFixed(2)+' LKR/kWh</span></div>'+savingsHtml+'<div class="hi-edit-hint">✏️ Tap to edit</div></div>'
 }).join('');
 
-list.querySelectorAll('.delBtn').forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();var id=parseInt(b.dataset.id);if(confirm('Delete this charge?'))deleteRecord(id,function(){renderHistory()})})});
+list.querySelectorAll('.delBtn').forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();var id=parseInt(b.dataset.id);if(confirm('Delete this charge?'))deleteRecord(id,function(){renderHistory();showToast('Charge deleted')})})});
 list.querySelectorAll('.history-item').forEach(function(el){
 el.addEventListener('click',function(e){
 if(e.target.classList.contains('delBtn'))return;
@@ -1824,6 +1959,8 @@ $('ehFrom').value=item.cur||0;
 $('ehTo').value=item.tgt||0;
 $('ehCap').value=item.cap||30.08;
 $('ehRate').value=item.r||0;
+$('ehTotal').value=item.total||0;
+if(item.mode==='money'||item.moneyRequested){$('ehTotalField').style.display='block'}else{$('ehTotalField').style.display='none'}
 $('editHistoryModal').classList.add('show');
 });
 }
@@ -1836,86 +1973,127 @@ var from=clamp($('ehFrom').value,1,100);
 var to=clamp($('ehTo').value,1,100);
 var cap=parseFloat($('ehCap').value);
 var rate=parseFloat($('ehRate').value);
-if(!cap||cap<=0){alert('Please enter a valid battery capacity.');return}
+if(!cap||cap<=0){alert('Please enter a valid capacity.');return}
 if(rate<0||isNaN(rate)){alert('Please enter a valid rate.');return}
 if(to<=from){alert('End % must be greater than start %.');return}
-
 var needed=((to-from)/100)*cap;
-var eff=90;
-if(currentCalc&&currentCalc.mode==='home')eff=parseFloat($('homeEfficiency').value)||88;
+var eff=currentMode==='home'?(parseFloat($('homeEfficiency').value)||88):(parseFloat($('efficiency').value)||90);
 var billed=needed/(eff/100);
 var total=billed*rate;
+var totalOverride=$('ehTotalField').style.display!=='none'?parseFloat($('ehTotal').value):null;
+if(totalOverride&&totalOverride>0)total=totalOverride;
 
 getAllRecords(function(hist){
 var item=hist.find(function(x){return x._docId===editingHistoryId});
 if(!item){alert('Charge not found.');return}
 var updates={cur:from,tgt:to,cap:cap,r:rate,needed:needed,billed:billed,total:total};
 updateRecord(editingHistoryId,updates,function(ok){
-if(ok){
-$('editHistoryModal').classList.remove('show');
-editingHistoryId=null;
-renderHistory();
-}else{alert('Could not update. Please try again.')}
+if(ok){$('editHistoryModal').classList.remove('show');editingHistoryId=null;renderHistory();showToast('Charge updated','success')}
+else{alert('Could not update.')}
 });
 });
 });
 
 $('historyVehicleFilter').addEventListener('change',function(){renderHistory()});
 
-$('saveBtn').addEventListener('click',function(){if(!currentCalc||currentCalc.needed<=0||!currentUser)return;var rec={ts:Date.now(),cap:currentCalc.cap,cur:currentCalc.cur,tgt:currentCalc.tgt,r:currentCalc.r,needed:currentCalc.needed,billed:currentCalc.billed,total:currentCalc.total,mode:currentCalc.mode,vehicleKey:currentCalc.vehicleKey,vehicleName:currentCalc.vehicleName};addRecord(rec,function(ok){if(ok){renderHistory();$('saveBtn').textContent='✓ Saved!';$('saveBtn').style.background='#2ecc71';setTimeout(function(){$('saveBtn').textContent='💾 Save this charge';$('saveBtn').style.background='linear-gradient(135deg,#3b82f6,#8b5cf6)'},1200)}else{$('saveBtn').textContent='⚠ Failed';$('saveBtn').style.background='#e74c3c';setTimeout(function(){$('saveBtn').textContent='💾 Save this charge';$('saveBtn').style.background='linear-gradient(135deg,#3b82f6,#8b5cf6)'},1500)}})});
-
-$('clearBtn').addEventListener('click',function(){if(confirm('Delete all history? Cannot be undone.'))clearAllRecords(function(){renderHistory()})});
-
-$('exportBtn').addEventListener('click',function(){getAllRecords(function(h){if(h.length===0)return;var rows=[['Date','Time','Vehicle','Mode','Capacity','From %','To %','Energy (kWh)','Billed (kWh)','Rate (LKR/kWh)','Total (LKR)','Savings vs Petrol']];h.slice().sort(function(a,b){return a.ts-b.ts}).forEach(function(x){var d=new Date(x.ts);var dt=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');var tm=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');var s=calculatePetrolSavings(x);rows.push([dt,tm,x.vehicleName||'—',x.mode||'public',x.cap,x.cur,x.tgt,x.needed.toFixed(2),x.billed.toFixed(2),x.r.toFixed(2),x.total.toFixed(2),s!==null?s.toFixed(2):'—'])});var csv=rows.map(function(r){return r.map(function(c){return '"'+String(c).replace(/"/g,'""')+'"'}).join(',')}).join('\n');var blob=new Blob([csv],{type:'text/csv;charset=utf-8'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='ev-history-'+new Date().toISOString().slice(0,10)+'.csv';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url)})});
-
-// ============ THEME / SUPPORT ============
-$('themeToggle').addEventListener('click',function(){var l=document.body.classList.contains('light');if(l){document.body.classList.remove('light');$('themeKnob').style.left='2px'}else{document.body.classList.add('light');$('themeKnob').style.left='32px'}savePrefs()});
-
-var SUPPORT_CONFIG={
-payhereLink:'https://www.payhere.lk/pay/YOUR_LINK_HERE',
-bankName:'Shamil Sallay',
-bankBank:'Your Bank',
-bankAcct:'Your Account Number',
-bankBranch:'Your Branch',
-shareMessage:'Check out this EV Charge Calculator for Sri Lanka — it calculates charging costs, range, and savings vs petrol. Free to use!',
-shareUrl:window.location.origin
+$('saveBtn').addEventListener('click',function(){
+if(!currentCalc||currentCalc.needed<=0||!currentUser)return;
+var rec={
+ts:Date.now(),cap:currentCalc.capacity,cur:currentCalc.cur,tgt:currentCalc.tgt,
+r:currentCalc.rate,needed:currentCalc.needed,billed:currentCalc.billed||0,
+total:currentCalc.total,mode:currentMode,calcMode:currentCalc.mode,
+vehicleKey:currentCalc.vehicleKey,vehicleName:currentCalc.vehicleName
 };
-$('donateBtn').addEventListener('click',function(){if(confirm('You will be redirected to PayHere to make a donation. Continue?')){window.open(SUPPORT_CONFIG.payhereLink,'_blank')}});
-$('bankBtn').addEventListener('click',function(){$('bankName').textContent=SUPPORT_CONFIG.bankName;$('bankBank').textContent=SUPPORT_CONFIG.bankBank;$('bankAcct').textContent=SUPPORT_CONFIG.bankAcct;$('bankBranch').textContent=SUPPORT_CONFIG.bankBranch;$('bankModal').classList.add('show')});
-$('bankOk').addEventListener('click',function(){$('bankModal').classList.remove('show')});
-$('shareAppBtn').addEventListener('click',function(){var text=SUPPORT_CONFIG.shareMessage+'\n\n'+SUPPORT_CONFIG.shareUrl;if(navigator.share){navigator.share({title:'EV Charge Calculator',text:text,url:SUPPORT_CONFIG.shareUrl}).catch(function(e){if(e.name!=='AbortError')console.warn(e)})}else{var waUrl='https://wa.me/?text='+encodeURIComponent(text);window.open(waUrl,'_blank')}});
-$('rateAppBtn').addEventListener('click',function(){alert('Ratings will be available once the app is published on the Google Play Store. For now, please share it with other EV owners!')});
-
-// ONBOARDING
-var obStep=1;
-function showOnboard(){obStep=1;$('obStep').textContent='1';$('obStep1').style.display='block';$('obStep2').style.display='none';$('obStep3').style.display='none';$('obSkip').textContent='Skip setup';$('obNext').textContent='Next →';$('onboardOverlay').classList.add('show')}
-function hideOnboard(){$('onboardOverlay').classList.remove('show');localStorage.setItem('obDone','1')}
-$('obNext').addEventListener('click',function(){
-if(obStep===1){var v=$('obVehicle').value;if(v){$('vehicleSelect').value=v;setDefaultVehicle(v);var vv=getVehicleByKey(v);if(vv)$('capacity').value=vv.capacity}obStep=2;$('obStep').textContent='2';$('obStep1').style.display='none';$('obStep2').style.display='block'}
-else if(obStep===2){var m=$('obMode').value;if(m==='home')setMode('home');else if(m==='public')setMode('public');obStep=3;$('obStep').textContent='3';$('obStep2').style.display='none';$('obStep3').style.display='block';$('obNext').textContent='Finish ✓'}
-else{var hr=$('obHomeRate').value;if(hr){$('homeRate').value=hr;$('homeRateSelect').value=hr}hideOnboard();calc();savePrefs()}
+if(currentCalc.mode==='money')rec.moneyRequested=true;
+addRecord(rec,function(ok){
+if(ok){renderHistory();showToast('Charge saved','success')}
+else{showToast('Save failed','error')}
 });
-$('obSkip').addEventListener('click',function(){hideOnboard()});
-$('rerunOnboard').addEventListener('click',function(){showOnboard()});
-
-calc();
-calcTime();
-if(!localStorage.getItem('obDone')){setTimeout(showOnboard,1500)}
-
-window.addEventListener('firebase-ready',function(){
-setTimeout(function(){
-if(window._pendingVehicle){
-var sel=$('vehicleSelect');
-if(sel.querySelector('option[value="'+window._pendingVehicle+'"]')){
-sel.value=window._pendingVehicle;
-var v=getVehicleByKey(window._pendingVehicle);
-if(v)$('capacity').value=v.capacity;
-}
-delete window._pendingVehicle;
-}
-calc();
-},500);
 });
+
+$('clearBtn').addEventListener('click',function(){if(confirm('Delete all history? Cannot be undone.'))clearAllRecords(function(){renderHistory();showToast('History cleared')})});
+
+$('exportBtn').addEventListener('click',function(){
+getAllRecords(function(h){
+if(h.length===0)return;
+var rows=[['Date','Time','Mode','Vehicle','CalcMode','From %','To %','Capacity','kWh','Rate','Total','Petrol Savings']];
+h.slice().sort(function(a,b){return a.ts-b.ts}).forEach(function(x){
+var d=new Date(x.ts);
+var dt=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+var tm=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+var s=calculatePetrolSavings(x);
+rows.push([dt,tm,x.mode||'public',x.vehicleName||'—',x.calcMode||'cost',x.cur,x.tgt,x.cap,x.needed.toFixed(2),x.r.toFixed(2),x.total.toFixed(2),s!==null?s.toFixed(2):'—']);
+});
+var csv=rows.map(function(r){return r.map(function(c){return '"'+String(c).replace(/"/g,'""')+'"'}).join(',')}).join('\n');
+var blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
+var url=URL.createObjectURL(blob);
+var a=document.createElement('a');a.href=url;a.download='ev-history-'+new Date().toISOString().slice(0,10)+'.csv';
+document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+});
+});
+
+// ============ THEME / SUPPORT / INTRO ============
+$('themeToggle').addEventListener('click',function(){
+var l=document.body.classList.contains('light');
+if(l){document.body.classList.remove('light');$('themeKnob').style.left='2px'}else{document.body.classList.add('light');$('themeKnob').style.left='32px'}
+savePrefs();
+});
+
+$('shareAppBtn').addEventListener('click',function(){
+var text='Check out this EV Charge Calculator for Sri Lanka — free to use!';
+var url=window.location.origin;
+if(navigator.share){navigator.share({title:'EV Charge Calculator',text:text,url:url}).catch(function(e){if(e.name!=='AbortError')console.warn(e)})}
+else{window.open('https://wa.me/?text='+encodeURIComponent(text+'\n\n'+url),'_blank')}
+});
+
+$('rerunIntro').addEventListener('click',function(){
+showIntro();
+});
+
+// ============ PREFS ============
+function savePrefs(){
+try{localStorage.setItem('evPrefs',JSON.stringify({
+current:$('current').value,target:$('target').value,rate:$('rate').value,efficiency:$('efficiency').value,
+sessionFee:$('sessionFee').value,tax:$('tax').value,chargerPower:$('chargerPower').value,
+homeRate:$('homeRate').value,homeChargerPower:$('homeChargerPower').value,homeEfficiency:$('homeEfficiency').value,
+customHomePower:$('customHomePower').value,customPublicPower:$('customPublicPower').value,
+moneyAmount:$('moneyAmount').value,durationMin:$('durationMin').value,
+mode:currentMode,calcMode:currentCalcMode,theme:document.body.classList.contains('light')?'light':'dark',
+setFuel92:$('setFuel92').value,setFuel95:$('setFuel95').value,setDiesel:$('setDiesel').value,setPetrolKm:$('setPetrolKm').value
+}))}catch(e){}
+}
+
+try{var s=localStorage.getItem('evPrefs');if(s){var p=JSON.parse(s);
+if(p.current)$('current').value=p.current;
+if(p.target)$('target').value=p.target;
+if(p.rate)$('rate').value=p.rate;
+if(p.efficiency)$('efficiency').value=p.efficiency;
+if(p.sessionFee)$('sessionFee').value=p.sessionFee;
+if(p.tax)$('tax').value=p.tax;
+if(p.chargerPower){$('chargerPower').value=p.chargerPower;if(p.chargerPower==='custom')$('customPublicPowerField').style.display='block'}
+if(p.homeRate)$('homeRate').value=p.homeRate;
+if(p.homeChargerPower){$('homeChargerPower').value=p.homeChargerPower;if(p.homeChargerPower==='custom')$('customHomePowerField').style.display='block'}
+if(p.homeEfficiency)$('homeEfficiency').value=p.homeEfficiency;
+if(p.customHomePower)$('customHomePower').value=p.customHomePower;
+if(p.customPublicPower)$('customPublicPower').value=p.customPublicPower;
+if(p.moneyAmount)$('moneyAmount').value=p.moneyAmount;
+if(p.durationMin)$('durationMin').value=p.durationMin;
+if(p.mode)currentMode=p.mode;
+if(p.calcMode)currentCalcMode=p.calcMode;
+if(p.theme==='light'){document.body.classList.add('light');$('themeKnob').style.left='32px'}
+if(p.setFuel92)$('setFuel92').value=p.setFuel92;
+if(p.setFuel95)$('setFuel95').value=p.setFuel95;
+if(p.setDiesel)$('setDiesel').value=p.setDiesel;
+if(p.setPetrolKm)$('setPetrolKm').value=p.setPetrolKm;
+}}catch(e){}
+
+if(currentMode==='home'){$('tabHome').classList.add('active');$('tabPublic').classList.remove('active');$('homeFields').style.display='block';$('publicFields').style.display='none'}
+setCalcMode(currentCalcMode||'cost');
+
+// INITIAL
+calc();
+
+// Auto-show intro for first-time users on signup (handled in auth success)
 </script>
 </body>
 </html>
