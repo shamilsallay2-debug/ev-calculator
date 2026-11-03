@@ -177,9 +177,17 @@ body.light .notice-banner{color:#b45309}
 .report-btn.r-slow{border-color:rgba(245,158,11,0.4);background:rgba(245,158,11,0.15);color:#fbbf24}
 .report-btn.r-broken{border-color:rgba(248,113,113,0.4);background:rgba(248,113,113,0.15);color:#f87171}
 .report-btn.r-blocked{border-color:rgba(148,163,184,0.4);background:rgba(148,163,184,0.15);color:#94a3b8}
-.offline-banner{position:fixed;top:0;left:80px;right:0;background:#f59e0b;color:#000;text-align:center;padding:8px;font-size:0.8rem;font-weight:700;z-index:200;display:none;transition:opacity 0.3s}
+.offline-banner{position:fixed;top:0;left:80px;right:0;background:#f59e0b;color:#000;text-align:center;padding:8px;font-size:0.8rem;font-weight:700;z-index:200;display:none}
 .offline-banner.show{display:block}
-@media(max-width:480px){.offline-banner{left:72px}body{padding-left:88px;padding-right:12px}.app{max-width:100%}.sidebar{width:72px}.nav-item{width:56px}.nav-icon{font-size:1.2rem}.nav-label{font-size:0.5rem}.compare-table{font-size:0.72rem}}
+.history-item{background:var(--input-bg);border-radius:12px;padding:14px 16px;margin-bottom:10px;border:1px solid rgba(139,92,246,0.15);border-left:3px solid #8b5cf6;position:relative;cursor:pointer;transition:all 0.15s}
+.history-item:active{transform:scale(0.99);background:rgba(139,92,246,0.05)}
+.history-item .hi-edit-hint{position:absolute;bottom:6px;right:12px;font-size:0.6rem;color:var(--faint);font-weight:600}
+.time-big{text-align:center;padding:10px 0 4px}
+.time-big .tb-lbl{font-size:0.7rem;text-transform:uppercase;letter-spacing:2px;color:var(--dim);margin-bottom:6px;font-weight:600}
+.time-big .tb-val{font-size:3rem;font-weight:800;line-height:1;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+body.light .time-big .tb-val{background:none;-webkit-text-fill-color:initial;color:#5b21b6}
+.time-big .tb-sub{font-size:0.85rem;color:var(--dim);margin-top:8px;font-weight:500}
+@media(max-width:480px){.offline-banner{left:72px}body{padding-left:88px;padding-right:12px}.app{max-width:100%}.sidebar{width:72px}.nav-item{width:56px}.nav-icon{font-size:1.2rem}.nav-label{font-size:0.5rem}.compare-table{font-size:0.72rem}.time-big .tb-val{font-size:2.4rem}}
 </style>
 </head>
 <body>
@@ -282,16 +290,9 @@ body.light .notice-banner{color:#b45309}
 <option value="Other">Other / Independent</option>
 </select>
 </div>
-<div class="field">
-<label>Station name <span class="hint">(e.g. Volt Charge – Keells Kandy)</span></label>
-<input type="text" id="subName" placeholder="Station name">
-</div>
-<div class="field">
-<label>Address <span class="hint">(optional)</span></label>
-<input type="text" id="subAddress" placeholder="Street, city">
-</div>
-<div class="field">
-<label>Charger type <span class="info-i" data-info="subStationType">i</span></label>
+<div class="field"><label>Station name <span class="hint">(e.g. Volt Charge – Keells Kandy)</span></label><input type="text" id="subName" placeholder="Station name"></div>
+<div class="field"><label>Address <span class="hint">(optional)</span></label><input type="text" id="subAddress" placeholder="Street, city"></div>
+<div class="field"><label>Charger type <span class="info-i" data-info="subStationType">i</span></label>
 <select id="subType">
 <option value="DC Fast">DC Fast (CCS2)</option>
 <option value="AC">AC (Type 2)</option>
@@ -299,10 +300,7 @@ body.light .notice-banner{color:#b45309}
 <option value="Unknown">Not sure</option>
 </select>
 </div>
-<div class="field">
-<label>Rate per kWh <span class="hint">(LKR, optional)</span></label>
-<input type="number" id="subRate" step="0.01" min="0" inputmode="decimal" placeholder="e.g. 150">
-</div>
+<div class="field"><label>Rate per kWh <span class="hint">(LKR, optional)</span></label><input type="number" id="subRate" step="0.01" min="0" inputmode="decimal" placeholder="e.g. 150"></div>
 <div style="background:var(--input-bg);border-radius:12px;padding:14px;margin-top:14px">
 <div style="font-size:0.75rem;color:var(--dim);line-height:1.6;margin-bottom:8px">📍 Your current location will be used for this station. Make sure you're standing at the charger.</div>
 <div id="subLocationStatus" style="font-size:0.8rem;font-weight:600;color:var(--dim)">Tap "Get My Location" to continue</div>
@@ -316,10 +314,26 @@ body.light .notice-banner{color:#b45309}
 </div>
 </div>
 
+<div class="modal-overlay" id="editHistoryModal">
+<div class="modal-box">
+<h3>Edit Charge</h3>
+<p style="font-size:0.8rem;color:var(--dim);line-height:1.6;margin-bottom:14px">Adjust the values if the actual charge differed from what was saved.</p>
+<div class="field"><label>From % <span class="hint">(1–100)</span></label><input type="number" id="ehFrom" value="20" min="1" max="100" step="1" inputmode="numeric"></div>
+<div class="field"><label>To % <span class="hint">(1–100)</span></label><input type="number" id="ehTo" value="80" min="1" max="100" step="1" inputmode="numeric"></div>
+<div class="field"><label>Battery capacity <span class="hint">(kWh)</span></label><input type="number" id="ehCap" value="30.08" step="0.01" min="1" inputmode="decimal"></div>
+<div class="field"><label>Rate per kWh <span class="hint">(LKR)</span></label><input type="number" id="ehRate" value="150" step="0.01" min="0" inputmode="decimal"></div>
+<div class="modal-actions">
+<button type="button" class="m-cancel" id="ehCancel">Cancel</button>
+<button type="button" class="m-ok" id="ehSave">Save Changes</button>
+</div>
+</div>
+</div>
+
 <div id="mainApp" style="display:none">
 
 <div class="sidebar">
 <button type="button" class="nav-item active" data-page="calc"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></button>
+<button type="button" class="nav-item" data-page="time"><span class="nav-icon">⏱️</span><span class="nav-label">Time</span></button>
 <button type="button" class="nav-item" data-page="garage"><span class="nav-icon">🚗</span><span class="nav-label">Garage</span></button>
 <button type="button" class="nav-item" data-page="history"><span class="nav-icon">📊</span><span class="nav-label">History</span></button>
 <button type="button" class="nav-item" data-page="stations"><span class="nav-icon">🔌</span><span class="nav-label">Stations</span></button>
@@ -336,9 +350,7 @@ body.light .notice-banner{color:#b45309}
 <div class="card">
 <div class="field" style="margin-bottom:8px">
 <label style="font-size:0.85rem;font-weight:600">Your vehicle <span class="info-i" data-info="vehicleSelect">i</span></label>
-<select id="vehicleSelect">
-<option value="">— Loading vehicles… —</option>
-</select>
+<select id="vehicleSelect"><option value="">— Loading vehicles… —</option></select>
 </div>
 <div class="field" id="customCapacityField" style="display:none">
 <label>Custom Capacity <span class="info-i" data-info="capacity">i</span> <span class="hint">(kWh)</span></label>
@@ -410,9 +422,7 @@ body.light .notice-banner{color:#b45309}
 </div>
 <div id="publicFields">
 <div class="field"><label>Network / station <span class="info-i" data-info="quickRate">i</span></label>
-<select id="quickRate">
-<option value="">— Loading networks… —</option>
-</select></div>
+<select id="quickRate"><option value="">— Loading networks… —</option></select></div>
 <div class="field"><label>Rate per kWh <span class="info-i" data-info="rate">i</span> <span class="hint">(LKR)</span></label><input type="number" id="rate" value="150" step="0.01" min="0" inputmode="decimal"></div>
 <div class="field"><label>Charger power <span class="info-i" data-info="chargerPower">i</span> <span class="hint">(kW)</span></label>
 <select id="chargerPower">
@@ -506,6 +516,87 @@ body.light .notice-banner{color:#b45309}
 </div>
 </div>
 
+<div class="page" id="page-time">
+<h1>⏱️ Charge Time</h1>
+<p style="text-align:center;font-size:0.8rem;color:var(--dim);margin-bottom:16px">Calculate how long it takes to charge — no cost involved</p>
+
+<div class="card">
+<div class="field" style="margin-bottom:8px">
+<label style="font-size:0.85rem;font-weight:600">Your vehicle <span class="info-i" data-info="vehicleSelect">i</span></label>
+<select id="timeVehicleSelect"><option value="">— Loading vehicles… —</option></select>
+</div>
+<div class="field">
+<label>Battery capacity <span class="info-i" data-info="capacity">i</span> <span class="hint">(kWh)</span></label>
+<input type="number" id="timeCapacity" value="30.08" step="0.01" min="1" inputmode="decimal">
+</div>
+</div>
+
+<div class="card">
+<div class="card-title">Charge Level</div>
+<div class="field">
+<label>Current charge <span class="info-i" data-info="currentCharge">i</span> <input type="number" class="pct-input" id="timeCurrentNum" value="20" min="1" max="100" step="1" inputmode="numeric"></label>
+<input type="range" id="timeCurrent" min="1" max="100" value="20" step="1">
+</div>
+<div class="field">
+<label>Target charge <span class="info-i" data-info="targetCharge">i</span> <input type="number" class="pct-input" id="timeTargetNum" value="80" min="1" max="100" step="1" inputmode="numeric"></label>
+<input type="range" id="timeTarget" min="1" max="100" value="80" step="1">
+</div>
+</div>
+
+<div class="card">
+<div class="card-title">Charger</div>
+<div class="mode-tabs">
+<button type="button" class="mode-tab active" id="timeTabHome">🏠 Home</button>
+<button type="button" class="mode-tab" id="timeTabPublic">🔌 Public DC</button>
+</div>
+<div id="timeHomeFields">
+<div class="field"><label>Charger power <span class="info-i" data-info="homeChargerPower">i</span> <span class="hint">(kW)</span></label>
+<select id="timeHomeChargerPower">
+<option value="2.3">2.3 kW standard outlet</option>
+<option value="3.3">3.3 kW standard outlet</option>
+<option value="7" selected>7 kW AC wallbox (default)</option>
+<option value="11">11 kW AC wallbox</option>
+<option value="22">22 kW AC wallbox</option>
+<option value="custom">Custom — Enter manually</option>
+</select></div>
+<div class="field" id="timeCustomHomePowerField" style="display:none"><label>Custom power <span class="hint">(kW)</span></label><input type="number" id="timeCustomHomePower" value="7" step="0.1" min="0.5" max="50" inputmode="decimal"></div>
+<div class="field"><label>Charging efficiency <span class="info-i" data-info="homeEfficiency">i</span> <span class="hint">(%)</span></label><input type="number" id="timeHomeEfficiency" value="88" step="1" min="50" max="100" inputmode="numeric"></div>
+</div>
+<div id="timePublicFields" style="display:none">
+<div class="field"><label>Charger power <span class="info-i" data-info="chargerPower">i</span> <span class="hint">(kW)</span></label>
+<select id="timeChargerPower">
+<option value="30" selected>DC 30 kW</option>
+<option value="50">DC 50 kW</option>
+<option value="60">DC 60 kW</option>
+<option value="100">DC 100 kW</option>
+<option value="120">DC 120 kW</option>
+<option value="150">DC 150 kW</option>
+<option value="180">DC 180 kW</option>
+<option value="240">DC 240 kW</option>
+<option value="custom">Custom — Enter manually</option>
+</select></div>
+<div class="field" id="timeCustomPublicPowerField" style="display:none"><label>Custom power <span class="hint">(kW)</span></label><input type="number" id="timeCustomPublicPower" value="30" step="0.1" min="0.5" max="500" inputmode="decimal"></div>
+<div class="field"><label>Charging efficiency <span class="info-i" data-info="efficiency">i</span> <span class="hint">(%)</span></label><input type="number" id="timeEfficiency" value="90" step="1" min="50" max="100" inputmode="numeric"></div>
+</div>
+</div>
+
+<div class="card" style="background:linear-gradient(135deg,rgba(59,130,246,0.15),rgba(139,92,246,0.1),rgba(10,6,18,0.6));border:1px solid rgba(139,92,246,0.3)">
+<div class="time-big">
+<div class="tb-lbl">Estimated Time</div>
+<div class="tb-val" id="timeBigVal">—</div>
+<div class="tb-sub" id="timeBigSub">Enter values to calculate</div>
+</div>
+<div style="display:flex;justify-content:space-between;padding:10px 0;font-size:0.85rem;border-top:1px solid rgba(139,92,246,0.1);margin-top:14px;padding-top:14px"><span style="color:var(--dim)">Energy to add</span><span id="timeEnergy" style="font-weight:600;color:var(--text)">0.00 kWh</span></div>
+<div style="display:flex;justify-content:space-between;padding:8px 0;font-size:0.85rem"><span style="color:var(--dim)">Effective charging rate</span><span id="timeRate" style="font-weight:600;color:var(--text)">— kW</span></div>
+</div>
+
+<div class="card">
+<div class="card-title">Charging Timer</div>
+<p style="font-size:0.8rem;color:var(--dim);margin-bottom:12px;line-height:1.6">Start a reminder for the estimated time.</p>
+<button type="button" id="timeStartTimer" style="width:100%;padding:13px;border-radius:12px;border:none;font-size:0.95rem;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff">🔔 Remind me when done</button>
+</div>
+</div>
+
 <div class="page" id="page-garage">
 <h1>🚗 My Garage</h1>
 <div class="user-bar"><span class="email" id="userEmail">—</span><button type="button" class="signout" id="signoutBtn">Sign Out</button></div>
@@ -522,7 +613,7 @@ body.light .notice-banner{color:#b45309}
 </div>
 <div class="card">
 <div class="card-title">Built-in Vehicles</div>
-<p style="font-size:0.75rem;color:var(--dim);margin-bottom:12px;line-height:1.5">These come pre-loaded with verified Sri Lankan specs. To use one, just select it from the dropdown on the Home page.</p>
+<p style="font-size:0.75rem;color:var(--dim);margin-bottom:12px;line-height:1.5">These come pre-loaded with verified Sri Lankan specs. Select one from the Home or Time page.</p>
 <div id="builtInList"></div>
 </div>
 </div>
@@ -564,24 +655,20 @@ body.light .notice-banner{color:#b45309}
 <div class="page" id="page-stations">
 <h1>🔌 Charging Stations</h1>
 <p style="text-align:center;font-size:0.8rem;color:var(--dim);margin-bottom:16px">Find the closest charger to your location</p>
-
 <div class="card">
 <button type="button" id="nearMeBtn" style="width:100%;padding:14px;border-radius:14px;border:none;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;box-shadow:0 4px 20px rgba(139,92,246,0.4)">📍 Find Stations Near Me</button>
 <div id="locationStatus" style="text-align:center;font-size:0.8rem;color:var(--dim);margin-top:10px;display:none"></div>
 </div>
-
 <div class="card">
 <div class="card-title">Know a charger we're missing?</div>
 <p style="font-size:0.8rem;color:var(--dim);line-height:1.6;margin-bottom:12px">Help the community by adding charging stations you find. Your submission will be reviewed before appearing in the app.</p>
 <button type="button" id="submitStationBtn" style="width:100%;padding:14px;border-radius:14px;border:1px solid rgba(46,204,113,0.4);background:rgba(46,204,113,0.15);color:#2ecc71;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit">➕ Submit a Station</button>
 </div>
-
 <div id="stationsList"></div>
 </div>
 
 <div class="page" id="page-settings">
 <h1>⚙️ Settings</h1>
-
 <div class="card">
 <div class="card-title">Appearance</div>
 <div style="display:flex;justify-content:space-between;align-items:center">
@@ -589,17 +676,13 @@ body.light .notice-banner{color:#b45309}
 <button type="button" id="themeToggle" style="width:60px;height:32px;border-radius:16px;border:1px solid rgba(139,92,246,0.4);background:rgba(139,92,246,0.15);cursor:pointer;position:relative;transition:background 0.3s;font-family:inherit"><span id="themeKnob" style="position:absolute;top:2px;left:2px;width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#8b5cf6);transition:left 0.3s;box-shadow:0 2px 8px rgba(139,92,246,0.5)"></span></button>
 </div>
 </div>
-
 <div class="card">
 <div class="card-title">Default vehicle</div>
 <div class="field" style="margin-bottom:0">
 <label>Pre-selected on launch <span class="info-i" data-info="defaultVehicle">i</span></label>
-<select id="settingsDefaultVehicle">
-<option value="">— None —</option>
-</select>
+<select id="settingsDefaultVehicle"><option value="">— None —</option></select>
 </div>
 </div>
-
 <div class="card">
 <div class="card-title">Change password</div>
 <div class="field"><label>Current password</label><input type="password" id="cpCurrent" placeholder="Your current password" autocomplete="current-password"></div>
@@ -608,7 +691,6 @@ body.light .notice-banner{color:#b45309}
 <button type="button" id="cpBtn" style="width:100%;padding:14px;border-radius:12px;border:none;font-size:0.95rem;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff">Update Password</button>
 <div id="cpMsg" style="margin-top:12px;font-size:0.82rem;line-height:1.6;text-align:center"></div>
 </div>
-
 <div class="card">
 <div class="card-title">Fuel prices (for comparison)</div>
 <p style="font-size:0.78rem;color:var(--dim);line-height:1.6;margin-bottom:12px">Sri Lankan fuel prices change monthly. Update these when they change.</p>
@@ -617,14 +699,12 @@ body.light .notice-banner{color:#b45309}
 <div class="field"><label>Auto Diesel <span class="hint">(LKR/L)</span></label><input type="number" id="setDiesel" value="392" step="0.01" min="0" inputmode="decimal"></div>
 <div class="field"><label>Petrol car efficiency <span class="hint">(km/L)</span></label><input type="number" id="setPetrolKm" value="12" step="0.1" min="1" inputmode="decimal"></div>
 </div>
-
 <div class="card">
 <div class="card-title">Setup</div>
 <button type="button" id="rerunOnboard" style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(139,92,246,0.3);background:rgba(139,92,246,0.1);color:var(--purpleB);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:8px">🔄 Re-run setup wizard</button>
 <button type="button" id="reseedStationsBtn" style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(245,158,11,0.3);background:rgba(245,158,11,0.1);color:#fbbf24;font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit">📍 Re-seed stations (admin)</button>
-<div class="hint" style="margin-top:8px">Use this only if station locations are missing or outdated.</div>
+<div class="hint" style="margin-top:8px">Use only if station data is missing.</div>
 </div>
-
 <div class="card">
 <div class="card-title">Support the Developer</div>
 <p style="font-size:0.82rem;color:var(--dim);line-height:1.7;margin-bottom:14px">This app is free and built by one person for the Sri Lankan EV community. If it saves you time or money, consider supporting its development.</p>
@@ -635,7 +715,6 @@ body.light .notice-banner{color:#b45309}
 <button type="button" id="rateAppBtn" style="flex:1;padding:12px;border-radius:12px;border:1px solid rgba(46,204,113,0.3);background:rgba(46,204,113,0.1);color:#2ecc71;font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit">⭐ Rate</button>
 </div>
 </div>
-
 <div class="card">
 <div class="card-title">Account</div>
 <p style="font-size:0.85rem;color:var(--dim);line-height:1.6;margin-bottom:10px">Signed in as <strong id="settingsEmail" style="color:var(--text)">—</strong></p>
@@ -647,42 +726,36 @@ body.light .notice-banner{color:#b45309}
 <h1>❓ Help & About</h1>
 <div class="card">
 <div class="card-title">What this app does</div>
-<p style="font-size:0.85rem;color:var(--dim);line-height:1.7">This app helps Sri Lankan EV owners figure out <strong style="color:var(--purpleB)">how much a charge will cost, how long it will take, and how far you can drive afterwards</strong> — before you plug in. It supports all major local charging networks plus home charging with your domestic tariff.</p>
-<p style="font-size:0.85rem;color:var(--dim);line-height:1.7;margin-top:10px">You can add your own vehicles to your garage with custom specs, and the app will use them for all calculations.</p>
+<p style="font-size:0.85rem;color:var(--dim);line-height:1.7">This app helps Sri Lankan EV owners figure out <strong style="color:var(--purpleB)">how much a charge will cost, how long it will take, and how far you can drive afterwards</strong> — before you plug in.</p>
+<p style="font-size:0.85rem;color:var(--dim);line-height:1.7;margin-top:10px">Use the <strong style="color:var(--purpleB)">⏱️ Time</strong> tab if you only care about how long a charge will take, without any cost calculation.</p>
 </div>
 <div class="card">
 <div class="card-title">How to use it — step by step</div>
-<div class="tip-row"><span class="tip-icon">1️⃣</span><div class="tip-text"><strong>Pick your car</strong> — tap the vehicle name on the Home page. Your chosen vehicle is remembered for next time.</div></div>
+<div class="tip-row"><span class="tip-icon">1️⃣</span><div class="tip-text"><strong>Pick your car</strong> — tap the vehicle name on Home or Time. Your choice is remembered for next time.</div></div>
 <div class="tip-row"><span class="tip-icon">2️⃣</span><div class="tip-text"><strong>Set your charge range</strong> — drag the sliders or tap the number to type directly.</div></div>
-<div class="tip-row"><span class="tip-icon">3️⃣</span><div class="tip-text"><strong>Choose where you're charging</strong> — tap 🏠 Home or 🔌 Public DC. Your last-used rate is remembered.</div></div>
+<div class="tip-row"><span class="tip-icon">3️⃣</span><div class="tip-text"><strong>Choose where you're charging</strong> — 🏠 Home or 🔌 Public DC. Your last-used rate is remembered.</div></div>
 <div class="tip-row"><span class="tip-icon">4️⃣</span><div class="tip-text"><strong>Read the result</strong> — cost, time, and range. Tap "Compare" for network and petrol comparisons.</div></div>
-<div class="tip-row"><span class="tip-icon">5️⃣</span><div class="tip-text"><strong>Save it</strong> — tap "💾 Save this charge" to log it. View savings in 📊 History.</div></div>
+<div class="tip-row"><span class="tip-icon">5️⃣</span><div class="tip-text"><strong>Save it</strong> — tap "💾 Save this charge." If the actual result differs, tap any history entry to edit its end % or values.</div></div>
 <div class="tip-row"><span class="tip-icon">📍</span><div class="tip-text"><strong>Find nearby chargers</strong> — on the 🔌 Stations tab, tap "Find Stations Near Me."</div></div>
-<div class="tip-row"><span class="tip-icon">➕</span><div class="tip-text"><strong>Submit a missing charger</strong> — on the Stations tab, tap "Submit a Station" and share its GPS location.</div></div>
-<div class="tip-row"><span class="tip-icon">🔌</span><div class="tip-text"><strong>Report a station</strong> — tap Working / Slow / Broken / Blocked to help other drivers.</div></div>
+<div class="tip-row"><span class="tip-icon">➕</span><div class="tip-text"><strong>Submit a missing charger</strong> — Stations tab → "Submit a Station" with GPS.</div></div>
 <div class="tip-row"><span class="tip-icon">ⓘ</span><div class="tip-text"><strong>Need help with a field?</strong> — tap any small "i" icon next to a label.</div></div>
 </div>
 <div class="card">
 <div class="card-title">Quick tips</div>
 <div class="tip-row"><span class="tip-icon">⚡</span><div class="tip-text"><strong>Above 80% is slow.</strong> DC charging tapers off dramatically past 80%.</div></div>
 <div class="tip-row"><span class="tip-icon">💰</span><div class="tip-text"><strong>Home is cheaper.</strong> Typically 3–5× cheaper than public DC.</div></div>
+<div class="tip-row"><span class="tip-icon">⏱️</span><div class="tip-text"><strong>Time-only check.</strong> Use the Time tab if you just want to know how long, without cost.</div></div>
 <div class="tip-row"><span class="tip-icon">🌡️</span><div class="tip-text"><strong>Heat affects range.</strong> Expect 15–25% less than the rated range.</div></div>
-<div class="tip-row"><span class="tip-icon">⛽</span><div class="tip-text"><strong>Update fuel prices.</strong> Set current prices in Settings for accurate petrol comparison.</div></div>
+<div class="tip-row"><span class="tip-icon">✏️</span><div class="tip-text"><strong>Edit history.</strong> Tap any saved charge to fix the end % if it differs from what you planned.</div></div>
 </div>
 <div class="card">
 <div class="card-title">The math behind it</div>
 <p style="font-size:0.82rem;color:var(--dim);line-height:1.7;margin-bottom:10px"><strong style="color:var(--purpleB)">Energy you'll add:</strong></p>
 <div style="background:var(--input-bg);padding:14px;border-radius:10px;font-family:monospace;font-size:0.8rem;color:var(--blueB);margin:8px 0;border-left:3px solid var(--blue)">kWh = (Target% − Current%) ÷ 100 × Capacity</div>
-<p style="font-size:0.82rem;color:var(--dim);line-height:1.7;margin-bottom:10px"><strong style="color:var(--purpleB)">What you'll pay for:</strong></p>
-<div style="background:var(--input-bg);padding:14px;border-radius:10px;font-family:monospace;font-size:0.8rem;color:var(--blueB);margin:8px 0;border-left:3px solid var(--blue)">Billed = Needed ÷ (Efficiency ÷ 100)</div>
+<p style="font-size:0.82rem;color:var(--dim);line-height:1.7;margin-bottom:10px"><strong style="color:var(--purpleB)">Charging time:</strong></p>
+<div style="background:var(--input-bg);padding:14px;border-radius:10px;font-family:monospace;font-size:0.8rem;color:var(--blueB);margin:8px 0;border-left:3px solid var(--blue)">Time (h) = Energy needed ÷ Effective charger power</div>
 <p style="font-size:0.82rem;color:var(--dim);line-height:1.7;margin-bottom:10px"><strong style="color:var(--purpleB)">Total cost:</strong></p>
 <div style="background:var(--input-bg);padding:14px;border-radius:10px;font-family:monospace;font-size:0.8rem;color:var(--blueB);margin:8px 0;border-left:3px solid var(--blue)">Cost = (Billed × Rate) + Tax + Session Fee</div>
-<p style="font-size:0.82rem;color:var(--dim);line-height:1.7;margin-bottom:10px"><strong style="color:var(--purpleB)">Petrol comparison:</strong></p>
-<div style="background:var(--input-bg);padding:14px;border-radius:10px;font-family:monospace;font-size:0.8rem;color:var(--blueB);margin:8px 0;border-left:3px solid var(--blue)">Distance = Range × (Target% ÷ 100)<br>Petrol cost = Distance ÷ km/L × fuel price</div>
-</div>
-<div class="card">
-<div class="card-title">Rate disclaimer</div>
-<p style="font-size:0.82rem;color:var(--dim);line-height:1.7">Network rates are based on published tariffs and may change. Always verify the rate shown at the charger.</p>
 </div>
 <div class="card" style="text-align:center;padding:16px">
 <p style="font-size:0.75rem;color:var(--faint);line-height:1.6;margin:0">© 2026 Shamil Sallay. All rights reserved.<br>EV Charge Calculator — Sri Lanka</p>
@@ -698,6 +771,7 @@ var currentMode='public';
 var userVehicles=[];
 var editingVehicleId=null;
 var confirmCallback=null;
+var editingHistoryId=null;
 
 var builtInVehicles={};
 var providerRates=[];
@@ -705,6 +779,8 @@ var stationData=[];
 var stationReports={};
 var userLocation=null;
 var subCoordinates=null;
+
+var timeMode='home';
 
 var reportLabels={
 working:{icon:'✅',label:'Working'},
@@ -715,8 +791,8 @@ blocked:{icon:'🅿️',label:'Blocked'}
 
 var infos={
 vehicleSelect:{title:'Your vehicle',text:'Pick the car you are charging. The app remembers your choice for next time.'},
-currentCharge:{title:'Current charge',text:'How full your battery is right now. Check your car\'s dashboard before setting this. You can type directly into the box.'},
-targetCharge:{title:'Target charge',text:'How full you want the battery to be when you unplug. Charging to 80% is best for daily driving. Above 80% is slow and stresses the battery.'},
+currentCharge:{title:'Current charge',text:'How full your battery is right now. Check your car\'s dashboard before setting this. You can type directly into the box (1–100).'},
+targetCharge:{title:'Target charge',text:'How full you want the battery to be when you unplug. Charging to 80% is best for daily driving. Above 80% is slow and stresses the battery. Maximum is 100%.'},
 homeRateSelect:{title:'Home electricity rate',text:'Your cost per unit (kWh) from your CEB or LECO bill. Pick the tariff tier that matches your monthly usage.'},
 homeRate:{title:'Home rate',text:'Exact cost per kWh. If you selected a tier above, this is auto-filled. Otherwise enter your actual rate.'},
 homeChargerPower:{title:'Home charger power',text:'The kW rating of your home charger. A standard 3-pin outlet is ~2.3 kW. A dedicated wallbox is usually 7 kW. 7 kW is the default.'},
@@ -726,7 +802,7 @@ rate:{title:'Rate per kWh',text:'The exact LKR cost per kilowatt-hour at this ch
 chargerPower:{title:'Charger power',text:'The power output of the charger. Higher kW = faster charging. Your car may cap below the charger\'s rating. 30 kW is typical for Sri Lankan DC.'},
 sessionFee:{title:'Session fee',text:'Some stations charge a flat starting fee on top of the per-kWh rate. Leave at 0 if your network does not.'},
 tax:{title:'Tax / VAT',text:'If the rate shown excludes tax, enter the tax percentage here. Most Sri Lankan EV charging rates already include tax.'},
-efficiency:{title:'DC charging efficiency',text:'Energy lost as heat during DC fast charging. 90–95% is typical. The remaining energy reaches your battery.'},
+efficiency:{title:'Charging efficiency',text:'Energy lost as heat during charging. DC fast: 90–95%. The remaining energy reaches your battery.'},
 capacity:{title:'Battery capacity',text:'Your car\'s usable battery size in kWh. This is auto-filled when you pick a vehicle but you can override it here.'},
 charged:{title:'What you\'ll pay for',text:'Charging is not 100% efficient — some energy is lost as heat. The station bills you for the total energy delivered, which is slightly more than what actually lands in your battery.'},
 defaultVehicle:{title:'Default vehicle',text:'The car that auto-selects when you open the app. Choose your main vehicle here.'},
@@ -748,6 +824,7 @@ updateOnlineStatus();
 // ============ DEFAULT VEHICLE ============
 function getDefaultVehicle(){try{return localStorage.getItem('evDefaultVehicle')||''}catch(e){return ''}}
 function setDefaultVehicle(v){try{if(v)localStorage.setItem('evDefaultVehicle',v);else localStorage.removeItem('evDefaultVehicle')}catch(e){}}
+
 function applyDefaultVehicle(){
 var def=getDefaultVehicle();
 if(def&&$('vehicleSelect').querySelector('option[value="'+def+'"]')){
@@ -801,14 +878,16 @@ if(n.indexOf('Dongfeng')===0)return 'Dongfeng';
 return 'Other';
 }
 
-function buildVehicleDropdown(){
-var sel=$('vehicleSelect');
+function buildVehicleDropdowns(){
+['vehicleSelect','timeVehicleSelect'].forEach(function(selId){
+var sel=$(selId);
+if(!sel)return;
 var curVal=sel.value;
 sel.innerHTML='<option value="">— Choose your vehicle —</option>';
 
 var garageGrp=document.createElement('optgroup');
 garageGrp.label='⭐ My Garage';
-garageGrp.id='garageOptGroup';
+garageGrp.id=selId==='vehicleSelect'?'garageOptGroup':'timeGarageOptGroup';
 sel.appendChild(garageGrp);
 
 var byBrand={};
@@ -831,15 +910,8 @@ grp.appendChild(o);
 });
 sel.appendChild(grp);
 });
-
-var otherGrp=document.createElement('optgroup');
-otherGrp.label='Other';
-var customOpt=document.createElement('option');
-customOpt.value='custom';
-customOpt.textContent='Custom — One-off entry';
-otherGrp.appendChild(customOpt);
-sel.appendChild(otherGrp);
 sel.value=curVal;
+});
 applyDefaultVehicle();
 }
 
@@ -1094,7 +1166,7 @@ else{alert(err||'Could not get your location.')}
 // ============ STATION RE-SEED ============
 $('reseedStationsBtn').addEventListener('click',function(){
 if(!currentUser){alert('Please sign in first.');return}
-if(!confirm('This will overwrite the stations list in Firestore with an expanded set of verified locations. Continue?'))return;
+if(!confirm('This will overwrite the stations list in Firestore. Continue?'))return;
 var btn=this;
 btn.disabled=true;
 btn.textContent='Seeding…';
@@ -1144,32 +1216,25 @@ stationData=seed;
 renderStations();
 btn.textContent='✓ Seeded';
 setTimeout(function(){btn.textContent='📍 Re-seed stations (admin)';btn.disabled=false;},1500);
-alert('Stations updated. Note: LECO and CEB coordinates are approximate — use Submit a Station to correct them.');
+alert('Stations updated.');
 })
 .catch(function(e){
 console.error('Seed failed:',e);
-alert('Seed failed: '+e.message+'\n\nYou need to temporarily allow writes to the config collection in Firestore rules.');
+alert('Seed failed: '+e.message);
 btn.textContent='📍 Re-seed stations (admin)';
 btn.disabled=false;
 });
 });
 
-// ============ SUBMIT A STATION — HANDLERS ============
+// ============ SUBMIT A STATION ============
 $('submitStationBtn').addEventListener('click',function(){
 if(!currentUser){alert('Please sign in to submit a station.');return}
 var today=new Date().toISOString().slice(0,10);
 var rateKey='submissions_'+currentUser.uid+'_'+today;
 var count=parseInt(localStorage.getItem(rateKey)||'0');
-if(count>=5){
-alert('You can submit up to 5 stations per day. Please try again tomorrow.');
-return;
-}
+if(count>=5){alert('You can submit up to 5 stations per day.');return}
 subCoordinates=null;
-$('subNetwork').value='';
-$('subName').value='';
-$('subAddress').value='';
-$('subType').value='DC Fast';
-$('subRate').value='';
+$('subNetwork').value='';$('subName').value='';$('subAddress').value='';$('subType').value='DC Fast';$('subRate').value='';
 $('subLocationStatus').textContent='Tap "Get My Location" to continue';
 $('subLocationStatus').style.color='var(--dim)';
 $('subCoords').textContent='';
@@ -1177,9 +1242,7 @@ $('subSubmit').disabled=true;
 $('submitStationModal').classList.add('show');
 });
 
-$('subCancel').addEventListener('click',function(){
-$('submitStationModal').classList.remove('show');
-});
+$('subCancel').addEventListener('click',function(){$('submitStationModal').classList.remove('show')});
 
 $('subGetLocationBtn').addEventListener('click',function(){
 var btn=this;
@@ -1208,7 +1271,6 @@ function checkSubmitReady(){
 var ok=subCoordinates&&$('subNetwork').value&&$('subName').value.trim().length>=3;
 $('subSubmit').disabled=!ok;
 }
-
 $('subNetwork').addEventListener('change',checkSubmitReady);
 $('subName').addEventListener('input',checkSubmitReady);
 
@@ -1220,17 +1282,9 @@ if($('subName').value.trim().length<3){alert('Please enter a station name.');ret
 
 var rate=$('subRate').value?parseFloat($('subRate').value):null;
 var sub={
-uid:currentUser.uid,
-email:currentUser.email,
-network:$('subNetwork').value,
-name:$('subName').value.trim(),
-address:$('subAddress').value.trim(),
-type:$('subType').value,
-rate:rate,
-lat:subCoordinates.lat,
-lng:subCoordinates.lng,
-ts:Date.now(),
-status:'pending'
+uid:currentUser.uid,email:currentUser.email,network:$('subNetwork').value,
+name:$('subName').value.trim(),address:$('subAddress').value.trim(),type:$('subType').value,
+rate:rate,lat:subCoordinates.lat,lng:subCoordinates.lng,ts:Date.now(),status:'pending'
 };
 
 var btn=this;
@@ -1248,9 +1302,8 @@ localStorage.setItem(rateKey,String(count+1));
 btn.textContent='✓ Submitted!';
 setTimeout(function(){
 $('submitStationModal').classList.remove('show');
-btn.textContent='Submit';
-btn.disabled=false;
-alert('Thank you! Your station has been submitted for review. It will be added to the app once verified.');
+btn.textContent='Submit';btn.disabled=false;
+alert('Thank you! Your station has been submitted for review.');
 },1200);
 })
 .catch(function(e){
@@ -1265,7 +1318,7 @@ alert('Could not submit. Please try again.');
 function onFirebaseReady(){
 auth=window.fbAuth;db=window.fbDB;fbFuncs=window.fbFuncs;
 loadConfig(function(){
-buildVehicleDropdown();
+buildVehicleDropdowns();
 buildRateDropdown();
 populateSettingsVehicleDropdown();
 loadStations(function(){
@@ -1284,6 +1337,7 @@ updateVehicleDropdowns();
 populateSettingsVehicleDropdown();
 applyDefaultVehicle();
 calc();
+calcTime();
 });
 loadStationReports(function(){renderStations()});
 }else{
@@ -1315,10 +1369,7 @@ $('signoutBtn2').addEventListener('click',function(){if(confirm('Sign out?'))fbF
 
 // CHANGE PASSWORD
 $('cpBtn').addEventListener('click',function(){
-var cur=$('cpCurrent').value;
-var nw=$('cpNew').value;
-var conf=$('cpConfirm').value;
-var msg=$('cpMsg');
+var cur=$('cpCurrent').value,nw=$('cpNew').value,conf=$('cpConfirm').value,msg=$('cpMsg');
 if(!cur||!nw||!conf){msg.style.color='#f87171';msg.textContent='Please fill in all fields.';return}
 if(nw.length<6){msg.style.color='#f87171';msg.textContent='New password must be at least 6 characters.';return}
 if(nw!==conf){msg.style.color='#f87171';msg.textContent='New passwords do not match.';return}
@@ -1328,18 +1379,8 @@ msg.textContent='';
 var cred=fbFuncs.EmailAuthProvider.credential(currentUser.email,cur);
 fbFuncs.reauthenticateWithCredential(currentUser,cred)
 .then(function(){return fbFuncs.updatePassword(currentUser,nw)})
-.then(function(){
-msg.style.color='#2ecc71';msg.textContent='✓ Password updated successfully.';
-$('cpCurrent').value='';$('cpNew').value='';$('cpConfirm').value='';
-})
-.catch(function(err){
-console.error(err);
-var m='Could not update password.';
-if(err.code==='auth/wrong-password'||err.code==='auth/invalid-credential')m='Current password is incorrect.';
-else if(err.code==='auth/weak-password')m='New password is too weak.';
-else if(err.code==='auth/too-many-requests')m='Too many attempts. Please wait.';
-msg.style.color='#f87171';msg.textContent=m;
-})
+.then(function(){msg.style.color='#2ecc71';msg.textContent='✓ Password updated successfully.';$('cpCurrent').value='';$('cpNew').value='';$('cpConfirm').value='';})
+.catch(function(err){var m='Could not update password.';if(err.code==='auth/wrong-password'||err.code==='auth/invalid-credential')m='Current password is incorrect.';else if(err.code==='auth/weak-password')m='New password is too weak.';else if(err.code==='auth/too-many-requests')m='Too many attempts. Please wait.';msg.style.color='#f87171';msg.textContent=m;})
 .then(function(){b.disabled=false;b.textContent='Update Password';});
 });
 
@@ -1347,6 +1388,7 @@ msg.style.color='#f87171';msg.textContent=m;
 function getUserHistoryRef(){return fbFuncs.collection(db,'users',currentUser.uid,'history')}
 function addRecord(r,cb){if(!currentUser){if(cb)cb(false);return}fbFuncs.addDoc(getUserHistoryRef(),r).then(function(){if(cb)cb(true)}).catch(function(e){console.error(e);if(cb)cb(false)})}
 function getAllRecords(cb){if(!currentUser){cb([]);return}fbFuncs.getDocs(getUserHistoryRef()).then(function(s){var a=[];s.forEach(function(d){var data=d.data();data._docId=d.id;a.push(data)});cb(a)}).catch(function(e){console.error(e);cb([])})}
+function updateRecord(docId,updates,cb){fbFuncs.updateDoc(fbFuncs.doc(db,'users',currentUser.uid,'history',docId),updates).then(function(){if(cb)cb(true)}).catch(function(e){console.error(e);if(cb)cb(false)})}
 function deleteRecord(ts,cb){getAllRecords(function(a){var t=a.find(function(x){return x.ts===ts});if(!t){if(cb)cb(false);return}fbFuncs.deleteDoc(fbFuncs.doc(db,'users',currentUser.uid,'history',t._docId)).then(function(){if(cb)cb(true)}).catch(function(){if(cb)cb(false)})})}
 function clearAllRecords(cb){getAllRecords(function(a){var p=a.map(function(x){return fbFuncs.deleteDoc(fbFuncs.doc(db,'users',currentUser.uid,'history',x._docId))});Promise.all(p).then(function(){if(cb)cb(true)}).catch(function(){if(cb)cb(false)})})}
 
@@ -1358,12 +1400,17 @@ function updateUserVehicle(id,updates,cb){fbFuncs.updateDoc(fbFuncs.doc(db,'user
 function deleteUserVehicle(id,cb){fbFuncs.deleteDoc(fbFuncs.doc(db,'users',currentUser.uid,'vehicles',id)).then(function(){userVehicles=userVehicles.filter(function(v){return v._docId!==id});if(cb)cb(true)}).catch(function(e){console.error(e);if(cb)cb(false)})}
 
 function updateVehicleDropdowns(){
-var grp=$('garageOptGroup');if(!grp)return;
+var garageLists=[{grpId:'garageOptGroup',selId:'vehicleSelect'},{grpId:'timeGarageOptGroup',selId:'timeVehicleSelect'}];
+garageLists.forEach(function(item){
+var grp=$(item.grpId);
+if(!grp)return;
 grp.innerHTML='';
 if(userVehicles.length>0){
-userVehicles.sort(function(a,b){return (a.name||'').localeCompare(b.name||'')});
-userVehicles.forEach(function(v){var opt=document.createElement('option');opt.value='custom_'+v._docId;opt.textContent=v.name+' — '+v.capacity+' kWh';grp.appendChild(opt)});
+var sorted=userVehicles.slice().sort(function(a,b){return (a.name||'').localeCompare(b.name||'')});
+sorted.forEach(function(v){var opt=document.createElement('option');opt.value='custom_'+v._docId;opt.textContent=v.name+' — '+v.capacity+' kWh';grp.appendChild(opt)});
 }else{grp.innerHTML='<option disabled>No custom vehicles yet</option>'}
+});
+
 var hf=$('historyVehicleFilter');if(!hf)return;var curHf=hf.value;
 hf.innerHTML='<option value="all">All vehicles</option>';
 if(userVehicles.length>0){
@@ -1408,6 +1455,7 @@ document.getElementById('page-'+btn.dataset.page).classList.add('active');
 if(btn.dataset.page==='garage')renderGarage();
 if(btn.dataset.page==='history')renderHistory();
 if(btn.dataset.page==='stations')loadStationReports(function(){renderStations()});
+if(btn.dataset.page==='time')calcTime();
 });
 });
 
@@ -1487,6 +1535,93 @@ if(savings>0){$('savingsBanner').style.display='block';$('savingsAmount').textCo
 var co2=litres*2.31;$('co2Saved').textContent=co2.toFixed(1)+' kg';
 }
 
+// ============ TIME CALCULATOR ============
+function setTimeMode(m){
+timeMode=m;
+if(m==='home'){$('timeTabHome').classList.add('active');$('timeTabPublic').classList.remove('active');$('timeHomeFields').style.display='block';$('timePublicFields').style.display='none'}
+else{$('timeTabPublic').classList.add('active');$('timeTabHome').classList.remove('active');$('timeHomeFields').style.display='none';$('timePublicFields').style.display='block'}
+calcTime();
+}
+$('timeTabHome').addEventListener('click',function(){setTimeMode('home')});
+$('timeTabPublic').addEventListener('click',function(){setTimeMode('public')});
+
+function getTimeHomePower(){if($('timeHomeChargerPower').value==='custom')return parseFloat($('timeCustomHomePower').value)||7;return parseFloat($('timeHomeChargerPower').value)||7}
+function getTimePublicPower(){if($('timeChargerPower').value==='custom')return parseFloat($('timeCustomPublicPower').value)||30;return parseFloat($('timeChargerPower').value)||30}
+
+function calcTime(){
+var cap=parseFloat($('timeCapacity').value)||0;
+var cur=parseFloat($('timeCurrent').value)||0;
+var tgt=parseFloat($('timeTarget').value)||0;
+if(document.activeElement!==$('timeCurrentNum'))$('timeCurrentNum').value=cur;
+if(document.activeElement!==$('timeTargetNum'))$('timeTargetNum').value=tgt;
+
+var power,eff;
+if(timeMode==='home'){power=getTimeHomePower();eff=parseFloat($('timeHomeEfficiency').value)||88}
+else{power=getTimePublicPower();eff=parseFloat($('timeEfficiency').value)||90}
+
+var needed=(tgt>cur)?((tgt-cur)/100)*cap:0;
+var billed=needed/(eff/100);
+var effPower=power*(eff/100);
+
+$('timeEnergy').textContent=needed.toFixed(2)+' kWh';
+$('timeRate').textContent=power.toFixed(1)+' kW ('+effPower.toFixed(1)+' kW effective)';
+
+if(needed>0&&effPower>0){
+var hrs=needed/effPower;
+var h=Math.floor(hrs);
+var m=Math.round((hrs-h)*60);
+if(m===60){h++;m=0}
+if(h>=1){
+$('timeBigVal').textContent=h+'h '+m+'m';
+}else{
+$('timeBigVal').textContent=m+' min';
+}
+$('timeBigSub').textContent=needed.toFixed(1)+' kWh at '+effPower.toFixed(1)+' kW effective';
+}else{
+$('timeBigVal').textContent='—';
+$('timeBigSub').textContent='Enter values to calculate';
+}
+}
+
+['timeCapacity','timeCurrent','timeTarget','timeCurrentNum','timeTargetNum','timeHomeChargerPower','timeCustomHomePower','timeHomeEfficiency','timeChargerPower','timeCustomPublicPower','timeEfficiency','timeVehicleSelect'].forEach(function(id){
+var el=$(id);
+if(!el)return;
+el.addEventListener('input',calcTime);
+el.addEventListener('change',calcTime);
+});
+
+$('timeHomeChargerPower').addEventListener('change',function(){if(this.value==='custom'){$('timeCustomHomePowerField').style.display='block';$('timeCustomHomePower').focus()}else{$('timeCustomHomePowerField').style.display='none'}calcTime()});
+$('timeChargerPower').addEventListener('change',function(){if(this.value==='custom'){$('timeCustomPublicPowerField').style.display='block';$('timeCustomPublicPower').focus()}else{$('timeCustomPublicPowerField').style.display='none'}calcTime()});
+
+$('timeCurrentNum').addEventListener('blur',function(){var v=clamp(this.value,1,100);this.value=v;$('timeCurrent').value=v;calcTime()});
+$('timeTargetNum').addEventListener('blur',function(){var v=clamp(this.value,1,100);this.value=v;$('timeTarget').value=v;calcTime()});
+$('timeCurrent').addEventListener('input',function(){$('timeCurrentNum').value=this.value;calcTime()});
+$('timeTarget').addEventListener('input',function(){$('timeTargetNum').value=this.value;calcTime()});
+$('timeVehicleSelect').addEventListener('change',function(){
+var v=this.value;
+if(v&&v!==''){
+var vehicle=getVehicleByKey(v);
+if(vehicle)$('timeCapacity').value=vehicle.capacity;
+}
+calcTime();
+});
+
+$('timeStartTimer').addEventListener('click',function(){
+var cap=parseFloat($('timeCapacity').value)||0;
+var cur=parseFloat($('timeCurrent').value)||0;
+var tgt=parseFloat($('timeTarget').value)||0;
+var power,eff;
+if(timeMode==='home'){power=getTimeHomePower();eff=parseFloat($('timeHomeEfficiency').value)||88}
+else{power=getTimePublicPower();eff=parseFloat($('timeEfficiency').value)||90}
+var effPower=power*(eff/100);
+var needed=(tgt>cur)?((tgt-cur)/100)*cap:0;
+if(needed<=0||effPower<=0){alert('Please enter valid values first.');return}
+var mins=Math.max(5,Math.round((needed/effPower)*60));
+if(!('Notification' in window)){alert('Notifications not supported.');return}
+Notification.requestPermission().then(function(p){if(p==='granted'){setTimeout(function(){try{new Notification('⚡ Charging Reminder',{body:'Your estimated charge time is up.'})}catch(e){}},mins*60*1000);alert('Reminder set for '+mins+' minutes. Keep the tab open.')}else{alert('Notifications blocked.')}});
+});
+
+// ============ PRESETS ============
 document.querySelectorAll('.preset-btn[data-preset]').forEach(function(b){b.addEventListener('click',function(){var p=this.dataset.preset.split(',');$('current').value=p[0];$('target').value=p[1];$('currentNum').value=p[0];$('targetNum').value=p[1];calc();savePrefs()})});
 
 document.querySelectorAll('.preset-btn[data-reminder]').forEach(function(b){
@@ -1498,6 +1633,7 @@ Notification.requestPermission().then(function(p){if(p==='granted'){setTimeout(f
 });
 });
 
+// ============ VEHICLE / RATE INPUTS ============
 $('vehicleSelect').addEventListener('change',function(){
 var v=this.value;
 if(v==='custom'){$('customCapacityField').style.display='block';return}
@@ -1538,10 +1674,7 @@ if(v<1)v=1;if(v>100)v=100;
 $('current').value=v;
 calc();savePrefs();
 });
-$('currentNum').addEventListener('blur',function(){
-var v=clamp(this.value,1,100);
-this.value=v;$('current').value=v;calc();savePrefs();
-});
+$('currentNum').addEventListener('blur',function(){var v=clamp(this.value,1,100);this.value=v;$('current').value=v;calc();savePrefs()});
 $('targetNum').addEventListener('input',function(){
 var raw=this.value;
 if(raw===''||raw==='-'){return}
@@ -1551,18 +1684,12 @@ if(v<1)v=1;if(v>100)v=100;
 $('target').value=v;
 calc();savePrefs();
 });
-$('targetNum').addEventListener('blur',function(){
-var v=clamp(this.value,1,100);
-this.value=v;$('target').value=v;calc();savePrefs();
-});
+$('targetNum').addEventListener('blur',function(){var v=clamp(this.value,1,100);this.value=v;$('target').value=v;calc();savePrefs()});
 $('current').addEventListener('input',function(){$('currentNum').value=this.value;calc()});
 $('target').addEventListener('input',function(){$('targetNum').value=this.value;calc()});
 
-$('settingsDefaultVehicle').addEventListener('change',function(){
-setDefaultVehicle(this.value);
-});
-
-['setFuel92','setFuel95','setDiesel','setPetrolKm'].forEach(function(id){$(id).addEventListener('change',function(){savePrefs();calc()})});
+$('settingsDefaultVehicle').addEventListener('change',function(){setDefaultVehicle(this.value)});
+['setFuel92','setFuel95','setDiesel','setPetrolKm'].forEach(function(id){$(id).addEventListener('change',function(){savePrefs();calc();renderHistory()})});
 
 function savePrefs(){
 try{localStorage.setItem('evPrefs',JSON.stringify({
@@ -1570,7 +1697,11 @@ capacity:$('capacity').value,current:$('current').value,target:$('target').value
 homeRate:$('homeRate').value,homeChargerPower:$('homeChargerPower').value,homeEfficiency:$('homeEfficiency').value,
 customHomePower:$('customHomePower').value,customPublicPower:$('customPublicPower').value,
 mode:currentMode,theme:document.body.classList.contains('light')?'light':'dark',
-setFuel92:$('setFuel92').value,setFuel95:$('setFuel95').value,setDiesel:$('setDiesel').value,setPetrolKm:$('setPetrolKm').value
+setFuel92:$('setFuel92').value,setFuel95:$('setFuel95').value,setDiesel:$('setDiesel').value,setPetrolKm:$('setPetrolKm').value,
+timeCapacity:$('timeCapacity').value,timeCurrent:$('timeCurrent').value,timeTarget:$('timeTarget').value,
+timeHomeChargerPower:$('timeHomeChargerPower').value,timeCustomHomePower:$('timeCustomHomePower').value,timeHomeEfficiency:$('timeHomeEfficiency').value,
+timeChargerPower:$('timeChargerPower').value,timeCustomPublicPower:$('timeCustomPublicPower').value,timeEfficiency:$('timeEfficiency').value,
+timeMode:timeMode
 }))}catch(e){}
 }
 
@@ -1581,11 +1712,23 @@ if(p.homeRate)$('homeRate').value=p.homeRate;if(p.homeChargerPower){$('homeCharg
 if(p.homeEfficiency)$('homeEfficiency').value=p.homeEfficiency;if(p.customHomePower)$('customHomePower').value=p.customHomePower;if(p.customPublicPower)$('customPublicPower').value=p.customPublicPower;if(p.mode)currentMode=p.mode;
 if(p.theme==='light'){document.body.classList.add('light');$('themeKnob').style.left='32px'}
 if(p.setFuel92)$('setFuel92').value=p.setFuel92;if(p.setFuel95)$('setFuel95').value=p.setFuel95;if(p.setDiesel)$('setDiesel').value=p.setDiesel;if(p.setPetrolKm)$('setPetrolKm').value=p.setPetrolKm;
+if(p.timeCapacity)$('timeCapacity').value=p.timeCapacity;
+if(p.timeCurrent)$('timeCurrent').value=p.timeCurrent;
+if(p.timeTarget)$('timeTarget').value=p.timeTarget;
+if(p.timeHomeChargerPower){$('timeHomeChargerPower').value=p.timeHomeChargerPower;if(p.timeHomeChargerPower==='custom')$('timeCustomHomePowerField').style.display='block'}
+if(p.timeCustomHomePower)$('timeCustomHomePower').value=p.timeCustomHomePower;
+if(p.timeHomeEfficiency)$('timeHomeEfficiency').value=p.timeHomeEfficiency;
+if(p.timeChargerPower){$('timeChargerPower').value=p.timeChargerPower;if(p.timeChargerPower==='custom')$('timeCustomPublicPowerField').style.display='block'}
+if(p.timeCustomPublicPower)$('timeCustomPublicPower').value=p.timeCustomPublicPower;
+if(p.timeEfficiency)$('timeEfficiency').value=p.timeEfficiency;
+if(p.timeMode){timeMode=p.timeMode;if(p.timeMode==='public'){setTimeMode('public')}}
 window._pendingVehicle=p.vehicle;
 }}catch(e){}
 
 if(currentMode==='home'){$('tabHome').classList.add('active');$('tabPublic').classList.remove('active');$('homeFields').style.display='block';$('publicFields').style.display='none'}
+if(timeMode==='public'){$('timeTabPublic').classList.add('active');$('timeTabHome').classList.remove('active');$('timeHomeFields').style.display='none';$('timePublicFields').style.display='block'}
 
+// ============ GARAGE ============
 function renderGarage(){
 var list=$('garageList');
 if(!userVehicles||userVehicles.length===0){list.innerHTML='<div class="empty-state"><div class="es-icon">🚗</div><div class="es-text"><strong>Your garage is empty.</strong><br>Tap "➕ Add" to save your first vehicle with its exact specs. It will appear at the top of the vehicle dropdown on the Home page.</div></div>'}
@@ -1625,6 +1768,7 @@ function askConfirm(title,text,cb){$('confirmTitle').textContent=title;$('confir
 $('confirmCancel').addEventListener('click',function(){$('confirmModal').classList.remove('show');confirmCallback=null});
 $('confirmOk').addEventListener('click',function(){$('confirmModal').classList.remove('show');if(confirmCallback){var cb=confirmCallback;confirmCallback=null;cb()}});
 
+// ============ HISTORY ============
 function calculatePetrolSavings(item){
 var vehicle=getVehicleByKey(item.vehicleKey);
 if(!vehicle||!vehicle.range)return null;
@@ -1643,7 +1787,7 @@ var filter=$('historyVehicleFilter').value;var filtered=hist;
 if(filter!=='all'){filtered=hist.filter(function(x){return x.vehicleKey===filter})}
 var list=$('historyList'),stats=$('historyStats'),cb=$('clearBtn'),er=$('exportRow'),sc=$('summaryCard');
 if(filtered.length===0){list.innerHTML='<div class="empty-state"><div class="es-icon">📭</div><div class="es-text"><strong>No charges'+(filter!=='all'?' for this filter':'')+'.</strong><br>Save a charge from the Home page to start your history.</div></div>';stats.style.display='none';cb.style.display='none';er.style.display='none';sc.style.display='none';return}
-var tc=0,te=0,totalSavings=0;filtered.forEach(function(x){tc+=x.total;te+=x.needed;var s=calculatePetrolSavings(x);if(s)totalSavings+=s});
+var tc=0,te=0;filtered.forEach(function(x){tc+=x.total;te+=x.needed});
 $('statCount').textContent=filtered.length;$('statEnergy').textContent=te.toFixed(0);$('statCost').textContent=tc.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',');stats.style.display='flex';cb.style.display='block';er.style.display='block';
 var now=new Date(),monthStart=new Date(now.getFullYear(),now.getMonth(),1).getTime();var monthRecs=filtered.filter(function(x){return x.ts>=monthStart});
 if(monthRecs.length>0){sc.style.display='block';var mC=0,mE=0,mS=0;monthRecs.forEach(function(x){mC+=x.total;mE+=x.needed;var s=calculatePetrolSavings(x);if(s)mS+=s});$('sumSessions').textContent=monthRecs.length;$('sumEnergy').textContent=mE.toFixed(0)+' kWh';$('sumCost').textContent='LKR '+mC.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',');$('sumSavings').textContent='LKR '+mS.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',')}else{sc.style.display='none'}
@@ -1657,11 +1801,64 @@ var savings=calculatePetrolSavings(item);
 var savingsHtml='';
 if(savings!==null&&savings>0){savingsHtml='<div style="font-size:0.72rem;color:#2ecc71;font-weight:700;margin-top:6px">💰 Saved '+lkr(savings)+' vs petrol</div>'}
 else if(savings!==null&&savings<0){savingsHtml='<div style="font-size:0.72rem;color:#f87171;font-weight:700;margin-top:6px">⚠ Petrol would have been '+lkr(Math.abs(savings))+' cheaper</div>'}
-return '<div style="background:var(--input-bg);border-radius:12px;padding:14px 16px;margin-bottom:10px;border:1px solid rgba(139,92,246,0.15);border-left:3px solid #8b5cf6;position:relative"><button data-id="'+item.ts+'" class="delBtn" style="position:absolute;top:10px;right:10px;background:none;border:none;color:#6a5a9e;font-size:1.2rem;cursor:pointer">×</button><div style="display:flex;justify-content:space-between;margin-bottom:8px;padding-right:24px"><span style="font-size:1.05rem;font-weight:800;color:#7c3aed">'+lkr(item.total)+'</span><span style="font-size:0.7rem;color:#6a5a9e">'+dt+'</span></div>'+(vname?'<div style="font-size:0.72rem;color:var(--purpleB);font-weight:700;margin-bottom:4px">🚗 '+vname+'</div>':'')+'<div style="font-size:0.78rem;color:var(--dim);line-height:1.6">'+mIcon+' <span style="color:var(--text);font-weight:600">'+item.cur+'% → '+item.tgt+'%</span> · ⚡ <span style="color:var(--text);font-weight:600">+'+item.needed.toFixed(2)+' kWh</span> · 💵 <span style="color:var(--text);font-weight:600">'+item.r.toFixed(2)+' LKR/kWh</span></div>'+savingsHtml+'</div>'
+return '<div class="history-item" data-docid="'+item._docId+'"><button data-id="'+item.ts+'" class="delBtn" style="position:absolute;top:10px;right:10px;background:none;border:none;color:#6a5a9e;font-size:1.2rem;cursor:pointer;z-index:2">×</button><div style="display:flex;justify-content:space-between;margin-bottom:8px;padding-right:24px"><span style="font-size:1.05rem;font-weight:800;color:#7c3aed">'+lkr(item.total)+'</span><span style="font-size:0.7rem;color:#6a5a9e">'+dt+'</span></div>'+(vname?'<div style="font-size:0.72rem;color:var(--purpleB);font-weight:700;margin-bottom:4px">🚗 '+vname+'</div>':'')+'<div style="font-size:0.78rem;color:var(--dim);line-height:1.6">'+mIcon+' <span style="color:var(--text);font-weight:600">'+item.cur+'% → '+item.tgt+'%</span> · ⚡ <span style="color:var(--text);font-weight:600">+'+item.needed.toFixed(2)+' kWh</span> · 💵 <span style="color:var(--text);font-weight:600">'+item.r.toFixed(2)+' LKR/kWh</span></div>'+savingsHtml+'<div class="hi-edit-hint">✏️ Tap to edit</div></div>'
 }).join('');
-list.querySelectorAll('.delBtn').forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();var id=parseInt(b.dataset.id);deleteRecord(id,function(){renderHistory()})})});
+
+list.querySelectorAll('.delBtn').forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();var id=parseInt(b.dataset.id);if(confirm('Delete this charge?'))deleteRecord(id,function(){renderHistory()})})});
+list.querySelectorAll('.history-item').forEach(function(el){
+el.addEventListener('click',function(e){
+if(e.target.classList.contains('delBtn'))return;
+openEditHistory(el.dataset.docid);
+});
+});
 });
 }
+
+function openEditHistory(docId){
+if(!docId)return;
+editingHistoryId=docId;
+getAllRecords(function(hist){
+var item=hist.find(function(x){return x._docId===docId});
+if(!item){alert('Could not find that charge.');return}
+$('ehFrom').value=item.cur||0;
+$('ehTo').value=item.tgt||0;
+$('ehCap').value=item.cap||30.08;
+$('ehRate').value=item.r||0;
+$('editHistoryModal').classList.add('show');
+});
+}
+
+$('ehCancel').addEventListener('click',function(){$('editHistoryModal').classList.remove('show');editingHistoryId=null});
+
+$('ehSave').addEventListener('click',function(){
+if(!editingHistoryId){alert('Nothing to edit.');return}
+var from=clamp($('ehFrom').value,1,100);
+var to=clamp($('ehTo').value,1,100);
+var cap=parseFloat($('ehCap').value);
+var rate=parseFloat($('ehRate').value);
+if(!cap||cap<=0){alert('Please enter a valid battery capacity.');return}
+if(rate<0||isNaN(rate)){alert('Please enter a valid rate.');return}
+if(to<=from){alert('End % must be greater than start %.');return}
+
+var needed=((to-from)/100)*cap;
+var eff=90;
+if(currentCalc&&currentCalc.mode==='home')eff=parseFloat($('homeEfficiency').value)||88;
+var billed=needed/(eff/100);
+var total=billed*rate;
+
+getAllRecords(function(hist){
+var item=hist.find(function(x){return x._docId===editingHistoryId});
+if(!item){alert('Charge not found.');return}
+var updates={cur:from,tgt:to,cap:cap,r:rate,needed:needed,billed:billed,total:total};
+updateRecord(editingHistoryId,updates,function(ok){
+if(ok){
+$('editHistoryModal').classList.remove('show');
+editingHistoryId=null;
+renderHistory();
+}else{alert('Could not update. Please try again.')}
+});
+});
+});
 
 $('historyVehicleFilter').addEventListener('change',function(){renderHistory()});
 
@@ -1671,6 +1868,7 @@ $('clearBtn').addEventListener('click',function(){if(confirm('Delete all history
 
 $('exportBtn').addEventListener('click',function(){getAllRecords(function(h){if(h.length===0)return;var rows=[['Date','Time','Vehicle','Mode','Capacity','From %','To %','Energy (kWh)','Billed (kWh)','Rate (LKR/kWh)','Total (LKR)','Savings vs Petrol']];h.slice().sort(function(a,b){return a.ts-b.ts}).forEach(function(x){var d=new Date(x.ts);var dt=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');var tm=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');var s=calculatePetrolSavings(x);rows.push([dt,tm,x.vehicleName||'—',x.mode||'public',x.cap,x.cur,x.tgt,x.needed.toFixed(2),x.billed.toFixed(2),x.r.toFixed(2),x.total.toFixed(2),s!==null?s.toFixed(2):'—'])});var csv=rows.map(function(r){return r.map(function(c){return '"'+String(c).replace(/"/g,'""')+'"'}).join(',')}).join('\n');var blob=new Blob([csv],{type:'text/csv;charset=utf-8'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='ev-history-'+new Date().toISOString().slice(0,10)+'.csv';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url)})});
 
+// ============ THEME / SUPPORT ============
 $('themeToggle').addEventListener('click',function(){var l=document.body.classList.contains('light');if(l){document.body.classList.remove('light');$('themeKnob').style.left='2px'}else{document.body.classList.add('light');$('themeKnob').style.left='32px'}savePrefs()});
 
 var SUPPORT_CONFIG={
@@ -1688,26 +1886,20 @@ $('bankOk').addEventListener('click',function(){$('bankModal').classList.remove(
 $('shareAppBtn').addEventListener('click',function(){var text=SUPPORT_CONFIG.shareMessage+'\n\n'+SUPPORT_CONFIG.shareUrl;if(navigator.share){navigator.share({title:'EV Charge Calculator',text:text,url:SUPPORT_CONFIG.shareUrl}).catch(function(e){if(e.name!=='AbortError')console.warn(e)})}else{var waUrl='https://wa.me/?text='+encodeURIComponent(text);window.open(waUrl,'_blank')}});
 $('rateAppBtn').addEventListener('click',function(){alert('Ratings will be available once the app is published on the Google Play Store. For now, please share it with other EV owners!')});
 
+// ONBOARDING
 var obStep=1;
 function showOnboard(){obStep=1;$('obStep').textContent='1';$('obStep1').style.display='block';$('obStep2').style.display='none';$('obStep3').style.display='none';$('obSkip').textContent='Skip setup';$('obNext').textContent='Next →';$('onboardOverlay').classList.add('show')}
 function hideOnboard(){$('onboardOverlay').classList.remove('show');localStorage.setItem('obDone','1')}
 $('obNext').addEventListener('click',function(){
-if(obStep===1){
-var v=$('obVehicle').value;
-if(v){$('vehicleSelect').value=v;setDefaultVehicle(v);var vv=getVehicleByKey(v);if(vv)$('capacity').value=vv.capacity}
-obStep=2;$('obStep').textContent='2';$('obStep1').style.display='none';$('obStep2').style.display='block';
-}else if(obStep===2){
-var m=$('obMode').value;if(m==='home')setMode('home');else if(m==='public')setMode('public');
-obStep=3;$('obStep').textContent='3';$('obStep2').style.display='none';$('obStep3').style.display='block';$('obNext').textContent='Finish ✓';
-}else{
-var hr=$('obHomeRate').value;if(hr){$('homeRate').value=hr;$('homeRateSelect').value=hr}
-hideOnboard();calc();savePrefs();
-}
+if(obStep===1){var v=$('obVehicle').value;if(v){$('vehicleSelect').value=v;setDefaultVehicle(v);var vv=getVehicleByKey(v);if(vv)$('capacity').value=vv.capacity}obStep=2;$('obStep').textContent='2';$('obStep1').style.display='none';$('obStep2').style.display='block'}
+else if(obStep===2){var m=$('obMode').value;if(m==='home')setMode('home');else if(m==='public')setMode('public');obStep=3;$('obStep').textContent='3';$('obStep2').style.display='none';$('obStep3').style.display='block';$('obNext').textContent='Finish ✓'}
+else{var hr=$('obHomeRate').value;if(hr){$('homeRate').value=hr;$('homeRateSelect').value=hr}hideOnboard();calc();savePrefs()}
 });
 $('obSkip').addEventListener('click',function(){hideOnboard()});
 $('rerunOnboard').addEventListener('click',function(){showOnboard()});
 
 calc();
+calcTime();
 if(!localStorage.getItem('obDone')){setTimeout(showOnboard,1500)}
 
 window.addEventListener('firebase-ready',function(){
