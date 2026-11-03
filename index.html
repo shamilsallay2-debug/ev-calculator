@@ -75,7 +75,6 @@ body.light select option{background:#fff;color:#1a1033}
 .nav-item.active .nav-icon{filter:drop-shadow(0 0 8px rgba(139,92,246,0.9))}
 .nav-icon{font-size:1.3rem;line-height:1;transition:all 0.2s}
 .nav-label{font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.4px}
-/* Compare bars */
 .compare-bar-row{margin-bottom:12px}
 .compare-bar-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-size:0.82rem}
 .compare-bar-hdr .name{font-weight:600;color:var(--text)}
@@ -130,6 +129,7 @@ body.light .result-tile .tile-val{background:none;-webkit-text-fill-color:initia
 .intro-slide .ob-field{text-align:left;margin-top:16px}
 .intro-slide .ob-field label{display:block;font-size:0.85rem;color:var(--dim);margin-bottom:8px;font-weight:600;text-align:left}
 .mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.mode-grid.three-up{grid-template-columns:1fr 1fr 1fr}
 .mode-card{padding:16px 10px;border-radius:12px;border:1px solid rgba(139,92,246,0.25);background:rgba(139,92,246,0.08);color:var(--dim);font-family:inherit;font-size:0.85rem;font-weight:700;cursor:pointer;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:6px}
 .mode-card .mc-icon{font-size:1.5rem}
 .mode-card.active{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;border-color:transparent;box-shadow:0 4px 16px rgba(139,92,246,0.4);transform:scale(1.02)}
@@ -140,7 +140,6 @@ body.light .result-tile .tile-val{background:none;-webkit-text-fill-color:initia
 .toast.error{border-color:rgba(248,113,113,0.5)}
 .offline-icon{position:fixed;top:16px;right:16px;background:#f59e0b;color:#000;width:32px;height:32px;border-radius:50%;display:none;align-items:center;justify-content:center;font-weight:700;font-size:0.9rem;z-index:150;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.3)}
 .offline-icon.show{display:flex}
-/* Battery visual */
 .battery-wrap{display:flex;align-items:center;gap:12px;margin-bottom:14px}
 .battery-wrap .battery-slider{flex:1;min-width:0}
 .battery-visual-big{width:70px;flex-shrink:0;position:relative}
@@ -150,21 +149,18 @@ body.light .result-tile .tile-val{background:none;-webkit-text-fill-color:initia
 .battery-shape .battery-fill-big.low{background:linear-gradient(90deg,#ef4444,#f87171)}
 .battery-shape .battery-fill-big.mid{background:linear-gradient(90deg,#f59e0b,#fbbf24)}
 .battery-pct{position:absolute;top:0;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:800;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.6);pointer-events:none}
-/* Energy flow bar */
 .energy-flow{margin-top:16px;padding:12px 14px;background:var(--input-bg);border-radius:12px;border:1px solid rgba(139,92,246,0.15)}
 .energy-flow .ef-labels{display:flex;justify-content:space-between;font-size:0.7rem;color:var(--dim);font-weight:600;margin-bottom:8px}
 .energy-flow .ef-track{height:14px;border-radius:7px;background:rgba(139,92,246,0.1);overflow:hidden;position:relative}
 .energy-flow .ef-fill{height:100%;background:linear-gradient(90deg,rgba(59,130,246,0.4),rgba(59,130,246,0.4));position:absolute;top:0;left:0;transition:all 0.4s}
 .energy-flow .ef-added{height:100%;background:linear-gradient(90deg,#3b82f6,#8b5cf6);position:absolute;top:0;transition:all 0.4s}
 .energy-flow .ef-legend{font-size:0.7rem;color:var(--faint);margin-top:8px;text-align:center;font-style:italic}
-/* History mini chart */
 .history-chart{display:flex;align-items:flex-end;justify-content:space-between;gap:4px;height:60px;padding:8px 0;margin-bottom:8px}
 .history-chart .hc-bar{flex:1;background:linear-gradient(180deg,#3b82f6,#8b5cf6);border-radius:3px 3px 0 0;min-height:4px;transition:height 0.3s}
 .history-chart .hc-bar.best{background:linear-gradient(180deg,#2ecc71,#27ae60)}
 .history-chart-labels{display:flex;justify-content:space-between;gap:4px;font-size:0.6rem;color:var(--faint);margin-bottom:10px}
 .history-chart-labels span{flex:1;text-align:center}
 .history-chart-title{font-size:0.7rem;color:var(--dim);text-align:center;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
-/* Modal */
 .modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(10,6,18,0.85);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:20px;z-index:9998;overflow-y:auto}
 .modal-overlay.show{display:flex}
 .modal-box{background:var(--card);border-radius:20px;padding:22px;max-width:440px;width:100%;border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,0.5);margin:auto}
@@ -216,7 +212,6 @@ body.light .notice-banner{color:#b45309}
 .big-num .bn-icon{font-size:1.8rem;margin-bottom:4px;line-height:1}
 .big-num .bn-val{font-size:2.6rem;font-weight:800;line-height:1.1;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;color:#5b21b6}
-/* Two-field time input */
 .two-field{display:flex;gap:10px}
 .two-field .tf-col{flex:1}
 .two-field .tf-col label{font-size:0.7rem;color:var(--faint);text-transform:uppercase;letter-spacing:0.8px;font-weight:700;display:block;margin-bottom:6px}
@@ -226,153 +221,52 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 .time-toggle button.active{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff}
 .computed-duration{font-size:0.8rem;color:var(--purpleB);font-weight:700;text-align:center;margin-top:10px;line-height:1.5}
 @media(max-width:480px){body{padding-left:88px;padding-right:12px}.app{max-width:100%}.sidebar{width:72px}.nav-item{width:56px}.nav-icon{font-size:1.2rem}.nav-label{font-size:0.5rem}.big-num .bn-val{font-size:2.2rem}.intro-icon{font-size:3.5rem}.intro-title{font-size:1.3rem}.battery-wrap{flex-direction:column;align-items:stretch;gap:8px}.battery-visual-big{width:100%}.battery-shape{height:28px}.battery-shape::after{display:none}.pct-input{width:68px;font-size:0.9rem}.result-tile .tile-val{font-size:0.9rem}}
+
 /* Light mode contrast fixes */
 body.light { color: #1a0f2e; }
 body.light .card { background: rgba(255,255,255,0.95); border-color: rgba(80,40,180,0.3); }
 body.light .card-title { color: #5b21b6; }
-body.light .card::before { background: linear-gradient(90deg,transparent,rgba(91,33,182,0.3),transparent); }
 body.light h1 { color: #4c1d95; background: none; -webkit-text-fill-color: initial; }
-body.light .field > label,
-body.light .field-hdr .lbl,
-body.light .field label { color: #2a1a4a; font-weight: 600; }
+body.light .field > label,body.light .field-hdr .lbl,body.light .field label { color: #2a1a4a; font-weight: 600; }
 body.light .hint { color: #5a4a8a; }
 body.light .mode-desc { color: #4a3a7a; }
-
-/* Text on gradient elements — force solid readable color */
-body.light .big-num .bn-val,
-body.light .result-tile .tile-val,
-body.light .summary-card .sc-val,
-body.light .stat .num,
-body.light .battery-pct,
-body.light .history-item .cost,
-body.light .modal-box h3,
-body.light .info-i { background: none; -webkit-text-fill-color: initial; }
+body.light .big-num .bn-val,body.light .result-tile .tile-val,body.light .summary-card .sc-val,body.light .stat .num,body.light .battery-pct,body.light .history-item .cost,body.light .modal-box h3,body.light .info-i { background: none; -webkit-text-fill-color: initial; }
 body.light .big-num .bn-val { color: #4c1d95; }
 body.light .result-tile .tile-val { color: #5b21b6; }
 body.light .summary-card .sc-val { color: #5b21b6; }
 body.light .history-item .cost { color: #5b21b6; }
 body.light .modal-box h3 { color: #5b21b6; }
 body.light .info-i { color: #5b21b6; background: rgba(91,33,182,0.15); }
-
-/* Labels and small text */
-body.light .big-num .bn-lbl,
-body.light .result-tile .tile-lbl,
-body.light .summary-card .sc-lbl,
-body.light .hint,
-body.light .compare-bar-hdr .name,
-body.light .history-chart-title { color: #3a2a6a; }
+body.light .big-num .bn-lbl,body.light .result-tile .tile-lbl,body.light .summary-card .sc-lbl,body.light .compare-bar-hdr .name,body.light .history-chart-title { color: #3a2a6a; }
 body.light .compare-bar-hdr .cost { color: #5b21b6; font-weight: 800; }
-
-/* Mode cards */
 body.light .mode-card { background: rgba(91,33,182,0.08); color: #3a2a6a; border-color: rgba(91,33,182,0.3); }
 body.light .mode-card.active { background: linear-gradient(135deg,#5b21b6,#7c3aed); color: #fff; }
-body.light .mode-card.active .mc-icon { filter: brightness(1.3); }
-
-/* Mode tabs */
 body.light .mode-tab { color: #3a2a6a; }
 body.light .mode-tab.active { background: linear-gradient(135deg,#5b21b6,#7c3aed); color: #fff; }
-
-/* Buttons and presets */
-body.light .preset-btn { background: rgba(91,33,182,0.08); color: #5b21b6; border-color: rgba(91,33,182,0.35); font-weight: 700; }
-body.light .preset-btn:active { background: rgba(91,33,182,0.2); }
+body.light .preset-btn { background: rgba(91,33,182,0.08); color: #5b21b6; border-color: rgba(91,33,182,0.35); }
 body.light .adv-toggle { color: #5b21b6; }
-body.light .adv-toggle .arrow { color: #5b21b6; }
-
-/* Primary button */
-body.light #saveBtn,
-body.light .auth-btn,
-body.light .intro-next { background: linear-gradient(135deg,#5b21b6,#7c3aed); color: #fff; }
-
-/* Slider — brighter track in light mode */
-body.light input[type=range] { background: linear-gradient(90deg,#dc2626 0%,#f59e0b 40%,#059669 70%,#16a34a 100%); }
-body.light input[type=range]::-webkit-slider-thumb { border-color: #5b21b6; box-shadow: 0 0 0 3px rgba(91,33,182,0.15), 0 2px 8px rgba(0,0,0,0.3); }
-
-/* Battery shape */
-body.light .battery-shape { border-color: #5b21b6; background: rgba(255,255,255,0.9); }
+body.light #saveBtn,body.light .auth-btn,body.light .intro-next { background: linear-gradient(135deg,#5b21b6,#7c3aed); color: #fff; }
+body.light input[type=range]::-webkit-slider-thumb { border-color: #5b21b6; }
+body.light .battery-shape { border-color: #5b21b6; }
 body.light .battery-shape::after { background: #5b21b6; }
-body.light .battery-pct { color: #1a0f2e; text-shadow: 0 1px 2px rgba(255,255,255,0.8); font-weight: 800; }
-
-/* Compare bars */
 body.light .compare-bar-track { background: rgba(91,33,182,0.12); }
-body.light .compare-bar-fill { background: linear-gradient(90deg,#7c3aed,#a78bfa); }
-body.light .compare-bar-fill.best { background: linear-gradient(90deg,#16a34a,#22c55e); }
-body.light .best-badge { background: rgba(22,163,74,0.15); color: #15803d; }
-
-/* History */
 body.light .history-item { background: rgba(255,255,255,0.9); border-color: rgba(91,33,182,0.2); }
-body.light .history-item .date,
-body.light .history-item .detail { color: #3a2a6a; }
-body.light .history-item .detail span { color: #1a0f2e; }
-body.light .history-item .hi-edit-hint { color: #5a4a8a; }
-
-/* History chart */
 body.light .history-chart .hc-bar { background: linear-gradient(180deg,#7c3aed,#5b21b6); }
 body.light .history-chart .hc-bar.best { background: linear-gradient(180deg,#22c55e,#16a34a); }
-body.light .history-chart-labels { color: #4a3a7a; }
-
-/* Energy flow */
-body.light .energy-flow { background: rgba(255,255,255,0.85); border-color: rgba(91,33,182,0.2); }
-body.light .energy-flow .ef-labels { color: #3a2a6a; }
-body.light .energy-flow .ef-track { background: rgba(91,33,182,0.1); }
-body.light .energy-flow .ef-legend { color: #4a3a7a; }
-
-/* Notices */
-body.light .notice-banner { background: rgba(245,158,11,0.15); color: #78350f; border-color: rgba(245,158,11,0.5); }
-
-/* Inputs */
-body.light input[type=number],
-body.light input[type=email],
-body.light input[type=password],
-body.light input[type=text],
-body.light input[type=time],
-body.light select { background: #fff; color: #1a0f2e; border-color: rgba(91,33,182,0.3); }
-body.light input::placeholder { color: #8a7ab0; }
+body.light .energy-flow { background: rgba(255,255,255,0.85); }
+body.light .notice-banner { color: #78350f; }
+body.light input,body.light select { background: #fff; color: #1a0f2e; }
 body.light select option { background: #fff; color: #1a0f2e; }
-body.light select optgroup { background: #f4f2fc; color: #5b21b6; }
-body.light .pct-input { background: rgba(91,33,182,0.1); border-color: rgba(91,33,182,0.35); color: #1a0f2e; }
-
-/* Sidebar */
-body.light .sidebar { background: rgba(255,255,255,0.95); border-right-color: rgba(91,33,182,0.2); }
+body.light .sidebar { background: rgba(255,255,255,0.95); }
 body.light .nav-item { color: #4a3a7a; }
 body.light .nav-item.active { color: #5b21b6; background: rgba(91,33,182,0.12); }
-body.light .nav-item.active .nav-icon { filter: none; }
-
-/* Modal */
-body.light .modal-box { background: rgba(255,255,255,0.98); border-color: rgba(91,33,182,0.3); }
-body.light .modal-box p { color: #3a2a6a; }
-body.light .modal-actions .m-cancel { color: #4a3a7a; border-color: rgba(91,33,182,0.3); }
-
-/* Vehicle cards */
-body.light .vehicle-card { background: rgba(255,255,255,0.9); border-color: rgba(91,33,182,0.2); }
-body.light .vehicle-card .vc-name { color: #1a0f2e; }
-body.light .vehicle-card .vc-specs { color: #4a3a7a; }
-body.light .vehicle-card.active { background: rgba(22,163,74,0.08); }
-
-/* Station cards */
-body.light .station-status-badge.stale { background: rgba(91,33,182,0.1); color: #5a4a8a; border-color: rgba(91,33,182,0.25); }
-
-/* Auth screen */
+body.light .modal-box { background: rgba(255,255,255,0.98); }
+body.light .vehicle-card { background: rgba(255,255,255,0.9); }
 body.light .auth-box { background: rgba(255,255,255,0.98); }
-body.light .auth-box h1 { color: #4c1d95; }
-body.light .auth-box .subtitle { color: #4a3a7a; }
-body.light .auth-tab { color: #4a3a7a; }
-body.light .auth-tab.active { background: linear-gradient(135deg,#5b21b6,#7c3aed); color: #fff; }
-body.light .link-btn { color: #5b21b6; }
-
-/* Intro slides */
-body.light .intro-container { background: #f4f2fc; background-image: radial-gradient(circle at 15% 0%,rgba(91,33,182,0.15),transparent 45%),radial-gradient(circle at 85% 100%,rgba(91,33,182,0.15),transparent 45%); }
+body.light .intro-container { background: #f4f2fc; }
 body.light .intro-title { color: #1a0f2e; }
 body.light .intro-body { color: #3a2a6a; }
-body.light .intro-body b { color: #5b21b6 !important; }
-body.light .intro-skip { color: #4a3a7a; border-color: rgba(91,33,182,0.3) !important; }
-body.light .intro-dot { background: rgba(91,33,182,0.25); }
-body.light .intro-dot.active { background: #5b21b6; }
-body.light .intro-slide .ob-field label { color: #3a2a6a; }
-
-/* Toast */
 body.light .toast { background: #1a0f2e; color: #fff; }
-
-/* Offline banner */
 body.light .offline-icon { background: #dc2626; color: #fff; }
 </style>
 </head>
@@ -581,7 +475,7 @@ body.light .offline-icon { background: #dc2626; color: #fff; }
 <select id="vehicleSelect"><option value="">— Loading vehicles… —</option></select>
 </div>
 <div class="card-title" style="margin-top:4px">What do you want to know?</div>
-<div class="mode-grid">
+<div class="mode-grid" id="modeGrid">
 <button type="button" class="mode-card active" data-mode="cost"><span class="mc-icon">💰</span><span>Cost</span></button>
 <button type="button" class="mode-card" data-mode="money"><span class="mc-icon">💵</span><span>Money</span></button>
 <button type="button" class="mode-card" data-mode="time"><span class="mc-icon">⏱️</span><span>Time</span></button>
@@ -635,7 +529,7 @@ body.light .offline-icon { background: #dc2626; color: #fff; }
 </div>
 </div>
 <div id="durationInputField" style="display:none;margin-top:18px">
-<div class="time-toggle">
+<div class="time-toggle" id="durTimeToggle">
 <button type="button" class="active" id="durToggleDuration">Duration</button>
 <button type="button" id="durToggleUntil">Until time</button>
 </div>
@@ -650,13 +544,21 @@ body.light .offline-icon { background: #dc2626; color: #fff; }
 <input type="number" id="durationMins" value="0" min="0" max="59" step="1" inputmode="numeric">
 </div>
 </div>
-<div class="presets" id="durationPresets">
-<button type="button" class="preset-btn" data-durh="0" data-durm="30">30 min</button>
+<div class="presets" id="durationPresetsHome">
 <button type="button" class="preset-btn" data-durh="1" data-durm="0">1 hour</button>
 <button type="button" class="preset-btn" data-durh="2" data-durm="0">2 hours</button>
-<button type="button" class="preset-btn" data-durh="3" data-durm="0">3 hours</button>
+<button type="button" class="preset-btn" data-durh="4" data-durm="0">4 hours</button>
 <button type="button" class="preset-btn" data-durh="6" data-durm="0">6 hours</button>
-<button type="button" class="preset-btn" data-durh="8" data-durm="0">Overnight (8h)</button>
+<button type="button" class="preset-btn" data-durh="8" data-durm="0">8 hours</button>
+<button type="button" class="preset-btn" data-durh="10" data-durm="0">Overnight</button>
+</div>
+<div class="presets" id="durationPresetsPublic" style="display:none">
+<button type="button" class="preset-btn" data-durh="0" data-durm="15">15 min</button>
+<button type="button" class="preset-btn" data-durh="0" data-durm="30">30 min</button>
+<button type="button" class="preset-btn" data-durh="0" data-durm="45">45 min</button>
+<button type="button" class="preset-btn" data-durh="1" data-durm="0">1 hour</button>
+<button type="button" class="preset-btn" data-durh="1" data-durm="30">1.5 hours</button>
+<button type="button" class="preset-btn" data-durh="2" data-durm="0">2 hours</button>
 </div>
 </div>
 <div id="durationMode2" style="display:none">
@@ -700,7 +602,7 @@ body.light .offline-icon { background: #dc2626; color: #fff; }
 <option value="custom">Custom — Enter manually</option>
 </optgroup>
 </select></div>
-<div class="field"><label>Rate per kWh (LKR)</label><input type="number" id="homeRate" value="42" step="0.01" min="0" inputmode="decimal"></div>
+<div class="field" id="homeRateField"><label>Rate per kWh (LKR)</label><input type="number" id="homeRate" value="42" step="0.01" min="0" inputmode="decimal"></div>
 <div class="field"><label>Charger power (kW)</label>
 <select id="homeChargerPower">
 <option value="2.3">2.3 kW standard outlet</option>
@@ -716,7 +618,7 @@ body.light .offline-icon { background: #dc2626; color: #fff; }
 <div id="publicFields">
 <div class="field"><label>Network / station</label>
 <select id="quickRate"><option value="">— Loading networks… —</option></select></div>
-<div class="field"><label>Rate per kWh (LKR)</label><input type="number" id="rate" value="150" step="0.01" min="0" inputmode="decimal"></div>
+<div class="field" id="publicRateField"><label>Rate per kWh (LKR)</label><input type="number" id="rate" value="150" step="0.01" min="0" inputmode="decimal"></div>
 <div class="field"><label>Charger power (kW)</label>
 <select id="chargerPower">
 <option value="30" selected>DC 30 kW</option>
@@ -854,11 +756,11 @@ body.light .offline-icon { background: #dc2626; color: #fff; }
 <h1>⚙️ Settings</h1>
 
 <div class="card">
-<div class="card-title">My Vehicles</div>
-<div style="display:flex;justify-content:flex-end;margin-bottom:10px">
-<button type="button" id="addVehicleBtn" style="background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;border:none;padding:8px 14px;border-radius:10px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:inherit">➕ Add</button>
+<div class="card-title">Default vehicle</div>
+<div class="field" style="margin-bottom:0">
+<label>Pre-selected on launch</label>
+<select id="settingsDefaultVehicle"><option value="">— None —</option></select>
 </div>
-<div id="garageList"></div>
 </div>
 
 <div class="card">
@@ -870,17 +772,19 @@ body.light .offline-icon { background: #dc2626; color: #fff; }
 </div>
 
 <div class="card">
-<div class="card-title">Default vehicle</div>
-<div class="field" style="margin-bottom:0">
-<label>Pre-selected on launch</label>
-<select id="settingsDefaultVehicle"><option value="">— None —</option></select>
+<div class="card-title">My Vehicles</div>
+<div style="display:flex;justify-content:flex-end;margin-bottom:10px">
+<button type="button" id="addVehicleBtn" style="background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;border:none;padding:8px 14px;border-radius:10px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:inherit">➕ Add</button>
 </div>
+<div id="garageList"></div>
 </div>
 
 <div class="card">
-<div class="card-title">Default rates & fees</div>
+<button type="button" class="adv-toggle" id="advancedSettingsToggle"><span class="arrow" id="advancedSettingsArrow">▶</span> Advanced rates & fees</button>
+<div id="advancedSettingsContent" style="display:none;padding-top:16px;border-top:1px solid rgba(139,92,246,0.15);margin-top:8px">
 <div class="field"><label>Session fee (LKR, optional)</label><input type="number" id="sessionFee" value="0" step="1" min="0" inputmode="numeric"></div>
 <div class="field"><label>Tax / VAT (%, optional)</label><input type="number" id="tax" value="0" step="0.1" min="0" inputmode="decimal"></div>
+</div>
 </div>
 
 <div class="card">
@@ -901,9 +805,11 @@ body.light .offline-icon { background: #dc2626; color: #fff; }
 </div>
 
 <div class="card">
-<div class="card-title">Setup</div>
+<button type="button" class="adv-toggle" id="adminToggle"><span class="arrow" id="adminArrow">▶</span> Admin</button>
+<div id="adminContent" style="display:none;padding-top:16px;border-top:1px solid rgba(139,92,246,0.15);margin-top:8px">
 <button type="button" id="rerunIntro" style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(139,92,246,0.3);background:rgba(139,92,246,0.1);color:var(--purpleB);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:8px">🔄 Show intro slides again</button>
-<button type="button" id="reseedStationsBtn" style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(245,158,11,0.3);background:rgba(245,158,11,0.1);color:#fbbf24;font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit">📍 Re-seed stations (admin)</button>
+<button type="button" id="reseedStationsBtn" style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(245,158,11,0.3);background:rgba(245,158,11,0.1);color:#fbbf24;font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit">📍 Re-seed stations</button>
+</div>
 </div>
 
 <div class="card">
@@ -931,7 +837,7 @@ body.light .offline-icon { background: #dc2626; color: #fff; }
 <div class="card">
 <div class="card-title">How the four modes work</div>
 <div style="padding:10px 0;border-bottom:1px solid rgba(139,92,246,0.08);font-size:0.82rem;color:var(--dim);line-height:1.6"><strong style="color:var(--purpleB)">💰 Cost</strong> — Enter start and target %. Get cost, time, and range.</div>
-<div style="padding:10px 0;border-bottom:1px solid rgba(139,92,246,0.08);font-size:0.82rem;color:var(--dim);line-height:1.6"><strong style="color:var(--purpleB)">💵 Money</strong> — Enter how much to spend. Get % reached, kWh, and time.</div>
+<div style="padding:10px 0;border-bottom:1px solid rgba(139,92,246,0.08);font-size:0.82rem;color:var(--dim);line-height:1.6"><strong style="color:var(--purpleB)">💵 Money</strong> — Enter how much to spend. Get % reached, kWh, and time. (Public charging only)</div>
 <div style="padding:10px 0;border-bottom:1px solid rgba(139,92,246,0.08);font-size:0.82rem;color:var(--dim);line-height:1.6"><strong style="color:var(--purpleB)">⏱️ Time</strong> — Enter start and target %. Get how long it takes.</div>
 <div style="padding:10px 0;font-size:0.82rem;color:var(--dim);line-height:1.6"><strong style="color:var(--purpleB)">⏳ Duration</strong> — Enter hours + minutes, or a target clock time. Get % reached and cost.</div>
 </div>
@@ -954,7 +860,7 @@ var $=function(id){return document.getElementById(id)};
 var auth=null,db=null,fbFuncs=null,currentUser=null;
 var currentMode='public';
 var currentCalcMode='cost';
-var durationSubMode='duration'; // 'duration' or 'until'
+var durationSubMode='duration';
 var userVehicles=[];
 var editingVehicleId=null;
 var editingHistoryId=null;
@@ -1017,7 +923,7 @@ window.addEventListener('offline',updateOnlineStatus);
 updateOnlineStatus();
 $('offlineIcon').addEventListener('click',function(){alert('You are offline. The app is using cached data.')});
 
-// ============ DEFAULT VEHICLE ============
+// ============ VEHICLE HELPERS ============
 function getDefaultVehicle(){try{return localStorage.getItem('evDefaultVehicle')||''}catch(e){return ''}}
 function setDefaultVehicle(v){try{if(v)localStorage.setItem('evDefaultVehicle',v);else localStorage.removeItem('evDefaultVehicle')}catch(e){}}
 
@@ -1159,7 +1065,7 @@ sel.appendChild(grp);
 sel.value=cur;
 }
 
-// ============ CONFIG LOADING ============
+// ============ CONFIG ============
 function loadConfig(cb){
 try{
 var cached=localStorage.getItem('evConfig');
@@ -1197,9 +1103,7 @@ calc();
 function applyDefaultVehicle(){
 var def=getDefaultVehicle();
 var sel=$('vehicleSelect');
-if(def&&sel&&sel.querySelector('option[value="'+def+'"]')){
-sel.value=def;
-}
+if(def&&sel&&sel.querySelector('option[value="'+def+'"]'))sel.value=def;
 var ssel=$('settingsDefaultVehicle');
 if(ssel)ssel.value=def;
 }
@@ -1436,16 +1340,15 @@ try{localStorage.setItem('evStations',JSON.stringify(seed))}catch(e){}
 stationData=seed;renderStations();
 btn.textContent='✓ Seeded';
 showToast('Stations updated','success');
-setTimeout(function(){btn.textContent='📍 Re-seed stations (admin)';btn.disabled=false;},1500);
+setTimeout(function(){btn.textContent='📍 Re-seed stations';btn.disabled=false;},1500);
 })
 .catch(function(e){
 alert('Seed failed: '+e.message);
-btn.textContent='📍 Re-seed stations (admin)';
+btn.textContent='📍 Re-seed stations';
 btn.disabled=false;
 });
 });
 
-// ============ SUBMIT STATION ============
 $('submitStationBtn').addEventListener('click',function(){
 if(!currentUser){alert('Please sign in.');return}
 var today=new Date().toISOString().slice(0,10);
@@ -1460,9 +1363,7 @@ $('subCoords').textContent='';
 $('subSubmit').disabled=true;
 $('submitStationModal').classList.add('show');
 });
-
 $('subCancel').addEventListener('click',function(){$('submitStationModal').classList.remove('show')});
-
 $('subGetLocationBtn').addEventListener('click',function(){
 var btn=this;
 btn.disabled=true;btn.textContent='📍 Getting location…';
@@ -1481,14 +1382,12 @@ $('subSubmit').disabled=true;
 }
 });
 });
-
 function checkSubmitReady(){
 var ok=subCoordinates&&$('subNetwork').value&&$('subName').value.trim().length>=3;
 $('subSubmit').disabled=!ok;
 }
 $('subNetwork').addEventListener('change',checkSubmitReady);
 $('subName').addEventListener('input',checkSubmitReady);
-
 $('subSubmit').addEventListener('click',function(){
 if(!currentUser||!subCoordinates)return;
 if(!$('subNetwork').value||$('subName').value.trim().length<3)return;
@@ -1640,10 +1539,41 @@ $('page-settings').classList.add('active');
 // CHARGING MODE
 $('tabHome').addEventListener('click',function(){setChargingMode('home')});
 $('tabPublic').addEventListener('click',function(){setChargingMode('public')});
+
 function setChargingMode(m){
 currentMode=m;
-if(m==='home'){$('tabHome').classList.add('active');$('tabPublic').classList.remove('active');$('homeFields').style.display='block';$('publicFields').style.display='none'}
-else{$('tabPublic').classList.add('active');$('tabHome').classList.remove('active');$('homeFields').style.display='none';$('publicFields').style.display='block'}
+if(m==='home'){
+$('tabHome').classList.add('active');
+$('tabPublic').classList.remove('active');
+$('homeFields').style.display='block';
+$('publicFields').style.display='none';
+// CHANGE 1: Hide Money mode in Home
+var moneyBtn=document.querySelector('.mode-card[data-mode="money"]');
+if(moneyBtn)moneyBtn.style.display='none';
+$('modeGrid').classList.add('three-up');
+// If Money was active, switch to Cost
+if(currentCalcMode==='money'){setCalcMode('cost');}
+// CHANGE 2: Toggle duration presets
+$('durationPresetsHome').style.display='flex';
+$('durationPresetsPublic').style.display='none';
+// CHANGE 3: Hide Until time in Home? No - home is where until-time makes sense, keep it
+$('durTimeToggle').style.display='flex';
+}else{
+$('tabPublic').classList.add('active');
+$('tabHome').classList.remove('active');
+$('homeFields').style.display='none';
+$('publicFields').style.display='block';
+var moneyBtn=document.querySelector('.mode-card[data-mode="money"]');
+if(moneyBtn)moneyBtn.style.display='flex';
+$('modeGrid').classList.remove('three-up');
+// CHANGE 2: Toggle duration presets
+$('durationPresetsHome').style.display='none';
+$('durationPresetsPublic').style.display='flex';
+// CHANGE 3: Hide Until time in Public
+$('durTimeToggle').style.display='none';
+// Force back to Duration sub-mode if it was Until
+if(durationSubMode==='until'){setDurationSubMode('duration')}
+}
 calc();savePrefs();
 }
 
@@ -1651,6 +1581,7 @@ calc();savePrefs();
 document.querySelectorAll('.mode-card').forEach(function(btn){
 btn.addEventListener('click',function(){setCalcMode(this.dataset.mode)});
 });
+
 function setCalcMode(m){
 currentCalcMode=m;
 document.querySelectorAll('.mode-card').forEach(function(b){b.classList.toggle('active',b.dataset.mode===m)});
@@ -1660,6 +1591,12 @@ $('targetField').style.display=targetVis?'block':'none';
 $('presetsRow').style.display=targetVis?'flex':'none';
 $('moneyInputField').style.display=(m==='money')?'block':'none';
 $('durationInputField').style.display=(m==='duration')?'block':'none';
+
+// CHANGE 4: Hide rate fields in Time mode
+var hideRate=(m==='time');
+$('homeRateField').style.display=hideRate?'none':'block';
+$('publicRateField').style.display=hideRate?'none':'block';
+
 try{localStorage.setItem('evCalcMode',m)}catch(e){}
 calc();savePrefs();
 }
@@ -1682,6 +1619,20 @@ $('durationMode2').style.display='block';
 }
 calc();
 }
+
+// CHANGE 5: Advanced Settings + Admin toggles
+$('advancedSettingsToggle').addEventListener('click',function(){
+this.classList.toggle('open');
+var c=$('advancedSettingsContent'),a=$('advancedSettingsArrow');
+if(c.style.display==='none'){c.style.display='block';a.style.transform='rotate(90deg)'}
+else{c.style.display='none';a.style.transform='rotate(0)'}
+});
+$('adminToggle').addEventListener('click',function(){
+this.classList.toggle('open');
+var c=$('adminContent'),a=$('adminArrow');
+if(c.style.display==='none'){c.style.display='block';a.style.transform='rotate(90deg)'}
+else{c.style.display='none';a.style.transform='rotate(0)'}
+});
 
 $('compareToggle').addEventListener('click',function(){this.classList.toggle('open');var c=$('compareContent'),a=$('compareArrow');if(c.style.display==='none'){c.style.display='block';a.style.transform='rotate(90deg)'}else{c.style.display='none';a.style.transform='rotate(0)'}});
 $('timerToggle').addEventListener('click',function(){this.classList.toggle('open');var c=$('timerContent'),a=$('timerArrow');if(c.style.display==='none'){c.style.display='block';a.style.transform='rotate(90deg)'}else{c.style.display='none';a.style.transform='rotate(0)'}});
@@ -1710,9 +1661,7 @@ var uh=parseInt(parts[0]);
 var um=parseInt(parts[1]);
 var now=new Date();
 var target=new Date(now.getFullYear(),now.getMonth(),now.getDate(),uh,um,0,0);
-if(target.getTime()<=now.getTime()){
-target.setDate(target.getDate()+1);
-}
+if(target.getTime()<=now.getTime()){target.setDate(target.getDate()+1)}
 return Math.max(1,Math.round((target.getTime()-now.getTime())/60000));
 }
 }
@@ -1857,7 +1806,6 @@ $('tile2').textContent=t2;$('tile2Lbl').textContent=t2L;
 $('tile3').textContent=t3;$('tile3Lbl').textContent=t3L;
 $('resultDetail').textContent=detail;
 
-// Energy flow bar
 var efFrom=result.cur;
 var efTo=result.tgt;
 $('efFrom').textContent=efFrom.toFixed(0)+'%';
@@ -1966,8 +1914,6 @@ $('currentNum').value=p[0];$('targetNum').value=p[1];
 calc();savePrefs();
 });
 });
-
-// Timer
 document.querySelectorAll('.preset-btn[data-reminder]').forEach(function(b){
 b.addEventListener('click',function(){
 var v=this.dataset.reminder,mins;
@@ -2089,7 +2035,6 @@ hf.value=curHf;
 
 if(filtered.length===0){list.innerHTML='<div class="empty-state"><div class="es-icon">📭</div><div class="es-text"><strong>No charges'+(filter!=='all'?' for this filter':'')+'.</strong><br>Save a charge from Calculate.</div></div>';stats.style.display='none';cb.style.display='none';er.style.display='none';sc.style.display='none';chartCard.style.display='none';return}
 
-// Chart
 var recent=filtered.slice().sort(function(a,b){return a.ts-b.ts}).slice(-6);
 if(recent.length>0){
 var maxC=Math.max.apply(null,recent.map(function(x){return x.total}));
@@ -2260,13 +2205,16 @@ if(p.setDiesel)$('setDiesel').value=p.setDiesel;
 if(p.setPetrolKm)$('setPetrolKm').value=p.setPetrolKm;
 }}catch(e){}
 
-if(currentMode==='home'){$('tabHome').classList.add('active');$('tabPublic').classList.remove('active');$('homeFields').style.display='block';$('publicFields').style.display='none'}
-if(durationSubMode==='until'){setDurationSubMode('until')}else{setDurationSubMode('duration')}
-setCalcMode(currentCalcMode||'cost');
-
+// Apply saved state
 populateVehicleDropdowns();
 populateRateDropdown();
 applyDefaultVehicle();
+
+if(currentMode==='home'){setChargingMode('home')}
+else{setChargingMode('public')}
+
+if(durationSubMode==='until'){setDurationSubMode('until')}else{setDurationSubMode('duration')}
+setCalcMode(currentCalcMode||'cost');
 calc();
 
 </script>
