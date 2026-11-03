@@ -99,9 +99,6 @@ body.light .auth-error{color:#b91c1c}
 body.light .auth-info{color:#1d4ed8}
 .auth-notice{text-align:center;font-size:0.7rem;color:var(--faint);margin-top:16px;line-height:1.5}
 .link-btn{background:none;border:none;color:var(--purpleB);font-size:0.8rem;cursor:pointer;font-family:inherit;text-decoration:underline;padding:8px 0;font-weight:600}
-.user-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--input-bg);border-radius:14px;border:1px solid rgba(139,92,246,0.15);margin-bottom:14px}
-.user-bar .email{font-size:0.8rem;color:var(--dim);word-break:break-all;padding-right:10px}
-.user-bar .signout{background:transparent;color:#f87171;border:1px solid rgba(248,113,113,0.3);font-size:0.75rem;padding:6px 12px;border-radius:8px;cursor:pointer;font-weight:600;font-family:inherit;white-space:nowrap}
 .result-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:14px}
 .result-tile{background:var(--input-bg);border-radius:12px;padding:12px 8px;text-align:center;border:1px solid rgba(139,92,246,0.15)}
 .result-tile .tile-icon{font-size:1.3rem;margin-bottom:4px}
@@ -111,7 +108,7 @@ body.light .result-tile .tile-val{background:none;-webkit-text-fill-color:initia
 .presets{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
 .preset-btn{padding:8px 12px;border-radius:10px;border:1px solid rgba(139,92,246,0.3);background:rgba(139,92,246,0.1);color:var(--purpleB);font-family:inherit;font-size:0.75rem;font-weight:700;cursor:pointer;transition:all 0.15s}
 .preset-btn:active{background:rgba(139,92,246,0.25);transform:scale(0.97)}
-/* Intro slides */
+/* Intro */
 .intro-container{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);background-image:radial-gradient(circle at 15% 0%,rgba(59,130,246,0.18),transparent 45%),radial-gradient(circle at 85% 100%,rgba(139,92,246,0.18),transparent 45%);z-index:10000;display:none;overflow-y:auto;padding:20px}
 .intro-container.show{display:flex;flex-direction:column;align-items:center;justify-content:center}
 .intro-slide{max-width:420px;width:100%;text-align:center;display:none;margin:auto}
@@ -119,7 +116,7 @@ body.light .result-tile .tile-val{background:none;-webkit-text-fill-color:initia
 @keyframes introFade{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
 .intro-icon{font-size:5rem;margin-bottom:24px;line-height:1}
 .intro-title{font-size:1.5rem;font-weight:800;margin-bottom:16px;color:var(--text);line-height:1.3}
-.intro-body{font-size:1rem;color:var(--dim);line-height:1.7;margin-bottom:32px}
+.intro-body{font-size:1rem;color:var(--dim);line-height:1.7;margin-bottom:24px}
 .intro-actions{display:flex;gap:10px;max-width:420px;width:100%;margin-top:20px}
 .intro-actions button{flex:1;padding:15px;border-radius:14px;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;border:none;transition:all 0.2s}
 .intro-skip{background:transparent;color:var(--dim);border:1px solid rgba(148,163,184,0.3)!important}
@@ -127,33 +124,25 @@ body.light .result-tile .tile-val{background:none;-webkit-text-fill-color:initia
 .intro-dots{display:flex;justify-content:center;gap:8px;margin-top:24px}
 .intro-dot{width:8px;height:8px;border-radius:50%;background:rgba(139,92,246,0.3);transition:all 0.2s}
 .intro-dot.active{background:var(--purpleB);width:24px;border-radius:4px}
-.intro-slide .ob-field{text-align:left;margin-top:20px}
+.intro-slide .ob-field{text-align:left;margin-top:16px}
 .intro-slide .ob-field label{display:block;font-size:0.85rem;color:var(--dim);margin-bottom:8px;font-weight:600;text-align:left}
 /* Mode grid */
-.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
 .mode-card{padding:16px 10px;border-radius:12px;border:1px solid rgba(139,92,246,0.25);background:rgba(139,92,246,0.08);color:var(--dim);font-family:inherit;font-size:0.85rem;font-weight:700;cursor:pointer;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:6px}
 .mode-card .mc-icon{font-size:1.5rem}
 .mode-card.active{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;border-color:transparent;box-shadow:0 4px 16px rgba(139,92,246,0.4)}
-.mode-desc{font-size:0.82rem;color:var(--dim);text-align:center;margin-bottom:14px;line-height:1.5;font-style:italic}
-/* Vehicle inline */
-.vehicle-inline{display:flex;justify-content:space-between;align-items:center;padding:6px 0}
-.vehicle-inline .vi-name{font-size:1rem;font-weight:700;color:var(--text)}
-.vehicle-inline .vi-change{background:none;border:none;color:var(--purpleB);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;padding:6px 12px;border-radius:8px;border:1px solid rgba(139,92,246,0.3)}
-.vehicle-inline .vi-change:active{background:rgba(139,92,246,0.15)}
+.mode-desc{font-size:0.82rem;color:var(--dim);text-align:center;margin-bottom:0;line-height:1.5;font-style:italic}
 /* Toast */
 .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:#1a1a2e;color:#fff;padding:12px 20px;border-radius:12px;font-size:0.85rem;font-weight:600;z-index:10001;box-shadow:0 8px 24px rgba(0,0,0,0.4);opacity:0;transition:all 0.3s;border:1px solid rgba(139,92,246,0.3);max-width:90%}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 .toast.success{border-color:rgba(46,204,113,0.5)}
 .toast.error{border-color:rgba(248,113,113,0.5)}
-/* Offline indicator */
 .offline-icon{position:fixed;top:16px;right:16px;background:#f59e0b;color:#000;width:32px;height:32px;border-radius:50%;display:none;align-items:center;justify-content:center;font-weight:700;font-size:0.9rem;z-index:150;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.3)}
 .offline-icon.show{display:flex}
-/* Battery visual */
 .battery-visual{display:inline-flex;align-items:center;gap:4px;margin-left:8px}
 .battery-body{width:32px;height:14px;border:2px solid var(--dim);border-radius:3px;position:relative;background:var(--input-bg)}
 .battery-body::after{content:'';position:absolute;right:-5px;top:3px;width:3px;height:6px;background:var(--dim);border-radius:0 2px 2px 0}
 .battery-fill{height:100%;background:linear-gradient(90deg,#3b82f6,#8b5cf6);border-radius:1px;transition:width 0.2s}
-/* Modal */
 .modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(10,6,18,0.85);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:20px;z-index:9998;overflow-y:auto}
 .modal-overlay.show{display:flex}
 .modal-box{background:var(--card);border-radius:20px;padding:22px;max-width:440px;width:100%;border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,0.5);margin:auto}
@@ -170,7 +159,6 @@ body.light .result-tile .tile-val{background:none;-webkit-text-fill-color:initia
 .vehicle-card .vc-specs{font-size:0.78rem;color:var(--dim);line-height:1.5}
 .vehicle-card .vc-actions{position:absolute;top:10px;right:10px;display:flex;gap:4px}
 .vehicle-card .vc-actions button{background:none;border:none;cursor:pointer;padding:4px 6px;font-size:0.9rem;color:var(--faint);border-radius:6px}
-.vehicle-card .vc-actions button:hover{background:rgba(139,92,246,0.15);color:var(--purpleB)}
 .vehicle-card .vc-active-badge{display:inline-block;background:rgba(46,204,113,0.2);color:#2ecc71;font-size:0.6rem;font-weight:800;padding:2px 8px;border-radius:6px;margin-left:6px;text-transform:uppercase;letter-spacing:0.5px}
 .station-status-badge{display:inline-flex;align-items:center;gap:4px;font-size:0.7rem;padding:4px 10px;border-radius:8px;font-weight:800;margin-bottom:8px}
 .station-status-badge.working{background:rgba(46,204,113,0.2);color:#2ecc71;border:1px solid rgba(46,204,113,0.4)}
@@ -180,19 +168,15 @@ body.light .result-tile .tile-val{background:none;-webkit-text-fill-color:initia
 .station-status-badge.stale{background:rgba(139,92,246,0.15);color:var(--faint);border:1px solid rgba(139,92,246,0.25)}
 .report-row{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
 .report-btn{flex:1;min-width:60px;padding:8px 6px;border-radius:10px;border:1px solid rgba(139,92,246,0.3);background:rgba(139,92,246,0.1);color:var(--purpleB);font-family:inherit;font-size:0.7rem;font-weight:700;cursor:pointer;transition:all 0.15s}
-.report-btn:active{transform:scale(0.96)}
 .report-btn.r-working{border-color:rgba(46,204,113,0.4);background:rgba(46,204,113,0.15);color:#2ecc71}
 .report-btn.r-slow{border-color:rgba(245,158,11,0.4);background:rgba(245,158,11,0.15);color:#fbbf24}
 .report-btn.r-broken{border-color:rgba(248,113,113,0.4);background:rgba(248,113,113,0.15);color:#f87171}
 .report-btn.r-blocked{border-color:rgba(148,163,184,0.4);background:rgba(148,163,184,0.15);color:#94a3b8}
 .history-item{background:var(--input-bg);border-radius:12px;padding:14px 16px;margin-bottom:10px;border:1px solid rgba(139,92,246,0.15);border-left:3px solid #8b5cf6;position:relative;cursor:pointer;transition:all 0.15s}
-.history-item:active{transform:scale(0.99);background:rgba(139,92,246,0.05)}
 .history-item .hi-edit-hint{position:absolute;bottom:6px;right:12px;font-size:0.6rem;color:var(--faint);font-weight:600}
-.history-mode-badge{display:inline-block;background:rgba(139,92,246,0.15);color:var(--purpleB);font-size:0.6rem;font-weight:800;padding:2px 8px;border-radius:6px;text-transform:uppercase;letter-spacing:0.5px;margin-left:8px}
 .summary-card{background:linear-gradient(135deg,rgba(59,130,246,0.2),rgba(139,92,246,0.2));border:1px solid rgba(139,92,246,0.35);border-radius:14px;padding:16px;margin-bottom:14px}
 .summary-card .sc-title{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--purpleB);margin-bottom:10px}
 .summary-card .sc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.summary-card .sc-item{text-align:left}
 .summary-card .sc-val{font-size:1.15rem;font-weight:800;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 body.light .summary-card .sc-val{background:none;-webkit-text-fill-color:initial;color:#5b21b6}
 .summary-card .sc-lbl{font-size:0.65rem;color:var(--dim);margin-top:2px}
@@ -209,16 +193,16 @@ body.light .notice-banner{color:#b45309}
 .big-num .bn-lbl{font-size:0.7rem;text-transform:uppercase;letter-spacing:2px;color:var(--dim);margin-bottom:6px;font-weight:600}
 .big-num .bn-val{font-size:2.6rem;font-weight:800;line-height:1.1;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;color:#5b21b6}
+.target-hidden{display:none!important}
 @media(max-width:480px){body{padding-left:88px;padding-right:12px}.app{max-width:100%}.sidebar{width:72px}.nav-item{width:56px}.nav-icon{font-size:1.2rem}.nav-label{font-size:0.5rem}.compare-table{font-size:0.72rem}.big-num .bn-val{font-size:2.2rem}.intro-icon{font-size:3.5rem}.intro-title{font-size:1.3rem}}
 </style>
 </head>
 <body>
 
 <div class="offline-icon" id="offlineIcon" title="Offline">⚠</div>
-
 <div class="toast" id="toast"></div>
 
-<!-- INTRO SLIDES -->
+<!-- INTRO -->
 <div class="intro-container" id="introContainer">
 <div class="intro-slide active" id="introSlide1">
 <div class="intro-icon">⚡</div>
@@ -227,8 +211,8 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 </div>
 <div class="intro-slide" id="introSlide2">
 <div class="intro-icon">🚗</div>
-<div class="intro-title">Pick your car, set your range</div>
-<div class="intro-body" style="margin-bottom:16px">Choose your vehicle and set your charge range.</div>
+<div class="intro-title">Pick your car and rate</div>
+<div class="intro-body" style="margin-bottom:16px">Choose your vehicle and (optionally) your home electricity rate.</div>
 <div class="ob-field">
 <label>Your vehicle</label>
 <select id="introVehicle"><option value="">— Choose —</option></select>
@@ -267,10 +251,7 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 <div class="intro-body">Tap "Save this charge" after each session to track your history and see savings vs petrol. On the Stations tab, find nearby chargers and report their status.</div>
 </div>
 <div class="intro-dots" id="introDots">
-<div class="intro-dot active"></div>
-<div class="intro-dot"></div>
-<div class="intro-dot"></div>
-<div class="intro-dot"></div>
+<div class="intro-dot active"></div><div class="intro-dot"></div><div class="intro-dot"></div><div class="intro-dot"></div>
 </div>
 <div class="intro-actions">
 <button type="button" class="intro-skip" id="introSkip">Skip</button>
@@ -318,18 +299,6 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 </div>
 </div>
 
-<div class="modal-overlay" id="vehiclePickModal">
-<div class="modal-box">
-<h3>Select your vehicle</h3>
-<div class="field"><label>Vehicle</label><select id="modalVehicleSelect"></select></div>
-<div class="field"><label>Or add custom capacity <span class="hint">(kWh)</span></label><input type="number" id="modalCustomCapacity" placeholder="Leave empty if using vehicle" step="0.01" min="1" inputmode="decimal"></div>
-<div class="modal-actions">
-<button type="button" class="m-cancel" id="vpCancel">Cancel</button>
-<button type="button" class="m-ok" id="vpSave">Apply</button>
-</div>
-</div>
-</div>
-
 <div class="modal-overlay" id="vehicleModal">
 <div class="modal-box">
 <h3 id="vehicleModalTitle">Add Vehicle</h3>
@@ -373,22 +342,12 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 </div>
 </div>
 
-<div class="modal-overlay" id="compareHistoryModal">
-<div class="modal-box">
-<h3>Compare this charge</h3>
-<div id="chContent"></div>
-<div class="modal-actions">
-<button type="button" class="m-ok" id="chOk" style="width:100%">Close</button>
-</div>
-</div>
-</div>
-
 <div class="modal-overlay" id="submitStationModal">
 <div class="modal-box">
 <h3>Submit a Station</h3>
-<div class="field"><label>Network / provider</label>
+<div class="field"><label>Network</label>
 <select id="subNetwork">
-<option value="">— Choose a network —</option>
+<option value="">— Choose —</option>
 <option value="Volt Charge">Volt Charge</option>
 <option value="chargeNET">chargeNET</option>
 <option value="LECO">LECO</option>
@@ -409,8 +368,8 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 </div>
 <div class="field"><label>Rate per kWh <span class="hint">(LKR, optional)</span></label><input type="number" id="subRate" step="0.01" min="0" inputmode="decimal"></div>
 <div style="background:var(--input-bg);border-radius:12px;padding:14px;margin-top:14px">
-<div style="font-size:0.75rem;color:var(--dim);line-height:1.6;margin-bottom:8px">📍 Your current location will be used for this station.</div>
-<div id="subLocationStatus" style="font-size:0.8rem;font-weight:600;color:var(--dim)">Tap "Get My Location" to continue</div>
+<div style="font-size:0.75rem;color:var(--dim);line-height:1.6;margin-bottom:8px">📍 Your current location will be used.</div>
+<div id="subLocationStatus" style="font-size:0.8rem;font-weight:600;color:var(--dim)">Tap "Get My Location"</div>
 <div id="subCoords" style="font-size:0.72rem;color:var(--faint);margin-top:4px;font-family:monospace"></div>
 </div>
 <button type="button" id="subGetLocationBtn" style="width:100%;padding:12px;margin-top:12px;border-radius:12px;border:1px solid rgba(59,130,246,0.4);background:rgba(59,130,246,0.15);color:var(--blueB);font-size:0.9rem;font-weight:700;cursor:pointer;font-family:inherit">📍 Get My Location</button>
@@ -421,6 +380,7 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 </div>
 </div>
 
+<!-- MAIN APP -->
 <div id="mainApp" style="display:none">
 
 <div class="sidebar">
@@ -432,35 +392,57 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 
 <div class="app">
 
-<!-- CALCULATE PAGE -->
+<!-- CALCULATE -->
 <div class="page active" id="page-calc">
 <h1>⚡ Calculate</h1>
 
 <div class="card">
-<div class="vehicle-inline">
-<div>
-<div style="font-size:0.7rem;color:var(--dim);text-transform:uppercase;letter-spacing:1.2px;font-weight:700;margin-bottom:4px">Your vehicle</div>
-<div class="vi-name" id="currentVehicleName">—</div>
+<div class="field" style="margin-bottom:14px">
+<label style="font-size:0.85rem;font-weight:600">Your vehicle</label>
+<select id="vehicleSelect"><option value="">— Loading vehicles… —</option></select>
 </div>
-<button type="button" class="vi-change" id="changeVehicleBtn">Change ▾</button>
+<div class="card-title" style="margin-top:4px">What do you want to know?</div>
+<div class="mode-grid">
+<button type="button" class="mode-card active" data-mode="cost"><span class="mc-icon">💰</span><span>Cost</span></button>
+<button type="button" class="mode-card" data-mode="money"><span class="mc-icon">💵</span><span>Money</span></button>
+<button type="button" class="mode-card" data-mode="time"><span class="mc-icon">⏱️</span><span>Time</span></button>
+<button type="button" class="mode-card" data-mode="duration"><span class="mc-icon">⏳</span><span>Duration</span></button>
 </div>
+<div class="mode-desc" id="modeDesc">How much will this charge cost?</div>
 </div>
 
 <div class="card">
-<div class="card-title">Charge Level</div>
+<div class="card-title">Your Charge</div>
 <div class="field">
-<label>Current <span class="battery-visual"><span class="battery-body"><span class="battery-fill" id="curBatteryFill" style="width:20%"></span></span></span> <input type="number" class="pct-input" id="currentNum" value="20" min="1" max="100" step="1" inputmode="numeric"></label>
+<label>Current charge <span class="battery-visual"><span class="battery-body"><span class="battery-fill" id="curBatteryFill" style="width:20%"></span></span></span> <input type="number" class="pct-input" id="currentNum" value="20" min="1" max="100" step="1" inputmode="numeric"></label>
 <input type="range" id="current" min="1" max="100" value="20" step="1">
 </div>
-<div class="field">
-<label>Target <span class="battery-visual"><span class="battery-body"><span class="battery-fill" id="tgtBatteryFill" style="width:80%"></span></span></span> <input type="number" class="pct-input" id="targetNum" value="80" min="1" max="100" step="1" inputmode="numeric"></label>
+<div class="field" id="targetField">
+<label>Target charge <span class="battery-visual"><span class="battery-body"><span class="battery-fill" id="tgtBatteryFill" style="width:80%"></span></span></span> <input type="number" class="pct-input" id="targetNum" value="80" min="1" max="100" step="1" inputmode="numeric"></label>
 <input type="range" id="target" min="1" max="100" value="80" step="1">
 </div>
-<div class="presets">
+<div class="presets" id="presetsRow">
 <button type="button" class="preset-btn" data-preset="20,80">20→80</button>
 <button type="button" class="preset-btn" data-preset="10,100">10→100</button>
 <button type="button" class="preset-btn" data-preset="50,80">50→80</button>
 <button type="button" class="preset-btn" data-preset="30,90">30→90</button>
+</div>
+<div class="field" id="moneyInputField" style="display:none;margin-top:14px">
+<label>Amount to spend <span class="hint">(LKR)</span></label>
+<input type="number" id="moneyAmount" value="500" step="1" min="1" inputmode="decimal">
+</div>
+<div class="field" id="durationInputField" style="display:none;margin-top:14px">
+<label>Charging duration <span class="hint">(minutes)</span></label>
+<input type="number" id="durationMin" value="60" step="1" min="1" inputmode="numeric">
+</div>
+<div class="presets" id="durationPresets" style="display:none">
+<button type="button" class="preset-btn" data-duration="30">30m</button>
+<button type="button" class="preset-btn" data-duration="60">1h</button>
+<button type="button" class="preset-btn" data-duration="120">2h</button>
+<button type="button" class="preset-btn" data-duration="180">3h</button>
+<button type="button" class="preset-btn" data-duration="360">6h</button>
+<button type="button" class="preset-btn" data-duration="480">8h</button>
+<button type="button" class="preset-btn" data-duration="600">Overnight</button>
 </div>
 <div id="taperHint" class="notice-banner" style="display:none"></div>
 </div>
@@ -471,7 +453,6 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 <button type="button" class="mode-tab" id="tabHome">🏠 Home</button>
 <button type="button" class="mode-tab active" id="tabPublic">🔌 Public DC</button>
 </div>
-
 <div id="homeFields" style="display:none">
 <div class="field"><label>Home rate <span class="info-i" data-info="homeRateSelect">i</span></label>
 <select id="homeRateSelect">
@@ -509,7 +490,6 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 <div class="field" id="customHomePowerField" style="display:none"><label>Custom power <span class="hint">(kW)</span></label><input type="number" id="customHomePower" value="7" step="0.1" min="0.5" max="50" inputmode="decimal"></div>
 <div class="field"><label>Charging efficiency <span class="hint">(%)</span></label><input type="number" id="homeEfficiency" value="88" step="1" min="50" max="100" inputmode="numeric"></div>
 </div>
-
 <div id="publicFields">
 <div class="field"><label>Network / station</label>
 <select id="quickRate"><option value="">— Loading networks… —</option></select></div>
@@ -531,52 +511,23 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 </div>
 </div>
 
-<div class="card">
-<div class="card-title">What do you want to know?</div>
-<div class="mode-grid">
-<button type="button" class="mode-card active" data-mode="cost"><span class="mc-icon">💰</span><span>Cost</span></button>
-<button type="button" class="mode-card" data-mode="money"><span class="mc-icon">💵</span><span>Money</span></button>
-<button type="button" class="mode-card" data-mode="time"><span class="mc-icon">⏱️</span><span>Time</span></button>
-<button type="button" class="mode-card" data-mode="duration"><span class="mc-icon">⏳</span><span>Duration</span></button>
-</div>
-<div class="mode-desc" id="modeDesc">How much will this charge cost?</div>
-
-<div id="moneyInputs" style="display:none">
-<div class="field"><label>Amount to spend <span class="hint">(LKR)</span></label><input type="number" id="moneyAmount" value="500" step="1" min="1" inputmode="decimal"></div>
-<div id="moneyWarning" class="notice-banner" style="display:none"></div>
-</div>
-
-<div id="durationInputs" style="display:none">
-<div class="field"><label>Charging duration <span class="hint">(minutes)</span></label><input type="number" id="durationMin" value="60" step="1" min="1" inputmode="numeric"></div>
-<div class="presets">
-<button type="button" class="preset-btn" data-duration="30">30 min</button>
-<button type="button" class="preset-btn" data-duration="60">1 hr</button>
-<button type="button" class="preset-btn" data-duration="120">2 hr</button>
-<button type="button" class="preset-btn" data-duration="180">3 hr</button>
-<button type="button" class="preset-btn" data-duration="360">6 hr</button>
-<button type="button" class="preset-btn" data-duration="480">8 hr</button>
-<button type="button" class="preset-btn" data-duration="600">Overnight</button>
-</div>
-<div id="durationWarning" class="notice-banner" style="display:none"></div>
-</div>
-</div>
-
 <div class="card" style="background:linear-gradient(135deg,rgba(59,130,246,0.15),rgba(139,92,246,0.1),rgba(10,6,18,0.6));border:1px solid rgba(139,92,246,0.3)">
 <div class="card-title">Your Result</div>
 <div class="big-num">
 <div class="bn-lbl" id="resultLabel">Total Cost</div>
 <div class="bn-val" id="resultValue">LKR 0.00</div>
 </div>
-<div class="result-grid" id="resultTiles">
+<div class="result-grid">
 <div class="result-tile"><div class="tile-icon">⚡</div><div class="tile-val" id="tile1">0.00</div><div class="tile-lbl" id="tile1Lbl">kWh</div></div>
 <div class="result-tile"><div class="tile-icon">⏱️</div><div class="tile-val" id="tile2">—</div><div class="tile-lbl" id="tile2Lbl">Time</div></div>
 <div class="result-tile"><div class="tile-icon">🛣️</div><div class="tile-val" id="tile3">—</div><div class="tile-lbl" id="tile3Lbl">Range</div></div>
 </div>
 <div id="resultDetail" style="font-size:0.8rem;color:var(--dim);text-align:center;margin-top:12px;line-height:1.6"></div>
+<div id="moneyWarn" class="notice-banner" style="display:none;margin-top:14px"></div>
 <div style="margin-top:16px"><button type="button" id="saveBtn" style="width:100%;padding:15px;border-radius:14px;border:none;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;box-shadow:0 4px 20px rgba(139,92,246,0.4)">💾 Save this charge</button></div>
 </div>
 
-<div class="card">
+<div class="card" id="compareCard">
 <button type="button" class="adv-toggle" id="compareToggle"><span class="arrow" id="compareArrow">▶</span> Compare with other options</button>
 <div id="compareContent" style="display:none;padding-top:14px;border-top:1px solid rgba(139,92,246,0.15);margin-top:8px">
 <div class="card-title" style="margin-top:8px">Cost at other networks</div>
@@ -602,7 +553,7 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 <div class="card">
 <button type="button" class="adv-toggle" id="timerToggle"><span class="arrow" id="timerArrow">▶</span> Set a charging reminder</button>
 <div id="timerContent" style="display:none;padding-top:14px;border-top:1px solid rgba(139,92,246,0.15);margin-top:8px">
-<p style="font-size:0.8rem;color:var(--dim);margin-bottom:12px;line-height:1.6">Get a notification so you don't overstay at the charger.</p>
+<p style="font-size:0.8rem;color:var(--dim);margin-bottom:12px;line-height:1.6">Get a notification so you don't overstay.</p>
 <div style="display:flex;gap:8px;flex-wrap:wrap">
 <button type="button" class="preset-btn" data-reminder="30">30 min</button>
 <button type="button" class="preset-btn" data-reminder="45">45 min</button>
@@ -659,7 +610,7 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 </div>
 <div class="card">
 <div class="card-title">Know a charger we're missing?</div>
-<p style="font-size:0.8rem;color:var(--dim);line-height:1.6;margin-bottom:12px">Help the community by adding charging stations you find.</p>
+<p style="font-size:0.8rem;color:var(--dim);line-height:1.6;margin-bottom:12px">Help the community by adding stations.</p>
 <button type="button" id="submitStationBtn" style="width:100%;padding:14px;border-radius:14px;border:1px solid rgba(46,204,113,0.4);background:rgba(46,204,113,0.15);color:#2ecc71;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit">➕ Submit a Station</button>
 </div>
 <div id="stationsList"></div>
@@ -695,7 +646,6 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 
 <div class="card">
 <div class="card-title">Default rates & fees</div>
-<p style="font-size:0.78rem;color:var(--dim);line-height:1.6;margin-bottom:12px">These apply every time unless you override on Calculate.</p>
 <div class="field"><label>Session fee <span class="hint">(LKR, optional)</span></label><input type="number" id="sessionFee" value="0" step="1" min="0" inputmode="numeric"></div>
 <div class="field"><label>Tax / VAT <span class="hint">(%, optional)</span></label><input type="number" id="tax" value="0" step="0.1" min="0" inputmode="decimal"></div>
 </div>
@@ -741,32 +691,23 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 </div>
 </div>
 
-<!-- HELP (opened from settings) -->
+<!-- HELP -->
 <div class="page" id="page-help">
 <h1>❓ Help & Tips</h1>
 <button type="button" id="backFromHelp" style="background:none;border:none;color:var(--purpleB);font-size:0.9rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:16px;padding:6px 0">← Back to Settings</button>
 <div class="card">
 <div class="card-title">How the four modes work</div>
-<div class="tip-row"><span class="tip-icon">💰</span><div class="tip-text"><strong>Cost</strong> — Enter your start and target %. The app tells you how much it costs, how long, and how far you can go.</div></div>
-<div class="tip-row"><span class="tip-icon">💵</span><div class="tip-text"><strong>Money</strong> — Enter how much you want to spend. The app tells you what % you'll reach, kWh added, and time.</div></div>
-<div class="tip-row"><span class="tip-icon">⏱️</span><div class="tip-text"><strong>Time</strong> — Enter your start and target %. The app tells you how long it takes.</div></div>
-<div class="tip-row"><span class="tip-icon">⏳</span><div class="tip-text"><strong>Duration</strong> — Enter how many minutes you'll charge. The app tells you what % you'll reach and how much it costs.</div></div>
+<div style="padding:10px 0;border-bottom:1px solid rgba(139,92,246,0.08)"><div style="font-size:0.82rem;color:var(--dim);line-height:1.6"><strong style="color:var(--purpleB)">💰 Cost</strong> — Enter start and target %. Get cost, time, and range.</div></div>
+<div style="padding:10px 0;border-bottom:1px solid rgba(139,92,246,0.08)"><div style="font-size:0.82rem;color:var(--dim);line-height:1.6"><strong style="color:var(--purpleB)">💵 Money</strong> — Enter how much to spend. Get % reached, kWh, and time.</div></div>
+<div style="padding:10px 0;border-bottom:1px solid rgba(139,92,246,0.08)"><div style="font-size:0.82rem;color:var(--dim);line-height:1.6"><strong style="color:var(--purpleB)">⏱️ Time</strong> — Enter start and target %. Get how long it takes.</div></div>
+<div style="padding:10px 0"><div style="font-size:0.82rem;color:var(--dim);line-height:1.6"><strong style="color:var(--purpleB)">⏳ Duration</strong> — Enter how many minutes. Get % reached and cost.</div></div>
 </div>
 <div class="card">
 <div class="card-title">Quick tips</div>
-<div class="tip-row"><span class="tip-icon">⚡</span><div class="tip-text"><strong>Above 80% is slow.</strong> DC charging tapers off dramatically past 80%.</div></div>
-<div class="tip-row"><span class="tip-icon">💰</span><div class="tip-text"><strong>Home is cheaper.</strong> Typically 3–5× cheaper than public DC.</div></div>
-<div class="tip-row"><span class="tip-icon">🌡️</span><div class="tip-text"><strong>Heat affects range.</strong> Expect 15–25% less than rated range in Sri Lanka.</div></div>
-<div class="tip-row"><span class="tip-icon">✏️</span><div class="tip-text"><strong>Edit history.</strong> Tap any saved charge to fix values if the actual differs.</div></div>
-</div>
-<div class="card">
-<div class="card-title">The math</div>
-<div style="background:var(--input-bg);padding:14px;border-radius:10px;font-family:monospace;font-size:0.78rem;color:var(--blueB);border-left:3px solid var(--blue);line-height:1.8">
-kWh = (Target% − Current%) ÷ 100 × Capacity<br>
-Billed = kWh ÷ Efficiency<br>
-Cost = Billed × Rate + Tax + Session Fee<br>
-Time = kWh ÷ Effective Charger Power
-</div>
+<div style="padding:8px 0;font-size:0.82rem;color:var(--dim);line-height:1.6"><strong style="color:var(--purpleB)">⚡ Above 80% is slow</strong> — DC charging tapers off dramatically.</div>
+<div style="padding:8px 0;font-size:0.82rem;color:var(--dim);line-height:1.6"><strong style="color:var(--purpleB)">💰 Home is cheaper</strong> — Typically 3–5× cheaper than public DC.</div>
+<div style="padding:8px 0;font-size:0.82rem;color:var(--dim);line-height:1.6"><strong style="color:var(--purpleB)">🌡️ Heat affects range</strong> — Expect 15–25% less than rated.</div>
+<div style="padding:8px 0;font-size:0.82rem;color:var(--dim);line-height:1.6"><strong style="color:var(--purpleB)">✏️ Edit history</strong> — Tap any saved charge to fix values.</div>
 </div>
 <div class="card" style="text-align:center;padding:16px">
 <p style="font-size:0.75rem;color:var(--faint);line-height:1.6;margin:0">© 2026 Shamil Sallay. All rights reserved.<br>EV Charge Calculator — Sri Lanka</p>
@@ -778,15 +719,32 @@ Time = kWh ÷ Effective Charger Power
 <script>
 var $=function(id){return document.getElementById(id)};
 var auth=null,db=null,fbFuncs=null,currentUser=null;
-var currentMode='public'; // home or public
-var currentCalcMode='cost'; // cost, money, time, duration
+var currentMode='public';
+var currentCalcMode='cost';
 var userVehicles=[];
 var editingVehicleId=null;
 var editingHistoryId=null;
 var confirmCallback=null;
 
-var builtInVehicles={};
-var providerRates=[];
+// Fallback vehicles in case Firestore hasn't loaded yet
+var FALLBACK_VEHICLES={
+'30.08':{name:'BYD Atto 1 Dynamic',capacity:30.08,range:300,dc:30},
+'38.88':{name:'BYD Atto 1 Premium',capacity:38.88,range:380,dc:40},
+'44.9':{name:'BYD Dolphin Dynamic 49',capacity:44.9,range:405,dc:60},
+'60.48':{name:'BYD Dolphin Premium',capacity:60.48,range:427,dc:80},
+'49.92':{name:'BYD Atto 3 Advanced',capacity:49.92,range:410,dc:70},
+'82.5':{name:'BYD Seal',capacity:82.5,range:520,dc:150},
+'71.8':{name:'BYD M6',capacity:71.8,range:420,dc:115},
+'64':{name:'MG4 EV Long Range',capacity:64,range:450,dc:135},
+'50.3':{name:'MG ZS EV',capacity:50.3,range:320,dc:76},
+'43.89':{name:'Dongfeng Box',capacity:43.89,range:320,dc:40},
+'51.87':{name:'Dongfeng Vigo',capacity:51.87,range:340,dc:60},
+'56.83':{name:'Dongfeng 007',capacity:56.83,range:480,dc:100},
+'61.06':{name:'OMODA E5',capacity:61.06,range:430,dc:80}
+};
+
+var builtInVehicles=JSON.parse(JSON.stringify(FALLBACK_VEHICLES));
+var providerRates=[{name:'Volt Charge',rate:150},{name:'ChargeNET Fast',rate:120},{name:'LECO Day',rate:89.23},{name:'LECO Peak',rate:113.85},{name:'LECO Off-Peak',rate:54.36},{name:'CEB Day',rate:83.08},{name:'CEB Peak',rate:107.70},{name:'CEB Off-Peak',rate:51.29}];
 var stationData=[];
 var stationReports={};
 var userLocation=null;
@@ -830,59 +788,31 @@ if(!navigator.onLine){icon.classList.add('show')}else{icon.classList.remove('sho
 window.addEventListener('online',updateOnlineStatus);
 window.addEventListener('offline',updateOnlineStatus);
 updateOnlineStatus();
-$('offlineIcon').addEventListener('click',function(){alert('You are offline. The app is using cached data. Some features like saving charges may not work until you reconnect.')});
+$('offlineIcon').addEventListener('click',function(){alert('You are offline. The app is using cached data.')});
 
 // ============ DEFAULT VEHICLE ============
 function getDefaultVehicle(){try{return localStorage.getItem('evDefaultVehicle')||''}catch(e){return ''}}
 function setDefaultVehicle(v){try{if(v)localStorage.setItem('evDefaultVehicle',v);else localStorage.removeItem('evDefaultVehicle')}catch(e){}}
 
-function applyDefaultVehicle(){
-var def=getDefaultVehicle();
-if(def){
-var v=getVehicleByKey(def);
-if(v){
-$('currentVehicleName').textContent=v.name;
-$('capacity')&&null;
-$('capacity').value=v.capacity;
-}
-}
-updateVehicleLabel();
+function getVehicleByKey(key){
+if(!key)return null;
+if(key.indexOf('custom_')===0){var id=key.substring(7);var v=userVehicles.find(function(x){return x._docId===id});if(v)return{name:v.name,capacity:v.capacity,range:v.range||0,dc:v.dc||0,custom:true,id:id};return null}
+if(builtInVehicles[key]){var b=builtInVehicles[key];return{name:b.name,capacity:b.capacity,range:b.range,dc:b.dc,custom:false,id:key}}
+return null;
 }
 
-function updateVehicleLabel(){
+function getCapacity(){
 var def=getDefaultVehicle();
 var v=getVehicleByKey(def);
-if(v){$('currentVehicleName').textContent=v.name}
-else{$('currentVehicleName').textContent='— No vehicle selected —'}
+return v?v.capacity:30.08;
 }
 
-// ============ LAST-USED RATE ============
-function getLastRate(networkKey){try{return localStorage.getItem('evLastRate_'+networkKey)||''}catch(e){return ''}}
-function setLastRate(networkKey,r){try{if(networkKey&&r)localStorage.setItem('evLastRate_'+networkKey,String(r))}catch(e){}}
-
-// ============ CONFIG ============
-function loadConfig(cb){
-try{
-var cached=localStorage.getItem('evConfig');
-if(cached){
-var c=JSON.parse(cached);
-if(c.vehicles&&Object.keys(c.vehicles).length>0)builtInVehicles=c.vehicles;
-if(c.rates&&c.rates.length>0)providerRates=c.rates;
-}
-}catch(e){}
-if(!db){if(cb)cb();return}
-Promise.all([
-fbFuncs.getDoc(fbFuncs.doc(db,'config','vehicles')),
-fbFuncs.getDoc(fbFuncs.doc(db,'config','rates'))
-]).then(function(results){
-var vDoc=results[0],rDoc=results[1];
-if(vDoc.exists()){var vData=vDoc.data();if(vData.list&&typeof vData.list==='object')builtInVehicles=vData.list;}
-if(rDoc.exists()){var rData=rDoc.data();if(rData.list&&Array.isArray(rData.list))providerRates=rData.list;}
-try{localStorage.setItem('evConfig',JSON.stringify({vehicles:builtInVehicles,rates:providerRates}))}catch(e){}
-if(cb)cb();
-}).catch(function(e){console.warn('Config load failed:',e);if(cb)cb()});
+function getCurrentVehicle(){
+var def=getDefaultVehicle();
+return getVehicleByKey(def);
 }
 
+// ============ BRAND GROUPING ============
 function brandForName(n){
 n=n||'';
 if(n.indexOf('BYD')===0)return 'BYD Sri Lanka';
@@ -893,17 +823,14 @@ if(n.indexOf('Dongfeng')===0)return 'Dongfeng';
 return 'Other';
 }
 
-function buildVehicleModalSelect(){
-var sel=$('modalVehicleSelect');
-if(!sel)return;
-sel.innerHTML='<option value="">— Choose —</option>';
-var byBrand={};
-Object.keys(builtInVehicles).forEach(function(k){
-var v=builtInVehicles[k];
-var brand=brandForName(v.name);
-if(!byBrand[brand])byBrand[brand]=[];
-byBrand[brand].push({key:k,v:v});
-});
+// ============ POPULATE VEHICLE DROPDOWNS ============
+function populateVehicleDropdowns(){
+// Main Calculate dropdown
+var sel=$('vehicleSelect');
+if(sel){
+var cur=sel.value||getDefaultVehicle();
+sel.innerHTML='<option value="">— Choose your vehicle —</option>';
+// My Garage first
 if(userVehicles.length>0){
 var grp=document.createElement('optgroup');
 grp.label='⭐ My Garage';
@@ -915,23 +842,7 @@ grp.appendChild(o);
 });
 sel.appendChild(grp);
 }
-Object.keys(byBrand).sort().forEach(function(brand){
-var grp=document.createElement('optgroup');
-grp.label=brand;
-byBrand[brand].sort(function(a,b){return (a.v.name||'').localeCompare(b.v.name||'')}).forEach(function(item){
-var o=document.createElement('option');
-o.value=item.key;
-o.textContent=item.v.name+' — '+item.v.capacity+' kWh';
-grp.appendChild(o);
-});
-sel.appendChild(grp);
-});
-}
-
-function buildIntroVehicleSelect(){
-var sel=$('introVehicle');
-if(!sel)return;
-sel.innerHTML='<option value="">— Choose —</option>';
+// Brands alphabetical
 var byBrand={};
 Object.keys(builtInVehicles).forEach(function(k){
 var v=builtInVehicles[k];
@@ -950,11 +861,76 @@ grp.appendChild(o);
 });
 sel.appendChild(grp);
 });
+if(cur)sel.value=cur;
 }
 
-function buildRateDropdown(){
+// Settings default vehicle dropdown
+var ssel=$('settingsDefaultVehicle');
+if(ssel){
+var scur=getDefaultVehicle();
+ssel.innerHTML='<option value="">— None —</option>';
+if(userVehicles.length>0){
+var grp=document.createElement('optgroup');
+grp.label='⭐ My Garage';
+userVehicles.forEach(function(v){
+var o=document.createElement('option');
+o.value='custom_'+v._docId;
+o.textContent=v.name;
+grp.appendChild(o);
+});
+ssel.appendChild(grp);
+}
+var sByBrand={};
+Object.keys(builtInVehicles).forEach(function(k){
+var v=builtInVehicles[k];
+var brand=brandForName(v.name);
+if(!sByBrand[brand])sByBrand[brand]=[];
+sByBrand[brand].push({key:k,v:v});
+});
+Object.keys(sByBrand).sort().forEach(function(brand){
+var grp=document.createElement('optgroup');
+grp.label=brand;
+sByBrand[brand].sort(function(a,b){return (a.v.name||'').localeCompare(b.v.name||'')}).forEach(function(item){
+var o=document.createElement('option');
+o.value=item.key;
+o.textContent=item.v.name;
+grp.appendChild(o);
+});
+ssel.appendChild(grp);
+});
+ssel.value=scur;
+}
+
+// Intro vehicle dropdown
+var isel=$('introVehicle');
+if(isel){
+isel.innerHTML='<option value="">— Choose —</option>';
+var iByBrand={};
+Object.keys(builtInVehicles).forEach(function(k){
+var v=builtInVehicles[k];
+var brand=brandForName(v.name);
+if(!iByBrand[brand])iByBrand[brand]=[];
+iByBrand[brand].push({key:k,v:v});
+});
+Object.keys(iByBrand).sort().forEach(function(brand){
+var grp=document.createElement('optgroup');
+grp.label=brand;
+iByBrand[brand].sort(function(a,b){return (a.v.name||'').localeCompare(b.v.name||'')}).forEach(function(item){
+var o=document.createElement('option');
+o.value=item.key;
+o.textContent=item.v.name+' — '+item.v.capacity+' kWh';
+grp.appendChild(o);
+});
+isel.appendChild(grp);
+});
+}
+}
+
+// ============ POPULATE RATE DROPDOWN ============
+function populateRateDropdown(){
 var sel=$('quickRate');
-var curVal=sel.value;
+if(!sel)return;
+var cur=sel.value;
 sel.innerHTML='<option value="">— Choose a provider —</option>';
 providerRates.forEach(function(p){
 var o=document.createElement('option');
@@ -969,48 +945,79 @@ cust.value='custom';
 cust.textContent='Custom — Enter manually';
 grp.appendChild(cust);
 sel.appendChild(grp);
-sel.value=curVal;
+sel.value=cur;
 }
 
-function populateSettingsVehicleDropdown(){
-var sel=$('settingsDefaultVehicle');
-if(!sel)return;
-var cur=getDefaultVehicle();
-sel.innerHTML='<option value="">— None —</option>';
-var byBrand={};
-Object.keys(builtInVehicles).forEach(function(k){
-var v=builtInVehicles[k];
-var brand=brandForName(v.name);
-if(!byBrand[brand])byBrand[brand]=[];
-byBrand[brand].push({key:k,v:v});
-});
-if(userVehicles.length>0){
-var grp=document.createElement('optgroup');grp.label='⭐ My Garage';
-userVehicles.forEach(function(v){var o=document.createElement('option');o.value='custom_'+v._docId;o.textContent=v.name;grp.appendChild(o)});
-sel.appendChild(grp);
+// ============ CONFIG LOADING ============
+function loadConfig(cb){
+// Try cache first
+try{
+var cached=localStorage.getItem('evConfig');
+if(cached){
+var c=JSON.parse(cached);
+if(c.vehicles&&Object.keys(c.vehicles).length>0)builtInVehicles=c.vehicles;
+if(c.rates&&c.rates.length>0)providerRates=c.rates;
 }
-Object.keys(byBrand).sort().forEach(function(brand){
-var grp=document.createElement('optgroup');grp.label=brand;
-byBrand[brand].sort(function(a,b){return (a.v.name||'').localeCompare(b.v.name||'')}).forEach(function(item){var o=document.createElement('option');o.value=item.key;o.textContent=item.v.name;grp.appendChild(o)});
-sel.appendChild(grp);
-});
-sel.value=cur;
+}catch(e){}
+// Populate immediately from fallback/cache so user isn't blocked
+populateVehicleDropdowns();
+populateRateDropdown();
+if(cb)cb();
+
+// Then fetch from Firestore in background
+if(!db)return;
+Promise.all([
+fbFuncs.getDoc(fbFuncs.doc(db,'config','vehicles')),
+fbFuncs.getDoc(fbFuncs.doc(db,'config','rates'))
+]).then(function(results){
+var vDoc=results[0],rDoc=results[1];
+if(vDoc.exists()){
+var vData=vDoc.data();
+if(vData.list&&typeof vData.list==='object')builtInVehicles=vData.list;
+}
+if(rDoc.exists()){
+var rData=rDoc.data();
+if(rData.list&&Array.isArray(rData.list))providerRates=rData.list;
+}
+try{localStorage.setItem('evConfig',JSON.stringify({vehicles:builtInVehicles,rates:providerRates}))}catch(e){}
+populateVehicleDropdowns();
+populateRateDropdown();
+populateSettingsDefault();
+applyDefaultVehicle();
+calc();
+}).catch(function(e){console.warn('Config fetch failed:',e)});
+}
+
+// ============ DEFAULT VEHICLE APPLY ============
+function applyDefaultVehicle(){
+var def=getDefaultVehicle();
+var sel=$('vehicleSelect');
+if(def&&sel&&sel.querySelector('option[value="'+def+'"]')){
+sel.value=def;
+}
+}
+
+function populateSettingsDefault(){
+var ssel=$('settingsDefaultVehicle');
+if(!ssel)return;
+ssel.value=getDefaultVehicle();
 }
 
 // ============ STATIONS ============
 function loadStations(cb){
-if(!db){if(cb)cb([]);return}
 try{
 var cached=localStorage.getItem('evStations');
 if(cached){var c=JSON.parse(cached);if(c&&c.length>0)stationData=c}
 }catch(e){}
+if(cb)cb();
+if(!db)return;
 fbFuncs.getDoc(fbFuncs.doc(db,'config','stations')).then(function(d){
 if(d.exists()&&d.data().list){
 stationData=d.data().list;
 try{localStorage.setItem('evStations',JSON.stringify(stationData))}catch(e){}
+renderStations();
 }
-if(cb)cb(stationData);
-}).catch(function(e){console.warn('Stations load failed:',e);if(cb)cb(stationData)});
+}).catch(function(e){console.warn('Stations fetch failed:',e)});
 }
 
 function loadStationReports(cb){
@@ -1026,7 +1033,7 @@ var existing=stationReports[key];
 if(!existing||r.ts>existing.ts)stationReports[key]=r;
 });
 if(cb)cb();
-}).catch(function(e){console.warn('Reports load failed:',e);if(cb)cb()});
+}).catch(function(e){console.warn(e);if(cb)cb()});
 }
 
 function getUserLocation(cb){
@@ -1039,9 +1046,8 @@ $('locationStatus').textContent='✓ Location found';
 cb({lat:pos.coords.latitude,lng:pos.coords.longitude});
 },
 function(err){
-var msg='Location access denied.';
-$('locationStatus').textContent='⚠ '+msg;
-cb(null,msg);
+$('locationStatus').textContent='⚠ Location denied';
+cb(null,'Location access denied.');
 },
 {enableHighAccuracy:true,timeout:10000,maximumAge:300000}
 );
@@ -1062,7 +1068,7 @@ var now=Date.now();
 var STALE_MS=24*60*60*1000;
 
 if(!stationData||stationData.length===0){
-$('stationsList').innerHTML='<div class="empty-state"><div class="es-icon">🔌</div><div class="es-text">Station data not loaded yet. Please sign in and refresh.</div></div>';
+$('stationsList').innerHTML='<div class="empty-state"><div class="es-icon">🔌</div><div class="es-text">Stations loading… If this persists, check your connection.</div></div>';
 return;
 }
 
@@ -1140,7 +1146,7 @@ submitReport(this.dataset.station,this.dataset.status,this);
 }
 
 function submitReport(stationId,status,btn){
-if(!currentUser){alert('Please sign in to report.');return}
+if(!currentUser){alert('Please sign in.');return}
 var meta=reportLabels[status];if(!meta)return;
 var rateKey='lastReport_'+currentUser.uid+'_'+stationId;
 var lastTs=parseInt(localStorage.getItem(rateKey)||'0');
@@ -1148,7 +1154,7 @@ var now=Date.now();
 var COOLDOWN_MS=60*60*1000;
 if(now-lastTs<COOLDOWN_MS){
 var remaining=Math.ceil((COOLDOWN_MS-(now-lastTs))/60000);
-alert('Please wait '+remaining+' more minute'+(remaining===1?'':'s')+' before reporting this again.');
+alert('Please wait '+remaining+' more minute'+(remaining===1?'':'s')+'.');
 return;
 }
 btn.disabled=true;
@@ -1160,7 +1166,7 @@ name:currentUser.email?currentUser.email.split('@')[0]:'User',ts:now
 }).then(function(){
 try{localStorage.setItem(rateKey,String(now))}catch(e){}
 btn.textContent='✓ Reported';
-showToast('Status reported. Thanks!','success');
+showToast('Reported — thanks!','success');
 setTimeout(function(){btn.textContent=originalText;btn.disabled=false;},1200);
 loadStationReports(function(){renderStations()});
 }).catch(function(e){
@@ -1184,12 +1190,10 @@ else{alert(err||'Could not get your location.')}
 
 // ============ RE-SEED ============
 $('reseedStationsBtn').addEventListener('click',function(){
-if(!currentUser){alert('Please sign in first.');return}
-if(!confirm('Overwrite stations list in Firestore? Continue?'))return;
+if(!currentUser){alert('Please sign in.');return}
+if(!confirm('Overwrite stations in Firestore?'))return;
 var btn=this;
-btn.disabled=true;
-btn.textContent='Seeding…';
-
+btn.disabled=true;btn.textContent='Seeding…';
 var seed=[
 {id:'volt-charge',name:'Volt Charge',badge:'LARGEST',detail:'Flat: <strong style="color:var(--blueB)">LKR 150/kWh</strong>',tel:'+94766700280',locations:[
 {name:'Volt Charge – Keells Jaffna',lat:9.6615,lng:80.0255,address:'Keells Supermarket, Jaffna'},
@@ -1223,22 +1227,21 @@ var seed=[
 {name:'CEB – Dambulla',lat:7.8696,lng:80.6482,address:'Kurunegala Rd, Dambulla'},
 {name:'CEB – Kandy',lat:7.2906,lng:80.6337,address:'Thilak Ratnayake Mawatha, Kandy'}
 ]},
-{id:'chargeup',name:'ChargeUP (Lanka IOC)',badge:'EXPANDING',detail:'Partnered with Lanka IOC. Rates vary.',tel:'+94112345678',locations:[
+{id:'chargeup',name:'ChargeUP (Lanka IOC)',badge:'EXPANDING',detail:'Partnered with Lanka IOC.',tel:'+94112345678',locations:[
 {name:'ChargeUP – Colombo (verify)',lat:6.9271,lng:79.8612,address:'Colombo area'}
 ]}
 ];
-
 fbFuncs.setDoc(fbFuncs.doc(db,'config','stations'),{list:seed})
 .then(function(){
 try{localStorage.setItem('evStations',JSON.stringify(seed))}catch(e){}
 stationData=seed;renderStations();
 btn.textContent='✓ Seeded';
-showToast('Stations updated.','success');
+showToast('Stations updated','success');
 setTimeout(function(){btn.textContent='📍 Re-seed stations (admin)';btn.disabled=false;},1500);
 })
 .catch(function(e){
 console.error(e);
-alert('Seed failed: '+e.message+'\n\nYou need to temporarily allow writes to the config collection.');
+alert('Seed failed: '+e.message+'\n\nTemporarily allow writes to config collection.');
 btn.textContent='📍 Re-seed stations (admin)';
 btn.disabled=false;
 });
@@ -1250,10 +1253,10 @@ if(!currentUser){alert('Please sign in.');return}
 var today=new Date().toISOString().slice(0,10);
 var rateKey='submissions_'+currentUser.uid+'_'+today;
 var count=parseInt(localStorage.getItem(rateKey)||'0');
-if(count>=5){alert('You can submit up to 5 stations per day.');return}
+if(count>=5){alert('Max 5 stations per day.');return}
 subCoordinates=null;
 $('subNetwork').value='';$('subName').value='';$('subAddress').value='';$('subType').value='DC Fast';$('subRate').value='';
-$('subLocationStatus').textContent='Tap "Get My Location" to continue';
+$('subLocationStatus').textContent='Tap "Get My Location"';
 $('subLocationStatus').style.color='var(--dim)';
 $('subCoords').textContent='';
 $('subSubmit').disabled=true;
@@ -1265,7 +1268,6 @@ $('subCancel').addEventListener('click',function(){$('submitStationModal').class
 $('subGetLocationBtn').addEventListener('click',function(){
 var btn=this;
 btn.disabled=true;btn.textContent='📍 Getting location…';
-$('subLocationStatus').textContent='Requesting GPS…';
 getUserLocation(function(loc,err){
 btn.disabled=false;btn.textContent='📍 Get My Location';
 if(loc){
@@ -1275,7 +1277,7 @@ $('subLocationStatus').style.color='#2ecc71';
 $('subCoords').textContent=loc.lat.toFixed(6)+', '+loc.lng.toFixed(6);
 checkSubmitReady();
 }else{
-$('subLocationStatus').textContent='⚠ '+(err||'Could not get location');
+$('subLocationStatus').textContent='⚠ '+(err||'Failed');
 $('subLocationStatus').style.color='#f87171';
 $('subSubmit').disabled=true;
 }
@@ -1290,37 +1292,18 @@ $('subNetwork').addEventListener('change',checkSubmitReady);
 $('subName').addEventListener('input',checkSubmitReady);
 
 $('subSubmit').addEventListener('click',function(){
-if(!currentUser){alert('Please sign in.');return}
-if(!subCoordinates){alert('Please capture location.');return}
-if(!$('subNetwork').value){alert('Please select a network.');return}
-if($('subName').value.trim().length<3){alert('Please enter a station name.');return}
-
+if(!currentUser||!subCoordinates)return;
+if(!$('subNetwork').value||$('subName').value.trim().length<3)return;
 var rate=$('subRate').value?parseFloat($('subRate').value):null;
-var sub={
-uid:currentUser.uid,email:currentUser.email,network:$('subNetwork').value,
-name:$('subName').value.trim(),address:$('subAddress').value.trim(),type:$('subType').value,
-rate:rate,lat:subCoordinates.lat,lng:subCoordinates.lng,ts:Date.now(),status:'pending'
-};
-
+var sub={uid:currentUser.uid,email:currentUser.email,network:$('subNetwork').value,name:$('subName').value.trim(),address:$('subAddress').value.trim(),type:$('subType').value,rate:rate,lat:subCoordinates.lat,lng:subCoordinates.lng,ts:Date.now(),status:'pending'};
 var btn=this;
 btn.disabled=true;btn.textContent='Submitting…';
-
-fbFuncs.addDoc(fbFuncs.collection(db,'station_submissions'),sub)
-.then(function(){
-try{
-var today=new Date().toISOString().slice(0,10);
-var rateKey='submissions_'+currentUser.uid+'_'+today;
-var count=parseInt(localStorage.getItem(rateKey)||'0');
-localStorage.setItem(rateKey,String(count+1));
-}catch(e){}
+fbFuncs.addDoc(fbFuncs.collection(db,'station_submissions'),sub).then(function(){
+try{var today=new Date().toISOString().slice(0,10);var rateKey='submissions_'+currentUser.uid+'_'+today;var count=parseInt(localStorage.getItem(rateKey)||'0');localStorage.setItem(rateKey,String(count+1))}catch(e){}
 btn.textContent='✓ Submitted!';
-showToast('Station submitted for review.','success');
-setTimeout(function(){
-$('submitStationModal').classList.remove('show');
-btn.textContent='Submit';btn.disabled=false;
-},1200);
-})
-.catch(function(e){
+showToast('Station submitted','success');
+setTimeout(function(){$('submitStationModal').classList.remove('show');btn.textContent='Submit';btn.disabled=false;},1200);
+}).catch(function(e){
 console.error(e);
 btn.textContent='⚠ Failed';
 setTimeout(function(){btn.textContent='Submit';btn.disabled=false;},1500);
@@ -1336,43 +1319,27 @@ introStep=1;
 updateIntroSlide();
 $('introContainer').classList.add('show');
 }
-
 function updateIntroSlide(){
-for(var i=1;i<=INTRO_TOTAL;i++){
-$('introSlide'+i).classList.remove('active');
-}
+for(var i=1;i<=INTRO_TOTAL;i++){$('introSlide'+i).classList.remove('active')}
 $('introSlide'+introStep).classList.add('active');
 var dots=$('introDots').children;
-for(var j=0;j<dots.length;j++){
-dots[j].classList.toggle('active',j===introStep-1);
-}
+for(var j=0;j<dots.length;j++){dots[j].classList.toggle('active',j===introStep-1)}
 $('introNext').textContent=introStep===INTRO_TOTAL?'Get Started →':'Next →';
 $('introSkip').textContent=introStep===1?'Skip':'Back';
 }
-
 $('introNext').addEventListener('click',function(){
-if(introStep<INTRO_TOTAL){
-introStep++;
-updateIntroSlide();
-}else{
-finishIntro();
-}
+if(introStep<INTRO_TOTAL){introStep++;updateIntroSlide()}
+else{finishIntro()}
 });
-
 $('introSkip').addEventListener('click',function(){
 if(introStep===1){finishIntro()}
 else{introStep--;updateIntroSlide()}
 });
-
 function finishIntro(){
 var v=$('introVehicle').value;
 var hr=$('introHomeRate').value;
 if(v){
 setDefaultVehicle(v);
-var vehicle=getVehicleByKey(v);
-if(vehicle){
-$('capacity').value=vehicle.capacity;
-}
 }
 if(hr){
 $('homeRate').value=hr;
@@ -1380,21 +1347,18 @@ $('homeRateSelect').value=hr;
 }
 try{localStorage.setItem('introDone','1')}catch(e){}
 $('introContainer').classList.remove('show');
+populateVehicleDropdowns();
+applyDefaultVehicle();
 calc();
 savePrefs();
-showToast('Welcome to EV Calc!',(window.location?'success':undefined));
+showToast('Welcome to EV Calc!','success');
 }
 
-// ============ AUTH ============
+// ============ FIREBASE INIT ============
 function onFirebaseReady(){
 auth=window.fbAuth;db=window.fbDB;fbFuncs=window.fbFuncs;
-loadConfig(function(){
-buildVehicleModalSelect();
-buildIntroVehicleSelect();
-buildRateDropdown();
-populateSettingsVehicleDropdown();
-loadStations(function(){
-renderStations();
+loadConfig();
+loadStations();
 fbFuncs.onAuthStateChanged(auth,function(user){
 currentUser=user;
 if(user){
@@ -1404,14 +1368,16 @@ $('settingsEmail').textContent=user.email;
 loadUserVehicles(function(){
 renderGarage();
 renderHistory();
-populateSettingsVehicleDropdown();
-updateVehicleLabel();
+populateVehicleDropdowns();
 applyDefaultVehicle();
 calc();
 });
 loadStationReports(function(){renderStations()});
+// Show intro if never completed
+if(!localStorage.getItem('introDone')){
+setTimeout(showIntro,600);
 }
-else{
+}else{
 $('authScreen').style.display='flex';
 $('mainApp').style.display='none';
 userVehicles=[];
@@ -1419,28 +1385,27 @@ stationReports={};
 renderStations();
 }
 });
-});
-});
 }
 if(window.firebaseReady){onFirebaseReady();}else{window.addEventListener('firebase-ready',onFirebaseReady);}
 
+// ============ AUTH ============
 $('tabLogin').addEventListener('click',function(){$('tabLogin').classList.add('active');$('tabSignup').classList.remove('active');$('loginForm').style.display='block';$('signupForm').style.display='none';$('resetForm').style.display='none';$('authTabs').style.display='flex';$('authSubtitle').textContent='Sign in to sync your charging history';$('authError').style.display='none';$('authInfo').style.display='none'});
 $('tabSignup').addEventListener('click',function(){$('tabSignup').classList.add('active');$('tabLogin').classList.remove('active');$('signupForm').style.display='block';$('loginForm').style.display='none';$('resetForm').style.display='none';$('authTabs').style.display='flex';$('authSubtitle').textContent='Create an account to save your history';$('authError').style.display='none';$('authInfo').style.display='none'});
 $('forgotBtn').addEventListener('click',function(){$('loginForm').style.display='none';$('signupForm').style.display='none';$('resetForm').style.display='block';$('authTabs').style.display='none';$('authSubtitle').textContent='Reset your password';$('authError').style.display='none';$('authInfo').style.display='none'});
 $('backToLoginBtn').addEventListener('click',function(){$('resetForm').style.display='none';$('loginForm').style.display='block';$('authTabs').style.display='flex';$('authSubtitle').textContent='Sign in to sync your charging history';$('authError').style.display='none';$('authInfo').style.display='none'});
 function showAuthError(m){$('authError').textContent=m;$('authError').style.display='block';$('authInfo').style.display='none'}
 function showAuthInfo(m){$('authInfo').textContent=m;$('authInfo').style.display='block';$('authError').style.display='none'}
-function friendlyAuthError(c){var m={'auth/invalid-email':'Please enter a valid email.','auth/user-not-found':'No account found.','auth/wrong-password':'Incorrect password.','auth/invalid-credential':'Invalid email or password.','auth/email-already-in-use':'Email already registered.','auth/weak-password':'Password must be 6+ characters.','auth/too-many-requests':'Too many attempts. Please wait.','auth/network-request-failed':'Network error.'};return m[c]||'Something went wrong.'}
+function friendlyAuthError(c){var m={'auth/invalid-email':'Invalid email.','auth/user-not-found':'No account found.','auth/wrong-password':'Incorrect password.','auth/invalid-credential':'Invalid email or password.','auth/email-already-in-use':'Email already registered.','auth/weak-password':'Password must be 6+ chars.','auth/too-many-requests':'Too many attempts.','auth/network-request-failed':'Network error.'};return m[c]||'Something went wrong.'}
 $('loginBtn').addEventListener('click',function(){var e=$('loginEmail').value.trim(),p=$('loginPassword').value;if(!e||!p){showAuthError('Enter email and password.');return}var b=this;b.disabled=true;b.textContent='Signing in...';fbFuncs.signInWithEmailAndPassword(auth,e,p).then(function(){b.disabled=false;b.textContent='Sign In'}).catch(function(err){b.disabled=false;b.textContent='Sign In';showAuthError(friendlyAuthError(err.code))})});
-$('signupBtn').addEventListener('click',function(){var e=$('signupEmail').value.trim(),p=$('signupPassword').value;if(!e||!p){showAuthError('Enter email and password.');return}if(p.length<6){showAuthError('Password must be 6+ characters.');return}var b=this;b.disabled=true;b.textContent='Creating...';fbFuncs.createUserWithEmailAndPassword(auth,e,p).then(function(){b.disabled=false;b.textContent='Create Account';if(!localStorage.getItem('introDone')){setTimeout(showIntro,500)}}).catch(function(err){b.disabled=false;b.textContent='Create Account';showAuthError(friendlyAuthError(err.code))})});
-$('resetBtn').addEventListener('click',function(){var e=$('resetEmail').value.trim();if(!e){showAuthError('Enter your email.');return}var b=this;b.disabled=true;b.textContent='Sending...';fbFuncs.sendPasswordResetEmail(auth,e).then(function(){b.disabled=false;b.textContent='Send Reset Link';showAuthInfo('✓ Reset link sent! Check your inbox.')}).catch(function(err){b.disabled=false;b.textContent='Send Reset Link';showAuthError(friendlyAuthError(err.code))})});
+$('signupBtn').addEventListener('click',function(){var e=$('signupEmail').value.trim(),p=$('signupPassword').value;if(!e||!p){showAuthError('Enter email and password.');return}if(p.length<6){showAuthError('Password must be 6+ chars.');return}var b=this;b.disabled=true;b.textContent='Creating...';fbFuncs.createUserWithEmailAndPassword(auth,e,p).then(function(){b.disabled=false;b.textContent='Create Account'}).catch(function(err){b.disabled=false;b.textContent='Create Account';showAuthError(friendlyAuthError(err.code))})});
+$('resetBtn').addEventListener('click',function(){var e=$('resetEmail').value.trim();if(!e){showAuthError('Enter email.');return}var b=this;b.disabled=true;b.textContent='Sending...';fbFuncs.sendPasswordResetEmail(auth,e).then(function(){b.disabled=false;b.textContent='Send Reset Link';showAuthInfo('✓ Reset link sent!')}).catch(function(err){b.disabled=false;b.textContent='Send Reset Link';showAuthError(friendlyAuthError(err.code))})});
 $('signoutBtn2').addEventListener('click',function(){if(confirm('Sign out?'))fbFuncs.signOut(auth)});
 
-// PASSWORD CHANGE
+// ============ PASSWORD ============
 $('cpBtn').addEventListener('click',function(){
 var cur=$('cpCurrent').value,nw=$('cpNew').value,conf=$('cpConfirm').value,msg=$('cpMsg');
-if(!cur||!nw||!conf){msg.style.color='#f87171';msg.textContent='Fill in all fields.';return}
-if(nw.length<6){msg.style.color='#f87171';msg.textContent='New password too short.';return}
+if(!cur||!nw||!conf){msg.style.color='#f87171';msg.textContent='Fill all fields.';return}
+if(nw.length<6){msg.style.color='#f87171';msg.textContent='Password too short.';return}
 if(nw!==conf){msg.style.color='#f87171';msg.textContent='Passwords do not match.';return}
 if(!currentUser){msg.style.color='#f87171';msg.textContent='Not signed in.';return}
 var b=this;b.disabled=true;b.textContent='Updating...';msg.textContent='';
@@ -1448,7 +1413,7 @@ var cred=fbFuncs.EmailAuthProvider.credential(currentUser.email,cur);
 fbFuncs.reauthenticateWithCredential(currentUser,cred)
 .then(function(){return fbFuncs.updatePassword(currentUser,nw)})
 .then(function(){msg.style.color='#2ecc71';msg.textContent='✓ Password updated.';$('cpCurrent').value='';$('cpNew').value='';$('cpConfirm').value=''})
-.catch(function(err){var m='Could not update.';if(err.code==='auth/wrong-password'||err.code==='auth/invalid-credential')m='Current password incorrect.';else if(err.code==='auth/weak-password')m='Password too weak.';else if(err.code==='auth/too-many-requests')m='Too many attempts.';msg.style.color='#f87171';msg.textContent=m})
+.catch(function(err){var m='Could not update.';if(err.code==='auth/wrong-password'||err.code==='auth/invalid-credential')m='Current password incorrect.';else if(err.code==='auth/weak-password')m='Password too weak.';msg.style.color='#f87171';msg.textContent=m})
 .then(function(){b.disabled=false;b.textContent='Update Password'});
 });
 
@@ -1461,17 +1426,10 @@ function deleteRecord(ts,cb){getAllRecords(function(a){var t=a.find(function(x){
 function clearAllRecords(cb){getAllRecords(function(a){var p=a.map(function(x){return fbFuncs.deleteDoc(fbFuncs.doc(db,'users',currentUser.uid,'history',x._docId))});Promise.all(p).then(function(){if(cb)cb(true)}).catch(function(){if(cb)cb(false)})})}
 
 function getUserVehiclesRef(){return fbFuncs.collection(db,'users',currentUser.uid,'vehicles')}
-function loadUserVehicles(cb){if(!currentUser){userVehicles=[];if(cb)cb();return}fbFuncs.getDocs(getUserVehiclesRef()).then(function(s){userVehicles=[];s.forEach(function(d){var data=d.data();data._docId=d.id;userVehicles.push(data)});if(cb)cb()}).catch(function(e){console.error(e);userVehicles=[];if(cb)cb()})}
-function addUserVehicle(v,cb){if(!currentUser){if(cb)cb(false);return}fbFuncs.addDoc(getUserVehiclesRef(),v).then(function(ref){v._docId=ref.id;userVehicles.push(v);if(cb)cb(true)}).catch(function(e){console.error(e);if(cb)cb(false)})}
-function updateUserVehicle(id,updates,cb){fbFuncs.updateDoc(fbFuncs.doc(db,'users',currentUser.uid,'vehicles',id),updates).then(function(){var idx=userVehicles.findIndex(function(v){return v._docId===id});if(idx>=0)Object.assign(userVehicles[idx],updates);if(cb)cb(true)}).catch(function(e){console.error(e);if(cb)cb(false)})}
-function deleteUserVehicle(id,cb){fbFuncs.deleteDoc(fbFuncs.doc(db,'users',currentUser.uid,'vehicles',id)).then(function(){userVehicles=userVehicles.filter(function(v){return v._docId!==id});if(cb)cb(true)}).catch(function(e){console.error(e);if(cb)cb(false)})}
-
-function getVehicleByKey(key){
-if(!key)return null;
-if(key.indexOf('custom_')===0){var id=key.substring(7);var v=userVehicles.find(function(x){return x._docId===id});if(v)return{name:v.name,capacity:v.capacity,range:v.range||0,dc:v.dc||0,custom:true,id:id};return null}
-if(builtInVehicles[key]){var b=builtInVehicles[key];return{name:b.name,capacity:b.capacity,range:b.range,dc:b.dc,custom:false,id:key}}
-return null;
-}
+function loadUserVehicles(cb){if(!currentUser){userVehicles=[];if(cb)cb();return}fbFuncs.getDocs(getUserVehiclesRef()).then(function(s){userVehicles=[];s.forEach(function(d){var data=d.data();data._docId=d.id;userVehicles.push(data)});if(cb)cb()}).catch(function(e){userVehicles=[];if(cb)cb()})}
+function addUserVehicle(v,cb){if(!currentUser){if(cb)cb(false);return}fbFuncs.addDoc(getUserVehiclesRef(),v).then(function(ref){v._docId=ref.id;userVehicles.push(v);if(cb)cb(true)}).catch(function(e){if(cb)cb(false)})}
+function updateUserVehicle(id,updates,cb){fbFuncs.updateDoc(fbFuncs.doc(db,'users',currentUser.uid,'vehicles',id),updates).then(function(){var idx=userVehicles.findIndex(function(v){return v._docId===id});if(idx>=0)Object.assign(userVehicles[idx],updates);if(cb)cb(true)}).catch(function(e){if(cb)cb(false)})}
+function deleteUserVehicle(id,cb){fbFuncs.deleteDoc(fbFuncs.doc(db,'users',currentUser.uid,'vehicles',id)).then(function(){userVehicles=userVehicles.filter(function(v){return v._docId!==id});if(cb)cb(true)}).catch(function(e){if(cb)cb(false)})}
 
 // ============ NAV ============
 document.querySelectorAll('.nav-item').forEach(function(btn){
@@ -1480,13 +1438,11 @@ document.querySelectorAll('.nav-item').forEach(function(b){b.classList.remove('a
 document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
 btn.classList.add('active');
 document.getElementById('page-'+btn.dataset.page).classList.add('active');
-if(btn.dataset.page==='garage')renderGarage();
 if(btn.dataset.page==='history')renderHistory();
 if(btn.dataset.page==='stations')loadStationReports(function(){renderStations()});
 });
 });
 
-// ============ HELP ============
 $('showHelpBtn').addEventListener('click',function(){
 document.querySelectorAll('.nav-item').forEach(function(b){b.classList.remove('active')});
 document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
@@ -1520,13 +1476,16 @@ function setCalcMode(m){
 currentCalcMode=m;
 document.querySelectorAll('.mode-card').forEach(function(b){b.classList.toggle('active',b.dataset.mode===m)});
 $('modeDesc').textContent=modeDescriptions[m];
-$('moneyInputs').style.display=m==='money'?'block':'none';
-$('durationInputs').style.display=m==='duration'?'block':'none';
+var targetVis=(m==='cost'||m==='time');
+$('targetField').style.display=targetVis?'block':'none';
+$('presetsRow').style.display=targetVis?'flex':'none';
+$('moneyInputField').style.display=(m==='money')?'block':'none';
+$('durationInputField').style.display=(m==='duration')?'block':'none';
+$('durationPresets').style.display=(m==='duration')?'flex':'none';
 try{localStorage.setItem('evCalcMode',m)}catch(e){}
 calc();savePrefs();
 }
 
-$('advToggle').addEventListener('click',function(){this.classList.toggle('open');var c=$('advContent');c.style.display=c.style.display==='none'?'block':'none'});
 $('compareToggle').addEventListener('click',function(){this.classList.toggle('open');var c=$('compareContent'),a=$('compareArrow');if(c.style.display==='none'){c.style.display='block';a.style.transform='rotate(90deg)'}else{c.style.display='none';a.style.transform='rotate(0)'}});
 $('timerToggle').addEventListener('click',function(){this.classList.toggle('open');var c=$('timerContent'),a=$('timerArrow');if(c.style.display==='none'){c.style.display='block';a.style.transform='rotate(90deg)'}else{c.style.display='none';a.style.transform='rotate(0)'}});
 
@@ -1540,7 +1499,6 @@ function getHomePower(){if($('homeChargerPower').value==='custom')return parseFl
 function getPublicPower(){if($('chargerPower').value==='custom')return parseFloat($('customPublicPower').value)||30;return parseFloat($('chargerPower').value)||30}
 function getEffectivePower(){var p=currentMode==='home'?getHomePower():getPublicPower();var eff=currentMode==='home'?(parseFloat($('homeEfficiency').value)||88):(parseFloat($('efficiency').value)||90);return{power:p,eff:eff,effPower:p*(eff/100)}}
 function getRate(){return currentMode==='home'?(parseFloat($('homeRate').value)||0):(parseFloat($('rate').value)||0)}
-function getCapacity(){var def=getDefaultVehicle();var v=getVehicleByKey(def);return v?v.capacity:30.08}
 
 // ============ MAIN CALCULATION ============
 var currentCalc=null;
@@ -1558,68 +1516,53 @@ var eff=getEffectivePower();
 var rate=getRate();
 var fee=parseFloat($('sessionFee').value)||0;
 var taxPct=parseFloat($('tax').value)||0;
-
-var vehicle=getVehicleByKey(getDefaultVehicle());
+var vehicle=getCurrentVehicle();
 var rangeMax=vehicle?vehicle.range:0;
 
 var result={};
-var label='Total Cost';
-var value='LKR 0.00';
-var t1='0.00',t1L='kWh';
-var t2='—',t2L='Time';
-var t3='—',t3L='Range';
+var label='Total Cost',value='LKR 0.00';
+var t1='0.00',t1L='kWh',t2='—',t2L='Time',t3='—',t3L='Range';
 var detail='';
 
 if(currentCalcMode==='cost'){
 var needed=(tgt>cur)?((tgt-cur)/100)*capacity:0;
 var billed=needed/(eff.eff/100);
-var base=billed*rate;
-var taxAmt=base*(taxPct/100);
-var total=base+taxAmt+fee;
-label='Total Cost';
-value=lkr(total);
+var base=billed*rate;var taxAmt=base*(taxPct/100);var total=base+taxAmt+fee;
+label='Total Cost';value=lkr(total);
 t1=needed.toFixed(1);t1L='kWh Added';
-if(needed>0&&eff.effPower>0){
-var hrs=needed/eff.effPower;
-var h=Math.floor(hrs);var m=Math.round((hrs-h)*60);
-if(m===60){h++;m=0}
-t2=(h>=1?(h+'h '+m+'m'):(m+' min'));t2L='Time';
-}else{t2='—';t2L='Time'}
+if(needed>0&&eff.effPower>0){var hrs=needed/eff.effPower;var h=Math.floor(hrs);var m=Math.round((hrs-h)*60);if(m===60){h++;m=0}t2=(h>=1?(h+'h '+m+'m'):(m+' min'))}else{t2='—'}
+t2L='Time';
 if(rangeMax>0){t3=((tgt/100)*rangeMax).toFixed(0);t3L='km Range'}else{t3='—';t3L='Range'}
 detail='Billed '+billed.toFixed(2)+' kWh at LKR '+rate.toFixed(2)+'/kWh';
+$('moneyWarn').style.display='none';
 result={mode:'cost',capacity:capacity,cur:cur,tgt:tgt,rate:rate,needed:needed,billed:billed,total:total,vehicleKey:getDefaultVehicle(),vehicleName:vehicle?vehicle.name:'—'};
 }
 
 else if(currentCalcMode==='money'){
 var money=parseFloat($('moneyAmount').value)||0;
 var kWhCanBuy=money/rate;
-var billedKwh=kWhCanBuy;
-var usableKwh=billedKwh*(eff.eff/100);
+var usableKwh=kWhCanBuy*(eff.eff/100);
 var newPercent=cur+(usableKwh/capacity)*100;
 var capped=newPercent>100;
 var actualPercent=capped?100:newPercent;
 var actualUsable=(actualPercent-cur)/100*capacity;
 if(actualUsable<0)actualUsable=0;
 var actualBilled=actualUsable/(eff.eff/100);
-var actualCost=actualBilled*rate;
 var actualTime=eff.effPower>0?(actualUsable/eff.effPower):0;
-
 label='Target Reached';
 value=actualPercent.toFixed(0)+'%';
 t1=actualUsable.toFixed(1);t1L='kWh Added';
 if(actualTime>0){var hrs2=actualTime;var h2=Math.floor(hrs2);var m2=Math.round((hrs2-h2)*60);if(m2===60){h2++;m2=0}t2=(h2>=1?(h2+'h '+m2+'m'):(m2+' min'))}else{t2='—'}
 t2L='Time';
 if(rangeMax>0){t3=((actualPercent/100)*rangeMax).toFixed(0);t3L='km Range'}else{t3='—';t3L='Range'}
-
-var warning=$('moneyWarning');
+var warn=$('moneyWarn');
 if(capped){
 var fullNeeded=(100-cur)/100*capacity;
 var fullBilled=fullNeeded/(eff.eff/100);
 var fullCost=fullBilled*rate;
-warning.style.display='block';
-warning.innerHTML='⚠️ LKR '+money.toFixed(0)+' is more than a full charge. You\'d reach 100% for about LKR '+fullCost.toFixed(0)+' — the rest wouldn\'t be used.<br><br><button type="button" class="preset-btn" style="margin-top:6px" onclick="document.getElementById(\'moneyAmount\').value=\''+fullCost.toFixed(0)+'\';calc()">Use LKR '+fullCost.toFixed(0)+'</button>';
-}else{warning.style.display='none'}
-
+warn.style.display='block';
+warn.innerHTML='⚠️ LKR '+money.toFixed(0)+' is more than a full charge. You\'d reach 100% for about LKR '+fullCost.toFixed(0)+'.<br><br><button type="button" class="preset-btn" style="margin-top:6px" onclick="document.getElementById(\'moneyAmount\').value=\''+fullCost.toFixed(0)+'\';calc()">Use LKR '+fullCost.toFixed(0)+'</button>';
+}else{warn.style.display='none'}
 detail='Spending LKR '+money.toFixed(0)+' at LKR '+rate.toFixed(2)+'/kWh';
 result={mode:'money',capacity:capacity,cur:cur,tgt:actualPercent,rate:rate,needed:actualUsable,billed:actualBilled,total:money,vehicleKey:getDefaultVehicle(),vehicleName:vehicle?vehicle.name:'—',moneyRequested:true};
 }
@@ -1627,16 +1570,15 @@ result={mode:'money',capacity:capacity,cur:cur,tgt:actualPercent,rate:rate,neede
 else if(currentCalcMode==='time'){
 var needed3=(tgt>cur)?((tgt-cur)/100)*capacity:0;
 if(needed3>0&&eff.effPower>0){
-var hrs3=needed3/eff.effPower;
-var h3=Math.floor(hrs3);var m3=Math.round((hrs3-h3)*60);
+var hrs3=needed3/eff.effPower;var h3=Math.floor(hrs3);var m3=Math.round((hrs3-h3)*60);
 if(m3===60){h3++;m3=0}
-label='Time Required';
-value=h3>=1?(h3+'h '+m3+'m'):(m3+' min');
+label='Time Required';value=h3>=1?(h3+'h '+m3+'m'):(m3+' min');
 }else{label='Time Required';value='—'}
 t1=needed3.toFixed(1);t1L='kWh';
 t2=tgt+'%';t2L='Target';
 if(rangeMax>0){t3=((tgt/100)*rangeMax).toFixed(0);t3L='km Range'}else{t3='—';t3L='Range'}
 detail='At '+eff.effPower.toFixed(1)+' kW effective rate';
+$('moneyWarn').style.display='none';
 result={mode:'time',capacity:capacity,cur:cur,tgt:tgt,rate:rate,needed:needed3,total:0,vehicleKey:getDefaultVehicle(),vehicleName:vehicle?vehicle.name:'—'};
 }
 
@@ -1650,24 +1592,20 @@ var capped2=newPercent2>100;
 var actualPercent2=capped2?100:newPercent2;
 var actualUsable2=(actualPercent2-cur)/100*capacity;
 if(actualUsable2<0)actualUsable2=0;
-var actualTime2=eff.effPower>0?(actualUsable2/eff.effPower):0;
 var billed2=actualUsable2/(eff.eff/100);
 var cost2=billed2*rate;
-
 label='Target Reached';
 value=actualPercent2.toFixed(0)+'%';
 t1=actualUsable2.toFixed(1);t1L='kWh Added';
 t2=lkr(cost2);t2L='Cost';
 if(rangeMax>0){t3=((actualPercent2/100)*rangeMax).toFixed(0);t3L='km Range'}else{t3='—';t3L='Range'}
-
-var warning2=$('durationWarning');
+var warn2=$('moneyWarn');
 if(capped2){
 var timeToFull=(actualUsable2/eff.effPower)*60;
 var h4=Math.floor(timeToFull/60);var m4=Math.round(timeToFull%60);
-warning2.style.display='block';
-warning2.innerHTML='⚠️ Your car will hit 100% at about '+(h4>=1?(h4+'h '+m4+'m'):(m4+' min'))+'. Any additional time won\'t add charge.';
-}else{warning2.style.display='none'}
-
+warn2.style.display='block';
+warn2.innerHTML='⚠️ Car hits 100% at about '+(h4>=1?(h4+'h '+m4+'m'):(m4+' min'))+'. Extra time won\'t add charge.';
+}else{warn2.style.display='none'}
 detail='Charging for '+(mins>=60?Math.round(mins/60*10)/10+' hr':mins+' min')+' at '+eff.effPower.toFixed(1)+' kW';
 result={mode:'duration',capacity:capacity,cur:cur,tgt:actualPercent2,rate:rate,needed:actualUsable2,billed:billed2,total:cost2,vehicleKey:getDefaultVehicle(),vehicleName:vehicle?vehicle.name:'—'};
 }
@@ -1679,12 +1617,11 @@ $('tile2').textContent=t2;$('tile2Lbl').textContent=t2L;
 $('tile3').textContent=t3;$('tile3Lbl').textContent=t3L;
 $('resultDetail').textContent=detail;
 
-// Taper warning
 if(tgt>80&&(currentCalcMode==='cost'||currentCalcMode==='time')){
 var msg;
-if(tgt>=100)msg='⚠️ Charging to 100% — the last 10% can take as long as the first 50%.';
-else if(tgt>=90)msg='⚡ Charging above 90% is about 30% slower than below 80%.';
-else msg='⚡ Charging above 80% is slow (taper). Stop at 80% unless needed.';
+if(tgt>=100)msg='⚠️ Charging to 100% — the last 10% takes as long as the first 50%.';
+else if(tgt>=90)msg='⚡ Above 90% is much slower.';
+else msg='⚡ Above 80% is slow (taper).';
 $('taperHint').textContent=msg;$('taperHint').style.display='block';
 }else{$('taperHint').style.display='none'}
 
@@ -1697,8 +1634,6 @@ if(currentCalcMode==='cost'||currentCalcMode==='time'){
 if(currentCalcMode==='cost')updateNetworkCompare(billed,taxPct,fee);
 updatePetrolCompare(result.needed,result.mode==='cost'?result.total:0,vehicle);
 }
-
-updateVehicleLabel();
 }
 
 function updateNetworkCompare(billed,taxPct,fee){
@@ -1724,42 +1659,45 @@ $('petrolCost95').textContent=lkr(litres*fuel95);
 $('dieselCost').textContent=lkr(litres*diesel);
 }
 
-// ============ INPUTS ============
-$('currentNum').addEventListener('input',function(){
-var raw=this.value;
-if(raw===''||raw==='-')return;
-var v=parseInt(raw);
-if(isNaN(v))return;
-if(v<1)v=1;if(v>100)v=100;
-$('current').value=v;
+// ============ INPUT HANDLERS ============
+$('vehicleSelect').addEventListener('change',function(){
+var v=this.value;
+if(v){setDefaultVehicle(v)}
 calc();savePrefs();
+});
+
+$('settingsDefaultVehicle').addEventListener('change',function(){
+setDefaultVehicle(this.value);
+applyDefaultVehicle();
+var sel=$('vehicleSelect');
+if(sel&&this.value)sel.value=this.value;
+calc();
+});
+
+$('currentNum').addEventListener('input',function(){
+var raw=this.value;if(raw===''||raw==='-')return;
+var v=parseInt(raw);if(isNaN(v))return;
+if(v<1)v=1;if(v>100)v=100;
+$('current').value=v;calc();savePrefs();
 });
 $('currentNum').addEventListener('blur',function(){var v=clamp(this.value,1,100);this.value=v;$('current').value=v;calc();savePrefs()});
 $('targetNum').addEventListener('input',function(){
-var raw=this.value;
-if(raw===''||raw==='-')return;
-var v=parseInt(raw);
-if(isNaN(v))return;
+var raw=this.value;if(raw===''||raw==='-')return;
+var v=parseInt(raw);if(isNaN(v))return;
 if(v<1)v=1;if(v>100)v=100;
-$('target').value=v;
-calc();savePrefs();
+$('target').value=v;calc();savePrefs();
 });
 $('targetNum').addEventListener('blur',function(){var v=clamp(this.value,1,100);this.value=v;$('target').value=v;calc();savePrefs()});
 $('current').addEventListener('input',function(){$('currentNum').value=this.value;calc()});
 $('target').addEventListener('input',function(){$('targetNum').value=this.value;calc()});
-
 $('moneyAmount').addEventListener('input',calc);
 $('moneyAmount').addEventListener('change',savePrefs);
 $('durationMin').addEventListener('input',calc);
 $('durationMin').addEventListener('change',savePrefs);
 
 document.querySelectorAll('.preset-btn[data-duration]').forEach(function(b){
-b.addEventListener('click',function(){
-$('durationMin').value=this.dataset.duration;
-calc();savePrefs();
+b.addEventListener('click',function(){$('durationMin').value=this.dataset.duration;calc();savePrefs()});
 });
-});
-
 document.querySelectorAll('.preset-btn[data-preset]').forEach(function(b){
 b.addEventListener('click',function(){
 var p=this.dataset.preset.split(',');
@@ -1768,93 +1706,47 @@ $('currentNum').value=p[0];$('targetNum').value=p[1];
 calc();savePrefs();
 });
 });
-
 document.querySelectorAll('.preset-btn[data-reminder]').forEach(function(b){
 b.addEventListener('click',function(){
 var v=this.dataset.reminder,mins;
 if(v==='auto'){
-var cap=getCapacity();
-var cur=parseFloat($('current').value)||0;
-var tgt=parseFloat($('target').value)||0;
-var needed=(tgt>cur)?((tgt-cur)/100)*cap:0;
-var eff=getEffectivePower();
+var cap=getCapacity();var cur=parseFloat($('current').value)||0;var tgt=parseFloat($('target').value)||0;
+var needed=(tgt>cur)?((tgt-cur)/100)*cap:0;var eff=getEffectivePower();
 mins=eff.effPower>0?Math.max(5,Math.round((needed/eff.effPower)*60)):30;
 }else mins=parseInt(v);
 if(!('Notification' in window)){alert('Notifications not supported.');return}
 Notification.requestPermission().then(function(p){
 if(p==='granted'){
 setTimeout(function(){try{new Notification('⚡ Charging Reminder',{body:'Your estimated charge time is up.'})}catch(e){}},mins*60*1000);
-showToast('Reminder set for '+mins+' minutes','success');
+showToast('Reminder set for '+mins+' min','success');
 }else{alert('Notifications blocked.')}
 });
 });
 });
 
 $('quickRate').addEventListener('change',function(){
-if(this.value&&this.value!=='custom'){
-$('rate').value=this.value;
-calc();savePrefs();
-setLastRate(this.value,$('rate').value);
-}else if(this.value==='custom'){$('rate').value='';$('rate').focus();calc()}
-});
-$('rate').addEventListener('change',function(){
-var v=$('quickRate').value;
-if(v&&v!=='custom')setLastRate(v,this.value);
-calc();savePrefs();
+if(this.value&&this.value!=='custom'){$('rate').value=this.value;calc();savePrefs()}
+else if(this.value==='custom'){$('rate').value='';$('rate').focus();calc()}
 });
 $('homeRateSelect').addEventListener('change',function(){if(this.value&&this.value!=='custom'){$('homeRate').value=this.value;calc();savePrefs()}else if(this.value==='custom'){$('homeRate').value='';$('homeRate').focus();calc()}});
 $('homeChargerPower').addEventListener('change',function(){if(this.value==='custom'){$('customHomePowerField').style.display='block';$('customHomePower').focus()}else{$('customHomePowerField').style.display='none'}calc();savePrefs()});
 $('chargerPower').addEventListener('change',function(){if(this.value==='custom'){$('customPublicPowerField').style.display='block';$('customPublicPower').focus()}else{$('customPublicPowerField').style.display='none'}calc();savePrefs()});
 
-['setFuel92','setFuel95','setDiesel','setPetrolKm'].forEach(function(id){$(id).addEventListener('change',function(){savePrefs();calc()})});
-$('sessionFee').addEventListener('change',function(){savePrefs();calc()});
-$('tax').addEventListener('change',function(){savePrefs();calc()});
-$('settingsDefaultVehicle').addEventListener('change',function(){setDefaultVehicle(this.value);applyDefaultVehicle();calc()});
-
-// ============ VEHICLE MODAL ============
-$('changeVehicleBtn').addEventListener('click',function(){
-buildVehicleModalSelect();
-$('modalVehicleSelect').value=getDefaultVehicle();
-$('modalCustomCapacity').value='';
-$('vehiclePickModal').classList.add('show');
-});
-$('vpCancel').addEventListener('click',function(){$('vehiclePickModal').classList.remove('show')});
-$('vpSave').addEventListener('click',function(){
-var v=$('modalVehicleSelect').value;
-var custom=parseFloat($('modalCustomCapacity').value);
-if(v){setDefaultVehicle(v)}
-else if(custom&&custom>0){
-// Save custom one-off vehicle
-var payload={name:'Custom '+custom+' kWh',capacity:custom,range:0,dc:0};
-addUserVehicle(payload,function(ok){
-if(ok){
-setDefaultVehicle('custom_'+userVehicles[userVehicles.length-1]._docId);
-applyDefaultVehicle();
-}
-});
-}
-$('vehiclePickModal').classList.remove('show');
-applyDefaultVehicle();
-calc();savePrefs();
-});
+['setFuel92','setFuel95','setDiesel','setPetrolKm','sessionFee','tax'].forEach(function(id){$(id).addEventListener('change',function(){savePrefs();calc()})});
 
 // ============ GARAGE ============
 function renderGarage(){
 var list=$('garageList');
-if(!userVehicles||userVehicles.length===0){list.innerHTML='<div class="empty-state"><div class="es-icon">🚗</div><div class="es-text"><strong>No custom vehicles yet.</strong><br>Tap "➕ Add" to save your car. It will appear in your vehicle selector.</div></div>'}
+if(!userVehicles||userVehicles.length===0){list.innerHTML='<div class="empty-state"><div class="es-icon">🚗</div><div class="es-text"><strong>No custom vehicles yet.</strong><br>Tap "➕ Add" to save your car.</div></div>'}
 else{
 var sorted=userVehicles.slice().sort(function(a,b){return (a.name||'').localeCompare(b.name||'')});
 list.innerHTML=sorted.map(function(v){var active=(getDefaultVehicle()==='custom_'+v._docId)?' active':'';var activeBadge=active?'<span class="vc-active-badge">Active</span>':'';var specs=v.capacity+' kWh';if(v.range)specs+=' · '+v.range+' km';if(v.dc)specs+=' · '+v.dc+' kW';return '<div class="vehicle-card'+active+'"><div class="vc-name">'+v.name+activeBadge+'</div><div class="vc-specs">'+specs+'</div><div class="vc-actions"><button data-edit="'+v._docId+'">✏️</button><button data-delete="'+v._docId+'">🗑️</button></div></div>'}).join('');
 list.querySelectorAll('[data-edit]').forEach(function(b){b.addEventListener('click',function(){openVehicleModal(this.dataset.edit)})});
 list.querySelectorAll('[data-delete]').forEach(function(b){b.addEventListener('click',function(){
 var id=this.dataset.delete;
-askConfirm('Delete Vehicle','Delete this vehicle? This cannot be undone.',function(){
+askConfirm('Delete Vehicle','Delete this vehicle?',function(){
 deleteUserVehicle(id,function(ok){
-if(ok){
-if(getDefaultVehicle()==='custom_'+id)setDefaultVehicle('');
-renderGarage();populateSettingsVehicleDropdown();updateVehicleLabel();calc();
-showToast('Vehicle deleted','success');
-}
+if(ok){if(getDefaultVehicle()==='custom_'+id)setDefaultVehicle('');renderGarage();populateVehicleDropdowns();showToast('Vehicle deleted','success');calc()}
 });
 });
 })});
@@ -1872,17 +1764,17 @@ $('vmCancel').addEventListener('click',function(){$('vehicleModal').classList.re
 $('vmSave').addEventListener('click',function(){
 var name=$('vmName').value.trim();var make=$('vmMake').value.trim();var model=$('vmModel').value.trim();
 var cap=parseFloat($('vmCapacity').value);var range=parseFloat($('vmRange').value)||0;var dc=parseFloat($('vmDC').value)||0;
-if(!name&&!make&&!model){alert('Please enter a name for the vehicle.');return}
+if(!name&&!make&&!model){alert('Enter a name.');return}
 if(!name){name=(make+' '+model).trim()}
-if(!cap||cap<=0){alert('Please enter a valid battery capacity.');return}
+if(!cap||cap<=0){alert('Enter valid capacity.');return}
 var payload={name:name,make:make,model:model,capacity:cap,range:range,dc:dc};
 if(editingVehicleId){
 updateUserVehicle(editingVehicleId,payload,function(ok){
-if(ok){$('vehicleModal').classList.remove('show');renderGarage();populateSettingsVehicleDropdown();updateVehicleLabel();calc();showToast('Vehicle updated','success')}
+if(ok){$('vehicleModal').classList.remove('show');renderGarage();populateVehicleDropdowns();showToast('Vehicle updated','success');calc()}
 });
 }else{
 addUserVehicle(payload,function(ok){
-if(ok){$('vehicleModal').classList.remove('show');renderGarage();populateSettingsVehicleDropdown();showToast('Vehicle added','success')}
+if(ok){$('vehicleModal').classList.remove('show');renderGarage();populateVehicleDropdowns();showToast('Vehicle added','success')}
 });
 }
 });
@@ -1909,7 +1801,6 @@ var filter=$('historyVehicleFilter').value;
 var filtered=filter==='all'?hist:hist.filter(function(x){return x.vehicleKey===filter});
 var list=$('historyList'),stats=$('historyStats'),cb=$('clearBtn'),er=$('exportRow'),sc=$('summaryCard');
 
-// Populate filter
 var hf=$('historyVehicleFilter');var curHf=hf.value;
 hf.innerHTML='<option value="all">All vehicles</option>';
 if(userVehicles.length>0){userVehicles.forEach(function(v){var o=document.createElement('option');o.value='custom_'+v._docId;o.textContent='⭐ '+v.name;hf.appendChild(o)})}
@@ -1917,7 +1808,7 @@ var byBrand={};Object.keys(builtInVehicles).forEach(function(k){var v=builtInVeh
 Object.keys(byBrand).sort().forEach(function(b){var g=document.createElement('optgroup');g.label=b;byBrand[b].sort(function(a,b){return(a.v.name||'').localeCompare(b.v.name||'')}).forEach(function(i){var o=document.createElement('option');o.value=i.key;o.textContent=i.v.name;g.appendChild(o)});hf.appendChild(g)});
 hf.value=curHf;
 
-if(filtered.length===0){list.innerHTML='<div class="empty-state"><div class="es-icon">📭</div><div class="es-text"><strong>No charges'+(filter!=='all'?' for this filter':'')+'.</strong><br>Save a charge from Calculate to start your history.</div></div>';stats.style.display='none';cb.style.display='none';er.style.display='none';sc.style.display='none';return}
+if(filtered.length===0){list.innerHTML='<div class="empty-state"><div class="es-icon">📭</div><div class="es-text"><strong>No charges'+(filter!=='all'?' for this filter':'')+'.</strong><br>Save a charge from Calculate.</div></div>';stats.style.display='none';cb.style.display='none';er.style.display='none';sc.style.display='none';return}
 
 var tc=0,te=0;filtered.forEach(function(x){tc+=x.total;te+=x.needed});
 $('statCount').textContent=filtered.length;$('statEnergy').textContent=te.toFixed(0);$('statCost').textContent=tc.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',');stats.style.display='flex';cb.style.display='block';er.style.display='block';
@@ -1932,11 +1823,10 @@ var d=new Date(item.ts),mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep
 var dt=d.getDate()+' '+mo[d.getMonth()]+' · '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
 var mIcon=item.mode==='home'?'🏠':'🔌';
 var vname=item.vehicleName||'';
-var modeBadge=item.calcMode?('<span class="history-mode-badge">'+item.calcMode+'</span>'):'';
 var savings=calculatePetrolSavings(item);
 var savingsHtml='';
 if(savings!==null&&savings>0){savingsHtml='<div style="font-size:0.72rem;color:#2ecc71;font-weight:700;margin-top:6px">💰 Saved '+lkr(savings)+' vs petrol</div>'}
-return '<div class="history-item" data-docid="'+item._docId+'"><button data-id="'+item.ts+'" class="delBtn" style="position:absolute;top:10px;right:10px;background:none;border:none;color:#6a5a9e;font-size:1.2rem;cursor:pointer;z-index:2">×</button><div style="display:flex;justify-content:space-between;margin-bottom:8px;padding-right:24px"><span style="font-size:1.05rem;font-weight:800;color:#7c3aed">'+lkr(item.total)+'</span><span style="font-size:0.7rem;color:#6a5a9e">'+dt+'</span></div>'+(vname?'<div style="font-size:0.72rem;color:var(--purpleB);font-weight:700;margin-bottom:4px">🚗 '+vname+modeBadge+'</div>':'')+'<div style="font-size:0.78rem;color:var(--dim);line-height:1.6">'+mIcon+' <span style="color:var(--text);font-weight:600">'+item.cur+'% → '+item.tgt+'%</span> · ⚡ <span style="color:var(--text);font-weight:600">+'+item.needed.toFixed(2)+' kWh</span> · 💵 <span style="color:var(--text);font-weight:600">'+item.r.toFixed(2)+' LKR/kWh</span></div>'+savingsHtml+'<div class="hi-edit-hint">✏️ Tap to edit</div></div>'
+return '<div class="history-item" data-docid="'+item._docId+'"><button data-id="'+item.ts+'" class="delBtn" style="position:absolute;top:10px;right:10px;background:none;border:none;color:#6a5a9e;font-size:1.2rem;cursor:pointer;z-index:2">×</button><div style="display:flex;justify-content:space-between;margin-bottom:8px;padding-right:24px"><span style="font-size:1.05rem;font-weight:800;color:#7c3aed">'+lkr(item.total)+'</span><span style="font-size:0.7rem;color:#6a5a9e">'+dt+'</span></div>'+(vname?'<div style="font-size:0.72rem;color:var(--purpleB);font-weight:700;margin-bottom:4px">🚗 '+vname+'</div>':'')+'<div style="font-size:0.78rem;color:var(--dim);line-height:1.6">'+mIcon+' <span style="color:var(--text);font-weight:600">'+item.cur+'% → '+item.tgt+'%</span> · ⚡ <span style="color:var(--text);font-weight:600">+'+item.needed.toFixed(2)+' kWh</span> · 💵 <span style="color:var(--text);font-weight:600">'+item.r.toFixed(2)+' LKR/kWh</span></div>'+savingsHtml+'<div class="hi-edit-hint">✏️ Tap to edit</div></div>'
 }).join('');
 
 list.querySelectorAll('.delBtn').forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();var id=parseInt(b.dataset.id);if(confirm('Delete this charge?'))deleteRecord(id,function(){renderHistory();showToast('Charge deleted')})})});
@@ -1954,7 +1844,7 @@ if(!docId)return;
 editingHistoryId=docId;
 getAllRecords(function(hist){
 var item=hist.find(function(x){return x._docId===docId});
-if(!item){alert('Could not find that charge.');return}
+if(!item){alert('Charge not found.');return}
 $('ehFrom').value=item.cur||0;
 $('ehTo').value=item.tgt||0;
 $('ehCap').value=item.cap||30.08;
@@ -1973,8 +1863,8 @@ var from=clamp($('ehFrom').value,1,100);
 var to=clamp($('ehTo').value,1,100);
 var cap=parseFloat($('ehCap').value);
 var rate=parseFloat($('ehRate').value);
-if(!cap||cap<=0){alert('Please enter a valid capacity.');return}
-if(rate<0||isNaN(rate)){alert('Please enter a valid rate.');return}
+if(!cap||cap<=0){alert('Invalid capacity.');return}
+if(rate<0||isNaN(rate)){alert('Invalid rate.');return}
 if(to<=from){alert('End % must be greater than start %.');return}
 var needed=((to-from)/100)*cap;
 var eff=currentMode==='home'?(parseFloat($('homeEfficiency').value)||88):(parseFloat($('efficiency').value)||90);
@@ -1994,7 +1884,7 @@ else{alert('Could not update.')}
 });
 });
 
-$('historyVehicleFilter').addEventListener('change',function(){renderHistory()});
+$('historyVehicleFilter').addEventListener('change',renderHistory);
 
 $('saveBtn').addEventListener('click',function(){
 if(!currentCalc||currentCalc.needed<=0||!currentUser)return;
@@ -2011,7 +1901,7 @@ else{showToast('Save failed','error')}
 });
 });
 
-$('clearBtn').addEventListener('click',function(){if(confirm('Delete all history? Cannot be undone.'))clearAllRecords(function(){renderHistory();showToast('History cleared')})});
+$('clearBtn').addEventListener('click',function(){if(confirm('Delete all history?'))clearAllRecords(function(){renderHistory();showToast('History cleared')})});
 
 $('exportBtn').addEventListener('click',function(){
 getAllRecords(function(h){
@@ -2032,7 +1922,7 @@ document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeOb
 });
 });
 
-// ============ THEME / SUPPORT / INTRO ============
+// ============ THEME / SHARE / INTRO ============
 $('themeToggle').addEventListener('click',function(){
 var l=document.body.classList.contains('light');
 if(l){document.body.classList.remove('light');$('themeKnob').style.left='2px'}else{document.body.classList.add('light');$('themeKnob').style.left='32px'}
@@ -2040,15 +1930,13 @@ savePrefs();
 });
 
 $('shareAppBtn').addEventListener('click',function(){
-var text='Check out this EV Charge Calculator for Sri Lanka — free to use!';
+var text='Check out this EV Charge Calculator for Sri Lanka!';
 var url=window.location.origin;
 if(navigator.share){navigator.share({title:'EV Charge Calculator',text:text,url:url}).catch(function(e){if(e.name!=='AbortError')console.warn(e)})}
 else{window.open('https://wa.me/?text='+encodeURIComponent(text+'\n\n'+url),'_blank')}
 });
 
-$('rerunIntro').addEventListener('click',function(){
-showIntro();
-});
+$('rerunIntro').addEventListener('click',showIntro);
 
 // ============ PREFS ============
 function savePrefs(){
@@ -2090,10 +1978,12 @@ if(p.setPetrolKm)$('setPetrolKm').value=p.setPetrolKm;
 if(currentMode==='home'){$('tabHome').classList.add('active');$('tabPublic').classList.remove('active');$('homeFields').style.display='block';$('publicFields').style.display='none'}
 setCalcMode(currentCalcMode||'cost');
 
-// INITIAL
+// INIT
+populateVehicleDropdowns();
+populateRateDropdown();
+applyDefaultVehicle();
 calc();
 
-// Auto-show intro for first-time users on signup (handled in auth success)
 </script>
 </body>
 </html>
