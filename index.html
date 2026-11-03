@@ -49,21 +49,24 @@ body.light h1{background:none;-webkit-text-fill-color:initial;color:#5b21b6}
 .card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(139,92,246,0.5),transparent)}
 .card-title{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--purpleB);margin-bottom:16px;display:flex;align-items:center;gap:8px}
 .card-title::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--purpleB);box-shadow:0 0 8px var(--purpleB)}
-.field{margin-bottom:16px}
+.field{margin-bottom:18px}
 .field:last-child{margin-bottom:0}
-.field label{display:flex;justify-content:space-between;align-items:center;font-size:0.85rem;color:var(--dim);margin-bottom:8px;font-weight:500}
-input[type=range]{-webkit-appearance:none;width:100%;height:8px;border-radius:4px;background:linear-gradient(90deg,var(--blue),var(--purple));outline:none}
+.field > label{display:block;font-size:0.85rem;color:var(--dim);margin-bottom:10px;font-weight:600;line-height:1.5}
+.field-hdr{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.field-hdr .lbl{font-size:0.85rem;color:var(--dim);font-weight:600;line-height:1.4}
+.field-hdr .hdr-right{display:flex;align-items:center;gap:8px}
+input[type=range]{-webkit-appearance:none;width:100%;height:8px;border-radius:4px;background:linear-gradient(90deg,var(--blue),var(--purple));outline:none;display:block}
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;background:#fff;cursor:pointer;border:3px solid var(--purple);box-shadow:0 0 12px rgba(139,92,246,0.8),0 2px 8px rgba(0,0,0,0.5)}
-input[type=number],input[type=email],input[type=password],input[type=text],select{width:100%;padding:13px 16px;border-radius:12px;border:1px solid rgba(139,92,246,0.2);background:var(--input-bg);color:var(--text);font-size:1rem;outline:none;font-family:inherit}
-input:focus,select:focus{border-color:var(--purpleB);box-shadow:0 0 0 3px rgba(139,92,246,0.15)}
+input[type=number],input[type=email],input[type=password],input[type=text],input[type=time],select{width:100%;padding:13px 16px;border-radius:12px;border:1px solid rgba(139,92,246,0.2);background:var(--input-bg);color:var(--text);font-size:1rem;outline:none;font-family:inherit}
+input:focus,select:focus,input[type=time]:focus{border-color:var(--purpleB);box-shadow:0 0 0 3px rgba(139,92,246,0.15)}
 input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 input[type=number]{-moz-appearance:textfield}
 select{-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath fill='%23a78bfa' d='M7 10L2 5h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:40px}
 select optgroup{background:#1e1b4b;color:var(--purpleB)}
 select option{background:#120a24;color:#fff}
 body.light select option{background:#fff;color:#1a1033}
-.hint{font-size:0.7rem;color:var(--faint);margin-top:6px;font-style:italic}
-.pct-input{width:70px;text-align:center;font-weight:700;color:var(--text);font-size:0.95rem;background:rgba(139,92,246,0.2);border:1px solid rgba(139,92,246,0.3);padding:4px 8px;border-radius:8px;font-family:inherit;outline:none}
+.hint{font-size:0.7rem;color:var(--faint);margin-top:6px;font-style:italic;line-height:1.5}
+.pct-input{width:80px;text-align:center;font-weight:700;color:var(--text);font-size:0.95rem;background:rgba(139,92,246,0.2);border:1px solid rgba(139,92,246,0.3);padding:6px 8px;border-radius:8px;font-family:inherit;outline:none}
 .pct-input:focus{border-color:var(--purpleB);box-shadow:0 0 0 3px rgba(139,92,246,0.15)}
 .sidebar{position:fixed;top:0;left:0;bottom:0;width:80px;background:var(--card);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;padding:16px 0;gap:4px;z-index:100;box-shadow:4px 0 24px var(--shadow);overflow-y:auto}
 .sidebar::after{content:'';position:absolute;top:10%;bottom:10%;right:0;width:1px;background:linear-gradient(180deg,transparent,rgba(139,92,246,0.6),transparent);pointer-events:none}
@@ -72,13 +75,14 @@ body.light select option{background:#fff;color:#1a1033}
 .nav-item.active .nav-icon{filter:drop-shadow(0 0 8px rgba(139,92,246,0.9))}
 .nav-icon{font-size:1.3rem;line-height:1;transition:all 0.2s}
 .nav-label{font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.4px}
-.compare-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:0.8rem}
-.compare-table th{text-align:left;padding:8px 6px;color:var(--dim);font-weight:700;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid var(--border)}
-.compare-table td{padding:8px 6px;border-bottom:1px solid rgba(139,92,246,0.08);color:var(--text)}
-.compare-table tr:last-child td{border-bottom:none}
-.compare-table td.cost{font-weight:700;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:right}
-body.light .compare-table td.cost{background:none;-webkit-text-fill-color:initial;color:#5b21b6}
-.compare-table td.name{font-weight:600}
+/* Compare bars */
+.compare-bar-row{margin-bottom:12px}
+.compare-bar-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-size:0.82rem}
+.compare-bar-hdr .name{font-weight:600;color:var(--text)}
+.compare-bar-hdr .cost{font-weight:700;color:var(--purpleB)}
+.compare-bar-track{height:8px;background:rgba(139,92,246,0.15);border-radius:4px;overflow:hidden}
+.compare-bar-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,#3b82f6,#8b5cf6);transition:width 0.4s ease}
+.compare-bar-fill.best{background:linear-gradient(90deg,#2ecc71,#27ae60)}
 .best-badge{font-size:0.6rem;background:rgba(46,204,113,0.2);color:#2ecc71;padding:2px 6px;border-radius:4px;font-weight:700;margin-left:6px}
 .mode-tabs{display:flex;gap:6px;margin-bottom:16px;background:var(--input-bg);padding:4px;border-radius:12px;border:1px solid rgba(139,92,246,0.15)}
 .mode-tab{flex:1;padding:12px;border-radius:9px;border:none;background:none;color:var(--faint);font-family:inherit;font-weight:700;font-size:0.85rem;cursor:pointer;transition:all 0.2s}
@@ -100,15 +104,14 @@ body.light .auth-info{color:#1d4ed8}
 .auth-notice{text-align:center;font-size:0.7rem;color:var(--faint);margin-top:16px;line-height:1.5}
 .link-btn{background:none;border:none;color:var(--purpleB);font-size:0.8rem;cursor:pointer;font-family:inherit;text-decoration:underline;padding:8px 0;font-weight:600}
 .result-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:14px}
-.result-tile{background:var(--input-bg);border-radius:12px;padding:12px 8px;text-align:center;border:1px solid rgba(139,92,246,0.15)}
-.result-tile .tile-icon{font-size:1.3rem;margin-bottom:4px}
-.result-tile .tile-val{font-size:1rem;font-weight:800;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.result-tile{background:var(--input-bg);border-radius:12px;padding:14px 10px;text-align:center;border:1px solid rgba(139,92,246,0.15)}
+.result-tile .tile-icon{font-size:1.3rem;margin-bottom:6px;line-height:1}
+.result-tile .tile-val{font-size:1rem;font-weight:800;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.3}
 body.light .result-tile .tile-val{background:none;-webkit-text-fill-color:initial;color:#5b21b6}
-.result-tile .tile-lbl{font-size:0.6rem;color:var(--faint);text-transform:uppercase;letter-spacing:0.5px;margin-top:2px;font-weight:700}
-.presets{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
-.preset-btn{padding:8px 12px;border-radius:10px;border:1px solid rgba(139,92,246,0.3);background:rgba(139,92,246,0.1);color:var(--purpleB);font-family:inherit;font-size:0.75rem;font-weight:700;cursor:pointer;transition:all 0.15s}
+.result-tile .tile-lbl{font-size:0.6rem;color:var(--faint);text-transform:uppercase;letter-spacing:0.5px;margin-top:4px;font-weight:700;line-height:1.4}
+.presets{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
+.preset-btn{padding:9px 13px;border-radius:10px;border:1px solid rgba(139,92,246,0.3);background:rgba(139,92,246,0.1);color:var(--purpleB);font-family:inherit;font-size:0.78rem;font-weight:700;cursor:pointer;transition:all 0.15s;line-height:1.3}
 .preset-btn:active{background:rgba(139,92,246,0.25);transform:scale(0.97)}
-/* Intro */
 .intro-container{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);background-image:radial-gradient(circle at 15% 0%,rgba(59,130,246,0.18),transparent 45%),radial-gradient(circle at 85% 100%,rgba(139,92,246,0.18),transparent 45%);z-index:10000;display:none;overflow-y:auto;padding:20px}
 .intro-container.show{display:flex;flex-direction:column;align-items:center;justify-content:center}
 .intro-slide{max-width:420px;width:100%;text-align:center;display:none;margin:auto}
@@ -126,23 +129,42 @@ body.light .result-tile .tile-val{background:none;-webkit-text-fill-color:initia
 .intro-dot.active{background:var(--purpleB);width:24px;border-radius:4px}
 .intro-slide .ob-field{text-align:left;margin-top:16px}
 .intro-slide .ob-field label{display:block;font-size:0.85rem;color:var(--dim);margin-bottom:8px;font-weight:600;text-align:left}
-/* Mode grid */
 .mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
 .mode-card{padding:16px 10px;border-radius:12px;border:1px solid rgba(139,92,246,0.25);background:rgba(139,92,246,0.08);color:var(--dim);font-family:inherit;font-size:0.85rem;font-weight:700;cursor:pointer;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:6px}
 .mode-card .mc-icon{font-size:1.5rem}
-.mode-card.active{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;border-color:transparent;box-shadow:0 4px 16px rgba(139,92,246,0.4)}
-.mode-desc{font-size:0.82rem;color:var(--dim);text-align:center;margin-bottom:0;line-height:1.5;font-style:italic}
-/* Toast */
+.mode-card.active{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;border-color:transparent;box-shadow:0 4px 16px rgba(139,92,246,0.4);transform:scale(1.02)}
+.mode-desc{font-size:0.82rem;color:var(--dim);text-align:center;line-height:1.5;font-style:italic}
 .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:#1a1a2e;color:#fff;padding:12px 20px;border-radius:12px;font-size:0.85rem;font-weight:600;z-index:10001;box-shadow:0 8px 24px rgba(0,0,0,0.4);opacity:0;transition:all 0.3s;border:1px solid rgba(139,92,246,0.3);max-width:90%}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 .toast.success{border-color:rgba(46,204,113,0.5)}
 .toast.error{border-color:rgba(248,113,113,0.5)}
 .offline-icon{position:fixed;top:16px;right:16px;background:#f59e0b;color:#000;width:32px;height:32px;border-radius:50%;display:none;align-items:center;justify-content:center;font-weight:700;font-size:0.9rem;z-index:150;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.3)}
 .offline-icon.show{display:flex}
-.battery-visual{display:inline-flex;align-items:center;gap:4px;margin-left:8px}
-.battery-body{width:32px;height:14px;border:2px solid var(--dim);border-radius:3px;position:relative;background:var(--input-bg)}
-.battery-body::after{content:'';position:absolute;right:-5px;top:3px;width:3px;height:6px;background:var(--dim);border-radius:0 2px 2px 0}
-.battery-fill{height:100%;background:linear-gradient(90deg,#3b82f6,#8b5cf6);border-radius:1px;transition:width 0.2s}
+/* Battery visual */
+.battery-wrap{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.battery-wrap .battery-slider{flex:1;min-width:0}
+.battery-visual-big{width:70px;flex-shrink:0;position:relative}
+.battery-shape{width:100%;height:34px;border:2.5px solid var(--dim);border-radius:5px;position:relative;background:var(--input-bg);overflow:hidden}
+.battery-shape::after{content:'';position:absolute;right:-7px;top:9px;width:5px;height:12px;background:var(--dim);border-radius:0 3px 3px 0}
+.battery-shape .battery-fill-big{height:100%;background:linear-gradient(90deg,#3b82f6,#8b5cf6);transition:width 0.25s ease;border-radius:2px}
+.battery-shape .battery-fill-big.low{background:linear-gradient(90deg,#ef4444,#f59e0b)}
+.battery-shape .battery-fill-big.mid{background:linear-gradient(90deg,#f59e0b,#3b82f6)}
+.battery-pct{position:absolute;top:0;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:800;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.6);pointer-events:none}
+/* Energy flow bar */
+.energy-flow{margin-top:16px;padding:12px 14px;background:var(--input-bg);border-radius:12px;border:1px solid rgba(139,92,246,0.15)}
+.energy-flow .ef-labels{display:flex;justify-content:space-between;font-size:0.7rem;color:var(--dim);font-weight:600;margin-bottom:8px}
+.energy-flow .ef-track{height:14px;border-radius:7px;background:rgba(139,92,246,0.1);overflow:hidden;position:relative}
+.energy-flow .ef-fill{height:100%;background:linear-gradient(90deg,rgba(59,130,246,0.4),rgba(59,130,246,0.4));position:absolute;top:0;left:0;transition:all 0.4s}
+.energy-flow .ef-added{height:100%;background:linear-gradient(90deg,#3b82f6,#8b5cf6);position:absolute;top:0;transition:all 0.4s}
+.energy-flow .ef-legend{font-size:0.7rem;color:var(--faint);margin-top:8px;text-align:center;font-style:italic}
+/* History mini chart */
+.history-chart{display:flex;align-items:flex-end;justify-content:space-between;gap:4px;height:60px;padding:8px 0;margin-bottom:8px}
+.history-chart .hc-bar{flex:1;background:linear-gradient(180deg,#3b82f6,#8b5cf6);border-radius:3px 3px 0 0;min-height:4px;transition:height 0.3s}
+.history-chart .hc-bar.best{background:linear-gradient(180deg,#2ecc71,#27ae60)}
+.history-chart-labels{display:flex;justify-content:space-between;gap:4px;font-size:0.6rem;color:var(--faint);margin-bottom:10px}
+.history-chart-labels span{flex:1;text-align:center}
+.history-chart-title{font-size:0.7rem;color:var(--dim);text-align:center;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+/* Modal */
 .modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(10,6,18,0.85);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:20px;z-index:9998;overflow-y:auto}
 .modal-overlay.show{display:flex}
 .modal-box{background:var(--card);border-radius:20px;padding:22px;max-width:440px;width:100%;border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,0.5);margin:auto}
@@ -155,7 +177,7 @@ body.light .result-tile .tile-val{background:none;-webkit-text-fill-color:initia
 .modal-box .modal-actions .m-ok:disabled{opacity:0.4;cursor:not-allowed}
 .vehicle-card{background:var(--input-bg);border-radius:14px;padding:14px;margin-bottom:10px;border:1px solid rgba(139,92,246,0.15);border-left:3px solid var(--purple);position:relative}
 .vehicle-card.active{border-left-color:#2ecc71;background:linear-gradient(135deg,rgba(46,204,113,0.08),var(--input-bg))}
-.vehicle-card .vc-name{font-weight:700;color:var(--text);font-size:0.95rem;margin-bottom:4px;padding-right:60px}
+.vehicle-card .vc-name{font-weight:700;color:var(--text);font-size:0.95rem;margin-bottom:4px;padding-right:60px;line-height:1.4}
 .vehicle-card .vc-specs{font-size:0.78rem;color:var(--dim);line-height:1.5}
 .vehicle-card .vc-actions{position:absolute;top:10px;right:10px;display:flex;gap:4px}
 .vehicle-card .vc-actions button{background:none;border:none;cursor:pointer;padding:4px 6px;font-size:0.9rem;color:var(--faint);border-radius:6px}
@@ -177,24 +199,33 @@ body.light .result-tile .tile-val{background:none;-webkit-text-fill-color:initia
 .summary-card{background:linear-gradient(135deg,rgba(59,130,246,0.2),rgba(139,92,246,0.2));border:1px solid rgba(139,92,246,0.35);border-radius:14px;padding:16px;margin-bottom:14px}
 .summary-card .sc-title{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--purpleB);margin-bottom:10px}
 .summary-card .sc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.summary-card .sc-val{font-size:1.15rem;font-weight:800;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.summary-card .sc-val{font-size:1.15rem;font-weight:800;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.3}
 body.light .summary-card .sc-val{background:none;-webkit-text-fill-color:initial;color:#5b21b6}
-.summary-card .sc-lbl{font-size:0.65rem;color:var(--dim);margin-top:2px}
+.summary-card .sc-lbl{font-size:0.65rem;color:var(--dim);margin-top:3px;line-height:1.4}
 .empty-state{text-align:center;padding:24px 16px;background:var(--input-bg);border-radius:12px;border:1px dashed rgba(139,92,246,0.3);margin-top:10px}
 .empty-state .es-icon{font-size:2rem;margin-bottom:8px;opacity:0.6}
 .empty-state .es-text{font-size:0.8rem;color:var(--dim);line-height:1.6}
-.notice-banner{background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(234,88,12,0.15));border:1px solid rgba(245,158,11,0.35);border-radius:12px;padding:12px 14px;margin-top:10px;font-size:0.78rem;color:#fbbf24;line-height:1.5}
+.notice-banner{background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(234,88,12,0.15));border:1px solid rgba(245,158,11,0.35);border-radius:12px;padding:12px 14px;margin-top:10px;font-size:0.78rem;color:#fbbf24;line-height:1.6}
 body.light .notice-banner{color:#b45309}
 .info-i{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:rgba(139,92,246,0.25);color:var(--purpleB);font-size:0.65rem;font-weight:800;margin-left:6px;cursor:pointer;vertical-align:middle;flex-shrink:0}
 .adv-toggle{background:none;border:none;color:var(--purpleB);font-size:0.85rem;cursor:pointer;padding:10px 0;font-weight:700;font-family:inherit;display:flex;align-items:center;gap:8px;width:100%}
 .adv-toggle .arrow{transition:transform 0.3s;display:inline-block;font-size:0.7rem}
 .adv-toggle.open .arrow{transform:rotate(90deg)}
 .big-num{text-align:center;padding:8px 0 12px}
-.big-num .bn-lbl{font-size:0.7rem;text-transform:uppercase;letter-spacing:2px;color:var(--dim);margin-bottom:6px;font-weight:600}
+.big-num .bn-lbl{font-size:0.72rem;text-transform:uppercase;letter-spacing:2px;color:var(--dim);margin-bottom:6px;font-weight:700;line-height:1.4}
+.big-num .bn-icon{font-size:1.8rem;margin-bottom:4px;line-height:1}
 .big-num .bn-val{font-size:2.6rem;font-weight:800;line-height:1.1;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;color:#5b21b6}
-.target-hidden{display:none!important}
-@media(max-width:480px){body{padding-left:88px;padding-right:12px}.app{max-width:100%}.sidebar{width:72px}.nav-item{width:56px}.nav-icon{font-size:1.2rem}.nav-label{font-size:0.5rem}.compare-table{font-size:0.72rem}.big-num .bn-val{font-size:2.2rem}.intro-icon{font-size:3.5rem}.intro-title{font-size:1.3rem}}
+/* Two-field time input */
+.two-field{display:flex;gap:10px}
+.two-field .tf-col{flex:1}
+.two-field .tf-col label{font-size:0.7rem;color:var(--faint);text-transform:uppercase;letter-spacing:0.8px;font-weight:700;display:block;margin-bottom:6px}
+.two-field input{width:100%}
+.time-toggle{display:flex;gap:6px;margin-bottom:14px;background:var(--input-bg);padding:4px;border-radius:10px;border:1px solid rgba(139,92,246,0.15)}
+.time-toggle button{flex:1;padding:10px;border-radius:7px;border:none;background:none;color:var(--faint);font-family:inherit;font-weight:700;font-size:0.8rem;cursor:pointer;transition:all 0.2s}
+.time-toggle button.active{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff}
+.computed-duration{font-size:0.8rem;color:var(--purpleB);font-weight:700;text-align:center;margin-top:10px;line-height:1.5}
+@media(max-width:480px){body{padding-left:88px;padding-right:12px}.app{max-width:100%}.sidebar{width:72px}.nav-item{width:56px}.nav-icon{font-size:1.2rem}.nav-label{font-size:0.5rem}.big-num .bn-val{font-size:2.2rem}.intro-icon{font-size:3.5rem}.intro-title{font-size:1.3rem}.battery-wrap{flex-direction:column;align-items:stretch;gap:8px}.battery-visual-big{width:100%}.battery-shape{height:28px}.battery-shape::after{display:none}.pct-input{width:68px;font-size:0.9rem}.result-tile .tile-val{font-size:0.9rem}}
 </style>
 </head>
 <body>
@@ -243,7 +274,7 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 <div class="intro-slide" id="introSlide3">
 <div class="intro-icon">🎯</div>
 <div class="intro-title">Four ways to calculate</div>
-<div class="intro-body">Pick what you know and the app figures out the rest:<br><br>💰 <b style="color:var(--purpleB)">Cost</b> — how much will this cost?<br>💵 <b style="color:var(--purpleB)">Money</b> — how much charge for LKR X?<br>⏱️ <b style="color:var(--purpleB)">Time</b> — how long to reach X%?<br>⏳ <b style="color:var(--purpleB)">Duration</b> — how much for X minutes?</div>
+<div class="intro-body">Pick what you know and the app figures out the rest:<br><br>💰 <b style="color:var(--purpleB)">Cost</b> — how much will this cost?<br>💵 <b style="color:var(--purpleB)">Money</b> — how much charge for LKR X?<br>⏱️ <b style="color:var(--purpleB)">Time</b> — how long to reach X%?<br>⏳ <b style="color:var(--purpleB)">Duration</b> — how much for X time?</div>
 </div>
 <div class="intro-slide" id="introSlide4">
 <div class="intro-icon">💾</div>
@@ -334,7 +365,7 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 <div class="field"><label>To % <span class="hint">(1–100)</span></label><input type="number" id="ehTo" min="1" max="100" step="1" inputmode="numeric"></div>
 <div class="field"><label>Battery capacity <span class="hint">(kWh)</span></label><input type="number" id="ehCap" step="0.01" min="1" inputmode="decimal"></div>
 <div class="field"><label>Rate per kWh <span class="hint">(LKR)</span></label><input type="number" id="ehRate" step="0.01" min="0" inputmode="decimal"></div>
-<div class="field" id="ehTotalField" style="display:none"><label>Actual total spent <span class="hint">(LKR)</span></label><input type="number" id="ehTotal" step="0.01" min="0" inputmode="decimal"><div class="hint">Update if you spent a different amount than planned.</div></div>
+<div class="field" id="ehTotalField" style="display:none"><label>Actual total spent <span class="hint">(LKR)</span></label><input type="number" id="ehTotal" step="0.01" min="0" inputmode="decimal"><div class="hint">Update if you spent a different amount.</div></div>
 <div class="modal-actions">
 <button type="button" class="m-cancel" id="ehCancel">Cancel</button>
 <button type="button" class="m-ok" id="ehSave">Save Changes</button>
@@ -398,7 +429,7 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 
 <div class="card">
 <div class="field" style="margin-bottom:14px">
-<label style="font-size:0.85rem;font-weight:600">Your vehicle</label>
+<label>Your vehicle</label>
 <select id="vehicleSelect"><option value="">— Loading vehicles… —</option></select>
 </div>
 <div class="card-title" style="margin-top:4px">What do you want to know?</div>
@@ -414,12 +445,34 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 <div class="card">
 <div class="card-title">Your Charge</div>
 <div class="field">
-<label>Current charge <span class="battery-visual"><span class="battery-body"><span class="battery-fill" id="curBatteryFill" style="width:20%"></span></span></span> <input type="number" class="pct-input" id="currentNum" value="20" min="1" max="100" step="1" inputmode="numeric"></label>
-<input type="range" id="current" min="1" max="100" value="20" step="1">
+<div class="field-hdr">
+<span class="lbl">Current charge</span>
+<div class="hdr-right"><input type="number" class="pct-input" id="currentNum" value="20" min="1" max="100" step="1" inputmode="numeric"><span>%</span></div>
+</div>
+<div class="battery-wrap">
+<div class="battery-slider"><input type="range" id="current" min="1" max="100" value="20" step="1"></div>
+<div class="battery-visual-big">
+<div class="battery-shape">
+<div class="battery-fill-big low" id="curBatteryFill" style="width:20%"></div>
+<div class="battery-pct" id="curBatteryPct">20%</div>
+</div>
+</div>
+</div>
 </div>
 <div class="field" id="targetField">
-<label>Target charge <span class="battery-visual"><span class="battery-body"><span class="battery-fill" id="tgtBatteryFill" style="width:80%"></span></span></span> <input type="number" class="pct-input" id="targetNum" value="80" min="1" max="100" step="1" inputmode="numeric"></label>
-<input type="range" id="target" min="1" max="100" value="80" step="1">
+<div class="field-hdr">
+<span class="lbl">Target charge</span>
+<div class="hdr-right"><input type="number" class="pct-input" id="targetNum" value="80" min="1" max="100" step="1" inputmode="numeric"><span>%</span></div>
+</div>
+<div class="battery-wrap">
+<div class="battery-slider"><input type="range" id="target" min="1" max="100" value="80" step="1"></div>
+<div class="battery-visual-big">
+<div class="battery-shape">
+<div class="battery-fill-big" id="tgtBatteryFill" style="width:80%"></div>
+<div class="battery-pct" id="tgtBatteryPct">80%</div>
+</div>
+</div>
+</div>
 </div>
 <div class="presets" id="presetsRow">
 <button type="button" class="preset-btn" data-preset="20,80">20→80</button>
@@ -427,22 +480,44 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 <button type="button" class="preset-btn" data-preset="50,80">50→80</button>
 <button type="button" class="preset-btn" data-preset="30,90">30→90</button>
 </div>
-<div class="field" id="moneyInputField" style="display:none;margin-top:14px">
-<label>Amount to spend <span class="hint">(LKR)</span></label>
+<div id="moneyInputField" style="display:none;margin-top:18px">
+<div class="field">
+<label>Amount to spend (LKR)</label>
 <input type="number" id="moneyAmount" value="500" step="1" min="1" inputmode="decimal">
 </div>
-<div class="field" id="durationInputField" style="display:none;margin-top:14px">
-<label>Charging duration <span class="hint">(minutes)</span></label>
-<input type="number" id="durationMin" value="60" step="1" min="1" inputmode="numeric">
 </div>
-<div class="presets" id="durationPresets" style="display:none">
-<button type="button" class="preset-btn" data-duration="30">30m</button>
-<button type="button" class="preset-btn" data-duration="60">1h</button>
-<button type="button" class="preset-btn" data-duration="120">2h</button>
-<button type="button" class="preset-btn" data-duration="180">3h</button>
-<button type="button" class="preset-btn" data-duration="360">6h</button>
-<button type="button" class="preset-btn" data-duration="480">8h</button>
-<button type="button" class="preset-btn" data-duration="600">Overnight</button>
+<div id="durationInputField" style="display:none;margin-top:18px">
+<div class="time-toggle">
+<button type="button" class="active" id="durToggleDuration">Duration</button>
+<button type="button" id="durToggleUntil">Until time</button>
+</div>
+<div id="durationMode1">
+<div class="two-field">
+<div class="tf-col">
+<label>Hours</label>
+<input type="number" id="durationHrs" value="1" min="0" max="23" step="1" inputmode="numeric">
+</div>
+<div class="tf-col">
+<label>Minutes</label>
+<input type="number" id="durationMins" value="0" min="0" max="59" step="1" inputmode="numeric">
+</div>
+</div>
+<div class="presets" id="durationPresets">
+<button type="button" class="preset-btn" data-durh="0" data-durm="30">30 min</button>
+<button type="button" class="preset-btn" data-durh="1" data-durm="0">1 hour</button>
+<button type="button" class="preset-btn" data-durh="2" data-durm="0">2 hours</button>
+<button type="button" class="preset-btn" data-durh="3" data-durm="0">3 hours</button>
+<button type="button" class="preset-btn" data-durh="6" data-durm="0">6 hours</button>
+<button type="button" class="preset-btn" data-durh="8" data-durm="0">Overnight (8h)</button>
+</div>
+</div>
+<div id="durationMode2" style="display:none">
+<div class="field">
+<label>Charge until (clock time)</label>
+<input type="time" id="untilTime" value="07:00">
+</div>
+<div class="computed-duration" id="untilComputed">—</div>
+</div>
 </div>
 <div id="taperHint" class="notice-banner" style="display:none"></div>
 </div>
@@ -454,7 +529,7 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 <button type="button" class="mode-tab active" id="tabPublic">🔌 Public DC</button>
 </div>
 <div id="homeFields" style="display:none">
-<div class="field"><label>Home rate <span class="info-i" data-info="homeRateSelect">i</span></label>
+<div class="field"><label>Home rate</label>
 <select id="homeRateSelect">
 <option value="">— Choose tariff —</option>
 <optgroup label="CEB Domestic">
@@ -477,8 +552,8 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 <option value="custom">Custom — Enter manually</option>
 </optgroup>
 </select></div>
-<div class="field"><label>Rate per kWh <span class="hint">(LKR)</span></label><input type="number" id="homeRate" value="42" step="0.01" min="0" inputmode="decimal"></div>
-<div class="field"><label>Charger power <span class="info-i" data-info="homeChargerPower">i</span> <span class="hint">(kW)</span></label>
+<div class="field"><label>Rate per kWh (LKR)</label><input type="number" id="homeRate" value="42" step="0.01" min="0" inputmode="decimal"></div>
+<div class="field"><label>Charger power (kW)</label>
 <select id="homeChargerPower">
 <option value="2.3">2.3 kW standard outlet</option>
 <option value="3.3">3.3 kW standard outlet</option>
@@ -487,14 +562,14 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 <option value="22">22 kW AC wallbox</option>
 <option value="custom">Custom — Enter manually</option>
 </select></div>
-<div class="field" id="customHomePowerField" style="display:none"><label>Custom power <span class="hint">(kW)</span></label><input type="number" id="customHomePower" value="7" step="0.1" min="0.5" max="50" inputmode="decimal"></div>
-<div class="field"><label>Charging efficiency <span class="hint">(%)</span></label><input type="number" id="homeEfficiency" value="88" step="1" min="50" max="100" inputmode="numeric"></div>
+<div class="field" id="customHomePowerField" style="display:none"><label>Custom power (kW)</label><input type="number" id="customHomePower" value="7" step="0.1" min="0.5" max="50" inputmode="decimal"></div>
+<div class="field"><label>Charging efficiency (%)</label><input type="number" id="homeEfficiency" value="88" step="1" min="50" max="100" inputmode="numeric"></div>
 </div>
 <div id="publicFields">
 <div class="field"><label>Network / station</label>
 <select id="quickRate"><option value="">— Loading networks… —</option></select></div>
-<div class="field"><label>Rate per kWh <span class="hint">(LKR)</span></label><input type="number" id="rate" value="150" step="0.01" min="0" inputmode="decimal"></div>
-<div class="field"><label>Charger power <span class="info-i" data-info="chargerPower">i</span> <span class="hint">(kW)</span></label>
+<div class="field"><label>Rate per kWh (LKR)</label><input type="number" id="rate" value="150" step="0.01" min="0" inputmode="decimal"></div>
+<div class="field"><label>Charger power (kW)</label>
 <select id="chargerPower">
 <option value="30" selected>DC 30 kW</option>
 <option value="50">DC 50 kW</option>
@@ -506,14 +581,15 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 <option value="240">DC 240 kW</option>
 <option value="custom">Custom — Enter manually</option>
 </select></div>
-<div class="field" id="customPublicPowerField" style="display:none"><label>Custom power <span class="hint">(kW)</span></label><input type="number" id="customPublicPower" value="30" step="0.1" min="0.5" max="500" inputmode="decimal"></div>
-<div class="field"><label>Charging efficiency <span class="hint">(%)</span></label><input type="number" id="efficiency" value="90" step="1" min="50" max="100" inputmode="numeric"></div>
+<div class="field" id="customPublicPowerField" style="display:none"><label>Custom power (kW)</label><input type="number" id="customPublicPower" value="30" step="0.1" min="0.5" max="500" inputmode="decimal"></div>
+<div class="field"><label>Charging efficiency (%)</label><input type="number" id="efficiency" value="90" step="1" min="50" max="100" inputmode="numeric"></div>
 </div>
 </div>
 
 <div class="card" style="background:linear-gradient(135deg,rgba(59,130,246,0.15),rgba(139,92,246,0.1),rgba(10,6,18,0.6));border:1px solid rgba(139,92,246,0.3)">
 <div class="card-title">Your Result</div>
 <div class="big-num">
+<div class="bn-icon" id="resultIcon">💰</div>
 <div class="bn-lbl" id="resultLabel">Total Cost</div>
 <div class="bn-val" id="resultValue">LKR 0.00</div>
 </div>
@@ -524,6 +600,14 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 </div>
 <div id="resultDetail" style="font-size:0.8rem;color:var(--dim);text-align:center;margin-top:12px;line-height:1.6"></div>
 <div id="moneyWarn" class="notice-banner" style="display:none;margin-top:14px"></div>
+<div class="energy-flow" id="energyFlow">
+<div class="ef-labels"><span id="efFrom">20%</span><span id="efTo">80%</span></div>
+<div class="ef-track">
+<div class="ef-fill" id="efFillBefore" style="width:20%"></div>
+<div class="ef-added" id="efFillAdded" style="left:20%;width:60%"></div>
+</div>
+<div class="ef-legend" id="efLegend">Adding 18.0 kWh</div>
+</div>
 <div style="margin-top:16px"><button type="button" id="saveBtn" style="width:100%;padding:15px;border-radius:14px;border:none;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;box-shadow:0 4px 20px rgba(139,92,246,0.4)">💾 Save this charge</button></div>
 </div>
 
@@ -531,21 +615,10 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 <button type="button" class="adv-toggle" id="compareToggle"><span class="arrow" id="compareArrow">▶</span> Compare with other options</button>
 <div id="compareContent" style="display:none;padding-top:14px;border-top:1px solid rgba(139,92,246,0.15);margin-top:8px">
 <div class="card-title" style="margin-top:8px">Cost at other networks</div>
-<table class="compare-table">
-<thead><tr><th>Network</th><th style="text-align:right">Cost</th></tr></thead>
-<tbody id="compareBody"></tbody>
-</table>
+<div id="compareBody"></div>
 <div style="margin-top:18px;padding-top:14px;border-top:1px solid rgba(139,92,246,0.1)">
 <div class="card-title">vs Petrol Car</div>
-<table class="compare-table">
-<thead><tr><th>Fuel</th><th style="text-align:right">Cost</th></tr></thead>
-<tbody>
-<tr><td class="name">⚡ Your EV charge</td><td class="cost" id="petrolEvCost">LKR 0.00</td></tr>
-<tr><td class="name">⛽ Petrol 92</td><td class="cost" id="petrolCost92" style="background:none;-webkit-text-fill-color:initial;color:var(--text)">LKR 0.00</td></tr>
-<tr><td class="name">⛽ Petrol 95</td><td class="cost" id="petrolCost95" style="background:none;-webkit-text-fill-color:initial;color:var(--text)">LKR 0.00</td></tr>
-<tr><td class="name">🚗 Auto Diesel</td><td class="cost" id="dieselCost" style="background:none;-webkit-text-fill-color:initial;color:var(--text)">LKR 0.00</td></tr>
-</tbody>
-</table>
+<div id="petrolBody"></div>
 </div>
 </div>
 </div>
@@ -554,12 +627,19 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 <button type="button" class="adv-toggle" id="timerToggle"><span class="arrow" id="timerArrow">▶</span> Set a charging reminder</button>
 <div id="timerContent" style="display:none;padding-top:14px;border-top:1px solid rgba(139,92,246,0.15);margin-top:8px">
 <p style="font-size:0.8rem;color:var(--dim);margin-bottom:12px;line-height:1.6">Get a notification so you don't overstay.</p>
-<div style="display:flex;gap:8px;flex-wrap:wrap">
+<div class="presets">
 <button type="button" class="preset-btn" data-reminder="30">30 min</button>
 <button type="button" class="preset-btn" data-reminder="45">45 min</button>
 <button type="button" class="preset-btn" data-reminder="60">1 hour</button>
 <button type="button" class="preset-btn" data-reminder="120">2 hours</button>
 <button type="button" class="preset-btn" data-reminder="auto">Based on estimate</button>
+</div>
+<div class="field" style="margin-top:14px">
+<label>Or remind me at a specific time</label>
+<div style="display:flex;gap:8px">
+<input type="time" id="reminderTime" style="flex:1">
+<button type="button" class="preset-btn" id="reminderAtBtn" style="flex-shrink:0">Set</button>
+</div>
 </div>
 </div>
 </div>
@@ -568,6 +648,11 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 <!-- HISTORY -->
 <div class="page" id="page-history">
 <h1>📊 History</h1>
+<div class="card" id="historyChartCard" style="display:none">
+<div class="history-chart-title">Recent Charges</div>
+<div class="history-chart" id="historyChart"></div>
+<div class="history-chart-labels" id="historyChartLabels"></div>
+</div>
 <div class="card">
 <div class="field" style="margin-bottom:0">
 <label>Filter by vehicle</label>
@@ -589,9 +674,9 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 <button type="button" id="clearBtn" style="display:none;background:transparent;color:#f87171;border:1px solid rgba(248,113,113,0.3);font-size:0.8rem;padding:8px 14px;border-radius:10px;cursor:pointer;font-weight:600;font-family:inherit">Clear all</button>
 </div>
 <div id="historyStats" style="display:none;gap:10px;margin-bottom:14px">
-<div style="flex:1;background:var(--input-bg);border-radius:12px;padding:12px 8px;text-align:center;border:1px solid rgba(139,92,246,0.15)"><div id="statCount" style="font-size:1.15rem;font-weight:800;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent">0</div><div style="font-size:0.6rem;color:var(--faint);text-transform:uppercase;letter-spacing:0.8px;margin-top:4px;font-weight:700">Sessions</div></div>
-<div style="flex:1;background:var(--input-bg);border-radius:12px;padding:12px 8px;text-align:center;border:1px solid rgba(139,92,246,0.15)"><div id="statEnergy" style="font-size:1.15rem;font-weight:800;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent">0</div><div style="font-size:0.6rem;color:var(--faint);text-transform:uppercase;letter-spacing:0.8px;margin-top:4px;font-weight:700">kWh</div></div>
-<div style="flex:1;background:var(--input-bg);border-radius:12px;padding:12px 8px;text-align:center;border:1px solid rgba(139,92,246,0.15)"><div id="statCost" style="font-size:1.15rem;font-weight:800;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent">0</div><div style="font-size:0.6rem;color:var(--faint);text-transform:uppercase;letter-spacing:0.8px;margin-top:4px;font-weight:700">LKR</div></div>
+<div style="flex:1;background:var(--input-bg);border-radius:12px;padding:12px 8px;text-align:center;border:1px solid rgba(139,92,246,0.15)"><div id="statCount" style="font-size:1.15rem;font-weight:800;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.3">0</div><div style="font-size:0.6rem;color:var(--faint);text-transform:uppercase;letter-spacing:0.8px;margin-top:4px;font-weight:700;line-height:1.4">Sessions</div></div>
+<div style="flex:1;background:var(--input-bg);border-radius:12px;padding:12px 8px;text-align:center;border:1px solid rgba(139,92,246,0.15)"><div id="statEnergy" style="font-size:1.15rem;font-weight:800;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.3">0</div><div style="font-size:0.6rem;color:var(--faint);text-transform:uppercase;letter-spacing:0.8px;margin-top:4px;font-weight:700;line-height:1.4">kWh</div></div>
+<div style="flex:1;background:var(--input-bg);border-radius:12px;padding:12px 8px;text-align:center;border:1px solid rgba(139,92,246,0.15)"><div id="statCost" style="font-size:1.15rem;font-weight:800;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.3">0</div><div style="font-size:0.6rem;color:var(--faint);text-transform:uppercase;letter-spacing:0.8px;margin-top:4px;font-weight:700;line-height:1.4">LKR</div></div>
 </div>
 <div id="historyList"></div>
 <div id="exportRow" style="display:none;margin-top:14px">
@@ -603,10 +688,10 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 <!-- STATIONS -->
 <div class="page" id="page-stations">
 <h1>🔌 Stations</h1>
-<p style="text-align:center;font-size:0.8rem;color:var(--dim);margin-bottom:16px">Find the closest charger to your location</p>
+<p style="text-align:center;font-size:0.8rem;color:var(--dim);margin-bottom:16px;line-height:1.5">Find the closest charger to your location</p>
 <div class="card">
 <button type="button" id="nearMeBtn" style="width:100%;padding:14px;border-radius:14px;border:none;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;box-shadow:0 4px 20px rgba(139,92,246,0.4)">📍 Find Stations Near Me</button>
-<div id="locationStatus" style="text-align:center;font-size:0.8rem;color:var(--dim);margin-top:10px;display:none"></div>
+<div id="locationStatus" style="text-align:center;font-size:0.8rem;color:var(--dim);margin-top:10px;display:none;line-height:1.5"></div>
 </div>
 <div class="card">
 <div class="card-title">Know a charger we're missing?</div>
@@ -646,22 +731,22 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 
 <div class="card">
 <div class="card-title">Default rates & fees</div>
-<div class="field"><label>Session fee <span class="hint">(LKR, optional)</span></label><input type="number" id="sessionFee" value="0" step="1" min="0" inputmode="numeric"></div>
-<div class="field"><label>Tax / VAT <span class="hint">(%, optional)</span></label><input type="number" id="tax" value="0" step="0.1" min="0" inputmode="decimal"></div>
+<div class="field"><label>Session fee (LKR, optional)</label><input type="number" id="sessionFee" value="0" step="1" min="0" inputmode="numeric"></div>
+<div class="field"><label>Tax / VAT (%, optional)</label><input type="number" id="tax" value="0" step="0.1" min="0" inputmode="decimal"></div>
 </div>
 
 <div class="card">
 <div class="card-title">Fuel prices (for comparison)</div>
-<div class="field"><label>Petrol 92 Octane <span class="hint">(LKR/L)</span></label><input type="number" id="setFuel92" value="414" step="0.01" min="0" inputmode="decimal"></div>
-<div class="field"><label>Petrol 95 Octane <span class="hint">(LKR/L)</span></label><input type="number" id="setFuel95" value="475" step="0.01" min="0" inputmode="decimal"></div>
-<div class="field"><label>Auto Diesel <span class="hint">(LKR/L)</span></label><input type="number" id="setDiesel" value="392" step="0.01" min="0" inputmode="decimal"></div>
-<div class="field"><label>Petrol car efficiency <span class="hint">(km/L)</span></label><input type="number" id="setPetrolKm" value="12" step="0.1" min="1" inputmode="decimal"></div>
+<div class="field"><label>Petrol 92 Octane (LKR/L)</label><input type="number" id="setFuel92" value="424" step="0.01" min="0" inputmode="decimal"></div>
+<div class="field"><label>Petrol 95 Octane (LKR/L)</label><input type="number" id="setFuel95" value="490" step="0.01" min="0" inputmode="decimal"></div>
+<div class="field"><label>Auto Diesel (LKR/L)</label><input type="number" id="setDiesel" value="397" step="0.01" min="0" inputmode="decimal"></div>
+<div class="field"><label>Petrol car efficiency (km/L)</label><input type="number" id="setPetrolKm" value="12" step="0.1" min="1" inputmode="decimal"></div>
 </div>
 
 <div class="card">
 <div class="card-title">Change password</div>
 <div class="field"><label>Current password</label><input type="password" id="cpCurrent" placeholder="Your current password" autocomplete="current-password"></div>
-<div class="field"><label>New password <span class="hint">(min 6 characters)</span></label><input type="password" id="cpNew" placeholder="New password" autocomplete="new-password"></div>
+<div class="field"><label>New password (min 6 characters)</label><input type="password" id="cpNew" placeholder="New password" autocomplete="new-password"></div>
 <div class="field"><label>Confirm new password</label><input type="password" id="cpConfirm" placeholder="Re-enter new password" autocomplete="new-password"></div>
 <button type="button" id="cpBtn" style="width:100%;padding:14px;border-radius:12px;border:none;font-size:0.95rem;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff">Update Password</button>
 <div id="cpMsg" style="margin-top:12px;font-size:0.82rem;line-height:1.6;text-align:center"></div>
@@ -697,10 +782,10 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 <button type="button" id="backFromHelp" style="background:none;border:none;color:var(--purpleB);font-size:0.9rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:16px;padding:6px 0">← Back to Settings</button>
 <div class="card">
 <div class="card-title">How the four modes work</div>
-<div style="padding:10px 0;border-bottom:1px solid rgba(139,92,246,0.08)"><div style="font-size:0.82rem;color:var(--dim);line-height:1.6"><strong style="color:var(--purpleB)">💰 Cost</strong> — Enter start and target %. Get cost, time, and range.</div></div>
-<div style="padding:10px 0;border-bottom:1px solid rgba(139,92,246,0.08)"><div style="font-size:0.82rem;color:var(--dim);line-height:1.6"><strong style="color:var(--purpleB)">💵 Money</strong> — Enter how much to spend. Get % reached, kWh, and time.</div></div>
-<div style="padding:10px 0;border-bottom:1px solid rgba(139,92,246,0.08)"><div style="font-size:0.82rem;color:var(--dim);line-height:1.6"><strong style="color:var(--purpleB)">⏱️ Time</strong> — Enter start and target %. Get how long it takes.</div></div>
-<div style="padding:10px 0"><div style="font-size:0.82rem;color:var(--dim);line-height:1.6"><strong style="color:var(--purpleB)">⏳ Duration</strong> — Enter how many minutes. Get % reached and cost.</div></div>
+<div style="padding:10px 0;border-bottom:1px solid rgba(139,92,246,0.08);font-size:0.82rem;color:var(--dim);line-height:1.6"><strong style="color:var(--purpleB)">💰 Cost</strong> — Enter start and target %. Get cost, time, and range.</div>
+<div style="padding:10px 0;border-bottom:1px solid rgba(139,92,246,0.08);font-size:0.82rem;color:var(--dim);line-height:1.6"><strong style="color:var(--purpleB)">💵 Money</strong> — Enter how much to spend. Get % reached, kWh, and time.</div>
+<div style="padding:10px 0;border-bottom:1px solid rgba(139,92,246,0.08);font-size:0.82rem;color:var(--dim);line-height:1.6"><strong style="color:var(--purpleB)">⏱️ Time</strong> — Enter start and target %. Get how long it takes.</div>
+<div style="padding:10px 0;font-size:0.82rem;color:var(--dim);line-height:1.6"><strong style="color:var(--purpleB)">⏳ Duration</strong> — Enter hours + minutes, or a target clock time. Get % reached and cost.</div>
 </div>
 <div class="card">
 <div class="card-title">Quick tips</div>
@@ -721,12 +806,12 @@ var $=function(id){return document.getElementById(id)};
 var auth=null,db=null,fbFuncs=null,currentUser=null;
 var currentMode='public';
 var currentCalcMode='cost';
+var durationSubMode='duration'; // 'duration' or 'until'
 var userVehicles=[];
 var editingVehicleId=null;
 var editingHistoryId=null;
 var confirmCallback=null;
 
-// Fallback vehicles in case Firestore hasn't loaded yet
 var FALLBACK_VEHICLES={
 '30.08':{name:'BYD Atto 1 Dynamic',capacity:30.08,range:300,dc:30},
 '38.88':{name:'BYD Atto 1 Premium',capacity:38.88,range:380,dc:40},
@@ -764,13 +849,8 @@ time:'How long to reach your target?',
 duration:'How much charge in a set time?'
 };
 
-var infos={
-homeRateSelect:{title:'Home electricity rate',text:'Your cost per unit (kWh) from your CEB or LECO bill. Pick the tariff tier matching your monthly usage.'},
-homeChargerPower:{title:'Home charger power',text:'The kW rating of your charger. Standard outlet ~2.3 kW. Wallbox usually 7 kW.'},
-chargerPower:{title:'Charger power',text:'The power output of the charger. Higher = faster. 30 kW is typical for Sri Lankan DC.'}
-};
+var modeIcons={cost:'💰',money:'💵',time:'⏱️',duration:'⏳'};
 
-// ============ TOAST ============
 var toastTimer=null;
 function showToast(msg,type){
 var t=$('toast');
@@ -780,7 +860,6 @@ clearTimeout(toastTimer);
 toastTimer=setTimeout(function(){t.className='toast'},2200);
 }
 
-// ============ OFFLINE ============
 function updateOnlineStatus(){
 var icon=$('offlineIcon');
 if(!navigator.onLine){icon.classList.add('show')}else{icon.classList.remove('show')}
@@ -800,19 +879,9 @@ if(key.indexOf('custom_')===0){var id=key.substring(7);var v=userVehicles.find(f
 if(builtInVehicles[key]){var b=builtInVehicles[key];return{name:b.name,capacity:b.capacity,range:b.range,dc:b.dc,custom:false,id:key}}
 return null;
 }
+function getCapacity(){var def=getDefaultVehicle();var v=getVehicleByKey(def);return v?v.capacity:30.08}
+function getCurrentVehicle(){return getVehicleByKey(getDefaultVehicle())}
 
-function getCapacity(){
-var def=getDefaultVehicle();
-var v=getVehicleByKey(def);
-return v?v.capacity:30.08;
-}
-
-function getCurrentVehicle(){
-var def=getDefaultVehicle();
-return getVehicleByKey(def);
-}
-
-// ============ BRAND GROUPING ============
 function brandForName(n){
 n=n||'';
 if(n.indexOf('BYD')===0)return 'BYD Sri Lanka';
@@ -823,14 +892,12 @@ if(n.indexOf('Dongfeng')===0)return 'Dongfeng';
 return 'Other';
 }
 
-// ============ POPULATE VEHICLE DROPDOWNS ============
+// ============ POPULATE DROPDOWNS ============
 function populateVehicleDropdowns(){
-// Main Calculate dropdown
 var sel=$('vehicleSelect');
 if(sel){
 var cur=sel.value||getDefaultVehicle();
 sel.innerHTML='<option value="">— Choose your vehicle —</option>';
-// My Garage first
 if(userVehicles.length>0){
 var grp=document.createElement('optgroup');
 grp.label='⭐ My Garage';
@@ -842,7 +909,6 @@ grp.appendChild(o);
 });
 sel.appendChild(grp);
 }
-// Brands alphabetical
 var byBrand={};
 Object.keys(builtInVehicles).forEach(function(k){
 var v=builtInVehicles[k];
@@ -864,7 +930,6 @@ sel.appendChild(grp);
 if(cur)sel.value=cur;
 }
 
-// Settings default vehicle dropdown
 var ssel=$('settingsDefaultVehicle');
 if(ssel){
 var scur=getDefaultVehicle();
@@ -901,7 +966,6 @@ ssel.appendChild(grp);
 ssel.value=scur;
 }
 
-// Intro vehicle dropdown
 var isel=$('introVehicle');
 if(isel){
 isel.innerHTML='<option value="">— Choose —</option>';
@@ -926,7 +990,6 @@ isel.appendChild(grp);
 }
 }
 
-// ============ POPULATE RATE DROPDOWN ============
 function populateRateDropdown(){
 var sel=$('quickRate');
 if(!sel)return;
@@ -950,7 +1013,6 @@ sel.value=cur;
 
 // ============ CONFIG LOADING ============
 function loadConfig(cb){
-// Try cache first
 try{
 var cached=localStorage.getItem('evConfig');
 if(cached){
@@ -959,12 +1021,9 @@ if(c.vehicles&&Object.keys(c.vehicles).length>0)builtInVehicles=c.vehicles;
 if(c.rates&&c.rates.length>0)providerRates=c.rates;
 }
 }catch(e){}
-// Populate immediately from fallback/cache so user isn't blocked
 populateVehicleDropdowns();
 populateRateDropdown();
 if(cb)cb();
-
-// Then fetch from Firestore in background
 if(!db)return;
 Promise.all([
 fbFuncs.getDoc(fbFuncs.doc(db,'config','vehicles')),
@@ -982,25 +1041,19 @@ if(rData.list&&Array.isArray(rData.list))providerRates=rData.list;
 try{localStorage.setItem('evConfig',JSON.stringify({vehicles:builtInVehicles,rates:providerRates}))}catch(e){}
 populateVehicleDropdowns();
 populateRateDropdown();
-populateSettingsDefault();
 applyDefaultVehicle();
 calc();
 }).catch(function(e){console.warn('Config fetch failed:',e)});
 }
 
-// ============ DEFAULT VEHICLE APPLY ============
 function applyDefaultVehicle(){
 var def=getDefaultVehicle();
 var sel=$('vehicleSelect');
 if(def&&sel&&sel.querySelector('option[value="'+def+'"]')){
 sel.value=def;
 }
-}
-
-function populateSettingsDefault(){
 var ssel=$('settingsDefaultVehicle');
-if(!ssel)return;
-ssel.value=getDefaultVehicle();
+if(ssel)ssel.value=def;
 }
 
 // ============ STATIONS ============
@@ -1033,7 +1086,7 @@ var existing=stationReports[key];
 if(!existing||r.ts>existing.ts)stationReports[key]=r;
 });
 if(cb)cb();
-}).catch(function(e){console.warn(e);if(cb)cb()});
+}).catch(function(e){if(cb)cb()});
 }
 
 function getUserLocation(cb){
@@ -1068,7 +1121,7 @@ var now=Date.now();
 var STALE_MS=24*60*60*1000;
 
 if(!stationData||stationData.length===0){
-$('stationsList').innerHTML='<div class="empty-state"><div class="es-icon">🔌</div><div class="es-text">Stations loading… If this persists, check your connection.</div></div>';
+$('stationsList').innerHTML='<div class="empty-state"><div class="es-icon">🔌</div><div class="es-text">Stations loading… Check your connection.</div></div>';
 return;
 }
 
@@ -1170,7 +1223,6 @@ showToast('Reported — thanks!','success');
 setTimeout(function(){btn.textContent=originalText;btn.disabled=false;},1200);
 loadStationReports(function(){renderStations()});
 }).catch(function(e){
-console.error(e);
 btn.textContent='⚠ Failed';
 setTimeout(function(){btn.textContent=originalText;btn.disabled=false;},1500);
 });
@@ -1188,7 +1240,6 @@ else{alert(err||'Could not get your location.')}
 });
 });
 
-// ============ RE-SEED ============
 $('reseedStationsBtn').addEventListener('click',function(){
 if(!currentUser){alert('Please sign in.');return}
 if(!confirm('Overwrite stations in Firestore?'))return;
@@ -1240,8 +1291,7 @@ showToast('Stations updated','success');
 setTimeout(function(){btn.textContent='📍 Re-seed stations (admin)';btn.disabled=false;},1500);
 })
 .catch(function(e){
-console.error(e);
-alert('Seed failed: '+e.message+'\n\nTemporarily allow writes to config collection.');
+alert('Seed failed: '+e.message);
 btn.textContent='📍 Re-seed stations (admin)';
 btn.disabled=false;
 });
@@ -1304,21 +1354,15 @@ btn.textContent='✓ Submitted!';
 showToast('Station submitted','success');
 setTimeout(function(){$('submitStationModal').classList.remove('show');btn.textContent='Submit';btn.disabled=false;},1200);
 }).catch(function(e){
-console.error(e);
 btn.textContent='⚠ Failed';
 setTimeout(function(){btn.textContent='Submit';btn.disabled=false;},1500);
 });
 });
 
-// ============ INTRO SLIDES ============
+// ============ INTRO ============
 var introStep=1;
 var INTRO_TOTAL=4;
-
-function showIntro(){
-introStep=1;
-updateIntroSlide();
-$('introContainer').classList.add('show');
-}
+function showIntro(){introStep=1;updateIntroSlide();$('introContainer').classList.add('show')}
 function updateIntroSlide(){
 for(var i=1;i<=INTRO_TOTAL;i++){$('introSlide'+i).classList.remove('active')}
 $('introSlide'+introStep).classList.add('active');
@@ -1338,19 +1382,13 @@ else{introStep--;updateIntroSlide()}
 function finishIntro(){
 var v=$('introVehicle').value;
 var hr=$('introHomeRate').value;
-if(v){
-setDefaultVehicle(v);
-}
-if(hr){
-$('homeRate').value=hr;
-$('homeRateSelect').value=hr;
-}
+if(v)setDefaultVehicle(v);
+if(hr){$('homeRate').value=hr;$('homeRateSelect').value=hr}
 try{localStorage.setItem('introDone','1')}catch(e){}
 $('introContainer').classList.remove('show');
 populateVehicleDropdowns();
 applyDefaultVehicle();
-calc();
-savePrefs();
+calc();savePrefs();
 showToast('Welcome to EV Calc!','success');
 }
 
@@ -1373,10 +1411,7 @@ applyDefaultVehicle();
 calc();
 });
 loadStationReports(function(){renderStations()});
-// Show intro if never completed
-if(!localStorage.getItem('introDone')){
-setTimeout(showIntro,600);
-}
+if(!localStorage.getItem('introDone')){setTimeout(showIntro,600)}
 }else{
 $('authScreen').style.display='flex';
 $('mainApp').style.display='none';
@@ -1388,7 +1423,7 @@ renderStations();
 }
 if(window.firebaseReady){onFirebaseReady();}else{window.addEventListener('firebase-ready',onFirebaseReady);}
 
-// ============ AUTH ============
+// AUTH
 $('tabLogin').addEventListener('click',function(){$('tabLogin').classList.add('active');$('tabSignup').classList.remove('active');$('loginForm').style.display='block';$('signupForm').style.display='none';$('resetForm').style.display='none';$('authTabs').style.display='flex';$('authSubtitle').textContent='Sign in to sync your charging history';$('authError').style.display='none';$('authInfo').style.display='none'});
 $('tabSignup').addEventListener('click',function(){$('tabSignup').classList.add('active');$('tabLogin').classList.remove('active');$('signupForm').style.display='block';$('loginForm').style.display='none';$('resetForm').style.display='none';$('authTabs').style.display='flex';$('authSubtitle').textContent='Create an account to save your history';$('authError').style.display='none';$('authInfo').style.display='none'});
 $('forgotBtn').addEventListener('click',function(){$('loginForm').style.display='none';$('signupForm').style.display='none';$('resetForm').style.display='block';$('authTabs').style.display='none';$('authSubtitle').textContent='Reset your password';$('authError').style.display='none';$('authInfo').style.display='none'});
@@ -1401,7 +1436,7 @@ $('signupBtn').addEventListener('click',function(){var e=$('signupEmail').value.
 $('resetBtn').addEventListener('click',function(){var e=$('resetEmail').value.trim();if(!e){showAuthError('Enter email.');return}var b=this;b.disabled=true;b.textContent='Sending...';fbFuncs.sendPasswordResetEmail(auth,e).then(function(){b.disabled=false;b.textContent='Send Reset Link';showAuthInfo('✓ Reset link sent!')}).catch(function(err){b.disabled=false;b.textContent='Send Reset Link';showAuthError(friendlyAuthError(err.code))})});
 $('signoutBtn2').addEventListener('click',function(){if(confirm('Sign out?'))fbFuncs.signOut(auth)});
 
-// ============ PASSWORD ============
+// PASSWORD
 $('cpBtn').addEventListener('click',function(){
 var cur=$('cpCurrent').value,nw=$('cpNew').value,conf=$('cpConfirm').value,msg=$('cpMsg');
 if(!cur||!nw||!conf){msg.style.color='#f87171';msg.textContent='Fill all fields.';return}
@@ -1417,11 +1452,11 @@ fbFuncs.reauthenticateWithCredential(currentUser,cred)
 .then(function(){b.disabled=false;b.textContent='Update Password'});
 });
 
-// ============ CLOUD DATA ============
+// CLOUD
 function getUserHistoryRef(){return fbFuncs.collection(db,'users',currentUser.uid,'history')}
-function addRecord(r,cb){if(!currentUser){if(cb)cb(false);return}fbFuncs.addDoc(getUserHistoryRef(),r).then(function(){if(cb)cb(true)}).catch(function(e){console.error(e);if(cb)cb(false)})}
-function getAllRecords(cb){if(!currentUser){cb([]);return}fbFuncs.getDocs(getUserHistoryRef()).then(function(s){var a=[];s.forEach(function(d){var data=d.data();data._docId=d.id;a.push(data)});cb(a)}).catch(function(e){console.error(e);cb([])})}
-function updateRecord(docId,updates,cb){fbFuncs.updateDoc(fbFuncs.doc(db,'users',currentUser.uid,'history',docId),updates).then(function(){if(cb)cb(true)}).catch(function(e){console.error(e);if(cb)cb(false)})}
+function addRecord(r,cb){if(!currentUser){if(cb)cb(false);return}fbFuncs.addDoc(getUserHistoryRef(),r).then(function(){if(cb)cb(true)}).catch(function(e){if(cb)cb(false)})}
+function getAllRecords(cb){if(!currentUser){cb([]);return}fbFuncs.getDocs(getUserHistoryRef()).then(function(s){var a=[];s.forEach(function(d){var data=d.data();data._docId=d.id;a.push(data)});cb(a)}).catch(function(e){cb([])})}
+function updateRecord(docId,updates,cb){fbFuncs.updateDoc(fbFuncs.doc(db,'users',currentUser.uid,'history',docId),updates).then(function(){if(cb)cb(true)}).catch(function(e){if(cb)cb(false)})}
 function deleteRecord(ts,cb){getAllRecords(function(a){var t=a.find(function(x){return x.ts===ts});if(!t){if(cb)cb(false);return}fbFuncs.deleteDoc(fbFuncs.doc(db,'users',currentUser.uid,'history',t._docId)).then(function(){if(cb)cb(true)}).catch(function(){if(cb)cb(false)})})}
 function clearAllRecords(cb){getAllRecords(function(a){var p=a.map(function(x){return fbFuncs.deleteDoc(fbFuncs.doc(db,'users',currentUser.uid,'history',x._docId))});Promise.all(p).then(function(){if(cb)cb(true)}).catch(function(){if(cb)cb(false)})})}
 
@@ -1431,7 +1466,7 @@ function addUserVehicle(v,cb){if(!currentUser){if(cb)cb(false);return}fbFuncs.ad
 function updateUserVehicle(id,updates,cb){fbFuncs.updateDoc(fbFuncs.doc(db,'users',currentUser.uid,'vehicles',id),updates).then(function(){var idx=userVehicles.findIndex(function(v){return v._docId===id});if(idx>=0)Object.assign(userVehicles[idx],updates);if(cb)cb(true)}).catch(function(e){if(cb)cb(false)})}
 function deleteUserVehicle(id,cb){fbFuncs.deleteDoc(fbFuncs.doc(db,'users',currentUser.uid,'vehicles',id)).then(function(){userVehicles=userVehicles.filter(function(v){return v._docId!==id});if(cb)cb(true)}).catch(function(e){if(cb)cb(false)})}
 
-// ============ NAV ============
+// NAV
 document.querySelectorAll('.nav-item').forEach(function(btn){
 btn.addEventListener('click',function(){
 document.querySelectorAll('.nav-item').forEach(function(b){b.classList.remove('active')});
@@ -1442,7 +1477,6 @@ if(btn.dataset.page==='history')renderHistory();
 if(btn.dataset.page==='stations')loadStationReports(function(){renderStations()});
 });
 });
-
 $('showHelpBtn').addEventListener('click',function(){
 document.querySelectorAll('.nav-item').forEach(function(b){b.classList.remove('active')});
 document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
@@ -1455,10 +1489,9 @@ var s=document.querySelector('.nav-item[data-page="settings"]');if(s)s.classList
 $('page-settings').classList.add('active');
 });
 
-// ============ MODE SWITCHING ============
+// CHARGING MODE
 $('tabHome').addEventListener('click',function(){setChargingMode('home')});
 $('tabPublic').addEventListener('click',function(){setChargingMode('public')});
-
 function setChargingMode(m){
 currentMode=m;
 if(m==='home'){$('tabHome').classList.add('active');$('tabPublic').classList.remove('active');$('homeFields').style.display='block';$('publicFields').style.display='none'}
@@ -1466,12 +1499,10 @@ else{$('tabPublic').classList.add('active');$('tabHome').classList.remove('activ
 calc();savePrefs();
 }
 
+// CALC MODE
 document.querySelectorAll('.mode-card').forEach(function(btn){
-btn.addEventListener('click',function(){
-setCalcMode(this.dataset.mode);
+btn.addEventListener('click',function(){setCalcMode(this.dataset.mode)});
 });
-});
-
 function setCalcMode(m){
 currentCalcMode=m;
 document.querySelectorAll('.mode-card').forEach(function(b){b.classList.toggle('active',b.dataset.mode===m)});
@@ -1481,9 +1512,27 @@ $('targetField').style.display=targetVis?'block':'none';
 $('presetsRow').style.display=targetVis?'flex':'none';
 $('moneyInputField').style.display=(m==='money')?'block':'none';
 $('durationInputField').style.display=(m==='duration')?'block':'none';
-$('durationPresets').style.display=(m==='duration')?'flex':'none';
 try{localStorage.setItem('evCalcMode',m)}catch(e){}
 calc();savePrefs();
+}
+
+// DURATION SUBMODE
+$('durToggleDuration').addEventListener('click',function(){setDurationSubMode('duration')});
+$('durToggleUntil').addEventListener('click',function(){setDurationSubMode('until')});
+function setDurationSubMode(m){
+durationSubMode=m;
+if(m==='duration'){
+$('durToggleDuration').classList.add('active');
+$('durToggleUntil').classList.remove('active');
+$('durationMode1').style.display='block';
+$('durationMode2').style.display='none';
+}else{
+$('durToggleUntil').classList.add('active');
+$('durToggleDuration').classList.remove('active');
+$('durationMode1').style.display='none';
+$('durationMode2').style.display='block';
+}
+calc();
 }
 
 $('compareToggle').addEventListener('click',function(){this.classList.toggle('open');var c=$('compareContent'),a=$('compareArrow');if(c.style.display==='none'){c.style.display='block';a.style.transform='rotate(90deg)'}else{c.style.display='none';a.style.transform='rotate(0)'}});
@@ -1492,7 +1541,7 @@ $('timerToggle').addEventListener('click',function(){this.classList.toggle('open
 document.addEventListener('click',function(e){if(e.target.classList&&e.target.classList.contains('info-i')){var k=e.target.dataset.info;var i=infos[k];if(i){$('infoTitle').textContent=i.title;$('infoText').textContent=i.text;$('infoModal').classList.add('show')}}});
 $('infoOk').addEventListener('click',function(){$('infoModal').classList.remove('show')});
 
-// ============ UTILITY ============
+// UTILITY
 function lkr(n){return 'LKR '+n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',')}
 function clamp(v,mn,mx){v=parseInt(v);if(isNaN(v))return mn;if(v<mn)return mn;if(v>mx)return mx;return v}
 function getHomePower(){if($('homeChargerPower').value==='custom')return parseFloat($('customHomePower').value)||7;return parseFloat($('homeChargerPower').value)||7}
@@ -1500,17 +1549,57 @@ function getPublicPower(){if($('chargerPower').value==='custom')return parseFloa
 function getEffectivePower(){var p=currentMode==='home'?getHomePower():getPublicPower();var eff=currentMode==='home'?(parseFloat($('homeEfficiency').value)||88):(parseFloat($('efficiency').value)||90);return{power:p,eff:eff,effPower:p*(eff/100)}}
 function getRate(){return currentMode==='home'?(parseFloat($('homeRate').value)||0):(parseFloat($('rate').value)||0)}
 
-// ============ MAIN CALCULATION ============
-var currentCalc=null;
+function getDurationMinutes(){
+if(durationSubMode==='duration'){
+var h=parseFloat($('durationHrs').value)||0;
+var m=parseFloat($('durationMins').value)||0;
+return h*60+m;
+}else{
+var untilStr=$('untilTime').value;
+if(!untilStr)return 0;
+var parts=untilStr.split(':');
+var uh=parseInt(parts[0]);
+var um=parseInt(parts[1]);
+var now=new Date();
+var target=new Date(now.getFullYear(),now.getMonth(),now.getDate(),uh,um,0,0);
+if(target.getTime()<=now.getTime()){
+target.setDate(target.getDate()+1);
+}
+return Math.max(1,Math.round((target.getTime()-now.getTime())/60000));
+}
+}
 
+function updateUntilComputed(){
+if(durationSubMode==='until'){
+var mins=getDurationMinutes();
+var h=Math.floor(mins/60);var m=mins%60;
+$('untilComputed').textContent='Charging for '+(h>0?(h+' hour'+(h===1?'':'s')+(m>0?' ':'')+''):'')+(m>0?m+' min':'')+' until '+$('untilTime').value;
+}
+}
+
+function updateBatteryVisual(id,fillId,pctId,value){
+var el=$(fillId);
+if(el){
+el.style.width=value+'%';
+el.classList.remove('low','mid');
+if(value<=20)el.classList.add('low');
+else if(value<=50)el.classList.add('mid');
+}
+var pctEl=$(pctId);
+if(pctEl)pctEl.textContent=value+'%';
+}
+
+// MAIN CALC
+var currentCalc=null;
 function calc(){
 var capacity=getCapacity();
 var cur=parseFloat($('current').value)||0;
 var tgt=parseFloat($('target').value)||0;
 if(document.activeElement!==$('currentNum'))$('currentNum').value=cur;
 if(document.activeElement!==$('targetNum'))$('targetNum').value=tgt;
-$('curBatteryFill').style.width=cur+'%';
-$('tgtBatteryFill').style.width=tgt+'%';
+updateBatteryVisual('current','curBatteryFill','curBatteryPct',cur);
+updateBatteryVisual('target','tgtBatteryFill','tgtBatteryPct',tgt);
+updateUntilComputed();
 
 var eff=getEffectivePower();
 var rate=getRate();
@@ -1523,6 +1612,7 @@ var result={};
 var label='Total Cost',value='LKR 0.00';
 var t1='0.00',t1L='kWh',t2='—',t2L='Time',t3='—',t3L='Range';
 var detail='';
+var addedKwh=0;
 
 if(currentCalcMode==='cost'){
 var needed=(tgt>cur)?((tgt-cur)/100)*capacity:0;
@@ -1535,9 +1625,9 @@ t2L='Time';
 if(rangeMax>0){t3=((tgt/100)*rangeMax).toFixed(0);t3L='km Range'}else{t3='—';t3L='Range'}
 detail='Billed '+billed.toFixed(2)+' kWh at LKR '+rate.toFixed(2)+'/kWh';
 $('moneyWarn').style.display='none';
+addedKwh=needed;
 result={mode:'cost',capacity:capacity,cur:cur,tgt:tgt,rate:rate,needed:needed,billed:billed,total:total,vehicleKey:getDefaultVehicle(),vehicleName:vehicle?vehicle.name:'—'};
 }
-
 else if(currentCalcMode==='money'){
 var money=parseFloat($('moneyAmount').value)||0;
 var kWhCanBuy=money/rate;
@@ -1549,8 +1639,7 @@ var actualUsable=(actualPercent-cur)/100*capacity;
 if(actualUsable<0)actualUsable=0;
 var actualBilled=actualUsable/(eff.eff/100);
 var actualTime=eff.effPower>0?(actualUsable/eff.effPower):0;
-label='Target Reached';
-value=actualPercent.toFixed(0)+'%';
+label='Target Reached';value=actualPercent.toFixed(0)+'%';
 t1=actualUsable.toFixed(1);t1L='kWh Added';
 if(actualTime>0){var hrs2=actualTime;var h2=Math.floor(hrs2);var m2=Math.round((hrs2-h2)*60);if(m2===60){h2++;m2=0}t2=(h2>=1?(h2+'h '+m2+'m'):(m2+' min'))}else{t2='—'}
 t2L='Time';
@@ -1564,9 +1653,9 @@ warn.style.display='block';
 warn.innerHTML='⚠️ LKR '+money.toFixed(0)+' is more than a full charge. You\'d reach 100% for about LKR '+fullCost.toFixed(0)+'.<br><br><button type="button" class="preset-btn" style="margin-top:6px" onclick="document.getElementById(\'moneyAmount\').value=\''+fullCost.toFixed(0)+'\';calc()">Use LKR '+fullCost.toFixed(0)+'</button>';
 }else{warn.style.display='none'}
 detail='Spending LKR '+money.toFixed(0)+' at LKR '+rate.toFixed(2)+'/kWh';
+addedKwh=actualUsable;
 result={mode:'money',capacity:capacity,cur:cur,tgt:actualPercent,rate:rate,needed:actualUsable,billed:actualBilled,total:money,vehicleKey:getDefaultVehicle(),vehicleName:vehicle?vehicle.name:'—',moneyRequested:true};
 }
-
 else if(currentCalcMode==='time'){
 var needed3=(tgt>cur)?((tgt-cur)/100)*capacity:0;
 if(needed3>0&&eff.effPower>0){
@@ -1579,11 +1668,11 @@ t2=tgt+'%';t2L='Target';
 if(rangeMax>0){t3=((tgt/100)*rangeMax).toFixed(0);t3L='km Range'}else{t3='—';t3L='Range'}
 detail='At '+eff.effPower.toFixed(1)+' kW effective rate';
 $('moneyWarn').style.display='none';
+addedKwh=needed3;
 result={mode:'time',capacity:capacity,cur:cur,tgt:tgt,rate:rate,needed:needed3,total:0,vehicleKey:getDefaultVehicle(),vehicleName:vehicle?vehicle.name:'—'};
 }
-
 else if(currentCalcMode==='duration'){
-var mins=parseFloat($('durationMin').value)||0;
+var mins=getDurationMinutes();
 var hrsInput=mins/60;
 var usableKwh=eff.effPower*hrsInput;
 var percentAdd=(usableKwh/capacity)*100;
@@ -1606,16 +1695,29 @@ var h4=Math.floor(timeToFull/60);var m4=Math.round(timeToFull%60);
 warn2.style.display='block';
 warn2.innerHTML='⚠️ Car hits 100% at about '+(h4>=1?(h4+'h '+m4+'m'):(m4+' min'))+'. Extra time won\'t add charge.';
 }else{warn2.style.display='none'}
-detail='Charging for '+(mins>=60?Math.round(mins/60*10)/10+' hr':mins+' min')+' at '+eff.effPower.toFixed(1)+' kW';
+var durationText=mins>=60?(Math.floor(mins/60)+'h '+(mins%60)+'m'):(mins+' min');
+detail='Charging for '+durationText+' at '+eff.effPower.toFixed(1)+' kW';
+addedKwh=actualUsable2;
 result={mode:'duration',capacity:capacity,cur:cur,tgt:actualPercent2,rate:rate,needed:actualUsable2,billed:billed2,total:cost2,vehicleKey:getDefaultVehicle(),vehicleName:vehicle?vehicle.name:'—'};
 }
 
+$('resultIcon').textContent=modeIcons[currentCalcMode]||'💰';
 $('resultLabel').textContent=label;
 $('resultValue').textContent=value;
 $('tile1').textContent=t1;$('tile1Lbl').textContent=t1L;
 $('tile2').textContent=t2;$('tile2Lbl').textContent=t2L;
 $('tile3').textContent=t3;$('tile3Lbl').textContent=t3L;
 $('resultDetail').textContent=detail;
+
+// Energy flow bar
+var efFrom=result.cur;
+var efTo=result.tgt;
+$('efFrom').textContent=efFrom.toFixed(0)+'%';
+$('efTo').textContent=efTo.toFixed(0)+'%';
+$('efFillBefore').style.width=efFrom+'%';
+$('efFillAdded').style.left=efFrom+'%';
+$('efFillAdded').style.width=Math.max(0,(efTo-efFrom))+'%';
+$('efLegend').textContent='Adding '+addedKwh.toFixed(1)+' kWh';
 
 if(tgt>80&&(currentCalcMode==='cost'||currentCalcMode==='time')){
 var msg;
@@ -1629,74 +1731,84 @@ currentCalc=result;
 $('saveBtn').disabled=(result.needed<=0);
 $('saveBtn').style.opacity=(result.needed<=0)?'0.5':'1';
 
-// Compare only for cost and time
 if(currentCalcMode==='cost'||currentCalcMode==='time'){
-if(currentCalcMode==='cost')updateNetworkCompare(billed,taxPct,fee);
+if(currentCalcMode==='cost')updateNetworkCompare(result.billed||0,taxPct,fee);
 updatePetrolCompare(result.needed,result.mode==='cost'?result.total:0,vehicle);
 }
 }
 
 function updateNetworkCompare(billed,taxPct,fee){
 var body=$('compareBody');
-if(billed<=0||!providerRates||providerRates.length===0){body.innerHTML='<tr><td colspan="2" style="text-align:center;color:#6a5a9e;padding:14px;font-style:italic">Set target above current charge.</td></tr>';return}
+if(billed<=0||!providerRates||providerRates.length===0){body.innerHTML='<div style="text-align:center;color:#6a5a9e;padding:14px;font-style:italic;font-size:0.85rem">Set target above current charge.</div>';return}
 var res=providerRates.map(function(p){var b=billed*p.rate;var t=b*(taxPct/100);return{name:p.name,cost:b+t+fee}});
 var mn=Math.min.apply(null,res.map(function(x){return x.cost}));
-body.innerHTML=res.map(function(x){var bd=x.cost===mn?'<span class="best-badge">BEST</span>':'';return '<tr><td class="name">'+x.name+bd+'</td><td class="cost">'+lkr(x.cost)+'</td></tr>'}).join('');
+var mx=Math.max.apply(null,res.map(function(x){return x.cost}));
+body.innerHTML=res.map(function(x){
+var pct=mx>0?(x.cost/mx*100):0;
+var cls=x.cost===mn?'best':'';
+var badge=x.cost===mn?'<span class="best-badge">BEST</span>':'';
+return '<div class="compare-bar-row"><div class="compare-bar-hdr"><span class="name">'+x.name+badge+'</span><span class="cost">'+lkr(x.cost)+'</span></div><div class="compare-bar-track"><div class="compare-bar-fill '+cls+'" style="width:'+pct+'%"></div></div></div>';
+}).join('');
 }
 
 function updatePetrolCompare(needed,totalCost,vehicle){
-if(!vehicle||!vehicle.range||needed<=0){$('petrolEvCost').textContent=totalCost>0?lkr(totalCost):'—';$('petrolCost92').textContent='—';$('petrolCost95').textContent='—';$('dieselCost').textContent='—';return}
+var body=$('petrolBody');
+if(!vehicle||!vehicle.range||needed<=0){body.innerHTML='<div style="text-align:center;color:#6a5a9e;padding:14px;font-style:italic;font-size:0.85rem">Select vehicle with range to compare.</div>';return}
 var tgt=currentCalc?currentCalc.tgt:parseFloat($('target').value)||0;
 var distance=vehicle.range*(tgt/100);
-var fuel92=parseFloat($('setFuel92').value)||414;
-var fuel95=parseFloat($('setFuel95').value)||475;
-var diesel=parseFloat($('setDiesel').value)||392;
+var fuel92=parseFloat($('setFuel92').value)||424;
+var fuel95=parseFloat($('setFuel95').value)||490;
+var diesel=parseFloat($('setDiesel').value)||397;
 var kmPerL=parseFloat($('setPetrolKm').value)||12;
 var litres=distance/kmPerL;
-$('petrolEvCost').textContent=totalCost>0?lkr(totalCost):'—';
-$('petrolCost92').textContent=lkr(litres*fuel92);
-$('petrolCost95').textContent=lkr(litres*fuel95);
-$('dieselCost').textContent=lkr(litres*diesel);
+var costs=[
+{name:'⚡ Your EV charge',cost:totalCost||0,isEV:true},
+{name:'⛽ Petrol 92',cost:litres*fuel92},
+{name:'⛽ Petrol 95',cost:litres*fuel95},
+{name:'🚗 Auto Diesel',cost:litres*diesel}
+];
+var mx=Math.max.apply(null,costs.map(function(x){return x.cost}));
+var mn=Math.min.apply(null,costs.map(function(x){return x.cost}));
+body.innerHTML=costs.map(function(x){
+var pct=mx>0?(x.cost/mx*100):0;
+var cls=x.cost===mn?'best':'';
+var badge=x.cost===mn?'<span class="best-badge">BEST</span>':'';
+return '<div class="compare-bar-row"><div class="compare-bar-hdr"><span class="name">'+x.name+badge+'</span><span class="cost">'+lkr(x.cost)+'</span></div><div class="compare-bar-track"><div class="compare-bar-fill '+cls+'" style="width:'+pct+'%"></div></div></div>';
+}).join('');
 }
 
-// ============ INPUT HANDLERS ============
+// INPUTS
 $('vehicleSelect').addEventListener('change',function(){
 var v=this.value;
 if(v){setDefaultVehicle(v)}
 calc();savePrefs();
 });
-
 $('settingsDefaultVehicle').addEventListener('change',function(){
 setDefaultVehicle(this.value);
 applyDefaultVehicle();
-var sel=$('vehicleSelect');
-if(sel&&this.value)sel.value=this.value;
 calc();
 });
 
-$('currentNum').addEventListener('input',function(){
-var raw=this.value;if(raw===''||raw==='-')return;
-var v=parseInt(raw);if(isNaN(v))return;
-if(v<1)v=1;if(v>100)v=100;
-$('current').value=v;calc();savePrefs();
-});
+$('currentNum').addEventListener('input',function(){var raw=this.value;if(raw===''||raw==='-')return;var v=parseInt(raw);if(isNaN(v))return;if(v<1)v=1;if(v>100)v=100;$('current').value=v;calc();savePrefs()});
 $('currentNum').addEventListener('blur',function(){var v=clamp(this.value,1,100);this.value=v;$('current').value=v;calc();savePrefs()});
-$('targetNum').addEventListener('input',function(){
-var raw=this.value;if(raw===''||raw==='-')return;
-var v=parseInt(raw);if(isNaN(v))return;
-if(v<1)v=1;if(v>100)v=100;
-$('target').value=v;calc();savePrefs();
-});
+$('targetNum').addEventListener('input',function(){var raw=this.value;if(raw===''||raw==='-')return;var v=parseInt(raw);if(isNaN(v))return;if(v<1)v=1;if(v>100)v=100;$('target').value=v;calc();savePrefs()});
 $('targetNum').addEventListener('blur',function(){var v=clamp(this.value,1,100);this.value=v;$('target').value=v;calc();savePrefs()});
 $('current').addEventListener('input',function(){$('currentNum').value=this.value;calc()});
 $('target').addEventListener('input',function(){$('targetNum').value=this.value;calc()});
 $('moneyAmount').addEventListener('input',calc);
 $('moneyAmount').addEventListener('change',savePrefs);
-$('durationMin').addEventListener('input',calc);
-$('durationMin').addEventListener('change',savePrefs);
+$('durationHrs').addEventListener('input',calc);
+$('durationHrs').addEventListener('change',savePrefs);
+$('durationMins').addEventListener('input',calc);
+$('durationMins').addEventListener('change',savePrefs);
+$('untilTime').addEventListener('change',calc);
 
-document.querySelectorAll('.preset-btn[data-duration]').forEach(function(b){
-b.addEventListener('click',function(){$('durationMin').value=this.dataset.duration;calc();savePrefs()});
+document.querySelectorAll('.preset-btn[data-durh]').forEach(function(b){
+b.addEventListener('click',function(){
+$('durationHrs').value=this.dataset.durh;
+$('durationMins').value=this.dataset.durm;
+calc();savePrefs();
+});
 });
 document.querySelectorAll('.preset-btn[data-preset]').forEach(function(b){
 b.addEventListener('click',function(){
@@ -1706,6 +1818,8 @@ $('currentNum').value=p[0];$('targetNum').value=p[1];
 calc();savePrefs();
 });
 });
+
+// Timer
 document.querySelectorAll('.preset-btn[data-reminder]').forEach(function(b){
 b.addEventListener('click',function(){
 var v=this.dataset.reminder,mins;
@@ -1724,6 +1838,24 @@ showToast('Reminder set for '+mins+' min','success');
 });
 });
 
+$('reminderAtBtn').addEventListener('click',function(){
+var timeVal=$('reminderTime').value;
+if(!timeVal){alert('Pick a time first.');return}
+var parts=timeVal.split(':');
+var rh=parseInt(parts[0]);var rm=parseInt(parts[1]);
+var now=new Date();
+var target=new Date(now.getFullYear(),now.getMonth(),now.getDate(),rh,rm,0,0);
+if(target.getTime()<=now.getTime())target.setDate(target.getDate()+1);
+var mins=Math.round((target.getTime()-now.getTime())/60000);
+if(!('Notification' in window)){alert('Notifications not supported.');return}
+Notification.requestPermission().then(function(p){
+if(p==='granted'){
+setTimeout(function(){try{new Notification('⚡ Charging Reminder',{body:'Time to check your charge.'})}catch(e){}},mins*60*1000);
+showToast('Reminder set for '+timeVal,'success');
+}else{alert('Notifications blocked.')}
+});
+});
+
 $('quickRate').addEventListener('change',function(){
 if(this.value&&this.value!=='custom'){$('rate').value=this.value;calc();savePrefs()}
 else if(this.value==='custom'){$('rate').value='';$('rate').focus();calc()}
@@ -1731,10 +1863,9 @@ else if(this.value==='custom'){$('rate').value='';$('rate').focus();calc()}
 $('homeRateSelect').addEventListener('change',function(){if(this.value&&this.value!=='custom'){$('homeRate').value=this.value;calc();savePrefs()}else if(this.value==='custom'){$('homeRate').value='';$('homeRate').focus();calc()}});
 $('homeChargerPower').addEventListener('change',function(){if(this.value==='custom'){$('customHomePowerField').style.display='block';$('customHomePower').focus()}else{$('customHomePowerField').style.display='none'}calc();savePrefs()});
 $('chargerPower').addEventListener('change',function(){if(this.value==='custom'){$('customPublicPowerField').style.display='block';$('customPublicPower').focus()}else{$('customPublicPowerField').style.display='none'}calc();savePrefs()});
-
 ['setFuel92','setFuel95','setDiesel','setPetrolKm','sessionFee','tax'].forEach(function(id){$(id).addEventListener('change',function(){savePrefs();calc()})});
 
-// ============ GARAGE ============
+// GARAGE
 function renderGarage(){
 var list=$('garageList');
 if(!userVehicles||userVehicles.length===0){list.innerHTML='<div class="empty-state"><div class="es-icon">🚗</div><div class="es-text"><strong>No custom vehicles yet.</strong><br>Tap "➕ Add" to save your car.</div></div>'}
@@ -1783,14 +1914,14 @@ function askConfirm(title,text,cb){$('confirmTitle').textContent=title;$('confir
 $('confirmCancel').addEventListener('click',function(){$('confirmModal').classList.remove('show');confirmCallback=null});
 $('confirmOk').addEventListener('click',function(){$('confirmModal').classList.remove('show');if(confirmCallback){var cb=confirmCallback;confirmCallback=null;cb()}});
 
-// ============ HISTORY ============
+// HISTORY
 function calculatePetrolSavings(item){
 var vehicle=getVehicleByKey(item.vehicleKey);
 if(!vehicle||!vehicle.range)return null;
 var distance=vehicle.range*(item.tgt/100);
 var kmPerL=parseFloat($('setPetrolKm').value)||12;
 var litres=distance/kmPerL;
-var fuel92=parseFloat($('setFuel92').value)||414;
+var fuel92=parseFloat($('setFuel92').value)||424;
 return (litres*fuel92)-item.total;
 }
 
@@ -1799,7 +1930,7 @@ if(!currentUser)return;
 getAllRecords(function(hist){
 var filter=$('historyVehicleFilter').value;
 var filtered=filter==='all'?hist:hist.filter(function(x){return x.vehicleKey===filter});
-var list=$('historyList'),stats=$('historyStats'),cb=$('clearBtn'),er=$('exportRow'),sc=$('summaryCard');
+var list=$('historyList'),stats=$('historyStats'),cb=$('clearBtn'),er=$('exportRow'),sc=$('summaryCard'),chartCard=$('historyChartCard');
 
 var hf=$('historyVehicleFilter');var curHf=hf.value;
 hf.innerHTML='<option value="all">All vehicles</option>';
@@ -1808,7 +1939,23 @@ var byBrand={};Object.keys(builtInVehicles).forEach(function(k){var v=builtInVeh
 Object.keys(byBrand).sort().forEach(function(b){var g=document.createElement('optgroup');g.label=b;byBrand[b].sort(function(a,b){return(a.v.name||'').localeCompare(b.v.name||'')}).forEach(function(i){var o=document.createElement('option');o.value=i.key;o.textContent=i.v.name;g.appendChild(o)});hf.appendChild(g)});
 hf.value=curHf;
 
-if(filtered.length===0){list.innerHTML='<div class="empty-state"><div class="es-icon">📭</div><div class="es-text"><strong>No charges'+(filter!=='all'?' for this filter':'')+'.</strong><br>Save a charge from Calculate.</div></div>';stats.style.display='none';cb.style.display='none';er.style.display='none';sc.style.display='none';return}
+if(filtered.length===0){list.innerHTML='<div class="empty-state"><div class="es-icon">📭</div><div class="es-text"><strong>No charges'+(filter!=='all'?' for this filter':'')+'.</strong><br>Save a charge from Calculate.</div></div>';stats.style.display='none';cb.style.display='none';er.style.display='none';sc.style.display='none';chartCard.style.display='none';return}
+
+// Chart
+var recent=filtered.slice().sort(function(a,b){return a.ts-b.ts}).slice(-6);
+if(recent.length>0){
+var maxC=Math.max.apply(null,recent.map(function(x){return x.total}));
+var minC=Math.min.apply(null,recent.map(function(x){return x.total}));
+chartCard.style.display='block';
+$('historyChart').innerHTML=recent.map(function(x){
+var h=maxC>0?(x.total/maxC*100):0;
+var cls=x.total===minC?'best':'';
+return '<div class="hc-bar '+cls+'" style="height:'+Math.max(8,h)+'%"></div>';
+}).join('');
+$('historyChartLabels').innerHTML=recent.map(function(x){
+var d=new Date(x.ts);return '<span>'+d.getDate()+'/'+(d.getMonth()+1)+'</span>';
+}).join('');
+}else{chartCard.style.display='none'}
 
 var tc=0,te=0;filtered.forEach(function(x){tc+=x.total;te+=x.needed});
 $('statCount').textContent=filtered.length;$('statEnergy').textContent=te.toFixed(0);$('statCost').textContent=tc.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',');stats.style.display='flex';cb.style.display='block';er.style.display='block';
@@ -1854,33 +2001,26 @@ if(item.mode==='money'||item.moneyRequested){$('ehTotalField').style.display='bl
 $('editHistoryModal').classList.add('show');
 });
 }
-
 $('ehCancel').addEventListener('click',function(){$('editHistoryModal').classList.remove('show');editingHistoryId=null});
-
 $('ehSave').addEventListener('click',function(){
-if(!editingHistoryId){alert('Nothing to edit.');return}
+if(!editingHistoryId)return;
 var from=clamp($('ehFrom').value,1,100);
 var to=clamp($('ehTo').value,1,100);
 var cap=parseFloat($('ehCap').value);
 var rate=parseFloat($('ehRate').value);
 if(!cap||cap<=0){alert('Invalid capacity.');return}
 if(rate<0||isNaN(rate)){alert('Invalid rate.');return}
-if(to<=from){alert('End % must be greater than start %.');return}
+if(to<=from){alert('End % must be greater.');return}
 var needed=((to-from)/100)*cap;
 var eff=currentMode==='home'?(parseFloat($('homeEfficiency').value)||88):(parseFloat($('efficiency').value)||90);
 var billed=needed/(eff/100);
 var total=billed*rate;
 var totalOverride=$('ehTotalField').style.display!=='none'?parseFloat($('ehTotal').value):null;
 if(totalOverride&&totalOverride>0)total=totalOverride;
-
-getAllRecords(function(hist){
-var item=hist.find(function(x){return x._docId===editingHistoryId});
-if(!item){alert('Charge not found.');return}
 var updates={cur:from,tgt:to,cap:cap,r:rate,needed:needed,billed:billed,total:total};
 updateRecord(editingHistoryId,updates,function(ok){
 if(ok){$('editHistoryModal').classList.remove('show');editingHistoryId=null;renderHistory();showToast('Charge updated','success')}
 else{alert('Could not update.')}
-});
 });
 });
 
@@ -1888,12 +2028,7 @@ $('historyVehicleFilter').addEventListener('change',renderHistory);
 
 $('saveBtn').addEventListener('click',function(){
 if(!currentCalc||currentCalc.needed<=0||!currentUser)return;
-var rec={
-ts:Date.now(),cap:currentCalc.capacity,cur:currentCalc.cur,tgt:currentCalc.tgt,
-r:currentCalc.rate,needed:currentCalc.needed,billed:currentCalc.billed||0,
-total:currentCalc.total,mode:currentMode,calcMode:currentCalc.mode,
-vehicleKey:currentCalc.vehicleKey,vehicleName:currentCalc.vehicleName
-};
+var rec={ts:Date.now(),cap:currentCalc.capacity,cur:currentCalc.cur,tgt:currentCalc.tgt,r:currentCalc.rate,needed:currentCalc.needed,billed:currentCalc.billed||0,total:currentCalc.total,mode:currentMode,calcMode:currentCalc.mode,vehicleKey:currentCalc.vehicleKey,vehicleName:currentCalc.vehicleName};
 if(currentCalc.mode==='money')rec.moneyRequested=true;
 addRecord(rec,function(ok){
 if(ok){renderHistory();showToast('Charge saved','success')}
@@ -1922,7 +2057,7 @@ document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeOb
 });
 });
 
-// ============ THEME / SHARE / INTRO ============
+// THEME / SHARE / INTRO
 $('themeToggle').addEventListener('click',function(){
 var l=document.body.classList.contains('light');
 if(l){document.body.classList.remove('light');$('themeKnob').style.left='2px'}else{document.body.classList.add('light');$('themeKnob').style.left='32px'}
@@ -1935,18 +2070,17 @@ var url=window.location.origin;
 if(navigator.share){navigator.share({title:'EV Charge Calculator',text:text,url:url}).catch(function(e){if(e.name!=='AbortError')console.warn(e)})}
 else{window.open('https://wa.me/?text='+encodeURIComponent(text+'\n\n'+url),'_blank')}
 });
-
 $('rerunIntro').addEventListener('click',showIntro);
 
-// ============ PREFS ============
+// PREFS
 function savePrefs(){
 try{localStorage.setItem('evPrefs',JSON.stringify({
 current:$('current').value,target:$('target').value,rate:$('rate').value,efficiency:$('efficiency').value,
 sessionFee:$('sessionFee').value,tax:$('tax').value,chargerPower:$('chargerPower').value,
 homeRate:$('homeRate').value,homeChargerPower:$('homeChargerPower').value,homeEfficiency:$('homeEfficiency').value,
 customHomePower:$('customHomePower').value,customPublicPower:$('customPublicPower').value,
-moneyAmount:$('moneyAmount').value,durationMin:$('durationMin').value,
-mode:currentMode,calcMode:currentCalcMode,theme:document.body.classList.contains('light')?'light':'dark',
+moneyAmount:$('moneyAmount').value,durationHrs:$('durationHrs').value,durationMins:$('durationMins').value,untilTime:$('untilTime').value,
+mode:currentMode,calcMode:currentCalcMode,durationSubMode:durationSubMode,theme:document.body.classList.contains('light')?'light':'dark',
 setFuel92:$('setFuel92').value,setFuel95:$('setFuel95').value,setDiesel:$('setDiesel').value,setPetrolKm:$('setPetrolKm').value
 }))}catch(e){}
 }
@@ -1965,9 +2099,12 @@ if(p.homeEfficiency)$('homeEfficiency').value=p.homeEfficiency;
 if(p.customHomePower)$('customHomePower').value=p.customHomePower;
 if(p.customPublicPower)$('customPublicPower').value=p.customPublicPower;
 if(p.moneyAmount)$('moneyAmount').value=p.moneyAmount;
-if(p.durationMin)$('durationMin').value=p.durationMin;
+if(p.durationHrs!==undefined)$('durationHrs').value=p.durationHrs;
+if(p.durationMins!==undefined)$('durationMins').value=p.durationMins;
+if(p.untilTime)$('untilTime').value=p.untilTime;
 if(p.mode)currentMode=p.mode;
 if(p.calcMode)currentCalcMode=p.calcMode;
+if(p.durationSubMode)durationSubMode=p.durationSubMode;
 if(p.theme==='light'){document.body.classList.add('light');$('themeKnob').style.left='32px'}
 if(p.setFuel92)$('setFuel92').value=p.setFuel92;
 if(p.setFuel95)$('setFuel95').value=p.setFuel95;
@@ -1976,9 +2113,9 @@ if(p.setPetrolKm)$('setPetrolKm').value=p.setPetrolKm;
 }}catch(e){}
 
 if(currentMode==='home'){$('tabHome').classList.add('active');$('tabPublic').classList.remove('active');$('homeFields').style.display='block';$('publicFields').style.display='none'}
+if(durationSubMode==='until'){setDurationSubMode('until')}else{setDurationSubMode('duration')}
 setCalcMode(currentCalcMode||'cost');
 
-// INIT
 populateVehicleDropdowns();
 populateRateDropdown();
 applyDefaultVehicle();
