@@ -46,6 +46,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 h1{font-size:1.4rem;font-weight:800;text-align:center;margin-bottom:22px;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 body.light h1{background:none;-webkit-text-fill-color:initial;color:#5b21b6}
 .card{background:var(--card);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:20px;padding:20px;margin-bottom:14px;border:1px solid var(--border);box-shadow:0 8px 32px var(--shadow);position:relative;overflow:hidden}
+.card.card-overflow-visible{overflow:visible}
 .card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(139,92,246,0.5),transparent)}
 .card-title{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--purpleB);margin-bottom:16px;display:flex;align-items:center;gap:8px}
 .card-title::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--purpleB);box-shadow:0 0 8px var(--purpleB)}
@@ -193,7 +194,8 @@ body.light .result-tile .tile-val{background:none;-webkit-text-fill-color:initia
 .report-btn.r-slow{border-color:rgba(245,158,11,0.4);background:rgba(245,158,11,0.15);color:#fbbf24}
 .report-btn.r-broken{border-color:rgba(248,113,113,0.4);background:rgba(248,113,113,0.15);color:#f87171}
 .report-btn.r-blocked{border-color:rgba(148,163,184,0.4);background:rgba(148,163,184,0.15);color:#94a3b8}
-.history-item{background:var(--input-bg);border-radius:12px;padding:14px 16px;margin-bottom:10px;border:1px solid rgba(139,92,246,0.15);border-left:3px solid #8b5cf6;position:relative;cursor:pointer;transition:all 0.15s}
+.history-item{background:var(--input-bg);border-radius:12px;padding:18px 16px 20px 16px;margin-bottom:10px;border:1px solid rgba(139,92,246,0.15);border-left:3px solid #8b5cf6;position:relative;cursor:pointer;transition:all 0.15s}
+.history-item:active{transform:scale(0.99);background:rgba(139,92,246,0.05)}
 .history-item .hi-edit-hint{position:absolute;bottom:6px;right:12px;font-size:0.6rem;color:var(--faint);font-weight:600}
 .summary-card{background:linear-gradient(135deg,rgba(59,130,246,0.2),rgba(139,92,246,0.2));border:1px solid rgba(139,92,246,0.35);border-radius:14px;padding:16px;margin-bottom:14px}
 .summary-card .sc-title{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--purpleB);margin-bottom:10px}
@@ -226,13 +228,12 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 .cost-preview{background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.25);border-radius:10px;padding:12px 14px;margin-top:8px;display:flex;justify-content:space-between;align-items:center}
 .cost-preview .cp-lbl{font-size:0.8rem;color:var(--dim);font-weight:600}
 .cost-preview .cp-val{font-size:1.1rem;font-weight:800;color:var(--purpleB)}
-/* Searchable vehicle combobox */
 .vcb{position:relative}
 .vcb-input{width:100%;padding:13px 40px 13px 16px;border-radius:12px;border:1px solid rgba(139,92,246,0.2);background:var(--input-bg);color:var(--text);font-size:1rem;outline:none;font-family:inherit}
 .vcb-input:focus{border-color:var(--purpleB);box-shadow:0 0 0 3px rgba(139,92,246,0.15)}
 .vcb-clear{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--faint);font-size:1.2rem;cursor:pointer;padding:4px 8px;display:none}
 .vcb-clear.show{display:block}
-.vcb-dropdown{position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:0 8px 32px var(--shadow);max-height:320px;overflow-y:auto;z-index:50;display:none}
+.vcb-dropdown{position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:0 8px 32px var(--shadow);max-height:320px;overflow-y:auto;z-index:500;display:none;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
 .vcb-dropdown.show{display:block}
 .vcb-group-header{padding:8px 14px;font-size:0.65rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--purpleB);background:rgba(139,92,246,0.05);border-top:1px solid rgba(139,92,246,0.1);position:sticky;top:0}
 .vcb-group-header:first-child{border-top:none}
@@ -241,18 +242,43 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 .vcb-item-name{font-size:0.9rem;font-weight:600;color:var(--text);line-height:1.3}
 .vcb-item-specs{font-size:0.72rem;color:var(--faint);margin-top:2px}
 .vcb-empty{padding:20px 14px;text-align:center;font-size:0.85rem;color:var(--faint);font-style:italic}
-/* PHEV banner */
 .phev-banner{background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(234,88,12,0.1));border:1px solid rgba(245,158,11,0.4);border-radius:12px;padding:12px 14px;margin-top:10px;font-size:0.78rem;color:#fbbf24;line-height:1.6}
 body.light .phev-banner{color:#92400e}
 .range-cycle{display:inline-block;background:rgba(139,92,246,0.15);color:var(--purpleB);font-size:0.55rem;font-weight:800;padding:1px 6px;border-radius:4px;margin-left:4px;text-transform:uppercase;letter-spacing:0.5px;vertical-align:middle}
+/* Sticky mode bar */
+.sticky-mode-bar{position:sticky;top:0;z-index:60;background:var(--card);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:14px;padding:12px 16px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 4px 16px var(--shadow);cursor:pointer;transition:all 0.2s}
+.sticky-mode-bar:active{transform:scale(0.98)}
+.sticky-mode-bar .smb-left{display:flex;align-items:center;gap:10px}
+.sticky-mode-bar .smb-icon{font-size:1.4rem;line-height:1}
+.sticky-mode-bar .smb-mode{font-size:0.7rem;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:0.8px}
+.sticky-mode-bar .smb-value{font-size:1.1rem;font-weight:800;color:var(--purpleB);display:block;margin-top:2px}
+.sticky-mode-bar .smb-arrow{font-size:0.7rem;color:var(--faint);transform:rotate(90deg);display:inline-block}
+body.light .sticky-mode-bar{background:#fff;border-color:rgba(91,33,182,0.28)}
+body.light .sticky-mode-bar .smb-value{color:#5b21b6}
+/* Station toggle */
+.station-toggle{display:flex;gap:6px;margin-bottom:12px;background:var(--input-bg);padding:4px;border-radius:12px;border:1px solid rgba(139,92,246,0.15)}
+.station-toggle button{flex:1;padding:10px;border-radius:9px;border:none;background:none;color:var(--faint);font-family:inherit;font-weight:700;font-size:0.82rem;cursor:pointer;transition:all 0.2s}
+.station-toggle button.active{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff}
+body.light .station-toggle{background:rgba(91,33,182,0.08);border-color:rgba(91,33,182,0.2)}
+body.light .station-toggle button{color:#3a2a6a}
+body.light .station-toggle button.active{background:linear-gradient(135deg,#5b21b6,#7c3aed);color:#fff}
+/* Mode modal */
+.mode-modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+.mode-modal-card{padding:18px 12px;border-radius:14px;border:1px solid rgba(139,92,246,0.25);background:rgba(139,92,246,0.08);color:var(--dim);font-family:inherit;font-size:0.9rem;font-weight:700;cursor:pointer;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:8px}
+.mode-modal-card .mm-icon{font-size:1.8rem}
+.mode-modal-card.active{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;border-color:transparent}
+body.light .mode-modal-card{background:rgba(91,33,182,0.12);color:#2a1a4a;border-color:rgba(91,33,182,0.35)}
+body.light .mode-modal-card.active{background:linear-gradient(135deg,#5b21b6,#7c3aed);color:#fff}
+/* Station search */
+.station-search{position:relative;margin-bottom:12px}
+.station-search input{padding-right:40px}
+.station-search .ss-clear{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--faint);font-size:1.2rem;cursor:pointer;padding:4px 8px;display:none}
+.station-search .ss-clear.show{display:block}
 @media(max-width:480px){body{padding-left:88px;padding-right:12px}.app{max-width:100%}.sidebar{width:72px}.nav-item{width:56px}.nav-icon{font-size:1.2rem}.nav-label{font-size:0.5rem}.big-num .bn-val{font-size:2.2rem}.intro-icon{font-size:3.5rem}.intro-title{font-size:1.3rem}.battery-wrap{flex-direction:column;align-items:stretch;gap:8px}.battery-visual-big{width:100%}.battery-shape{height:28px}.battery-shape::after{display:none}.pct-input{width:68px;font-size:0.9rem}.result-tile .tile-val{font-size:0.9rem}}
-
 /* LIGHT MODE */
 body.light { color: #1a0f2e; }
 body.light .card { background: rgba(255,255,255,0.96); border-color: rgba(91,33,182,0.28); }
-body.light .card::before { background: linear-gradient(90deg,transparent,rgba(91,33,182,0.35),transparent); }
 body.light .card-title { color: #5b21b6; }
-body.light .card-title::before { background: #5b21b6; box-shadow: 0 0 6px rgba(91,33,182,0.6); }
 body.light h1 { color: #4c1d95; background: none; -webkit-text-fill-color: initial; }
 body.light .field > label,body.light .field-hdr .lbl,body.light .field label { color: #2a1a4a; font-weight: 600; }
 body.light .hint { color: #5a4a8a; }
@@ -267,93 +293,45 @@ body.light .big-num .bn-lbl,body.light .result-tile .tile-lbl,body.light .summar
 body.light .compare-bar-hdr .cost { color: #5b21b6; font-weight: 800; }
 body.light .info-i { background: rgba(91,33,182,0.22); color: #5b21b6; border: 1px solid rgba(91,33,182,0.35); }
 body.light .mode-card { background: rgba(91,33,182,0.12); color: #2a1a4a; border-color: rgba(91,33,182,0.35); }
-body.light .mode-card.active { background: linear-gradient(135deg,#5b21b6,#7c3aed); color: #fff; border-color: transparent; box-shadow: 0 4px 16px rgba(91,33,182,0.35); }
+body.light .mode-card.active { background: linear-gradient(135deg,#5b21b6,#7c3aed); color: #fff; }
 body.light .mode-tabs { background: rgba(91,33,182,0.08); border-color: rgba(91,33,182,0.2); }
 body.light .mode-tab { color: #3a2a6a; }
-body.light .mode-tab.active { background: linear-gradient(135deg,#5b21b6,#7c3aed); color: #fff; box-shadow: 0 4px 12px rgba(91,33,182,0.35); }
+body.light .mode-tab.active { background: linear-gradient(135deg,#5b21b6,#7c3aed); color: #fff; }
 body.light .time-toggle { background: rgba(91,33,182,0.08); border-color: rgba(91,33,182,0.2); }
 body.light .time-toggle button { color: #3a2a6a; }
 body.light .time-toggle button.active { background: linear-gradient(135deg,#5b21b6,#7c3aed); color: #fff; }
-body.light .computed-duration { color: #5b21b6; }
 body.light .preset-btn { background: rgba(91,33,182,0.1); color: #5b21b6; border-color: rgba(91,33,182,0.35); }
 body.light .adv-toggle { color: #5b21b6; }
 body.light #saveBtn,body.light .auth-btn,body.light .intro-next { background: linear-gradient(135deg,#5b21b6,#7c3aed); color: #fff; }
-body.light input[type=range] { background: linear-gradient(90deg,#dc2626 0%,#d97706 40%,#059669 70%,#16a34a 100%); box-shadow: inset 0 0 0 1px rgba(91,33,182,0.3), 0 1px 4px rgba(91,33,182,0.15); height: 10px; }
-body.light input[type=range]::-webkit-slider-thumb { border-color: #5b21b6; border-width: 3px; box-shadow: 0 0 0 3px rgba(91,33,182,0.18), 0 2px 6px rgba(0,0,0,0.3); }
+body.light input[type=range] { background: linear-gradient(90deg,#dc2626 0%,#d97706 40%,#059669 70%,#16a34a 100%); box-shadow: inset 0 0 0 1px rgba(91,33,182,0.3); height: 10px; }
+body.light input[type=range]::-webkit-slider-thumb { border-color: #5b21b6; border-width: 3px; }
 body.light .battery-shape { border-color: #5b21b6; background: #fff; }
 body.light .battery-shape::after { background: #5b21b6; }
-body.light .battery-pct { color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.7); }
-body.light input[type=number],body.light input[type=email],body.light input[type=password],body.light input[type=text],body.light input[type=time],body.light input[type=datetime-local],body.light select,body.light textarea { background: #fff; color: #1a0f2e; border-color: rgba(91,33,182,0.35); }
-body.light input::placeholder { color: #8a7ab0; }
+body.light input,body.light select,body.light textarea { background: #fff; color: #1a0f2e; border-color: rgba(91,33,182,0.35); }
 body.light select option { background: #fff; color: #1a0f2e; }
-body.light select optgroup { background: #f4f2fc; color: #5b21b6; }
-body.light .pct-input { background: rgba(91,33,182,0.12); border-color: rgba(91,33,182,0.4); color: #1a0f2e; }
-body.light input:focus,body.light select:focus,body.light input[type=time]:focus,body.light input[type=datetime-local]:focus,body.light .pct-input:focus,body.light textarea:focus,body.light .vcb-input:focus { border-color: #5b21b6; box-shadow: 0 0 0 3px rgba(91,33,182,0.22); }
 body.light .vcb-input { background: #fff; color: #1a0f2e; border-color: rgba(91,33,182,0.35); }
-body.light .vcb-dropdown { background: #fff; border-color: rgba(91,33,182,0.28); }
+body.light .vcb-dropdown { background: #fff; }
 body.light .vcb-item-name { color: #1a0f2e; }
-body.light .vcb-item-specs { color: #5a4a8a; }
-body.light .vcb-item:hover,body.light .vcb-item.active { background: rgba(91,33,182,0.1); }
-body.light .vcb-group-header { color: #5b21b6; background: rgba(91,33,182,0.06); }
-body.light .compare-bar-track { background: rgba(91,33,182,0.15); box-shadow: inset 0 1px 2px rgba(91,33,182,0.15); }
+body.light .vcb-group-header { color: #5b21b6; }
+body.light .compare-bar-track { background: rgba(91,33,182,0.15); }
 body.light .compare-bar-fill { background: linear-gradient(90deg,#7c3aed,#5b21b6); }
 body.light .compare-bar-fill.best { background: linear-gradient(90deg,#16a34a,#15803d); }
-body.light .best-badge { background: rgba(22,163,74,0.2); color: #15803d; border: 1px solid rgba(22,163,74,0.4); }
-body.light .energy-flow { background: rgba(255,255,255,0.95); border-color: rgba(91,33,182,0.25); }
-body.light .energy-flow .ef-labels { color: #2a1a4a; font-weight: 700; }
-body.light .energy-flow .ef-track { background: rgba(91,33,182,0.15); box-shadow: inset 0 1px 2px rgba(91,33,182,0.15); }
-body.light .energy-flow .ef-fill { background: rgba(91,33,182,0.35); }
-body.light .energy-flow .ef-added { background: linear-gradient(90deg,#5b21b6,#7c3aed); }
-body.light .energy-flow .ef-legend { color: #3a2a6a; font-weight: 600; }
-body.light .history-item { background: rgba(255,255,255,0.95); border-color: rgba(91,33,182,0.22); border-left-color: #5b21b6; }
-body.light .history-item .detail { color: #3a2a6a; }
-body.light .history-item .detail span { color: #1a0f2e; }
-body.light .history-item .hi-edit-hint { color: #5a4a8a; }
-body.light .history-chart .hc-bar { background: linear-gradient(180deg,#7c3aed,#5b21b6); }
-body.light .history-chart .hc-bar.best { background: linear-gradient(180deg,#22c55e,#15803d); }
-body.light .history-chart-labels { color: #3a2a6a; font-weight: 600; }
-body.light .notice-banner { background: rgba(245,158,11,0.18); color: #78350f; border-color: rgba(245,158,11,0.55); font-weight: 600; }
-body.light .phev-banner { background: rgba(245,158,11,0.18); color: #78350f; border-color: rgba(245,158,11,0.55); }
-body.light .summary-card { background: linear-gradient(135deg,rgba(91,33,182,0.1),rgba(124,58,237,0.08)); border-color: rgba(91,33,182,0.35); }
-body.light .sidebar { background: rgba(255,255,255,0.96); border-right-color: rgba(91,33,182,0.25); }
+body.light .history-item { background: rgba(255,255,255,0.95); border-color: rgba(91,33,182,0.22); }
+body.light .energy-flow { background: rgba(255,255,255,0.95); }
+body.light .notice-banner,body.light .phev-banner { color: #78350f; }
+body.light .sidebar { background: rgba(255,255,255,0.96); }
 body.light .nav-item { color: #4a3a7a; }
 body.light .nav-item.active { color: #5b21b6; background: rgba(91,33,182,0.15); }
-body.light .nav-item.active .nav-icon { filter: none; }
 body.light .modal-overlay { background: rgba(26,15,46,0.5); }
-body.light .modal-box { background: #fff; border-color: rgba(91,33,182,0.28); }
-body.light .modal-box p { color: #3a2a6a; }
-body.light .modal-actions .m-cancel { color: #4a3a7a; border-color: rgba(91,33,182,0.35); }
-body.light .vehicle-card { background: #fff; border-color: rgba(91,33,182,0.22); }
-body.light .vehicle-card .vc-name { color: #1a0f2e; }
-body.light .vehicle-card .vc-specs { color: #4a3a7a; }
-body.light .vehicle-card.active { background: rgba(22,163,74,0.08); border-left-color: #16a34a; }
-body.light .vehicle-card .vc-active-badge { background: rgba(22,163,74,0.2); color: #15803d; }
-body.light .manual-badge { background: rgba(245,158,11,0.25); color: #92400e; border-color: rgba(245,158,11,0.5); }
-body.light .unverified-badge { background: rgba(245,158,11,0.2); color: #92400e; border-color: rgba(245,158,11,0.5); }
-body.light .empty-state { background: #faf9ff; border-color: rgba(91,33,182,0.35); }
-body.light .empty-state .es-text { color: #4a3a7a; }
-body.light .station-status-badge.stale { background: rgba(91,33,182,0.1); color: #5a4a8a; border-color: rgba(91,33,182,0.3); }
+body.light .modal-box { background: #fff; }
+body.light .vehicle-card { background: #fff; }
 body.light .auth-container { background: #f4f2fc; }
-body.light .auth-box { background: #fff; border-color: rgba(91,33,182,0.25); }
-body.light .auth-box h1 { color: #4c1d95; }
-body.light .auth-box .subtitle { color: #4a3a7a; }
-body.light .auth-tabs { background: rgba(91,33,182,0.08); border-color: rgba(91,33,182,0.2); }
-body.light .auth-tab { color: #4a3a7a; }
-body.light .auth-tab.active { background: linear-gradient(135deg,#5b21b6,#7c3aed); color: #fff; }
-body.light .link-btn { color: #5b21b6; }
-body.light .auth-notice { color: #5a4a8a; }
+body.light .auth-box { background: #fff; }
 body.light .intro-container { background: #f4f2fc; }
-body.light .intro-title { color: #1a0f2e; }
-body.light .intro-body { color: #3a2a6a; }
-body.light .intro-skip { color: #4a3a7a; border-color: rgba(91,33,182,0.35) !important; }
-body.light .intro-dot { background: rgba(91,33,182,0.25); }
-body.light .intro-dot.active { background: #5b21b6; }
-body.light .toast { background: #1a0f2e; color: #fff; border-color: rgba(91,33,182,0.5); }
-body.light .offline-icon { background: #dc2626; color: #fff; }
-body.light .cost-preview { background: rgba(91,33,182,0.1); border-color: rgba(91,33,182,0.35); }
-body.light .cost-preview .cp-lbl { color: #2a1a4a; }
-body.light .cost-preview .cp-val { color: #5b21b6; }
+body.light .toast { background: #1a0f2e; color: #fff; }
+body.light .cost-preview { background: rgba(91,33,182,0.1); }
 body.light .range-cycle { background: rgba(91,33,182,0.15); color: #5b21b6; }
+body.light .unverified-badge { background: rgba(245,158,11,0.2); color: #92400e; }
 </style>
 </head>
 <body>
@@ -361,7 +339,7 @@ body.light .range-cycle { background: rgba(91,33,182,0.15); color: #5b21b6; }
 <div class="offline-icon" id="offlineIcon" title="Offline">⚠</div>
 <div class="toast" id="toast"></div>
 
-<!-- INTRO (condensed for brevity — same 4 slides as before) -->
+<!-- INTRO -->
 <div class="intro-container" id="introContainer">
 <div class="intro-slide active" id="introSlide1">
 <div class="intro-icon">⚡</div>
@@ -411,15 +389,10 @@ body.light .range-cycle { background: rgba(91,33,182,0.15); color: #5b21b6; }
 <div class="intro-slide" id="introSlide4">
 <div class="intro-icon">💾</div>
 <div class="intro-title">Save, compare, report</div>
-<div class="intro-body">Tap "Save this charge" after each session to track your history and see savings vs petrol. On the Stations tab, find nearby chargers and report their status.</div>
+<div class="intro-body">Tap "Save this charge" after each session to track your history. On the Stations tab, find nearby chargers and report their status.</div>
 </div>
-<div class="intro-dots" id="introDots">
-<div class="intro-dot active"></div><div class="intro-dot"></div><div class="intro-dot"></div><div class="intro-dot"></div>
-</div>
-<div class="intro-actions">
-<button type="button" class="intro-skip" id="introSkip">Skip</button>
-<button type="button" class="intro-next" id="introNext">Next →</button>
-</div>
+<div class="intro-dots" id="introDots"><div class="intro-dot active"></div><div class="intro-dot"></div><div class="intro-dot"></div><div class="intro-dot"></div></div>
+<div class="intro-actions"><button type="button" class="intro-skip" id="introSkip">Skip</button><button type="button" class="intro-next" id="introNext">Next →</button></div>
 </div>
 
 <!-- AUTH -->
@@ -427,10 +400,7 @@ body.light .range-cycle { background: rgba(91,33,182,0.15); color: #5b21b6; }
 <div class="auth-box">
 <h1>⚡ EV Calc</h1>
 <p class="subtitle" id="authSubtitle">Sign in to sync your charging history</p>
-<div class="auth-tabs" id="authTabs">
-<button type="button" class="auth-tab active" id="tabLogin">Sign In</button>
-<button type="button" class="auth-tab" id="tabSignup">Sign Up</button>
-</div>
+<div class="auth-tabs" id="authTabs"><button type="button" class="auth-tab active" id="tabLogin">Sign In</button><button type="button" class="auth-tab" id="tabSignup">Sign Up</button></div>
 <div class="auth-error" id="authError"></div>
 <div class="auth-info" id="authInfo"></div>
 <div id="loginForm">
@@ -453,7 +423,7 @@ body.light .range-cycle { background: rgba(91,33,182,0.15); color: #5b21b6; }
 </div>
 </div>
 
-<!-- MODALS (unchanged from previous version + the same Add Previous modal) -->
+<!-- MODALS -->
 <div class="modal-overlay" id="infoModal"><div class="modal-box"><h3 id="infoTitle">Info</h3><p id="infoText">Details here.</p><div class="modal-actions"><button type="button" class="m-ok" id="infoOk">Got it</button></div></div></div>
 
 <div class="modal-overlay" id="vehicleModal">
@@ -471,6 +441,19 @@ body.light .range-cycle { background: rgba(91,33,182,0.15); color: #5b21b6; }
 
 <div class="modal-overlay" id="confirmModal"><div class="modal-box"><h3 id="confirmTitle">Confirm</h3><p id="confirmText">Are you sure?</p><div class="modal-actions"><button type="button" class="m-cancel" id="confirmCancel">Cancel</button><button type="button" class="m-ok" id="confirmOk" style="background:linear-gradient(135deg,#ef4444,#dc2626)">Delete</button></div></div></div>
 
+<div class="modal-overlay" id="modeModal">
+<div class="modal-box">
+<h3>What do you want to know?</h3>
+<div class="mode-modal-grid" id="modeModalGrid">
+<button type="button" class="mode-modal-card active" data-mode="cost"><span class="mm-icon">💰</span><span>Cost</span></button>
+<button type="button" class="mode-modal-card" data-mode="money"><span class="mm-icon">💵</span><span>Money</span></button>
+<button type="button" class="mode-modal-card" data-mode="time"><span class="mm-icon">⏱️</span><span>Time</span></button>
+<button type="button" class="mode-modal-card" data-mode="duration"><span class="mm-icon">⏳</span><span>Duration</span></button>
+</div>
+<div class="modal-actions"><button type="button" class="m-ok" id="modeModalClose" style="width:100%">Close</button></div>
+</div>
+</div>
+
 <div class="modal-overlay" id="editHistoryModal">
 <div class="modal-box">
 <h3>Edit Charge</h3>
@@ -480,7 +463,7 @@ body.light .range-cycle { background: rgba(91,33,182,0.15); color: #5b21b6; }
 <div class="field"><label>To % <span class="hint">(1–100)</span></label><input type="number" id="ehTo" min="1" max="100" step="1" inputmode="numeric"></div>
 <div class="field"><label>Battery capacity <span class="hint">(kWh)</span></label><input type="number" id="ehCap" step="0.01" min="1" inputmode="decimal"></div>
 <div class="field"><label>Rate per kWh <span class="hint">(LKR)</span></label><input type="number" id="ehRate" step="0.01" min="0" inputmode="decimal"></div>
-<div class="field" id="ehTotalField" style="display:none"><label>Actual total spent <span class="hint">(LKR)</span></label><input type="number" id="ehTotal" step="0.01" min="0" inputmode="decimal"><div class="hint">Update if you spent a different amount.</div></div>
+<div class="field" id="ehTotalField" style="display:none"><label>Actual total spent <span class="hint">(LKR)</span></label><input type="number" id="ehTotal" step="0.01" min="0" inputmode="decimal"></div>
 <div class="modal-actions"><button type="button" class="m-cancel" id="ehCancel">Cancel</button><button type="button" class="m-ok" id="ehSave">Save Changes</button></div>
 </div>
 </div>
@@ -495,8 +478,8 @@ body.light .range-cycle { background: rgba(91,33,182,0.15); color: #5b21b6; }
 <div class="two-field" style="margin-bottom:18px"><div class="tf-col"><label>From %</label><input type="number" id="apFrom" value="20" min="1" max="100" step="1" inputmode="numeric"></div><div class="tf-col"><label>To %</label><input type="number" id="apTo" value="80" min="1" max="100" step="1" inputmode="numeric"></div></div>
 <div class="field"><label>Battery capacity <span class="hint">(kWh)</span></label><input type="number" id="apCap" value="30.08" step="0.01" min="1" inputmode="decimal"></div>
 <div class="field"><label>Rate per kWh <span class="hint">(LKR)</span></label><input type="number" id="apRate" value="150" step="0.01" min="0" inputmode="decimal"></div>
-<div class="field" id="apTotalField" style="display:none"><label>Total paid <span class="hint">(LKR, optional)</span></label><input type="number" id="apTotal" step="0.01" min="0" inputmode="decimal"><div class="hint">Leave blank to use calculated amount.</div></div>
-<div class="field" id="apFeeField" style="display:none"><label>Session fee <span class="hint">(LKR, optional)</span></label><input type="number" id="apFee" value="0" step="1" min="0" inputmode="numeric"></div>
+<div class="field" id="apTotalField"><label>Total paid <span class="hint">(LKR, optional)</span></label><input type="number" id="apTotal" step="0.01" min="0" inputmode="decimal"></div>
+<div class="field" id="apFeeField"><label>Session fee <span class="hint">(LKR, optional)</span></label><input type="number" id="apFee" value="0" step="1" min="0" inputmode="numeric"></div>
 <div class="field"><label>Notes <span class="hint">(optional)</span></label><textarea id="apNotes" placeholder="e.g. First time at this charger"></textarea></div>
 <div class="cost-preview"><span class="cp-lbl">Calculated cost:</span><span class="cp-val" id="apPreview">LKR 0.00</span></div>
 <div class="modal-actions"><button type="button" class="m-cancel" id="apCancel">Cancel</button><button type="button" class="m-ok" id="apSave">Add to History</button></div>
@@ -527,12 +510,30 @@ body.light .range-cycle { background: rgba(91,33,182,0.15); color: #5b21b6; }
 </div>
 
 <div class="app">
-
-<!-- CALCULATE -->
+  <!-- CALCULATE -->
 <div class="page active" id="page-calc">
 <h1>⚡ Calculate</h1>
 
+<div class="sticky-mode-bar" id="stickyModeBar">
+<div class="smb-left">
+<span class="smb-icon" id="smbIcon">💰</span>
+<span>
+<span class="smb-mode" id="smbMode">Cost</span>
+<span class="smb-value" id="smbValue">LKR 0.00</span>
+</span>
+</div>
+<span class="smb-arrow">▶</span>
+</div>
+
 <div class="card">
+<div class="card-title" style="margin-bottom:14px">Where are you charging?</div>
+<div class="mode-tabs" style="margin-bottom:0">
+<button type="button" class="mode-tab" id="tabHome">🏠 Home</button>
+<button type="button" class="mode-tab active" id="tabPublic">🔌 Public DC</button>
+</div>
+</div>
+
+<div class="card card-overflow-visible">
 <div class="field" style="margin-bottom:14px">
 <label>Your vehicle <span class="info-i" data-info="vehicleSearch">i</span></label>
 <div class="vcb" id="calcVcb">
@@ -588,8 +589,7 @@ body.light .range-cycle { background: rgba(91,33,182,0.15); color: #5b21b6; }
 </div>
 
 <div class="card">
-<div class="card-title">Where are you charging?</div>
-<div class="mode-tabs"><button type="button" class="mode-tab" id="tabHome">🏠 Home</button><button type="button" class="mode-tab active" id="tabPublic">🔌 Public DC</button></div>
+<div class="card-title" id="chargingInputsTitle">Public charging details</div>
 <div id="homeFields" style="display:none">
 <div class="field" id="homeRateSelectField"><label>Home rate</label><select id="homeRateSelect"><option value="">— Choose tariff —</option><optgroup label="CEB Domestic"><option value="30">CEB 0–30 units — 30</option><option value="37">CEB 31–60 units — 37</option><option value="42">CEB 61–90 units — 42</option><option value="50">CEB 91–120 units — 50</option><option value="65">CEB 121–180 units — 65</option><option value="85">CEB >180 units — 85</option></optgroup><optgroup label="LECO Domestic"><option value="32">LECO 0–30 units — 32</option><option value="39">LECO 31–60 units — 39</option><option value="44">LECO 61–90 units — 44</option><option value="52">LECO 91–120 units — 52</option><option value="68">LECO 121–180 units — 68</option><option value="88">LECO >180 units — 88</option></optgroup><optgroup label="Other"><option value="custom">Custom — Enter manually</option></optgroup></select></div>
 <div class="field" id="homeRateField"><label>Rate per kWh (LKR)</label><input type="number" id="homeRate" value="42" step="0.01" min="0" inputmode="decimal"></div>
@@ -654,12 +654,29 @@ body.light .range-cycle { background: rgba(91,33,182,0.15); color: #5b21b6; }
 <div class="page" id="page-stations">
 <h1>🔌 Stations</h1>
 <p style="text-align:center;font-size:0.8rem;color:var(--dim);margin-bottom:16px;line-height:1.5">Find the closest charger. Data is community-reported — verify before driving.</p>
-<div class="card"><button type="button" id="nearMeBtn" style="width:100%;padding:14px;border-radius:14px;border:none;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;box-shadow:0 4px 20px rgba(139,92,246,0.4)">📍 Find Stations Near Me</button><div id="locationStatus" style="text-align:center;font-size:0.8rem;color:var(--dim);margin-top:10px;display:none;line-height:1.5"></div></div>
-<div class="card"><div class="card-title">Know a charger we're missing?</div><p style="font-size:0.8rem;color:var(--dim);line-height:1.6;margin-bottom:12px">Help the community by adding stations.</p><button type="button" id="submitStationBtn" style="width:100%;padding:14px;border-radius:14px;border:1px solid rgba(46,204,113,0.4);background:rgba(46,204,113,0.15);color:#2ecc71;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit">➕ Submit a Station</button></div>
+
+<div class="card">
+<div class="station-search">
+<input type="text" id="stationSearchInput" placeholder="Search by network, area, or station name..." autocomplete="off">
+<button type="button" class="ss-clear" id="stationSearchClear">×</button>
+</div>
+<div class="station-toggle">
+<button type="button" class="active" id="stNear">📍 Nearest first</button>
+<button type="button" id="stAll">📋 All stations</button>
+</div>
+<div id="locationStatus" style="text-align:center;font-size:0.8rem;color:var(--dim);line-height:1.5"></div>
+</div>
+
+<div class="card">
+<div class="card-title">Know a charger we're missing?</div>
+<p style="font-size:0.8rem;color:var(--dim);line-height:1.6;margin-bottom:12px">Help the community by adding stations.</p>
+<button type="button" id="submitStationBtn" style="width:100%;padding:14px;border-radius:14px;border:1px solid rgba(46,204,113,0.4);background:rgba(46,204,113,0.15);color:#2ecc71;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit">➕ Submit a Station</button>
+</div>
+
 <div id="stationsList"></div>
 </div>
 
-<!-- SETTINGS (same as previous version, includes Advanced, Fuel, Password, Admin, Help, Support, Account) -->
+<!-- SETTINGS -->
 <div class="page" id="page-settings">
 <h1>⚙️ Settings</h1>
 <div class="card"><div class="card-title">Default vehicle</div><div class="field" style="margin-bottom:0"><label>Pre-selected on launch</label><select id="settingsDefaultVehicle"><option value="">— None —</option></select></div></div>
@@ -668,13 +685,13 @@ body.light .range-cycle { background: rgba(91,33,182,0.15); color: #5b21b6; }
 <div class="card"><button type="button" class="adv-toggle" id="advancedSettingsToggle"><span class="arrow" id="advancedSettingsArrow">▶</span> Advanced rates & fees</button><div id="advancedSettingsContent" style="display:none;padding-top:16px;border-top:1px solid rgba(139,92,246,0.15);margin-top:8px"><div class="field"><label>Session fee (LKR, optional)</label><input type="number" id="sessionFee" value="0" step="1" min="0" inputmode="numeric"></div><div class="field"><label>Tax / VAT (%, optional)</label><input type="number" id="tax" value="0" step="0.1" min="0" inputmode="decimal"></div></div></div>
 <div class="card"><div class="card-title">Fuel prices (for comparison)</div><div class="field"><label>Petrol 92 Octane (LKR/L)</label><input type="number" id="setFuel92" value="424" step="0.01" min="0" inputmode="decimal"></div><div class="field"><label>Petrol 95 Octane (LKR/L)</label><input type="number" id="setFuel95" value="490" step="0.01" min="0" inputmode="decimal"></div><div class="field"><label>Auto Diesel (LKR/L)</label><input type="number" id="setDiesel" value="397" step="0.01" min="0" inputmode="decimal"></div><div class="field"><label>Petrol car efficiency (km/L)</label><input type="number" id="setPetrolKm" value="12" step="0.1" min="1" inputmode="decimal"></div></div>
 <div class="card"><div class="card-title">Change password</div><div class="field"><label>Current password</label><input type="password" id="cpCurrent" autocomplete="current-password"></div><div class="field"><label>New password (min 6 chars)</label><input type="password" id="cpNew" autocomplete="new-password"></div><div class="field"><label>Confirm new password</label><input type="password" id="cpConfirm" autocomplete="new-password"></div><button type="button" id="cpBtn" style="width:100%;padding:14px;border-radius:12px;border:none;font-size:0.95rem;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff">Update Password</button><div id="cpMsg" style="margin-top:12px;font-size:0.82rem;text-align:center"></div></div>
-<div class="card"><button type="button" class="adv-toggle" id="adminToggle"><span class="arrow" id="adminArrow">▶</span> Admin</button><div id="adminContent" style="display:none;padding-top:16px;border-top:1px solid rgba(139,92,246,0.15);margin-top:8px"><button type="button" id="rerunIntro" style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(139,92,246,0.3);background:rgba(139,92,246,0.1);color:var(--purpleB);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:8px">🔄 Show intro slides again</button><button type="button" id="reseedStationsBtn" style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(245,158,11,0.3);background:rgba(245,158,11,0.1);color:#fbbf24;font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit">📍 Re-seed stations</button></div></div>
+<div class="card"><button type="button" class="adv-toggle" id="adminToggle"><span class="arrow" id="adminArrow">▶</span> Admin</button><div id="adminContent" style="display:none;padding-top:16px;border-top:1px solid rgba(139,92,246,0.15);margin-top:8px"><button type="button" id="rerunIntro" style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(139,92,246,0.3);background:rgba(139,92,246,0.1);color:var(--purpleB);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:8px">🔄 Show intro slides again</button></div></div>
 <div class="card"><div class="card-title">How to use & about</div><button type="button" id="showHelpBtn" style="width:100%;padding:13px;border-radius:12px;border:1px solid rgba(139,92,246,0.3);background:rgba(139,92,246,0.1);color:var(--purpleB);font-size:0.9rem;font-weight:700;cursor:pointer;font-family:inherit">❓ Help, tips & the math</button></div>
 <div class="card"><div class="card-title">Support the Developer</div><p style="font-size:0.82rem;color:var(--dim);line-height:1.7;margin-bottom:14px">Free and built by one person. Share it with other EV owners!</p><button type="button" id="shareAppBtn" style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(59,130,246,0.3);background:rgba(59,130,246,0.1);color:var(--blueB);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit">📤 Share with a friend</button></div>
 <div class="card"><div class="card-title">Account</div><p style="font-size:0.85rem;color:var(--dim);margin-bottom:10px">Signed in as <strong id="settingsEmail" style="color:var(--text)">—</strong></p><button type="button" id="signoutBtn2" style="width:100%;padding:13px;border-radius:12px;border:1px solid rgba(248,113,113,0.3);background:transparent;color:#f87171;font-size:0.9rem;font-weight:700;cursor:pointer;font-family:inherit">Sign Out</button></div>
 </div>
 
-<!-- HELP (same as before + connector standards + data quality) -->
+<!-- HELP -->
 <div class="page" id="page-help">
 <h1>❓ Help & Tips</h1>
 <button type="button" id="backFromHelp" style="background:none;border:none;color:var(--purpleB);font-size:0.9rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:16px;padding:6px 0">← Back to Settings</button>
@@ -708,22 +725,24 @@ var currentCalcMode='cost';
 var durationSubMode='duration';
 var apMode='public';
 var userVehicles=[];
-var selectedVehicleKey='';
 var editingVehicleId=null;
 var editingHistoryId=null;
 var confirmCallback=null;
+var stationViewMode='nearest';
+var stationSearchQuery='';
+var locationAttempted=false;
 
 var FALLBACK_VEHICLES={
 '30.08':{name:'BYD Atto 1 Dynamic',aliases:['atto 1','seagull','byd atto 1','dynamic'],capacity:30.08,range:305,rangeCycle:'CLTC',dc:30,chemistry:'LFP',powertrain:'BEV'},
-'38.88':{name:'BYD Atto 1 Premium',aliases:['atto 1 premium','seagull premium','byd atto 1 premium'],capacity:38.88,range:405,rangeCycle:'CLTC',dc:40,chemistry:'LFP',powertrain:'BEV'},
-'44.9':{name:'BYD Dolphin Dynamic',aliases:['dolphin','dolphin dynamic','byd dolphin'],capacity:44.9,range:420,rangeCycle:'NEDC',dc:60,chemistry:'LFP',powertrain:'BEV'},
-'60.48':{name:'BYD Dolphin Premium',aliases:['dolphin premium','byd dolphin premium'],capacity:60.48,range:490,rangeCycle:'CLTC',dc:80,chemistry:'LFP',powertrain:'BEV'},
+'38.88':{name:'BYD Atto 1 Premium',aliases:['atto 1 premium','seagull premium'],capacity:38.88,range:405,rangeCycle:'CLTC',dc:40,chemistry:'LFP',powertrain:'BEV'},
+'44.9':{name:'BYD Dolphin Dynamic',aliases:['dolphin','byd dolphin'],capacity:44.9,range:420,rangeCycle:'NEDC',dc:60,chemistry:'LFP',powertrain:'BEV'},
+'60.48':{name:'BYD Dolphin Premium',aliases:['dolphin premium'],capacity:60.48,range:490,rangeCycle:'CLTC',dc:80,chemistry:'LFP',powertrain:'BEV'},
 '49.92':{name:'BYD Atto 3 Advanced',aliases:['atto 3','byd atto 3'],capacity:49.92,range:410,rangeCycle:'NEDC',dc:70,chemistry:'LFP',powertrain:'BEV'},
-'82.56':{name:'BYD Seal Premium',aliases:['seal','byd seal','byd seal premium'],capacity:82.56,range:700,rangeCycle:'CLTC',dc:150,chemistry:'LFP',powertrain:'BEV'},
-'18.3':{name:'BYD Sealion 6 DM-i',aliases:['sealion 6','sealion','byd sealion 6','phev','plug in hybrid'],capacity:18.3,range:0,rangeCycle:'',dc:0,chemistry:'LFP',powertrain:'PHEV'},
-'64':{name:'MG4 EV Long Range',aliases:['mg4','mg 4','mg4 long range'],capacity:64,range:450,rangeCycle:'WLTP',dc:135,chemistry:'NMC',powertrain:'BEV'},
-'51':{name:'MG4 EV Standard Range',aliases:['mg4 standard','mg 4 standard'],capacity:51,range:350,rangeCycle:'WLTP',dc:80,chemistry:'LFP',powertrain:'BEV'},
-'50.3':{name:'MG ZS EV Long Range',aliases:['zs ev','mg zs','zs ev long range'],capacity:50.3,range:320,rangeCycle:'WLTP',dc:76,chemistry:'NMC',powertrain:'BEV'},
+'82.56':{name:'BYD Seal Premium',aliases:['seal','byd seal'],capacity:82.56,range:700,rangeCycle:'CLTC',dc:150,chemistry:'LFP',powertrain:'BEV'},
+'18.3':{name:'BYD Sealion 6 DM-i',aliases:['sealion 6','sealion','phev'],capacity:18.3,range:0,rangeCycle:'',dc:0,chemistry:'LFP',powertrain:'PHEV'},
+'64':{name:'MG4 EV Long Range',aliases:['mg4','mg 4'],capacity:64,range:450,rangeCycle:'WLTP',dc:135,chemistry:'NMC',powertrain:'BEV'},
+'51':{name:'MG4 EV Standard Range',aliases:['mg4 standard'],capacity:51,range:350,rangeCycle:'WLTP',dc:80,chemistry:'LFP',powertrain:'BEV'},
+'50.3':{name:'MG ZS EV Long Range',aliases:['zs ev','mg zs'],capacity:50.3,range:320,rangeCycle:'WLTP',dc:76,chemistry:'NMC',powertrain:'BEV'},
 '43.89':{name:'Dongfeng Box',aliases:['box','dongfeng box'],capacity:43.89,range:320,rangeCycle:'WLTP',dc:40,chemistry:'LFP',powertrain:'BEV'},
 '51.87':{name:'Dongfeng Vigo',aliases:['vigo','dongfeng vigo'],capacity:51.87,range:340,rangeCycle:'WLTP',dc:60,chemistry:'LFP',powertrain:'BEV'},
 '56.83':{name:'Dongfeng 007',aliases:['007','dongfeng 007'],capacity:56.83,range:480,rangeCycle:'WLTP',dc:100,chemistry:'LFP',powertrain:'BEV'},
@@ -798,11 +817,9 @@ return 'Other';
 // ============ SEARCHABLE COMBOBOX ============
 function buildVehicleIndex(){
 var list=[];
-// My garage first
 userVehicles.forEach(function(v){
-list.push({key:'custom_'+v._docId,name:v.name,capacity:v.capacity,range:v.range||0,rangeCycle:'',powertrain:'BEV',isGarage:true,searchText:(v.name+' '+v.make+' '+v.model).toLowerCase()});
+list.push({key:'custom_'+v._docId,name:v.name,capacity:v.capacity,range:v.range||0,rangeCycle:'',powertrain:'BEV',isGarage:true,searchText:(v.name+' '+(v.make||'')+' '+(v.model||'')).toLowerCase()});
 });
-// Built-ins
 Object.keys(builtInVehicles).forEach(function(k){
 var v=builtInVehicles[k];
 var searchText=(v.name+' '+(v.aliases||[]).join(' ')).toLowerCase();
@@ -834,7 +851,6 @@ dropdown.classList.add('show');
 return;
 }
 
-// Group by garage vs brand
 var garage=results.filter(function(r){return r.isGarage});
 var byBrand={};
 results.filter(function(r){return !r.isGarage}).forEach(function(r){
@@ -897,18 +913,16 @@ if(!container.contains(e.target))dropdown.classList.remove('show');
 });
 }
 
-// Setup Calculate combobox
 setupVcb('calcVcbInput','calcVcbDropdown','calcVcbClear',function(key){
-selectedVehicleKey=key;
 setDefaultVehicle(key);
 updateCalcVehicleDisplay();
 calc();
 savePrefs();
 });
 
-// Setup Intro combobox
 setupVcb('introVcbInput','introVcbDropdown','introVcbClear',function(key){
-$('introVcbInput').value=getVehicleByKey(key)?getVehicleByKey(key).name:'';
+var v=getVehicleByKey(key);
+$('introVcbInput').value=v?v.name:'';
 });
 
 function updateCalcVehicleDisplay(){
@@ -916,12 +930,9 @@ var v=getVehicleByKey(getDefaultVehicle());
 var input=$('calcVcbInput');
 if(v){
 input.value=v.name;
-input.placeholder='Search make or model...';
 }else{
 input.value='';
-input.placeholder='Search make or model...';
 }
-// PHEV warning
 var phevWarn=$('calcPhevWarning');
 if(v&&v.powertrain==='PHEV'){
 phevWarn.style.display='block';
@@ -968,7 +979,6 @@ ssel.appendChild(grp);
 });
 ssel.value=scur;
 
-// Add-previous vehicle dropdown
 var apsel=$('apVehicle');
 if(apsel){
 apsel.innerHTML='<option value="">— Choose —</option>';
@@ -1106,15 +1116,28 @@ $('locationStatus').style.display='block';
 $('locationStatus').textContent='📍 Getting your location…';
 navigator.geolocation.getCurrentPosition(
 function(pos){
-$('locationStatus').textContent='✓ Location found';
-cb({lat:pos.coords.latitude,lng:pos.coords.longitude});
+$('locationStatus').textContent='✓ Location found — showing nearest first';
+userLocation={lat:pos.coords.latitude,lng:pos.coords.longitude};
+try{localStorage.setItem('evLastLocation',JSON.stringify({lat:userLocation.lat,lng:userLocation.lng,ts:Date.now()}))}catch(e){}
+cb(userLocation);
 },
 function(err){
-$('locationStatus').textContent='⚠ Location denied';
+$('locationStatus').textContent='⚠ Location denied — showing all stations';
 cb(null,'Location access denied.');
 },
-{enableHighAccuracy:true,timeout:10000,maximumAge:300000}
+{enableHighAccuracy:true,timeout:10000,maximumAge:600000}
 );
+}
+
+function tryRestoreLocation(){
+try{
+var saved=JSON.parse(localStorage.getItem('evLastLocation')||'null');
+if(saved&&saved.ts&&(Date.now()-saved.ts)<10*60*1000){
+userLocation={lat:saved.lat,lng:saved.lng};
+return true;
+}
+}catch(e){}
+return false;
 }
 
 function haversine(lat1,lng1,lat2,lng2){
@@ -1124,6 +1147,14 @@ var dLng=(lng2-lng1)*Math.PI/180;
 var a=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLng/2)*Math.sin(dLng/2);
 var c=2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
 return R*c;
+}
+
+function stationMatchesSearch(station,loc,query){
+if(!query)return true;
+var q=query.toLowerCase().trim();
+var tokens=q.split(/\s+/);
+var haystack=((station.name||'')+' '+(station.operator||'')+' '+(loc.name||'')+' '+(loc.address||'')).toLowerCase();
+return tokens.every(function(t){return haystack.indexOf(t)>-1});
 }
 
 function renderStations(){
@@ -1153,7 +1184,20 @@ flat.push({station:station,loc:loc,dist:dist,report:stationReports[reportKey]});
 }
 });
 
-if(userLocation){flat.sort(function(a,b){return (a.dist==null?9999:a.dist)-(b.dist==null?9999:b.dist)})}
+// Apply search filter
+if(stationSearchQuery){
+flat=flat.filter(function(item){return stationMatchesSearch(item.station,item.loc,stationSearchQuery)});
+}
+
+// Apply sorting
+if(stationViewMode==='nearest'&&userLocation){
+flat.sort(function(a,b){return (a.dist==null?9999:a.dist)-(b.dist==null?9999:b.dist)});
+}
+
+if(flat.length===0){
+$('stationsList').innerHTML='<div class="empty-state"><div class="es-icon">🔍</div><div class="es-text">No stations match your search.<br>Try a different term or clear the search.</div></div>';
+return;
+}
 
 flat.forEach(function(item){
 var s=item.station,loc=item.loc,report=item.report;
@@ -1194,7 +1238,7 @@ html+=unverified;
 html+=distHtml;
 html+=badgeHtml;
 if(s.detail){html+='<div style="font-size:0.8rem;color:var(--dim);line-height:1.6;margin:8px 0 12px">'+s.detail+'</div>'}
-if(s.notes){html+='<div style="font-size:0.7rem;color:var(--faint);font-style:italic;margin:8px 0 12px">ⓘ '+s.notes+'</div>'}
+if(loc.notes||s.notes){html+='<div style="font-size:0.7rem;color:var(--faint);font-style:italic;margin:8px 0 12px">ⓘ '+(loc.notes||s.notes)+'</div>'}
 html+='<div style="display:flex;gap:8px;margin-bottom:10px"><a href="tel:'+(s.tel||'')+'" style="flex:1;text-align:center;padding:11px;border-radius:10px;background:rgba(139,92,246,0.15);color:var(--purpleB);text-decoration:none;font-weight:700;font-size:0.8rem;border:1px solid rgba(139,92,246,0.25)">📞 Call</a><a href="'+dirUrl+'" target="_blank" style="flex:1;text-align:center;padding:11px;border-radius:10px;background:rgba(59,130,246,0.15);color:var(--blueB);text-decoration:none;font-weight:700;font-size:0.8rem;border:1px solid rgba(59,130,246,0.25)">📍 '+(hasCoords?'Directions':'Search')+'</a></div>';
 html+='<div style="font-size:0.7rem;color:var(--faint);font-weight:600;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px">Report this location</div>';
 html+='<div class="report-row">';
@@ -1244,23 +1288,57 @@ setTimeout(function(){btn.textContent=originalText;btn.disabled=false;},1500);
 });
 }
 
-$('nearMeBtn').addEventListener('click',function(){
-var btn=this;
-btn.disabled=true;
-btn.textContent='📍 Locating…';
-getUserLocation(function(loc,err){
-btn.disabled=false;
-btn.textContent='📍 Find Stations Near Me';
-if(loc){userLocation=loc;renderStations()}
-else{alert(err||'Could not get your location.')}
+$('stNear').addEventListener('click',function(){
+stationViewMode='nearest';
+$('stNear').classList.add('active');
+$('stAll').classList.remove('active');
+if(!userLocation){
+getUserLocation(function(loc){
+if(loc)renderStations();
+else{stationViewMode='all';$('stAll').classList.add('active');$('stNear').classList.remove('active');renderStations()}
 });
-});
-
-// Re-seed (placeholder — the real seed script is Part 3)
-$('reseedStationsBtn').addEventListener('click',function(){
-alert('To re-seed stations, use the admin seed script (Part 3). This button is reserved for future use.');
+}else{
+renderStations();
+}
 });
 
+$('stAll').addEventListener('click',function(){
+stationViewMode='all';
+$('stAll').classList.add('active');
+$('stNear').classList.remove('active');
+renderStations();
+});
+
+$('stationSearchInput').addEventListener('input',function(){
+stationSearchQuery=this.value;
+$('stationSearchClear').classList.toggle('show',this.value.length>0);
+renderStations();
+});
+$('stationSearchClear').addEventListener('click',function(){
+$('stationSearchInput').value='';
+stationSearchQuery='';
+this.classList.remove('show');
+renderStations();
+});
+
+// Auto-attempt location on first Stations visit
+function autoAttemptLocation(){
+if(locationAttempted)return;
+locationAttempted=true;
+if(tryRestoreLocation()){
+$('locationStatus').style.display='block';
+$('locationStatus').textContent='✓ Using your recent location';
+renderStations();
+return;
+}
+if(navigator.geolocation){
+getUserLocation(function(loc){
+if(loc)renderStations();
+});
+}
+}
+
+// ============ SUBMIT STATION ============
 $('submitStationBtn').addEventListener('click',function(){
 if(!currentUser){alert('Please sign in.');return}
 var today=new Date().toISOString().slice(0,10);
@@ -1279,20 +1357,30 @@ $('subCancel').addEventListener('click',function(){$('submitStationModal').class
 $('subGetLocationBtn').addEventListener('click',function(){
 var btn=this;
 btn.disabled=true;btn.textContent='📍 Getting location…';
-getUserLocation(function(loc,err){
+$('subLocationStatus').textContent='Requesting GPS…';
+$('subLocationStatus').style.color='var(--dim)';
+if(!navigator.geolocation){
 btn.disabled=false;btn.textContent='📍 Get My Location';
-if(loc){
-subCoordinates=loc;
+$('subLocationStatus').textContent='⚠ Geolocation not supported';
+return;
+}
+navigator.geolocation.getCurrentPosition(
+function(pos){
+btn.disabled=false;btn.textContent='📍 Get My Location';
+subCoordinates={lat:pos.coords.latitude,lng:pos.coords.longitude};
 $('subLocationStatus').textContent='✓ Location captured';
 $('subLocationStatus').style.color='#2ecc71';
-$('subCoords').textContent=loc.lat.toFixed(6)+', '+loc.lng.toFixed(6);
+$('subCoords').textContent=subCoordinates.lat.toFixed(6)+', '+subCoordinates.lng.toFixed(6);
 checkSubmitReady();
-}else{
-$('subLocationStatus').textContent='⚠ '+(err||'Failed');
+},
+function(err){
+btn.disabled=false;btn.textContent='📍 Get My Location';
+$('subLocationStatus').textContent='⚠ Location denied';
 $('subLocationStatus').style.color='#f87171';
 $('subSubmit').disabled=true;
-}
-});
+},
+{enableHighAccuracy:true,timeout:10000,maximumAge:0}
+);
 });
 function checkSubmitReady(){
 var ok=subCoordinates&&$('subNetwork').value&&$('subName').value.trim().length>=3;
@@ -1341,7 +1429,6 @@ else{introStep--;updateIntroSlide()}
 function finishIntro(){
 var introVcbText=$('introVcbInput').value;
 if(introVcbText){
-// Find matching vehicle by name
 var match=buildVehicleIndex().find(function(v){return v.name===introVcbText});
 if(match)setDefaultVehicle(match.key);
 }
@@ -1385,7 +1472,7 @@ renderStations();
 }
 if(window.firebaseReady){onFirebaseReady();}else{window.addEventListener('firebase-ready',onFirebaseReady);}
 
-// AUTH
+// ============ AUTH ============
 $('tabLogin').addEventListener('click',function(){$('tabLogin').classList.add('active');$('tabSignup').classList.remove('active');$('loginForm').style.display='block';$('signupForm').style.display='none';$('resetForm').style.display='none';$('authTabs').style.display='flex';$('authSubtitle').textContent='Sign in to sync your charging history';$('authError').style.display='none';$('authInfo').style.display='none'});
 $('tabSignup').addEventListener('click',function(){$('tabSignup').classList.add('active');$('tabLogin').classList.remove('active');$('signupForm').style.display='block';$('loginForm').style.display='none';$('resetForm').style.display='none';$('authTabs').style.display='flex';$('authSubtitle').textContent='Create an account to save your history';$('authError').style.display='none';$('authInfo').style.display='none'});
 $('forgotBtn').addEventListener('click',function(){$('loginForm').style.display='none';$('signupForm').style.display='none';$('resetForm').style.display='block';$('authTabs').style.display='none';$('authSubtitle').textContent='Reset your password';$('authError').style.display='none';$('authInfo').style.display='none'});
@@ -1414,7 +1501,7 @@ fbFuncs.reauthenticateWithCredential(currentUser,cred)
 .then(function(){b.disabled=false;b.textContent='Update Password'});
 });
 
-// CLOUD
+// ============ CLOUD ============
 function getUserHistoryRef(){return fbFuncs.collection(db,'users',currentUser.uid,'history')}
 function addRecord(r,cb){if(!currentUser){if(cb)cb(false);return}fbFuncs.addDoc(getUserHistoryRef(),r).then(function(){if(cb)cb(true)}).catch(function(e){if(cb)cb(false)})}
 function getAllRecords(cb){if(!currentUser){cb([]);return}fbFuncs.getDocs(getUserHistoryRef()).then(function(s){var a=[];s.forEach(function(d){var data=d.data();data._docId=d.id;a.push(data)});cb(a)}).catch(function(e){cb([])})}
@@ -1428,7 +1515,7 @@ function addUserVehicle(v,cb){if(!currentUser){if(cb)cb(false);return}fbFuncs.ad
 function updateUserVehicle(id,updates,cb){fbFuncs.updateDoc(fbFuncs.doc(db,'users',currentUser.uid,'vehicles',id),updates).then(function(){var idx=userVehicles.findIndex(function(v){return v._docId===id});if(idx>=0)Object.assign(userVehicles[idx],updates);if(cb)cb(true)}).catch(function(e){if(cb)cb(false)})}
 function deleteUserVehicle(id,cb){fbFuncs.deleteDoc(fbFuncs.doc(db,'users',currentUser.uid,'vehicles',id)).then(function(){userVehicles=userVehicles.filter(function(v){return v._docId!==id});if(cb)cb(true)}).catch(function(e){if(cb)cb(false)})}
 
-// NAV
+// ============ NAV ============
 document.querySelectorAll('.nav-item').forEach(function(btn){
 btn.addEventListener('click',function(){
 document.querySelectorAll('.nav-item').forEach(function(b){b.classList.remove('active')});
@@ -1436,7 +1523,10 @@ document.querySelectorAll('.page').forEach(function(p){p.classList.remove('activ
 btn.classList.add('active');
 document.getElementById('page-'+btn.dataset.page).classList.add('active');
 if(btn.dataset.page==='history')renderHistory();
-if(btn.dataset.page==='stations')loadStationReports(function(){renderStations()});
+if(btn.dataset.page==='stations'){
+loadStationReports(function(){renderStations()});
+autoAttemptLocation();
+}
 });
 });
 $('showHelpBtn').addEventListener('click',function(){
@@ -1451,7 +1541,7 @@ var s=document.querySelector('.nav-item[data-page="settings"]');if(s)s.classList
 $('page-settings').classList.add('active');
 });
 
-// CHARGING MODE
+// ============ CHARGING MODE ============
 $('tabHome').addEventListener('click',function(){setChargingMode('home')});
 $('tabPublic').addEventListener('click',function(){setChargingMode('public')});
 
@@ -1462,8 +1552,11 @@ $('tabHome').classList.add('active');
 $('tabPublic').classList.remove('active');
 $('homeFields').style.display='block';
 $('publicFields').style.display='none';
+$('chargingInputsTitle').textContent='Home charging details';
 var moneyBtn=document.querySelector('.mode-card[data-mode="money"]');
 if(moneyBtn)moneyBtn.style.display='none';
+var moneyModalBtn=document.querySelector('.mode-modal-card[data-mode="money"]');
+if(moneyModalBtn)moneyModalBtn.style.display='none';
 $('modeGrid').classList.add('three-up');
 if(currentCalcMode==='money'){setCalcMode('cost');}
 $('durationPresetsHome').style.display='flex';
@@ -1474,8 +1567,11 @@ $('tabPublic').classList.add('active');
 $('tabHome').classList.remove('active');
 $('homeFields').style.display='none';
 $('publicFields').style.display='block';
+$('chargingInputsTitle').textContent='Public charging details';
 var moneyBtn=document.querySelector('.mode-card[data-mode="money"]');
 if(moneyBtn)moneyBtn.style.display='flex';
+var moneyModalBtn=document.querySelector('.mode-modal-card[data-mode="money"]');
+if(moneyModalBtn)moneyModalBtn.style.display='flex';
 $('modeGrid').classList.remove('three-up');
 $('durationPresetsHome').style.display='none';
 $('durationPresetsPublic').style.display='flex';
@@ -1494,14 +1590,18 @@ $('quickRateField').style.display=isTime?'none':'block';
 $('publicRateField').style.display=isTime?'none':'block';
 }
 
-// CALC MODE
+// ============ CALC MODE ============
 document.querySelectorAll('.mode-card').forEach(function(btn){
 btn.addEventListener('click',function(){setCalcMode(this.dataset.mode)});
+});
+document.querySelectorAll('.mode-modal-card').forEach(function(btn){
+btn.addEventListener('click',function(){setCalcMode(this.dataset.mode);$('modeModal').classList.remove('show')});
 });
 
 function setCalcMode(m){
 currentCalcMode=m;
 document.querySelectorAll('.mode-card').forEach(function(b){b.classList.toggle('active',b.dataset.mode===m)});
+document.querySelectorAll('.mode-modal-card').forEach(function(b){b.classList.toggle('active',b.dataset.mode===m)});
 $('modeDesc').textContent=modeDescriptions[m];
 var targetVis=(m==='cost'||m==='time');
 $('targetField').style.display=targetVis?'block':'none';
@@ -1514,7 +1614,20 @@ try{localStorage.setItem('evCalcMode',m)}catch(e){}
 calc();savePrefs();
 }
 
-// DURATION SUBMODE
+// ============ STICKY MODE BAR ============
+$('stickyModeBar').addEventListener('click',function(){
+$('modeModal').classList.add('show');
+});
+$('modeModalClose').addEventListener('click',function(){
+$('modeModal').classList.remove('show');
+});
+function updateStickyBar(mode,valueText){
+$('smbIcon').textContent=modeIcons[mode]||'💰';
+$('smbMode').textContent=mode.charAt(0).toUpperCase()+mode.slice(1)+' mode';
+$('smbValue').textContent=valueText;
+}
+
+// ============ DURATION SUBMODE ============
 $('durToggleDuration').addEventListener('click',function(){setDurationSubMode('duration')});
 $('durToggleUntil').addEventListener('click',function(){setDurationSubMode('until')});
 function setDurationSubMode(m){
@@ -1533,18 +1646,23 @@ $('durationMode2').style.display='block';
 calc();
 }
 
+// ============ SETTINGS COLLAPSIBLES ============
 $('advancedSettingsToggle').addEventListener('click',function(){
 this.classList.toggle('open');
 var c=$('advancedSettingsContent'),a=$('advancedSettingsArrow');
-if(c.style.display==='none'){c.style.display='block';a.style.transform='rotate(90deg)'}
-else{c.style.display='none';a.style.transform='rotate(0)'}
+if(c.style.display==='none'){c.style.display='block';a.style.transform='rotate(90deg)';try{localStorage.setItem('evAdvOpen','1')}catch(e){}}
+else{c.style.display='none';a.style.transform='rotate(0)';try{localStorage.setItem('evAdvOpen','0')}catch(e){}}
 });
 $('adminToggle').addEventListener('click',function(){
 this.classList.toggle('open');
 var c=$('adminContent'),a=$('adminArrow');
-if(c.style.display==='none'){c.style.display='block';a.style.transform='rotate(90deg)'}
-else{c.style.display='none';a.style.transform='rotate(0)'}
+if(c.style.display==='none'){c.style.display='block';a.style.transform='rotate(90deg)';try{localStorage.setItem('evAdminOpen','1')}catch(e){}}
+else{c.style.display='none';a.style.transform='rotate(0)';try{localStorage.setItem('evAdminOpen','0')}catch(e){}}
 });
+try{
+if(localStorage.getItem('evAdvOpen')==='1'){$('advancedSettingsContent').style.display='block';$('advancedSettingsArrow').style.transform='rotate(90deg)';$('advancedSettingsToggle').classList.add('open')}
+if(localStorage.getItem('evAdminOpen')==='1'){$('adminContent').style.display='block';$('adminArrow').style.transform='rotate(90deg)';$('adminToggle').classList.add('open')}
+}catch(e){}
 
 $('compareToggle').addEventListener('click',function(){this.classList.toggle('open');var c=$('compareContent'),a=$('compareArrow');if(c.style.display==='none'){c.style.display='block';a.style.transform='rotate(90deg)'}else{c.style.display='none';a.style.transform='rotate(0)'}});
 $('timerToggle').addEventListener('click',function(){this.classList.toggle('open');var c=$('timerContent'),a=$('timerArrow');if(c.style.display==='none'){c.style.display='block';a.style.transform='rotate(90deg)'}else{c.style.display='none';a.style.transform='rotate(0)'}});
@@ -1554,6 +1672,7 @@ $('infoOk').addEventListener('click',function(){$('infoModal').classList.remove(
 
 var infos={vehicleSearch:{title:'Search your vehicle',text:'Type any part of your car\'s name — make, model, or variant. Results filter as you type. Your saved vehicles appear first.'}};
 
+// ============ UTILITY ============
 function lkr(n){return 'LKR '+n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',')}
 function clamp(v,mn,mx){v=parseInt(v);if(isNaN(v))return mn;if(v<mn)return mn;if(v>mx)return mx;return v}
 function getHomePower(){if($('homeChargerPower').value==='custom')return parseFloat($('customHomePower').value)||7;return parseFloat($('homeChargerPower').value)||7}
@@ -1599,6 +1718,7 @@ var pctEl=$(pctId);
 if(pctEl)pctEl.textContent=value+'%';
 }
 
+// ============ MAIN CALC ============
 var currentCalc=null;
 function calc(){
 var capacity=getCapacity();
@@ -1636,6 +1756,7 @@ detail='Billed '+billed.toFixed(2)+' kWh at LKR '+rate.toFixed(2)+'/kWh'+(fee>0?
 $('moneyWarn').style.display='none';
 addedKwh=needed;
 result={mode:'cost',capacity:capacity,cur:cur,tgt:tgt,rate:rate,needed:needed,billed:billed,total:total,vehicleKey:getDefaultVehicle(),vehicleName:vehicle?vehicle.name:'—'};
+updateStickyBar('cost',lkr(total));
 }
 else if(currentCalcMode==='money'){
 var money=parseFloat($('moneyAmount').value)||0;
@@ -1664,6 +1785,7 @@ warn.innerHTML='⚠️ LKR '+money.toFixed(0)+' is more than a full charge. You\
 detail='Spending LKR '+money.toFixed(0)+' at LKR '+rate.toFixed(2)+'/kWh';
 addedKwh=actualUsable;
 result={mode:'money',capacity:capacity,cur:cur,tgt:actualPercent,rate:rate,needed:actualUsable,billed:actualBilled,total:money,vehicleKey:getDefaultVehicle(),vehicleName:vehicle?vehicle.name:'—',moneyRequested:true};
+updateStickyBar('money',lkr(money));
 }
 else if(currentCalcMode==='time'){
 var needed3=(tgt>cur)?((tgt-cur)/100)*capacity:0;
@@ -1679,6 +1801,7 @@ detail='At '+eff.effPower.toFixed(1)+' kW effective rate';
 $('moneyWarn').style.display='none';
 addedKwh=needed3;
 result={mode:'time',capacity:capacity,cur:cur,tgt:tgt,rate:rate,needed:needed3,total:0,vehicleKey:getDefaultVehicle(),vehicleName:vehicle?vehicle.name:'—'};
+updateStickyBar('time',value);
 }
 else if(currentCalcMode==='duration'){
 var mins=getDurationMinutes();
@@ -1709,6 +1832,7 @@ var durationText=mins>=60?(Math.floor(mins/60)+'h '+(mins%60)+'m'):(mins+' min')
 detail='Charging for '+durationText+' at '+eff.effPower.toFixed(1)+' kW'+(fee>0?' + '+lkr(fee)+' fee':'')+(taxPct>0?' + '+taxPct+'% tax':'');
 addedKwh=actualUsable2;
 result={mode:'duration',capacity:capacity,cur:cur,tgt:actualPercent2,rate:rate,needed:actualUsable2,billed:billed2,total:cost2,vehicleKey:getDefaultVehicle(),vehicleName:vehicle?vehicle.name:'—'};
+updateStickyBar('duration',value);
 }
 
 $('resultIcon').textContent=modeIcons[currentCalcMode]||'💰';
@@ -1784,7 +1908,7 @@ return '<div class="compare-bar-row"><div class="compare-bar-hdr"><span class="n
 }).join('');
 }
 
-// INPUTS
+// ============ INPUTS ============
 $('settingsDefaultVehicle').addEventListener('change',function(){
 setDefaultVehicle(this.value);
 applyDefaultVehicle();
@@ -1856,16 +1980,30 @@ showToast('Reminder set for '+timeVal,'success');
 });
 });
 
+// Charger power memory
+var savedHomePower=localStorage.getItem('evHomePower');
+var savedPublicPower=localStorage.getItem('evPublicPower');
+if(savedHomePower){$('homeChargerPower').value=savedHomePower;if(savedHomePower==='custom')$('customHomePowerField').style.display='block'}
+if(savedPublicPower){$('chargerPower').value=savedPublicPower;if(savedPublicPower==='custom')$('customPublicPowerField').style.display='block'}
+
 $('quickRate').addEventListener('change',function(){
 if(this.value&&this.value!=='custom'){$('rate').value=this.value;calc();savePrefs()}
 else if(this.value==='custom'){$('rate').value='';$('rate').focus();calc()}
 });
 $('homeRateSelect').addEventListener('change',function(){if(this.value&&this.value!=='custom'){$('homeRate').value=this.value;calc();savePrefs()}else if(this.value==='custom'){$('homeRate').value='';$('homeRate').focus();calc()}});
-$('homeChargerPower').addEventListener('change',function(){if(this.value==='custom'){$('customHomePowerField').style.display='block';$('customHomePower').focus()}else{$('customHomePowerField').style.display='none'}calc();savePrefs()});
-$('chargerPower').addEventListener('change',function(){if(this.value==='custom'){$('customPublicPowerField').style.display='block';$('customPublicPower').focus()}else{$('customPublicPowerField').style.display='none'}calc();savePrefs()});
+$('homeChargerPower').addEventListener('change',function(){
+try{localStorage.setItem('evHomePower',this.value)}catch(e){}
+if(this.value==='custom'){$('customHomePowerField').style.display='block';$('customHomePower').focus()}else{$('customHomePowerField').style.display='none'}
+calc();savePrefs();
+});
+$('chargerPower').addEventListener('change',function(){
+try{localStorage.setItem('evPublicPower',this.value)}catch(e){}
+if(this.value==='custom'){$('customPublicPowerField').style.display='block';$('customPublicPower').focus()}else{$('customPublicPowerField').style.display='none'}
+calc();savePrefs();
+});
 ['setFuel92','setFuel95','setDiesel','setPetrolKm','sessionFee','tax'].forEach(function(id){$(id).addEventListener('change',function(){savePrefs();calc()})});
 
-// ADD PREVIOUS CHARGE
+// ============ ADD PREVIOUS CHARGE ============
 $('addPastBtn').addEventListener('click',function(){
 if(!currentUser){alert('Please sign in.');return}
 var now=new Date();
@@ -1971,7 +2109,7 @@ else{showToast('Failed to add','error')}
 });
 });
 
-// GARAGE
+// ============ GARAGE ============
 function renderGarage(){
 var list=$('garageList');
 if(!userVehicles||userVehicles.length===0){list.innerHTML='<div class="empty-state"><div class="es-icon">🚗</div><div class="es-text"><strong>No custom vehicles yet.</strong><br>Tap "➕ Add" to save your car.</div></div>'}
@@ -2018,7 +2156,7 @@ function askConfirm(title,text,cb){$('confirmTitle').textContent=title;$('confir
 $('confirmCancel').addEventListener('click',function(){$('confirmModal').classList.remove('show');confirmCallback=null});
 $('confirmOk').addEventListener('click',function(){$('confirmModal').classList.remove('show');if(confirmCallback){var cb=confirmCallback;confirmCallback=null;cb()}});
 
-// HISTORY
+// ============ HISTORY ============
 function calculatePetrolSavings(item){
 var vehicle=getVehicleByKey(item.vehicleKey);
 if(!vehicle||!vehicle.range)return null;
@@ -2167,7 +2305,7 @@ document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeOb
 });
 });
 
-// THEME / SHARE / INTRO
+// ============ THEME / SHARE / INTRO ============
 $('themeToggle').addEventListener('click',function(){
 var l=document.body.classList.contains('light');
 if(l){document.body.classList.remove('light');$('themeKnob').style.left='2px'}else{document.body.classList.add('light');$('themeKnob').style.left='32px'}
@@ -2181,7 +2319,7 @@ else{window.open('https://wa.me/?text='+encodeURIComponent(text+'\n\n'+url),'_bl
 });
 $('rerunIntro').addEventListener('click',showIntro);
 
-// PREFS
+// ============ PREFS ============
 function savePrefs(){
 try{localStorage.setItem('evPrefs',JSON.stringify({
 current:$('current').value,target:$('target').value,rate:$('rate').value,efficiency:$('efficiency').value,
@@ -2230,6 +2368,7 @@ else{setChargingMode('public')}
 if(durationSubMode==='until'){setDurationSubMode('until')}else{setDurationSubMode('duration')}
 setCalcMode(currentCalcMode||'cost');
 calc();
+
 </script>
 </body>
 </html>
