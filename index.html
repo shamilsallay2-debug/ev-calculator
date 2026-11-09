@@ -36,14 +36,14 @@ window.dispatchEvent(new Event('firebase-ready'));
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-:root{--bg:#0a0612;--card:rgba(30,20,60,0.55);--border:rgba(120,80,255,0.18);--blue:#3b82f6;--blueB:#60a5fa;--purple:#8b5cf6;--purpleB:#a78bfa;--text:#ede9fe;--dim:#a29ac4;--faint:#6a5a9e;--input-bg:rgba(10,6,18,0.7);--shadow:rgba(0,0,0,0.4)}
-body.light{--bg:#f4f2fc;--card:rgba(255,255,255,0.9);--border:rgba(120,80,255,0.25);--text:#1a1033;--dim:#4a3a7a;--faint:#6a5a9e;--input-bg:rgba(255,255,255,0.95);--shadow:rgba(120,80,255,0.15)}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);background-image:radial-gradient(circle at 15% 0%,rgba(59,130,246,0.18),transparent 45%),radial-gradient(circle at 85% 100%,rgba(139,92,246,0.18),transparent 45%);background-attachment:fixed;color:var(--text);min-height:100vh;padding:16px;padding-left:96px;transition:background 0.3s,color 0.3s}
-.app{max-width:520px;margin:0 auto}
+:root{--bg:#0a0612;--card:rgba(30,20,60,0.55);--card-solid:#1a1430;--border:rgba(120,80,255,0.18);--blue:#3b82f6;--blueB:#60a5fa;--purple:#8b5cf6;--purpleB:#a78bfa;--text:#ede9fe;--dim:#a29ac4;--faint:#6a5a9e;--input-bg:rgba(10,6,18,0.7);--input-solid:#120a24;--shadow:rgba(0,0,0,0.4)}
+body.light{--bg:#f4f2fc;--card:rgba(255,255,255,0.9);--card-solid:#ffffff;--border:rgba(120,80,255,0.25);--text:#1a1033;--dim:#4a3a7a;--faint:#6a5a9e;--input-bg:rgba(255,255,255,0.95);--input-solid:#ffffff;--shadow:rgba(120,80,255,0.15)}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);background-image:radial-gradient(circle at 15% 0%,rgba(59,130,246,0.18),transparent 45%),radial-gradient(circle at 85% 100%,rgba(139,92,246,0.18),transparent 45%);background-attachment:fixed;color:var(--text);min-height:100vh;padding:0 16px 16px 96px;transition:background 0.3s,color 0.3s}
+.app{max-width:520px;margin:0 auto;padding-top:0}
 .page{display:none;animation:fadeIn 0.3s}
 .page.active{display:block}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-h1{font-size:1.4rem;font-weight:800;text-align:center;margin-bottom:22px;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+h1{font-size:1.4rem;font-weight:800;text-align:center;margin-bottom:22px;padding-top:18px;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 body.light h1{background:none;-webkit-text-fill-color:initial;color:#5b21b6}
 .card{background:var(--card);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:20px;padding:20px;margin-bottom:14px;border:1px solid var(--border);box-shadow:0 8px 32px var(--shadow);position:relative;overflow:hidden}
 .card.card-overflow-visible{overflow:visible}
@@ -64,9 +64,8 @@ input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-
 input[type=number]{-moz-appearance:textfield}
 textarea{resize:vertical;min-height:70px}
 select{-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath fill='%23a78bfa' d='M7 10L2 5h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:40px}
-select optgroup{background:#1e1b4b;color:var(--purpleB)}
-select option{background:#120a24;color:#fff}
-body.light select option{background:#fff;color:#1a1033}
+select optgroup{background:var(--input-solid);color:var(--purpleB)}
+select option{background:var(--input-solid);color:var(--text)}
 .hint{font-size:0.7rem;color:var(--faint);margin-top:6px;font-style:italic;line-height:1.5}
 .pct-input{width:80px;text-align:center;font-weight:700;color:var(--text);font-size:0.95rem;background:rgba(139,92,246,0.2);border:1px solid rgba(139,92,246,0.3);padding:6px 8px;border-radius:8px;font-family:inherit;outline:none}
 .pct-input:focus{border-color:var(--purpleB);box-shadow:0 0 0 3px rgba(139,92,246,0.15)}
@@ -89,8 +88,8 @@ body.light select option{background:#fff;color:#1a1033}
 .mode-tab{flex:1;padding:12px;border-radius:9px;border:none;background:none;color:var(--faint);font-family:inherit;font-weight:700;font-size:0.85rem;cursor:pointer;transition:all 0.2s}
 .mode-tab.active{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;box-shadow:0 4px 12px rgba(139,92,246,0.4)}
 .auth-container{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);background-image:radial-gradient(circle at 15% 0%,rgba(59,130,246,0.18),transparent 45%),radial-gradient(circle at 85% 100%,rgba(139,92,246,0.18),transparent 45%);display:flex;align-items:center;justify-content:center;padding:20px;z-index:9999;overflow-y:auto}
-.auth-box{background:var(--card);backdrop-filter:blur(20px);border-radius:24px;padding:32px 24px;width:100%;max-width:380px;border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,0.5);margin:auto}
-.auth-box h1{font-size:1.6rem;margin-bottom:8px}
+.auth-box{background:var(--card-solid);backdrop-filter:blur(20px);border-radius:24px;padding:32px 24px;width:100%;max-width:380px;border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,0.5);margin:auto}
+.auth-box h1{font-size:1.6rem;margin-bottom:8px;padding-top:0}
 .auth-box .subtitle{text-align:center;color:var(--dim);font-size:0.85rem;margin-bottom:28px}
 .auth-tabs{display:flex;gap:6px;margin-bottom:20px;background:var(--input-bg);padding:4px;border-radius:12px;border:1px solid rgba(139,92,246,0.15)}
 .auth-tab{flex:1;padding:10px;border-radius:9px;border:none;background:none;color:var(--faint);font-family:inherit;font-weight:700;font-size:0.85rem;cursor:pointer;transition:all 0.2s}
@@ -130,12 +129,6 @@ body.light .result-tile .tile-val{background:none;-webkit-text-fill-color:initia
 .intro-dot.active{background:var(--purpleB);width:24px;border-radius:4px}
 .intro-slide .ob-field{text-align:left;margin-top:16px}
 .intro-slide .ob-field label{display:block;font-size:0.85rem;color:var(--dim);margin-bottom:8px;font-weight:600;text-align:left}
-.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
-.mode-grid.three-up{grid-template-columns:1fr 1fr 1fr}
-.mode-card{padding:16px 10px;border-radius:12px;border:1px solid rgba(139,92,246,0.25);background:rgba(139,92,246,0.08);color:var(--dim);font-family:inherit;font-size:0.85rem;font-weight:700;cursor:pointer;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:6px}
-.mode-card .mc-icon{font-size:1.5rem}
-.mode-card.active{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;border-color:transparent;box-shadow:0 4px 16px rgba(139,92,246,0.4);transform:scale(1.02)}
-.mode-desc{font-size:0.82rem;color:var(--dim);text-align:center;line-height:1.5;font-style:italic}
 .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:#1a1a2e;color:#fff;padding:12px 20px;border-radius:12px;font-size:0.85rem;font-weight:600;z-index:10001;box-shadow:0 8px 24px rgba(0,0,0,0.4);opacity:0;transition:all 0.3s;border:1px solid rgba(139,92,246,0.3);max-width:90%}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 .toast.success{border-color:rgba(46,204,113,0.5)}
@@ -151,12 +144,6 @@ body.light .result-tile .tile-val{background:none;-webkit-text-fill-color:initia
 .battery-shape .battery-fill-big.low{background:linear-gradient(90deg,#ef4444,#f87171)}
 .battery-shape .battery-fill-big.mid{background:linear-gradient(90deg,#f59e0b,#fbbf24)}
 .battery-pct{position:absolute;top:0;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:800;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.6);pointer-events:none}
-.energy-flow{margin-top:16px;padding:12px 14px;background:var(--input-bg);border-radius:12px;border:1px solid rgba(139,92,246,0.15)}
-.energy-flow .ef-labels{display:flex;justify-content:space-between;font-size:0.7rem;color:var(--dim);font-weight:600;margin-bottom:8px}
-.energy-flow .ef-track{height:14px;border-radius:7px;background:rgba(139,92,246,0.1);overflow:hidden;position:relative}
-.energy-flow .ef-fill{height:100%;background:linear-gradient(90deg,rgba(59,130,246,0.4),rgba(59,130,246,0.4));position:absolute;top:0;left:0;transition:all 0.4s}
-.energy-flow .ef-added{height:100%;background:linear-gradient(90deg,#3b82f6,#8b5cf6);position:absolute;top:0;transition:all 0.4s}
-.energy-flow .ef-legend{font-size:0.7rem;color:var(--faint);margin-top:8px;text-align:center;font-style:italic}
 .history-chart{display:flex;align-items:flex-end;justify-content:space-between;gap:4px;height:60px;padding:8px 0;margin-bottom:8px}
 .history-chart .hc-bar{flex:1;background:linear-gradient(180deg,#3b82f6,#8b5cf6);border-radius:3px 3px 0 0;min-height:4px;transition:height 0.3s}
 .history-chart .hc-bar.best{background:linear-gradient(180deg,#2ecc71,#27ae60)}
@@ -165,7 +152,7 @@ body.light .result-tile .tile-val{background:none;-webkit-text-fill-color:initia
 .history-chart-title{font-size:0.7rem;color:var(--dim);text-align:center;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
 .modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(10,6,18,0.85);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:20px;z-index:9998;overflow-y:auto}
 .modal-overlay.show{display:flex}
-.modal-box{background:var(--card);border-radius:20px;padding:22px;max-width:440px;width:100%;border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,0.5);margin:auto}
+.modal-box{background:var(--card-solid);border-radius:20px;padding:22px;max-width:440px;width:100%;border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,0.5);margin:auto}
 .modal-box h3{font-size:1.05rem;font-weight:700;margin-bottom:12px;color:var(--purpleB)}
 .modal-box p{font-size:0.85rem;color:var(--dim);line-height:1.7;margin-bottom:16px}
 .modal-box .modal-actions{display:flex;gap:8px;margin-top:16px}
@@ -233,13 +220,13 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 .vcb-input:focus{border-color:var(--purpleB);box-shadow:0 0 0 3px rgba(139,92,246,0.15)}
 .vcb-clear{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--faint);font-size:1.2rem;cursor:pointer;padding:4px 8px;display:none}
 .vcb-clear.show{display:block}
-.vcb-dropdown{position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:0 8px 32px var(--shadow);max-height:320px;overflow-y:auto;z-index:500;display:none;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
+.vcb-dropdown{position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--card-solid);border:1px solid var(--border);border-radius:12px;box-shadow:0 8px 32px var(--shadow);max-height:320px;overflow-y:auto;z-index:500;display:none}
 .vcb-dropdown.show{display:block}
-.vcb-group-header{padding:8px 14px;font-size:0.65rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--purpleB);background:rgba(139,92,246,0.05);border-top:1px solid rgba(139,92,246,0.1);position:sticky;top:0}
+.vcb-group-header{padding:8px 14px;font-size:0.65rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--purpleB);background:rgba(139,92,246,0.08);border-top:1px solid rgba(139,92,246,0.1);position:sticky;top:0}
 .vcb-group-header:first-child{border-top:none}
 .vcb-item{padding:12px 14px;cursor:pointer;border-bottom:1px solid rgba(139,92,246,0.05);transition:background 0.1s}
 .vcb-item:hover,.vcb-item.active{background:rgba(139,92,246,0.1)}
-.vcb-item-name{font-size:0.9rem;font-weight:600;color:var(--text);line-height:1.3;text-shadow:none}
+.vcb-item-name{font-size:0.9rem;font-weight:600;color:var(--text);line-height:1.3}
 body.light .vcb-item-name{color:#1a0f2e !important;font-weight:700}
 .vcb-item-specs{font-size:0.72rem;color:var(--faint);margin-top:2px}
 body.light .vcb-item-specs{color:#5a4a8a !important}
@@ -247,23 +234,20 @@ body.light .vcb-item-specs{color:#5a4a8a !important}
 .phev-banner{background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(234,88,12,0.1));border:1px solid rgba(245,158,11,0.4);border-radius:12px;padding:12px 14px;margin-top:10px;font-size:0.78rem;color:#fbbf24;line-height:1.6}
 body.light .phev-banner{color:#92400e}
 .range-cycle{display:inline-block;background:rgba(139,92,246,0.15);color:var(--purpleB);font-size:0.55rem;font-weight:800;padding:1px 6px;border-radius:4px;margin-left:4px;text-transform:uppercase;letter-spacing:0.5px;vertical-align:middle}
-/* Sticky mode bar */
-.sticky-mode-bar{position:sticky;top:0;z-index:60;background:var(--card);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:14px;padding:12px 16px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 4px 16px var(--shadow);cursor:pointer;transition:all 0.2s}
-.sticky-mode-bar:active{transform:scale(0.98)}
-.sticky-mode-bar .smb-left{display:flex;align-items:center;gap:10px}
-.sticky-mode-bar .smb-icon{font-size:1.4rem;line-height:1}
-.sticky-mode-bar .smb-mode{font-size:0.7rem;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:0.8px}
-.sticky-mode-bar .smb-value{font-size:1.1rem;font-weight:800;color:var(--purpleB);display:block;margin-top:2px}
-.sticky-mode-bar .smb-arrow{font-size:0.7rem;color:var(--faint);transform:rotate(90deg);display:inline-block}
-body.light .sticky-mode-bar{background:#fff;border-color:rgba(91,33,182,0.28)}
-body.light .sticky-mode-bar .smb-value{color:#5b21b6}
-/* Station toggle */
-.station-toggle{display:flex;gap:6px;margin-bottom:12px;background:var(--input-bg);padding:4px;border-radius:12px;border:1px solid rgba(139,92,246,0.15)}
-.station-toggle button{flex:1;padding:10px;border-radius:9px;border:none;background:none;color:var(--faint);font-family:inherit;font-weight:700;font-size:0.82rem;cursor:pointer;transition:all 0.2s}
-.station-toggle button.active{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff}
-body.light .station-toggle{background:rgba(91,33,182,0.08);border-color:rgba(91,33,182,0.2)}
-body.light .station-toggle button{color:#3a2a6a}
-body.light .station-toggle button.active{background:linear-gradient(135deg,#5b21b6,#7c3aed);color:#fff}
+/* Sticky page switcher */
+.page-switcher{position:sticky;top:0;z-index:70;background:var(--card-solid);border-bottom:1px solid var(--border);display:flex;margin:0 -16px 14px -16px;padding:0 16px;box-shadow:0 4px 16px var(--shadow)}
+.page-switcher button{flex:1;padding:16px 8px;border:none;background:none;color:var(--faint);font-family:inherit;font-weight:700;font-size:0.9rem;cursor:pointer;transition:all 0.2s;border-bottom:3px solid transparent}
+.page-switcher button.active{color:var(--purpleB);border-bottom-color:var(--purpleB)}
+body.light .page-switcher{background:#fff}
+body.light .page-switcher button{color:#4a3a7a}
+body.light .page-switcher button.active{color:#5b21b6;border-bottom-color:#5b21b6}
+/* Mode pills */
+.mode-pills{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;margin-top:12px}
+.mode-pill{padding:10px 4px;border-radius:10px;border:1px solid rgba(139,92,246,0.25);background:rgba(139,92,246,0.08);color:var(--dim);font-family:inherit;font-size:0.7rem;font-weight:700;cursor:pointer;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:3px;line-height:1.2}
+.mode-pill .mp-icon{font-size:1.1rem}
+.mode-pill.active{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;border-color:transparent}
+body.light .mode-pill{background:rgba(91,33,182,0.12);color:#2a1a4a;border-color:rgba(91,33,182,0.35)}
+body.light .mode-pill.active{background:linear-gradient(135deg,#5b21b6,#7c3aed);color:#fff}
 /* Mode modal */
 .mode-modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
 .mode-modal-card{padding:18px 12px;border-radius:14px;border:1px solid rgba(139,92,246,0.25);background:rgba(139,92,246,0.08);color:var(--dim);font-family:inherit;font-size:0.9rem;font-weight:700;cursor:pointer;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:8px}
@@ -276,84 +260,73 @@ body.light .mode-modal-card.active{background:linear-gradient(135deg,#5b21b6,#7c
 .station-search input{padding-right:40px}
 .station-search .ss-clear{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--faint);font-size:1.2rem;cursor:pointer;padding:4px 8px;display:none}
 .station-search .ss-clear.show{display:block}
-@media(max-width:480px){body{padding-left:88px;padding-right:12px}.app{max-width:100%}.sidebar{width:72px}.nav-item{width:56px}.nav-icon{font-size:1.2rem}.nav-label{font-size:0.5rem}.big-num .bn-val{font-size:2.2rem}.intro-icon{font-size:3.5rem}.intro-title{font-size:1.3rem}.battery-wrap{flex-direction:column;align-items:stretch;gap:8px}.battery-visual-big{width:100%}.battery-shape{height:28px}.battery-shape::after{display:none}.pct-input{width:68px;font-size:0.9rem}.result-tile .tile-val{font-size:0.9rem}}
-/* LIGHT MODE */
-body.light { color: #1a0f2e; }
-body.light .card { background: rgba(255,255,255,0.96); border-color: rgba(91,33,182,0.28); }
-body.light .card-title { color: #5b21b6; }
-body.light h1 { color: #4c1d95; background: none; -webkit-text-fill-color: initial; }
-body.light .field > label,body.light .field-hdr .lbl,body.light .field label { color: #2a1a4a; font-weight: 600; }
-body.light .hint { color: #5a4a8a; }
-body.light .mode-desc { color: #4a3a7a; }
-body.light .big-num .bn-val,body.light .result-tile .tile-val,body.light .summary-card .sc-val,body.light .stat .num,body.light .history-item .cost,body.light .modal-box h3 { background: none; -webkit-text-fill-color: initial; }
-body.light .big-num .bn-val { color: #4c1d95; }
-body.light .result-tile .tile-val { color: #5b21b6; }
-body.light .summary-card .sc-val { color: #5b21b6; }
-body.light .history-item .cost { color: #5b21b6; }
-body.light .modal-box h3 { color: #5b21b6; }
-body.light .big-num .bn-lbl,body.light .result-tile .tile-lbl,body.light .summary-card .sc-lbl,body.light .compare-bar-hdr .name,body.light .history-chart-title,body.light .history-item .date { color: #3a2a6a; }
-body.light .compare-bar-hdr .cost { color: #5b21b6; font-weight: 800; }
-body.light .info-i { background: rgba(91,33,182,0.22); color: #5b21b6; border: 1px solid rgba(91,33,182,0.35); }
-body.light .mode-card { background: rgba(91,33,182,0.12); color: #2a1a4a; border-color: rgba(91,33,182,0.35); }
-body.light .mode-card.active { background: linear-gradient(135deg,#5b21b6,#7c3aed); color: #fff; }
-body.light .mode-tabs { background: rgba(91,33,182,0.08); border-color: rgba(91,33,182,0.2); }
-body.light .mode-tab { color: #3a2a6a; }
-body.light .mode-tab.active { background: linear-gradient(135deg,#5b21b6,#7c3aed); color: #fff; }
-body.light .time-toggle { background: rgba(91,33,182,0.08); border-color: rgba(91,33,182,0.2); }
-body.light .time-toggle button { color: #3a2a6a; }
-body.light .time-toggle button.active { background: linear-gradient(135deg,#5b21b6,#7c3aed); color: #fff; }
-body.light .preset-btn { background: rgba(91,33,182,0.1); color: #5b21b6; border-color: rgba(91,33,182,0.35); }
-body.light .adv-toggle { color: #5b21b6; }
-body.light #saveBtn,body.light .auth-btn,body.light .intro-next { background: linear-gradient(135deg,#5b21b6,#7c3aed); color: #fff; }
-body.light input[type=range] { background: linear-gradient(90deg,#dc2626 0%,#d97706 40%,#059669 70%,#16a34a 100%); box-shadow: inset 0 0 0 1px rgba(91,33,182,0.3); height: 10px; }
-body.light input[type=range]::-webkit-slider-thumb { border-color: #5b21b6; border-width: 3px; }
-body.light .battery-shape { border-color: #5b21b6; background: #fff; }
-body.light .battery-shape::after { background: #5b21b6; }
-body.light input,body.light select,body.light textarea { background: #fff; color: #1a0f2e; border-color: rgba(91,33,182,0.35); }
-body.light select option { background: #fff; color: #1a0f2e; }
-body.light .vcb-input { background: #fff; color: #1a0f2e; border-color: rgba(91,33,182,0.35); }
-body.light .vcb-input::placeholder { color: #6a5a8a; }
-body.light .vcb-dropdown { background: #fff; border-color: rgba(91,33,182,0.35); box-shadow: 0 8px 32px rgba(91,33,182,0.25); }
-body.light .vcb-item-name { color: #1a0f2e; font-weight: 700; }
-body.light .vcb-item-specs { color: #5a4a8a; }
-body.light .vcb-item { border-bottom-color: rgba(91,33,182,0.08); }
-body.light .vcb-item:hover,body.light .vcb-item.active { background: rgba(91,33,182,0.08); }
-body.light .vcb-group-header { color: #5b21b6; background: rgba(91,33,182,0.08); border-top-color: rgba(91,33,182,0.15); }
-body.light .vcb-empty { color: #6a5a8a; }
-body.light .vcb-clear { color: #5a4a8a; }
-body.light .range-cycle { background: rgba(91,33,182,0.15); color: #5b21b6; }
-body.light .compare-bar-track { background: rgba(91,33,182,0.15); }
-body.light .compare-bar-fill { background: linear-gradient(90deg,#7c3aed,#5b21b6); }
-body.light .compare-bar-fill.best { background: linear-gradient(90deg,#16a34a,#15803d); }
-body.light .history-item { background: rgba(255,255,255,0.95); border-color: rgba(91,33,182,0.22); }
-body.light .energy-flow { background: rgba(255,255,255,0.95); }
-body.light .notice-banner,body.light .phev-banner { color: #78350f; }
-body.light .sidebar { background: rgba(255,255,255,0.96); }
-body.light .nav-item { color: #4a3a7a; }
-body.light .nav-item.active { color: #5b21b6; background: rgba(91,33,182,0.15); }
-body.light .modal-overlay { background: rgba(26,15,46,0.5); }
-body.light .modal-box { background: #fff; }
-body.light .vehicle-card { background: #fff; }
-body.light .auth-container { background: #f4f2fc; }
-body.light .auth-box { background: #fff; }
-body.light .intro-container { background: #f4f2fc; }
-body.light .toast { background: #1a0f2e; color: #fff; }
-body.light .cost-preview { background: rgba(91,33,182,0.1); }
-body.light .range-cycle { background: rgba(91,33,182,0.15); color: #5b21b6; }
-body.light .unverified-badge { background: rgba(245,158,11,0.2); color: #92400e; }
-  body.light .smb-mode { color: #4a3a7a; }
-body.light .smb-value { color: #5b21b6; }
-body.light .mode-desc { color: #4a3a7a; font-style: italic; }
-body.light .card-title { color: #5b21b6; }
-body.light .field > label { color: #2a1a4a; }
-body.light .hint { color: #5a4a8a; }
-body.light .preset-btn { color: #5b21b6; background: rgba(91,33,182,0.1); }
-body.light .adv-toggle { color: #5b21b6; }
-  body.light .unverified-badge { background: rgba(245,158,11,0.2); color: #92400e; }
-body.light .range-cycle { background: rgba(91,33,182,0.15); color: #5b21b6; }
-
-body.light .mode-tab { background: transparent; color: #3a2a6a; }
-body.light .mode-tab.active { background: linear-gradient(135deg,#5b21b6,#7c3aed); color: #fff; box-shadow: 0 4px 12px rgba(91,33,182,0.4); }
+/* Station toggle */
+.station-toggle{display:flex;gap:6px;margin-bottom:12px;background:var(--input-bg);padding:4px;border-radius:12px;border:1px solid rgba(139,92,246,0.15)}
+.station-toggle button{flex:1;padding:10px;border-radius:9px;border:none;background:none;color:var(--faint);font-family:inherit;font-weight:700;font-size:0.82rem;cursor:pointer;transition:all 0.2s}
+.station-toggle button.active{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff}
+body.light .station-toggle{background:rgba(91,33,182,0.08);border-color:rgba(91,33,182,0.2)}
+body.light .station-toggle button{color:#3a2a6a}
+body.light .station-toggle button.active{background:linear-gradient(135deg,#5b21b6,#7c3aed);color:#fff}
+@media(max-width:480px){body{padding-left:88px;padding-right:12px}.app{max-width:100%}.sidebar{width:72px}.nav-item{width:56px}.nav-icon{font-size:1.2rem}.nav-label{font-size:0.5rem}.big-num .bn-val{font-size:2.2rem}.intro-icon{font-size:3.5rem}.intro-title{font-size:1.3rem}.battery-wrap{flex-direction:column;align-items:stretch;gap:8px}.battery-visual-big{width:100%}.battery-shape{height:28px}.battery-shape::after{display:none}.pct-input{width:68px;font-size:0.9rem}.result-tile .tile-val{font-size:0.9rem}.mode-pills{grid-template-columns:1fr 1fr 1fr 1fr;gap:4px}.mode-pill{font-size:0.6rem;padding:8px 2px}}
+/* LIGHT MODE OVERRIDES */
+body.light{color:#1a0f2e}
+body.light .card{background:rgba(255,255,255,0.96);border-color:rgba(91,33,182,0.28)}
+body.light .card-title{color:#5b21b6}
+body.light h1{color:#4c1d95;background:none;-webkit-text-fill-color:initial}
+body.light .field > label,body.light .field-hdr .lbl,body.light .field label{color:#2a1a4a;font-weight:600}
+body.light .hint{color:#5a4a8a}
+body.light .mode-desc{color:#4a3a7a}
+body.light .big-num .bn-val,body.light .result-tile .tile-val,body.light .summary-card .sc-val,body.light .stat .num,body.light .history-item .cost,body.light .modal-box h3{background:none;-webkit-text-fill-color:initial}
+body.light .big-num .bn-val{color:#4c1d95}
+body.light .result-tile .tile-val{color:#5b21b6}
+body.light .summary-card .sc-val{color:#5b21b6}
+body.light .history-item .cost{color:#5b21b6}
+body.light .modal-box h3{color:#5b21b6}
+body.light .big-num .bn-lbl,body.light .result-tile .tile-lbl,body.light .summary-card .sc-lbl,body.light .compare-bar-hdr .name,body.light .history-chart-title,body.light .history-item .date{color:#3a2a6a}
+body.light .compare-bar-hdr .cost{color:#5b21b6;font-weight:800}
+body.light .info-i{background:rgba(91,33,182,0.22);color:#5b21b6;border:1px solid rgba(91,33,182,0.35)}
+body.light .mode-tab{background:transparent;color:#3a2a6a}
+body.light .mode-tab.active{background:linear-gradient(135deg,#5b21b6,#7c3aed);color:#fff;box-shadow:0 4px 12px rgba(91,33,182,0.4)}
+body.light .time-toggle{background:rgba(91,33,182,0.08);border-color:rgba(91,33,182,0.2)}
+body.light .time-toggle button{color:#3a2a6a}
+body.light .time-toggle button.active{background:linear-gradient(135deg,#5b21b6,#7c3aed);color:#fff}
+body.light .preset-btn{background:rgba(91,33,182,0.1);color:#5b21b6;border-color:rgba(91,33,182,0.35)}
+body.light .adv-toggle{color:#5b21b6}
+body.light .auth-btn{background:linear-gradient(135deg,#5b21b6,#7c3aed);color:#fff}
+body.light input[type=range]{background:linear-gradient(90deg,#dc2626 0%,#d97706 40%,#059669 70%,#16a34a 100%);box-shadow:inset 0 0 0 1px rgba(91,33,182,0.3);height:10px}
+body.light input[type=range]::-webkit-slider-thumb{border-color:#5b21b6;border-width:3px}
+body.light .battery-shape{border-color:#5b21b6;background:#fff}
+body.light .battery-shape::after{background:#5b21b6}
+body.light input,body.light select,body.light textarea{background:#fff;color:#1a0f2e;border-color:rgba(91,33,182,0.35)}
+body.light select option{background:#fff;color:#1a0f2e}
+body.light .vcb-input{background:#fff;color:#1a0f2e;border-color:rgba(91,33,182,0.35)}
+body.light .vcb-input::placeholder{color:#6a5a8a}
+body.light .vcb-dropdown{background:#fff;border-color:rgba(91,33,182,0.35);box-shadow:0 8px 32px rgba(91,33,182,0.25)}
+body.light .vcb-item-name{color:#1a0f2e;font-weight:700}
+body.light .vcb-item-specs{color:#5a4a8a}
+body.light .vcb-item{border-bottom-color:rgba(91,33,182,0.08)}
+body.light .vcb-item:hover,body.light .vcb-item.active{background:rgba(91,33,182,0.08)}
+body.light .vcb-group-header{color:#5b21b6;background:rgba(91,33,182,0.08);border-top-color:rgba(91,33,182,0.15)}
+body.light .vcb-empty{color:#6a5a8a}
+body.light .vcb-clear{color:#5a4a8a}
+body.light .range-cycle{background:rgba(91,33,182,0.15);color:#5b21b6}
+body.light .compare-bar-track{background:rgba(91,33,182,0.15)}
+body.light .compare-bar-fill{background:linear-gradient(90deg,#7c3aed,#5b21b6)}
+body.light .compare-bar-fill.best{background:linear-gradient(90deg,#16a34a,#15803d)}
+body.light .history-item{background:rgba(255,255,255,0.95);border-color:rgba(91,33,182,0.22)}
+body.light .notice-banner,body.light .phev-banner{color:#78350f}
+body.light .sidebar{background:rgba(255,255,255,0.96)}
+body.light .nav-item{color:#4a3a7a}
+body.light .nav-item.active{color:#5b21b6;background:rgba(91,33,182,0.15)}
+body.light .modal-overlay{background:rgba(26,15,46,0.5)}
+body.light .modal-box{background:#fff}
+body.light .vehicle-card{background:#fff}
+body.light .auth-container{background:#f4f2fc}
+body.light .auth-box{background:#fff}
+body.light .intro-container{background:#f4f2fc}
+body.light .toast{background:#1a0f2e;color:#fff}
+body.light .cost-preview{background:rgba(91,33,182,0.1)}
+body.light .unverified-badge{background:rgba(245,158,11,0.2);color:#92400e}
 </style>
 </head>
 <body>
@@ -534,28 +507,11 @@ body.light .mode-tab.active { background: linear-gradient(135deg,#5b21b6,#7c3aed
 <div class="app">
   <!-- CALCULATE -->
 <div class="page active" id="page-calc">
+<div class="page-switcher">
+<button type="button" id="tabHome">🏠 Home</button>
+<button type="button" id="tabPublic" class="active">🔌 Public DC</button>
+</div>
 <h1>⚡ Calculate</h1>
-
-<div class="sticky-mode-bar" id="stickyModeBar">
-<div class="smb-left">
-<span class="smb-icon" id="smbIcon">💰</span>
-<span>
-<span class="smb-mode" id="smbMode">Cost</span>
-<span class="smb-value" id="smbValue">LKR 0.00</span>
-</span>
-</div>
-<span class="smb-arrow">▶</span>
-</div>
-
-<div class="card" style="padding:14px 16px">
-<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-<span style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--purpleB)">Where are you charging?</span>
-</div>
-<div class="mode-tabs" style="margin-bottom:0;padding:5px">
-<button type="button" class="mode-tab" id="tabHome" style="padding:14px;font-size:0.9rem">🏠 Home</button>
-<button type="button" class="mode-tab active" id="tabPublic" style="padding:14px;font-size:0.9rem">🔌 Public DC</button>
-</div>
-</div>
 
 <div class="card card-overflow-visible">
 <div class="field" style="margin-bottom:14px">
@@ -567,14 +523,12 @@ body.light .mode-tab.active { background: linear-gradient(135deg,#5b21b6,#7c3aed
 </div>
 <div id="calcPhevWarning" class="phev-banner" style="display:none"></div>
 </div>
-<div class="card-title" style="margin-top:4px">What do you want to know?</div>
-<div class="mode-grid" id="modeGrid" style="margin-top:8px;margin-bottom:12px">
-<button type="button" class="mode-card active" data-mode="cost"><span class="mc-icon">💰</span><span>Cost</span></button>
-<button type="button" class="mode-card" data-mode="money"><span class="mc-icon">💵</span><span>Money</span></button>
-<button type="button" class="mode-card" data-mode="time"><span class="mc-icon">⏱️</span><span>Time</span></button>
-<button type="button" class="mode-card" data-mode="duration"><span class="mc-icon">⏳</span><span>Duration</span></button>
+<div class="mode-pills" id="modePills">
+<button type="button" class="mode-pill active" data-mode="cost"><span class="mp-icon">💰</span><span>Cost</span></button>
+<button type="button" class="mode-pill" data-mode="money"><span class="mp-icon">💵</span><span>Money</span></button>
+<button type="button" class="mode-pill" data-mode="time"><span class="mp-icon">⏱️</span><span>Time</span></button>
+<button type="button" class="mode-pill" data-mode="duration"><span class="mp-icon">⏳</span><span>Duration</span></button>
 </div>
-<div class="mode-desc" id="modeDesc">How much will this charge cost?</div>
 </div>
 
 <div class="card">
@@ -610,23 +564,21 @@ body.light .mode-tab.active { background: linear-gradient(135deg,#5b21b6,#7c3aed
 <div id="durationMode2" style="display:none"><div class="field"><label>Charge until (clock time)</label><input type="time" id="untilTime" value="07:00"></div><div class="computed-duration" id="untilComputed">—</div></div>
 </div>
 <div id="taperHint" class="notice-banner" style="display:none"></div>
-</div>
 
-<div class="card">
-<div class="card-title" id="chargingInputsTitle">Public charging details</div>
+<!-- Home/Public inputs merged into this card -->
+<div style="margin-top:18px;padding-top:16px;border-top:1px solid rgba(139,92,246,0.15)">
 <div id="homeFields" style="display:none">
 <div class="field" id="homeRateSelectField"><label>Home rate</label><select id="homeRateSelect"><option value="">— Choose tariff —</option><optgroup label="CEB Domestic"><option value="30">CEB 0–30 units — 30</option><option value="37">CEB 31–60 units — 37</option><option value="42">CEB 61–90 units — 42</option><option value="50">CEB 91–120 units — 50</option><option value="65">CEB 121–180 units — 65</option><option value="85">CEB >180 units — 85</option></optgroup><optgroup label="LECO Domestic"><option value="32">LECO 0–30 units — 32</option><option value="39">LECO 31–60 units — 39</option><option value="44">LECO 61–90 units — 44</option><option value="52">LECO 91–120 units — 52</option><option value="68">LECO 121–180 units — 68</option><option value="88">LECO >180 units — 88</option></optgroup><optgroup label="Other"><option value="custom">Custom — Enter manually</option></optgroup></select></div>
 <div class="field" id="homeRateField"><label>Rate per kWh (LKR)</label><input type="number" id="homeRate" value="42" step="0.01" min="0" inputmode="decimal"></div>
 <div class="field"><label>Charger power (kW)</label><select id="homeChargerPower"><option value="2.3">2.3 kW standard outlet</option><option value="3.3">3.3 kW standard outlet</option><option value="7" selected>7 kW AC wallbox (default)</option><option value="11">11 kW AC wallbox</option><option value="22">22 kW AC wallbox</option><option value="custom">Custom — Enter manually</option></select></div>
 <div class="field" id="customHomePowerField" style="display:none"><label>Custom power (kW)</label><input type="number" id="customHomePower" value="7" step="0.1" min="0.5" max="50" inputmode="decimal"></div>
-<div class="field"><label>Charging efficiency (%)</label><input type="number" id="homeEfficiency" value="88" step="1" min="50" max="100" inputmode="numeric"></div>
 </div>
 <div id="publicFields">
 <div class="field" id="quickRateField"><label>Network / station</label><select id="quickRate"><option value="">— Loading networks… —</option></select></div>
 <div class="field" id="publicRateField"><label>Rate per kWh (LKR)</label><input type="number" id="rate" value="150" step="0.01" min="0" inputmode="decimal"></div>
 <div class="field"><label>Charger power (kW)</label><select id="chargerPower"><option value="30" selected>DC 30 kW</option><option value="50">DC 50 kW</option><option value="60">DC 60 kW</option><option value="100">DC 100 kW</option><option value="120">DC 120 kW</option><option value="150">DC 150 kW</option><option value="180">DC 180 kW</option><option value="240">DC 240 kW</option><option value="custom">Custom — Enter manually</option></select></div>
 <div class="field" id="customPublicPowerField" style="display:none"><label>Custom power (kW)</label><input type="number" id="customPublicPower" value="30" step="0.1" min="0.5" max="500" inputmode="decimal"></div>
-<div class="field"><label>Charging efficiency (%)</label><input type="number" id="efficiency" value="90" step="1" min="50" max="100" inputmode="numeric"></div>
+</div>
 </div>
 </div>
 
@@ -636,10 +588,18 @@ body.light .mode-tab.active { background: linear-gradient(135deg,#5b21b6,#7c3aed
 <div class="result-grid"><div class="result-tile"><div class="tile-icon">⚡</div><div class="tile-val" id="tile1">0.00</div><div class="tile-lbl" id="tile1Lbl">kWh</div></div><div class="result-tile"><div class="tile-icon">⏱️</div><div class="tile-val" id="tile2">—</div><div class="tile-lbl" id="tile2Lbl">Time</div></div><div class="result-tile"><div class="tile-icon">🛣️</div><div class="tile-val" id="tile3">—</div><div class="tile-lbl" id="tile3Lbl">Range</div></div></div>
 <div id="resultDetail" style="font-size:0.8rem;color:var(--dim);text-align:center;margin-top:12px;line-height:1.6"></div>
 <div id="moneyWarn" class="notice-banner" style="display:none;margin-top:14px"></div>
-<div class="energy-flow" id="energyFlow"><div class="ef-labels"><span id="efFrom">20%</span><span id="efTo">80%</span></div><div class="ef-track"><div class="ef-fill" id="efFillBefore" style="width:20%"></div><div class="ef-added" id="efFillAdded" style="left:20%;width:60%"></div></div><div class="ef-legend" id="efLegend">Adding 18.0 kWh</div></div>
 <div style="margin-top:16px"><button type="button" id="saveBtn" style="width:100%;padding:15px;border-radius:14px;border:none;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;box-shadow:0 4px 20px rgba(139,92,246,0.4)">💾 Save this charge</button></div>
 </div>
 
+<!-- Timer (expanded, not collapsed) -->
+<div class="card">
+<div class="card-title">⏰ Set a charging reminder</div>
+<p style="font-size:0.8rem;color:var(--dim);margin-bottom:12px;line-height:1.6">Get a notification so you don't overstay.</p>
+<div class="presets"><button type="button" class="preset-btn" data-reminder="30">30 min</button><button type="button" class="preset-btn" data-reminder="45">45 min</button><button type="button" class="preset-btn" data-reminder="60">1 hour</button><button type="button" class="preset-btn" data-reminder="120">2 hours</button><button type="button" class="preset-btn" data-reminder="auto">Based on estimate</button></div>
+<div class="field" style="margin-top:14px"><label>Or remind me at a specific time</label><div style="display:flex;gap:8px"><input type="time" id="reminderTime" style="flex:1"><button type="button" class="preset-btn" id="reminderAtBtn" style="flex-shrink:0">Set</button></div></div>
+</div>
+
+<!-- Compare (collapsed, at very bottom) -->
 <div class="card" id="compareCard">
 <button type="button" class="adv-toggle" id="compareToggle"><span class="arrow" id="compareArrow">▶</span> Compare with other options</button>
 <div id="compareContent" style="display:none;padding-top:14px;border-top:1px solid rgba(139,92,246,0.15);margin-top:8px">
@@ -649,14 +609,6 @@ body.light .mode-tab.active { background: linear-gradient(135deg,#5b21b6,#7c3aed
 </div>
 </div>
 
-<div class="card">
-<button type="button" class="adv-toggle" id="timerToggle"><span class="arrow" id="timerArrow">▶</span> Set a charging reminder</button>
-<div id="timerContent" style="display:none;padding-top:14px;border-top:1px solid rgba(139,92,246,0.15);margin-top:8px">
-<p style="font-size:0.8rem;color:var(--dim);margin-bottom:12px;line-height:1.6">Get a notification so you don't overstay.</p>
-<div class="presets"><button type="button" class="preset-btn" data-reminder="30">30 min</button><button type="button" class="preset-btn" data-reminder="45">45 min</button><button type="button" class="preset-btn" data-reminder="60">1 hour</button><button type="button" class="preset-btn" data-reminder="120">2 hours</button><button type="button" class="preset-btn" data-reminder="auto">Based on estimate</button></div>
-<div class="field" style="margin-top:14px"><label>Or remind me at a specific time</label><div style="display:flex;gap:8px"><input type="time" id="reminderTime" style="flex:1"><button type="button" class="preset-btn" id="reminderAtBtn" style="flex-shrink:0">Set</button></div></div>
-</div>
-</div>
 </div>
 
 <!-- HISTORY -->
@@ -706,7 +658,7 @@ body.light .mode-tab.active { background: linear-gradient(135deg,#5b21b6,#7c3aed
 <div class="card"><div class="card-title">Default vehicle</div><div class="field" style="margin-bottom:0"><label>Pre-selected on launch</label><select id="settingsDefaultVehicle"><option value="">— None —</option></select></div></div>
 <div class="card"><div class="card-title">Appearance</div><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:0.85rem;color:var(--dim);font-weight:500">Light theme</span><button type="button" id="themeToggle" style="width:60px;height:32px;border-radius:16px;border:1px solid rgba(139,92,246,0.4);background:rgba(139,92,246,0.15);cursor:pointer;position:relative;transition:background 0.3s;font-family:inherit"><span id="themeKnob" style="position:absolute;top:2px;left:2px;width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#8b5cf6);transition:left 0.3s"></span></button></div></div>
 <div class="card"><div class="card-title">My Vehicles</div><div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button type="button" id="addVehicleBtn" style="background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;border:none;padding:8px 14px;border-radius:10px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:inherit">➕ Add</button></div><div id="garageList"></div></div>
-<div class="card"><button type="button" class="adv-toggle" id="advancedSettingsToggle"><span class="arrow" id="advancedSettingsArrow">▶</span> Advanced rates & fees</button><div id="advancedSettingsContent" style="display:none;padding-top:16px;border-top:1px solid rgba(139,92,246,0.15);margin-top:8px"><div class="field"><label>Session fee (LKR, optional)</label><input type="number" id="sessionFee" value="0" step="1" min="0" inputmode="numeric"></div><div class="field"><label>Tax / VAT (%, optional)</label><input type="number" id="tax" value="0" step="0.1" min="0" inputmode="decimal"></div></div></div>
+<div class="card"><button type="button" class="adv-toggle" id="advancedSettingsToggle"><span class="arrow" id="advancedSettingsArrow">▶</span> Advanced rates & fees</button><div id="advancedSettingsContent" style="display:none;padding-top:16px;border-top:1px solid rgba(139,92,246,0.15);margin-top:8px"><div class="field"><label>Session fee (LKR, optional)</label><input type="number" id="sessionFee" value="0" step="1" min="0" inputmode="numeric"></div><div class="field"><label>Tax / VAT (%, optional)</label><input type="number" id="tax" value="0" step="0.1" min="0" inputmode="decimal"></div><div class="field"><label>Charging efficiency (%)</label><input type="number" id="efficiency" value="90" step="1" min="50" max="100" inputmode="numeric"></div><div class="field"><label>Home charging efficiency (%)</label><input type="number" id="homeEfficiency" value="88" step="1" min="50" max="100" inputmode="numeric"></div></div></div>
 <div class="card"><div class="card-title">Fuel prices (for comparison)</div><div class="field"><label>Petrol 92 Octane (LKR/L)</label><input type="number" id="setFuel92" value="424" step="0.01" min="0" inputmode="decimal"></div><div class="field"><label>Petrol 95 Octane (LKR/L)</label><input type="number" id="setFuel95" value="490" step="0.01" min="0" inputmode="decimal"></div><div class="field"><label>Auto Diesel (LKR/L)</label><input type="number" id="setDiesel" value="397" step="0.01" min="0" inputmode="decimal"></div><div class="field"><label>Petrol car efficiency (km/L)</label><input type="number" id="setPetrolKm" value="12" step="0.1" min="1" inputmode="decimal"></div></div>
 <div class="card"><div class="card-title">Change password</div><div class="field"><label>Current password</label><input type="password" id="cpCurrent" autocomplete="current-password"></div><div class="field"><label>New password (min 6 chars)</label><input type="password" id="cpNew" autocomplete="new-password"></div><div class="field"><label>Confirm new password</label><input type="password" id="cpConfirm" autocomplete="new-password"></div><button type="button" id="cpBtn" style="width:100%;padding:14px;border-radius:12px;border:none;font-size:0.95rem;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff">Update Password</button><div id="cpMsg" style="margin-top:12px;font-size:0.82rem;text-align:center"></div></div>
 <div class="card"><button type="button" class="adv-toggle" id="adminToggle"><span class="arrow" id="adminArrow">▶</span> Admin</button><div id="adminContent" style="display:none;padding-top:16px;border-top:1px solid rgba(139,92,246,0.15);margin-top:8px"><button type="button" id="rerunIntro" style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(139,92,246,0.3);background:rgba(139,92,246,0.1);color:var(--purpleB);font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:8px">🔄 Show intro slides again</button></div></div>
@@ -1576,12 +1528,10 @@ $('tabHome').classList.add('active');
 $('tabPublic').classList.remove('active');
 $('homeFields').style.display='block';
 $('publicFields').style.display='none';
-$('chargingInputsTitle').textContent='Home charging details';
-var moneyBtn=document.querySelector('.mode-card[data-mode="money"]');
+var moneyBtn=document.querySelector('.mode-pill[data-mode="money"]');
 if(moneyBtn)moneyBtn.style.display='none';
 var moneyModalBtn=document.querySelector('.mode-modal-card[data-mode="money"]');
 if(moneyModalBtn)moneyModalBtn.style.display='none';
-$('modeGrid').classList.add('three-up');
 if(currentCalcMode==='money'){setCalcMode('cost');}
 $('durationPresetsHome').style.display='flex';
 $('durationPresetsPublic').style.display='none';
@@ -1591,12 +1541,10 @@ $('tabPublic').classList.add('active');
 $('tabHome').classList.remove('active');
 $('homeFields').style.display='none';
 $('publicFields').style.display='block';
-$('chargingInputsTitle').textContent='Public charging details';
-var moneyBtn=document.querySelector('.mode-card[data-mode="money"]');
+var moneyBtn=document.querySelector('.mode-pill[data-mode="money"]');
 if(moneyBtn)moneyBtn.style.display='flex';
 var moneyModalBtn=document.querySelector('.mode-modal-card[data-mode="money"]');
 if(moneyModalBtn)moneyModalBtn.style.display='flex';
-$('modeGrid').classList.remove('three-up');
 $('durationPresetsHome').style.display='none';
 $('durationPresetsPublic').style.display='flex';
 $('durTimeToggle').style.display='none';
@@ -1615,7 +1563,7 @@ $('publicRateField').style.display=isTime?'none':'block';
 }
 
 // ============ CALC MODE ============
-document.querySelectorAll('.mode-card').forEach(function(btn){
+document.querySelectorAll('.mode-pill').forEach(function(btn){
 btn.addEventListener('click',function(){setCalcMode(this.dataset.mode)});
 });
 document.querySelectorAll('.mode-modal-card').forEach(function(btn){
@@ -1624,9 +1572,8 @@ btn.addEventListener('click',function(){setCalcMode(this.dataset.mode);$('modeMo
 
 function setCalcMode(m){
 currentCalcMode=m;
-document.querySelectorAll('.mode-card').forEach(function(b){b.classList.toggle('active',b.dataset.mode===m)});
+document.querySelectorAll('.mode-pill').forEach(function(b){b.classList.toggle('active',b.dataset.mode===m)});
 document.querySelectorAll('.mode-modal-card').forEach(function(b){b.classList.toggle('active',b.dataset.mode===m)});
-$('modeDesc').textContent=modeDescriptions[m];
 var targetVis=(m==='cost'||m==='time');
 $('targetField').style.display=targetVis?'block':'none';
 $('presetsRow').style.display=targetVis?'flex':'none';
@@ -1639,17 +1586,9 @@ calc();savePrefs();
 }
 
 // ============ STICKY MODE BAR ============
-$('stickyModeBar').addEventListener('click',function(){
-$('modeModal').classList.add('show');
-});
 $('modeModalClose').addEventListener('click',function(){
 $('modeModal').classList.remove('show');
 });
-function updateStickyBar(mode,valueText){
-$('smbIcon').textContent=modeIcons[mode]||'💰';
-$('smbMode').textContent=mode.charAt(0).toUpperCase()+mode.slice(1)+' mode';
-$('smbValue').textContent=valueText;
-}
 
 // ============ DURATION SUBMODE ============
 $('durToggleDuration').addEventListener('click',function(){setDurationSubMode('duration')});
@@ -1689,7 +1628,6 @@ if(localStorage.getItem('evAdminOpen')==='1'){$('adminContent').style.display='b
 }catch(e){}
 
 $('compareToggle').addEventListener('click',function(){this.classList.toggle('open');var c=$('compareContent'),a=$('compareArrow');if(c.style.display==='none'){c.style.display='block';a.style.transform='rotate(90deg)'}else{c.style.display='none';a.style.transform='rotate(0)'}});
-$('timerToggle').addEventListener('click',function(){this.classList.toggle('open');var c=$('timerContent'),a=$('timerArrow');if(c.style.display==='none'){c.style.display='block';a.style.transform='rotate(90deg)'}else{c.style.display='none';a.style.transform='rotate(0)'}});
 
 document.addEventListener('click',function(e){if(e.target.classList&&e.target.classList.contains('info-i')){var k=e.target.dataset.info;var i=infos[k];if(i){$('infoTitle').textContent=i.title;$('infoText').textContent=i.text;$('infoModal').classList.add('show')}}});
 $('infoOk').addEventListener('click',function(){$('infoModal').classList.remove('show')});
@@ -1780,7 +1718,6 @@ detail='Billed '+billed.toFixed(2)+' kWh at LKR '+rate.toFixed(2)+'/kWh'+(fee>0?
 $('moneyWarn').style.display='none';
 addedKwh=needed;
 result={mode:'cost',capacity:capacity,cur:cur,tgt:tgt,rate:rate,needed:needed,billed:billed,total:total,vehicleKey:getDefaultVehicle(),vehicleName:vehicle?vehicle.name:'—'};
-updateStickyBar('cost',lkr(total));
 }
 else if(currentCalcMode==='money'){
 var money=parseFloat($('moneyAmount').value)||0;
@@ -1809,7 +1746,6 @@ warn.innerHTML='⚠️ LKR '+money.toFixed(0)+' is more than a full charge. You\
 detail='Spending LKR '+money.toFixed(0)+' at LKR '+rate.toFixed(2)+'/kWh';
 addedKwh=actualUsable;
 result={mode:'money',capacity:capacity,cur:cur,tgt:actualPercent,rate:rate,needed:actualUsable,billed:actualBilled,total:money,vehicleKey:getDefaultVehicle(),vehicleName:vehicle?vehicle.name:'—',moneyRequested:true};
-updateStickyBar('money',lkr(money));
 }
 else if(currentCalcMode==='time'){
 var needed3=(tgt>cur)?((tgt-cur)/100)*capacity:0;
@@ -1825,7 +1761,6 @@ detail='At '+eff.effPower.toFixed(1)+' kW effective rate';
 $('moneyWarn').style.display='none';
 addedKwh=needed3;
 result={mode:'time',capacity:capacity,cur:cur,tgt:tgt,rate:rate,needed:needed3,total:0,vehicleKey:getDefaultVehicle(),vehicleName:vehicle?vehicle.name:'—'};
-updateStickyBar('time',value);
 }
 else if(currentCalcMode==='duration'){
 var mins=getDurationMinutes();
@@ -1856,7 +1791,6 @@ var durationText=mins>=60?(Math.floor(mins/60)+'h '+(mins%60)+'m'):(mins+' min')
 detail='Charging for '+durationText+' at '+eff.effPower.toFixed(1)+' kW'+(fee>0?' + '+lkr(fee)+' fee':'')+(taxPct>0?' + '+taxPct+'% tax':'');
 addedKwh=actualUsable2;
 result={mode:'duration',capacity:capacity,cur:cur,tgt:actualPercent2,rate:rate,needed:actualUsable2,billed:billed2,total:cost2,vehicleKey:getDefaultVehicle(),vehicleName:vehicle?vehicle.name:'—'};
-updateStickyBar('duration',value);
 }
 
 $('resultIcon').textContent=modeIcons[currentCalcMode]||'💰';
@@ -1866,13 +1800,6 @@ $('tile1').textContent=t1;$('tile1Lbl').textContent=t1L;
 $('tile2').textContent=t2;$('tile2Lbl').textContent=t2L;
 $('tile3').textContent=t3;$('tile3Lbl').textContent=t3L;
 $('resultDetail').textContent=detail;
-
-$('efFrom').textContent=result.cur.toFixed(0)+'%';
-$('efTo').textContent=result.tgt.toFixed(0)+'%';
-$('efFillBefore').style.width=result.cur+'%';
-$('efFillAdded').style.left=result.cur+'%';
-$('efFillAdded').style.width=Math.max(0,(result.tgt-result.cur))+'%';
-$('efLegend').textContent='Adding '+addedKwh.toFixed(1)+' kWh';
 
 if(tgt>80&&(currentCalcMode==='cost'||currentCalcMode==='time'||currentCalcMode==='duration')){
 var msg;
@@ -2025,7 +1952,7 @@ try{localStorage.setItem('evPublicPower',this.value)}catch(e){}
 if(this.value==='custom'){$('customPublicPowerField').style.display='block';$('customPublicPower').focus()}else{$('customPublicPowerField').style.display='none'}
 calc();savePrefs();
 });
-['setFuel92','setFuel95','setDiesel','setPetrolKm','sessionFee','tax'].forEach(function(id){$(id).addEventListener('change',function(){savePrefs();calc()})});
+['setFuel92','setFuel95','setDiesel','setPetrolKm','sessionFee','tax','efficiency','homeEfficiency'].forEach(function(id){$(id).addEventListener('change',function(){savePrefs();calc()})});
 
 // ============ ADD PREVIOUS CHARGE ============
 $('addPastBtn').addEventListener('click',function(){
