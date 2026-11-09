@@ -57,10 +57,11 @@ body.light h1{background:none;-webkit-text-fill-color:initial;color:#5b21b6}
 .field-hdr .hdr-right{display:flex;align-items:center;gap:8px}
 input[type=range]{-webkit-appearance:none;width:100%;height:8px;border-radius:4px;background:linear-gradient(90deg,#ef4444 0%,#f59e0b 40%,#10b981 70%,#22c55e 100%);outline:none;display:block}
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;background:#fff;cursor:pointer;border:3px solid var(--purple);box-shadow:0 0 12px rgba(139,92,246,0.8),0 2px 8px rgba(0,0,0,0.5)}
-input[type=number],input[type=email],input[type=password],input[type=text],input[type=time],select{width:100%;padding:13px 16px;border-radius:12px;border:1px solid rgba(139,92,246,0.2);background:var(--input-bg);color:var(--text);font-size:1rem;outline:none;font-family:inherit}
-input:focus,select:focus,input[type=time]:focus{border-color:var(--purpleB);box-shadow:0 0 0 3px rgba(139,92,246,0.15)}
+input[type=number],input[type=email],input[type=password],input[type=text],input[type=time],input[type=datetime-local],select,textarea{width:100%;padding:13px 16px;border-radius:12px;border:1px solid rgba(139,92,246,0.2);background:var(--input-bg);color:var(--text);font-size:1rem;outline:none;font-family:inherit}
+input:focus,select:focus,input[type=time]:focus,input[type=datetime-local]:focus,textarea:focus{border-color:var(--purpleB);box-shadow:0 0 0 3px rgba(139,92,246,0.15)}
 input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 input[type=number]{-moz-appearance:textfield}
+textarea{resize:vertical;min-height:70px}
 select{-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath fill='%23a78bfa' d='M7 10L2 5h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:40px}
 select optgroup{background:#1e1b4b;color:var(--purpleB)}
 select option{background:#120a24;color:#fff}
@@ -178,6 +179,7 @@ body.light .result-tile .tile-val{background:none;-webkit-text-fill-color:initia
 .vehicle-card .vc-actions{position:absolute;top:10px;right:10px;display:flex;gap:4px}
 .vehicle-card .vc-actions button{background:none;border:none;cursor:pointer;padding:4px 6px;font-size:0.9rem;color:var(--faint);border-radius:6px}
 .vehicle-card .vc-active-badge{display:inline-block;background:rgba(46,204,113,0.2);color:#2ecc71;font-size:0.6rem;font-weight:800;padding:2px 8px;border-radius:6px;margin-left:6px;text-transform:uppercase;letter-spacing:0.5px}
+.manual-badge{display:inline-block;background:rgba(245,158,11,0.2);color:#f59e0b;font-size:0.6rem;font-weight:800;padding:2px 8px;border-radius:6px;margin-left:6px;text-transform:uppercase;letter-spacing:0.5px;border:1px solid rgba(245,158,11,0.4)}
 .station-status-badge{display:inline-flex;align-items:center;gap:4px;font-size:0.7rem;padding:4px 10px;border-radius:8px;font-weight:800;margin-bottom:8px}
 .station-status-badge.working{background:rgba(46,204,113,0.2);color:#2ecc71;border:1px solid rgba(46,204,113,0.4)}
 .station-status-badge.slow{background:rgba(245,158,11,0.2);color:#fbbf24;border:1px solid rgba(245,158,11,0.4)}
@@ -220,127 +222,63 @@ body.light .big-num .bn-val{background:none;-webkit-text-fill-color:initial;colo
 .time-toggle button{flex:1;padding:10px;border-radius:7px;border:none;background:none;color:var(--faint);font-family:inherit;font-weight:700;font-size:0.8rem;cursor:pointer;transition:all 0.2s}
 .time-toggle button.active{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff}
 .computed-duration{font-size:0.8rem;color:var(--purpleB);font-weight:700;text-align:center;margin-top:10px;line-height:1.5}
+.cost-preview{background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.25);border-radius:10px;padding:12px 14px;margin-top:8px;display:flex;justify-content:space-between;align-items:center}
+.cost-preview .cp-lbl{font-size:0.8rem;color:var(--dim);font-weight:600}
+.cost-preview .cp-val{font-size:1.1rem;font-weight:800;color:var(--purpleB)}
 @media(max-width:480px){body{padding-left:88px;padding-right:12px}.app{max-width:100%}.sidebar{width:72px}.nav-item{width:56px}.nav-icon{font-size:1.2rem}.nav-label{font-size:0.5rem}.big-num .bn-val{font-size:2.2rem}.intro-icon{font-size:3.5rem}.intro-title{font-size:1.3rem}.battery-wrap{flex-direction:column;align-items:stretch;gap:8px}.battery-visual-big{width:100%}.battery-shape{height:28px}.battery-shape::after{display:none}.pct-input{width:68px;font-size:0.9rem}.result-tile .tile-val{font-size:0.9rem}}
 
 /* ============ LIGHT MODE — FULL CONTRAST PASS ============ */
 body.light { color: #1a0f2e; }
-
-/* Cards & structure */
 body.light .card { background: rgba(255,255,255,0.96); border-color: rgba(91,33,182,0.28); }
 body.light .card::before { background: linear-gradient(90deg,transparent,rgba(91,33,182,0.35),transparent); }
 body.light .card-title { color: #5b21b6; }
 body.light .card-title::before { background: #5b21b6; box-shadow: 0 0 6px rgba(91,33,182,0.6); }
 body.light h1 { color: #4c1d95; background: none; -webkit-text-fill-color: initial; }
-
-/* Labels & body text */
-body.light .field > label,
-body.light .field-hdr .lbl,
-body.light .field label { color: #2a1a4a; font-weight: 600; }
+body.light .field > label,body.light .field-hdr .lbl,body.light .field label { color: #2a1a4a; font-weight: 600; }
 body.light .hint { color: #5a4a8a; }
 body.light .mode-desc { color: #4a3a7a; }
-
-/* Gradient text → solid readable */
-body.light .big-num .bn-val,
-body.light .result-tile .tile-val,
-body.light .summary-card .sc-val,
-body.light .stat .num,
-body.light .history-item .cost,
-body.light .modal-box h3 { background: none; -webkit-text-fill-color: initial; }
+body.light .big-num .bn-val,body.light .result-tile .tile-val,body.light .summary-card .sc-val,body.light .stat .num,body.light .history-item .cost,body.light .modal-box h3 { background: none; -webkit-text-fill-color: initial; }
 body.light .big-num .bn-val { color: #4c1d95; }
 body.light .result-tile .tile-val { color: #5b21b6; }
 body.light .summary-card .sc-val { color: #5b21b6; }
 body.light .history-item .cost { color: #5b21b6; }
 body.light .modal-box h3 { color: #5b21b6; }
-
-/* Small labels */
-body.light .big-num .bn-lbl,
-body.light .result-tile .tile-lbl,
-body.light .summary-card .sc-lbl,
-body.light .compare-bar-hdr .name,
-body.light .history-chart-title,
-body.light .history-item .date { color: #3a2a6a; }
+body.light .big-num .bn-lbl,body.light .result-tile .tile-lbl,body.light .summary-card .sc-lbl,body.light .compare-bar-hdr .name,body.light .history-chart-title,body.light .history-item .date { color: #3a2a6a; }
 body.light .compare-bar-hdr .cost { color: #5b21b6; font-weight: 800; }
-
-/* Info icon */
 body.light .info-i { background: rgba(91,33,182,0.22); color: #5b21b6; border: 1px solid rgba(91,33,182,0.35); }
-
-/* Mode cards */
 body.light .mode-card { background: rgba(91,33,182,0.12); color: #2a1a4a; border-color: rgba(91,33,182,0.35); }
-body.light .mode-card:hover { background: rgba(91,33,182,0.18); }
 body.light .mode-card.active { background: linear-gradient(135deg,#5b21b6,#7c3aed); color: #fff; border-color: transparent; box-shadow: 0 4px 16px rgba(91,33,182,0.35); }
-
-/* Mode tabs */
 body.light .mode-tabs { background: rgba(91,33,182,0.08); border-color: rgba(91,33,182,0.2); }
 body.light .mode-tab { color: #3a2a6a; }
 body.light .mode-tab.active { background: linear-gradient(135deg,#5b21b6,#7c3aed); color: #fff; box-shadow: 0 4px 12px rgba(91,33,182,0.35); }
-
-/* Time sub-toggle */
 body.light .time-toggle { background: rgba(91,33,182,0.08); border-color: rgba(91,33,182,0.2); }
 body.light .time-toggle button { color: #3a2a6a; }
 body.light .time-toggle button.active { background: linear-gradient(135deg,#5b21b6,#7c3aed); color: #fff; }
 body.light .computed-duration { color: #5b21b6; }
-
-/* Preset buttons */
 body.light .preset-btn { background: rgba(91,33,182,0.1); color: #5b21b6; border-color: rgba(91,33,182,0.35); }
-body.light .preset-btn:active { background: rgba(91,33,182,0.22); }
-
-/* Advanced toggles */
 body.light .adv-toggle { color: #5b21b6; }
-body.light .adv-toggle .arrow { color: #5b21b6; }
-
-/* Primary buttons */
-body.light #saveBtn,
-body.light .auth-btn,
-body.light .intro-next { background: linear-gradient(135deg,#5b21b6,#7c3aed); color: #fff; }
-
-/* Sliders — CRITICAL FIX */
-body.light input[type=range] {
-  background: linear-gradient(90deg,#dc2626 0%,#d97706 40%,#059669 70%,#16a34a 100%);
-  box-shadow: inset 0 0 0 1px rgba(91,33,182,0.3), 0 1px 4px rgba(91,33,182,0.15);
-  height: 10px;
-}
-body.light input[type=range]::-webkit-slider-thumb {
-  border-color: #5b21b6;
-  border-width: 3px;
-  box-shadow: 0 0 0 3px rgba(91,33,182,0.18), 0 2px 6px rgba(0,0,0,0.3);
-}
-
-/* Battery visual */
+body.light #saveBtn,body.light .auth-btn,body.light .intro-next { background: linear-gradient(135deg,#5b21b6,#7c3aed); color: #fff; }
+body.light input[type=range] { background: linear-gradient(90deg,#dc2626 0%,#d97706 40%,#059669 70%,#16a34a 100%); box-shadow: inset 0 0 0 1px rgba(91,33,182,0.3), 0 1px 4px rgba(91,33,182,0.15); height: 10px; }
+body.light input[type=range]::-webkit-slider-thumb { border-color: #5b21b6; border-width: 3px; box-shadow: 0 0 0 3px rgba(91,33,182,0.18), 0 2px 6px rgba(0,0,0,0.3); }
 body.light .battery-shape { border-color: #5b21b6; background: #fff; }
 body.light .battery-shape::after { background: #5b21b6; }
 body.light .battery-pct { color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.7), 0 0 2px rgba(0,0,0,0.5); }
-
-/* Inputs */
-body.light input[type=number],
-body.light input[type=email],
-body.light input[type=password],
-body.light input[type=text],
-body.light input[type=time],
-body.light select { background: #fff; color: #1a0f2e; border-color: rgba(91,33,182,0.35); }
+body.light input[type=number],body.light input[type=email],body.light input[type=password],body.light input[type=text],body.light input[type=time],body.light input[type=datetime-local],body.light select,body.light textarea { background: #fff; color: #1a0f2e; border-color: rgba(91,33,182,0.35); }
 body.light input::placeholder { color: #8a7ab0; }
 body.light select option { background: #fff; color: #1a0f2e; }
 body.light select optgroup { background: #f4f2fc; color: #5b21b6; }
 body.light .pct-input { background: rgba(91,33,182,0.12); border-color: rgba(91,33,182,0.4); color: #1a0f2e; }
-body.light input:focus,
-body.light select:focus,
-body.light input[type=time]:focus,
-body.light .pct-input:focus { border-color: #5b21b6; box-shadow: 0 0 0 3px rgba(91,33,182,0.22); }
-
-/* Compare bars */
+body.light input:focus,body.light select:focus,body.light input[type=time]:focus,body.light input[type=datetime-local]:focus,body.light .pct-input:focus,body.light textarea:focus { border-color: #5b21b6; box-shadow: 0 0 0 3px rgba(91,33,182,0.22); }
 body.light .compare-bar-track { background: rgba(91,33,182,0.15); box-shadow: inset 0 1px 2px rgba(91,33,182,0.15); }
 body.light .compare-bar-fill { background: linear-gradient(90deg,#7c3aed,#5b21b6); }
 body.light .compare-bar-fill.best { background: linear-gradient(90deg,#16a34a,#15803d); }
 body.light .best-badge { background: rgba(22,163,74,0.2); color: #15803d; border: 1px solid rgba(22,163,74,0.4); }
-
-/* Energy flow */
 body.light .energy-flow { background: rgba(255,255,255,0.95); border-color: rgba(91,33,182,0.25); }
 body.light .energy-flow .ef-labels { color: #2a1a4a; font-weight: 700; }
 body.light .energy-flow .ef-track { background: rgba(91,33,182,0.15); box-shadow: inset 0 1px 2px rgba(91,33,182,0.15); }
 body.light .energy-flow .ef-fill { background: rgba(91,33,182,0.35); }
 body.light .energy-flow .ef-added { background: linear-gradient(90deg,#5b21b6,#7c3aed); }
 body.light .energy-flow .ef-legend { color: #3a2a6a; font-weight: 600; }
-
-/* History */
 body.light .history-item { background: rgba(255,255,255,0.95); border-color: rgba(91,33,182,0.22); border-left-color: #5b21b6; }
 body.light .history-item .detail { color: #3a2a6a; }
 body.light .history-item .detail span { color: #1a0f2e; }
@@ -348,47 +286,27 @@ body.light .history-item .hi-edit-hint { color: #5a4a8a; }
 body.light .history-chart .hc-bar { background: linear-gradient(180deg,#7c3aed,#5b21b6); }
 body.light .history-chart .hc-bar.best { background: linear-gradient(180deg,#22c55e,#15803d); }
 body.light .history-chart-labels { color: #3a2a6a; font-weight: 600; }
-
-/* Stats in history */
 body.light #historyStats > div { background: #f4f2fc; border-color: rgba(91,33,182,0.25); }
-body.light #historyStats > div > div:first-child { color: #5b21b6; }
-body.light #historyStats > div > div:last-child { color: #5a4a8a; }
-
-/* Notices */
 body.light .notice-banner { background: rgba(245,158,11,0.18); color: #78350f; border-color: rgba(245,158,11,0.55); font-weight: 600; }
-
-/* Summary card */
 body.light .summary-card { background: linear-gradient(135deg,rgba(91,33,182,0.1),rgba(124,58,237,0.08)); border-color: rgba(91,33,182,0.35); }
-
-/* Sidebar */
 body.light .sidebar { background: rgba(255,255,255,0.96); border-right-color: rgba(91,33,182,0.25); box-shadow: 4px 0 20px rgba(91,33,182,0.08); }
 body.light .sidebar::after { background: linear-gradient(180deg,transparent,rgba(91,33,182,0.35),transparent); }
 body.light .nav-item { color: #4a3a7a; }
 body.light .nav-item.active { color: #5b21b6; background: rgba(91,33,182,0.15); }
 body.light .nav-item.active .nav-icon { filter: none; }
-
-/* Modals */
 body.light .modal-overlay { background: rgba(26,15,46,0.5); }
 body.light .modal-box { background: #fff; border-color: rgba(91,33,182,0.28); box-shadow: 0 20px 60px rgba(91,33,182,0.2); }
 body.light .modal-box p { color: #3a2a6a; }
 body.light .modal-actions .m-cancel { color: #4a3a7a; border-color: rgba(91,33,182,0.35); }
-
-/* Vehicle cards */
 body.light .vehicle-card { background: #fff; border-color: rgba(91,33,182,0.22); }
 body.light .vehicle-card .vc-name { color: #1a0f2e; }
 body.light .vehicle-card .vc-specs { color: #4a3a7a; }
 body.light .vehicle-card.active { background: rgba(22,163,74,0.08); border-left-color: #16a34a; }
-body.light .vehicle-card .vc-actions button { color: #7c6ba8; }
 body.light .vehicle-card .vc-active-badge { background: rgba(22,163,74,0.2); color: #15803d; }
-
-/* Empty state */
+body.light .manual-badge { background: rgba(245,158,11,0.25); color: #92400e; border-color: rgba(245,158,11,0.5); }
 body.light .empty-state { background: #faf9ff; border-color: rgba(91,33,182,0.35); }
 body.light .empty-state .es-text { color: #4a3a7a; }
-
-/* Station status badges */
 body.light .station-status-badge.stale { background: rgba(91,33,182,0.1); color: #5a4a8a; border-color: rgba(91,33,182,0.3); }
-
-/* Auth screen */
 body.light .auth-container { background: #f4f2fc; background-image: radial-gradient(circle at 15% 0%,rgba(91,33,182,0.12),transparent 45%),radial-gradient(circle at 85% 100%,rgba(91,33,182,0.12),transparent 45%); }
 body.light .auth-box { background: #fff; border-color: rgba(91,33,182,0.25); }
 body.light .auth-box h1 { color: #4c1d95; }
@@ -398,8 +316,6 @@ body.light .auth-tab { color: #4a3a7a; }
 body.light .auth-tab.active { background: linear-gradient(135deg,#5b21b6,#7c3aed); color: #fff; }
 body.light .link-btn { color: #5b21b6; }
 body.light .auth-notice { color: #5a4a8a; }
-
-/* Intro */
 body.light .intro-container { background: #f4f2fc; background-image: radial-gradient(circle at 15% 0%,rgba(91,33,182,0.12),transparent 45%),radial-gradient(circle at 85% 100%,rgba(91,33,182,0.12),transparent 45%); }
 body.light .intro-title { color: #1a0f2e; }
 body.light .intro-body { color: #3a2a6a; }
@@ -408,10 +324,12 @@ body.light .intro-skip { color: #4a3a7a; border-color: rgba(91,33,182,0.35) !imp
 body.light .intro-dot { background: rgba(91,33,182,0.25); }
 body.light .intro-dot.active { background: #5b21b6; }
 body.light .intro-slide .ob-field label { color: #3a2a6a; }
-
-/* Toast & offline */
 body.light .toast { background: #1a0f2e; color: #fff; border-color: rgba(91,33,182,0.5); }
-body.light .offline-icon { background: #dc2626; color: #fff; }</style>
+body.light .offline-icon { background: #dc2626; color: #fff; }
+body.light .cost-preview { background: rgba(91,33,182,0.1); border-color: rgba(91,33,182,0.35); }
+body.light .cost-preview .cp-lbl { color: #2a1a4a; }
+body.light .cost-preview .cp-val { color: #5b21b6; }
+</style>
 </head>
 <body>
 
@@ -546,6 +464,7 @@ body.light .offline-icon { background: #dc2626; color: #fff; }</style>
 <div class="modal-box">
 <h3>Edit Charge</h3>
 <p style="font-size:0.8rem;color:var(--dim);line-height:1.6;margin-bottom:14px">Adjust values if the actual charge differed from what was saved.</p>
+<div class="field"><label>Date & time</label><input type="datetime-local" id="ehDate"></div>
 <div class="field"><label>From % <span class="hint">(1–100)</span></label><input type="number" id="ehFrom" min="1" max="100" step="1" inputmode="numeric"></div>
 <div class="field"><label>To % <span class="hint">(1–100)</span></label><input type="number" id="ehTo" min="1" max="100" step="1" inputmode="numeric"></div>
 <div class="field"><label>Battery capacity <span class="hint">(kWh)</span></label><input type="number" id="ehCap" step="0.01" min="1" inputmode="decimal"></div>
@@ -554,6 +473,45 @@ body.light .offline-icon { background: #dc2626; color: #fff; }</style>
 <div class="modal-actions">
 <button type="button" class="m-cancel" id="ehCancel">Cancel</button>
 <button type="button" class="m-ok" id="ehSave">Save Changes</button>
+</div>
+</div>
+</div>
+
+<!-- ADD PREVIOUS CHARGE MODAL -->
+<div class="modal-overlay" id="addPastModal">
+<div class="modal-box">
+<h3>Add Previous Charge</h3>
+<p style="font-size:0.8rem;color:var(--dim);line-height:1.6;margin-bottom:14px">Log a charge that happened on a different date.</p>
+<div class="field"><label>Date & time</label><input type="datetime-local" id="apDate"></div>
+<div class="field"><label>Vehicle</label><select id="apVehicle"></select></div>
+<div class="field"><label>Where did you charge?</label>
+<div class="mode-tabs" style="margin-bottom:0">
+<button type="button" class="mode-tab" id="apTabHome">🏠 Home</button>
+<button type="button" class="mode-tab active" id="apTabPublic">🔌 Public</button>
+</div>
+</div>
+<div class="two-field" style="margin-bottom:18px">
+<div class="tf-col">
+<label>From %</label>
+<input type="number" id="apFrom" value="20" min="1" max="100" step="1" inputmode="numeric">
+</div>
+<div class="tf-col">
+<label>To %</label>
+<input type="number" id="apTo" value="80" min="1" max="100" step="1" inputmode="numeric">
+</div>
+</div>
+<div class="field"><label>Battery capacity <span class="hint">(kWh)</span></label><input type="number" id="apCap" value="30.08" step="0.01" min="1" inputmode="decimal"></div>
+<div class="field"><label>Rate per kWh <span class="hint">(LKR)</span></label><input type="number" id="apRate" value="150" step="0.01" min="0" inputmode="decimal"></div>
+<div class="field" id="apTotalField" style="display:none"><label>Total paid <span class="hint">(LKR, optional)</span></label><input type="number" id="apTotal" step="0.01" min="0" inputmode="decimal"><div class="hint">Leave blank to use calculated amount.</div></div>
+<div class="field" id="apFeeField" style="display:none"><label>Session fee <span class="hint">(LKR, optional)</span></label><input type="number" id="apFee" value="0" step="1" min="0" inputmode="numeric"></div>
+<div class="field"><label>Notes <span class="hint">(optional)</span></label><textarea id="apNotes" placeholder="e.g. First time at this charger"></textarea></div>
+<div class="cost-preview">
+<span class="cp-lbl">Calculated cost:</span>
+<span class="cp-val" id="apPreview">LKR 0.00</span>
+</div>
+<div class="modal-actions">
+<button type="button" class="m-cancel" id="apCancel">Cancel</button>
+<button type="button" class="m-ok" id="apSave">Add to History</button>
 </div>
 </div>
 </div>
@@ -722,7 +680,7 @@ body.light .offline-icon { background: #dc2626; color: #fff; }</style>
 <button type="button" class="mode-tab active" id="tabPublic">🔌 Public DC</button>
 </div>
 <div id="homeFields" style="display:none">
-<div class="field"><label>Home rate</label>
+<div class="field" id="homeRateSelectField"><label>Home rate</label>
 <select id="homeRateSelect">
 <option value="">— Choose tariff —</option>
 <optgroup label="CEB Domestic">
@@ -759,7 +717,7 @@ body.light .offline-icon { background: #dc2626; color: #fff; }</style>
 <div class="field"><label>Charging efficiency (%)</label><input type="number" id="homeEfficiency" value="88" step="1" min="50" max="100" inputmode="numeric"></div>
 </div>
 <div id="publicFields">
-<div class="field"><label>Network / station</label>
+<div class="field" id="quickRateField"><label>Network / station</label>
 <select id="quickRate"><option value="">— Loading networks… —</option></select></div>
 <div class="field" id="publicRateField"><label>Rate per kWh (LKR)</label><input type="number" id="rate" value="150" step="0.01" min="0" inputmode="decimal"></div>
 <div class="field"><label>Charger power (kW)</label>
@@ -809,7 +767,7 @@ body.light .offline-icon { background: #dc2626; color: #fff; }</style>
 <div id="compareContent" style="display:none;padding-top:14px;border-top:1px solid rgba(139,92,246,0.15);margin-top:8px">
 <div class="card-title" style="margin-top:8px">Cost at other networks</div>
 <div id="compareBody"></div>
-<div style="margin-top:18px;padding-top:14px;border-top:1px solid rgba(139,92,246,0.1)">
+<div id="petrolSection" style="margin-top:18px;padding-top:14px;border-top:1px solid rgba(139,92,246,0.1)">
 <div class="card-title">vs Petrol Car</div>
 <div id="petrolBody"></div>
 </div>
@@ -841,6 +799,7 @@ body.light .offline-icon { background: #dc2626; color: #fff; }</style>
 <!-- HISTORY -->
 <div class="page" id="page-history">
 <h1>📊 History</h1>
+<button type="button" id="addPastBtn" style="width:100%;padding:14px;margin-bottom:14px;border-radius:14px;border:1px solid rgba(46,204,113,0.4);background:rgba(46,204,113,0.15);color:#2ecc71;font-size:0.95rem;font-weight:700;cursor:pointer;font-family:inherit">➕ Add previous charge</button>
 <div class="card" id="historyChartCard" style="display:none">
 <div class="history-chart-title">Recent Charges</div>
 <div class="history-chart" id="historyChart"></div>
@@ -985,6 +944,10 @@ body.light .offline-icon { background: #dc2626; color: #fff; }</style>
 <div style="padding:10px 0;font-size:0.82rem;color:var(--dim);line-height:1.6"><strong style="color:var(--purpleB)">⏳ Duration</strong> — Enter hours + minutes, or a target clock time. Get % reached and cost.</div>
 </div>
 <div class="card">
+<div class="card-title">Adding a past charge</div>
+<p style="font-size:0.82rem;color:var(--dim);line-height:1.6">On the History page, tap "➕ Add previous charge" to log a charge from another date. For home charging, the cost is computed from your tariff. For public charging, you can enter the exact amount you paid (or leave it blank to compute).</p>
+</div>
+<div class="card">
 <div class="card-title">Quick tips</div>
 <div style="padding:8px 0;font-size:0.82rem;color:var(--dim);line-height:1.6"><strong style="color:var(--purpleB)">⚡ Above 80% is slow</strong> — DC charging tapers off dramatically.</div>
 <div style="padding:8px 0;font-size:0.82rem;color:var(--dim);line-height:1.6"><strong style="color:var(--purpleB)">💰 Home is cheaper</strong> — Typically 3–5× cheaper than public DC.</div>
@@ -1004,6 +967,7 @@ var auth=null,db=null,fbFuncs=null,currentUser=null;
 var currentMode='public';
 var currentCalcMode='cost';
 var durationSubMode='duration';
+var apMode='public'; // add-previous mode
 var userVehicles=[];
 var editingVehicleId=null;
 var editingHistoryId=null;
@@ -1183,6 +1147,41 @@ o.textContent=item.v.name+' — '+item.v.capacity+' kWh';
 grp.appendChild(o);
 });
 isel.appendChild(grp);
+});
+}
+
+// Add-previous vehicle dropdown
+var apsel=$('apVehicle');
+if(apsel){
+apsel.innerHTML='<option value="">— Choose —</option>';
+if(userVehicles.length>0){
+var grp=document.createElement('optgroup');
+grp.label='⭐ My Garage';
+userVehicles.slice().sort(function(a,b){return (a.name||'').localeCompare(b.name||'')}).forEach(function(v){
+var o=document.createElement('option');
+o.value='custom_'+v._docId;
+o.textContent=v.name+' — '+v.capacity+' kWh';
+grp.appendChild(o);
+});
+apsel.appendChild(grp);
+}
+var apByBrand={};
+Object.keys(builtInVehicles).forEach(function(k){
+var v=builtInVehicles[k];
+var brand=brandForName(v.name);
+if(!apByBrand[brand])apByBrand[brand]=[];
+apByBrand[brand].push({key:k,v:v});
+});
+Object.keys(apByBrand).sort().forEach(function(brand){
+var grp=document.createElement('optgroup');
+grp.label=brand;
+apByBrand[brand].sort(function(a,b){return (a.v.name||'').localeCompare(b.v.name||'')}).forEach(function(item){
+var o=document.createElement('option');
+o.value=item.key;
+o.textContent=item.v.name+' — '+item.v.capacity+' kWh';
+grp.appendChild(o);
+});
+apsel.appendChild(grp);
 });
 }
 }
@@ -1690,16 +1689,12 @@ $('tabHome').classList.add('active');
 $('tabPublic').classList.remove('active');
 $('homeFields').style.display='block';
 $('publicFields').style.display='none';
-// CHANGE 1: Hide Money mode in Home
 var moneyBtn=document.querySelector('.mode-card[data-mode="money"]');
 if(moneyBtn)moneyBtn.style.display='none';
 $('modeGrid').classList.add('three-up');
-// If Money was active, switch to Cost
 if(currentCalcMode==='money'){setCalcMode('cost');}
-// CHANGE 2: Toggle duration presets
 $('durationPresetsHome').style.display='flex';
 $('durationPresetsPublic').style.display='none';
-// CHANGE 3: Hide Until time in Home? No - home is where until-time makes sense, keep it
 $('durTimeToggle').style.display='flex';
 }else{
 $('tabPublic').classList.add('active');
@@ -1709,15 +1704,25 @@ $('publicFields').style.display='block';
 var moneyBtn=document.querySelector('.mode-card[data-mode="money"]');
 if(moneyBtn)moneyBtn.style.display='flex';
 $('modeGrid').classList.remove('three-up');
-// CHANGE 2: Toggle duration presets
 $('durationPresetsHome').style.display='none';
 $('durationPresetsPublic').style.display='flex';
-// CHANGE 3: Hide Until time in Public
 $('durTimeToggle').style.display='none';
-// Force back to Duration sub-mode if it was Until
 if(durationSubMode==='until'){setDurationSubMode('duration')}
 }
+// Reapply rate field visibility for current calc mode
+applyModeFieldVisibility();
 calc();savePrefs();
+}
+
+// FIX 1 + 4: Hide rate-related fields in Time mode
+function applyModeFieldVisibility(){
+var isTime=(currentCalcMode==='time');
+// Home: hide tariff dropdown + rate input in Time mode
+$('homeRateSelectField').style.display=isTime?'none':'block';
+$('homeRateField').style.display=isTime?'none':'block';
+// Public: hide network dropdown + rate input in Time mode
+$('quickRateField').style.display=isTime?'none':'block';
+$('publicRateField').style.display=isTime?'none':'block';
 }
 
 // CALC MODE
@@ -1734,12 +1739,9 @@ $('targetField').style.display=targetVis?'block':'none';
 $('presetsRow').style.display=targetVis?'flex':'none';
 $('moneyInputField').style.display=(m==='money')?'block':'none';
 $('durationInputField').style.display=(m==='duration')?'block':'none';
-
-// CHANGE 4: Hide rate fields in Time mode
-var hideRate=(m==='time');
-$('homeRateField').style.display=hideRate?'none':'block';
-$('publicRateField').style.display=hideRate?'none':'block';
-
+applyModeFieldVisibility();
+// FIX 3: Hide petrol comparison in Time mode
+$('petrolSection').style.display=(m==='cost')?'block':'none';
 try{localStorage.setItem('evCalcMode',m)}catch(e){}
 calc();savePrefs();
 }
@@ -1763,7 +1765,7 @@ $('durationMode2').style.display='block';
 calc();
 }
 
-// CHANGE 5: Advanced Settings + Admin toggles
+// ADVANCED / ADMIN toggles
 $('advancedSettingsToggle').addEventListener('click',function(){
 this.classList.toggle('open');
 var c=$('advancedSettingsContent'),a=$('advancedSettingsArrow');
@@ -1782,6 +1784,8 @@ $('timerToggle').addEventListener('click',function(){this.classList.toggle('open
 
 document.addEventListener('click',function(e){if(e.target.classList&&e.target.classList.contains('info-i')){var k=e.target.dataset.info;var i=infos[k];if(i){$('infoTitle').textContent=i.title;$('infoText').textContent=i.text;$('infoModal').classList.add('show')}}});
 $('infoOk').addEventListener('click',function(){$('infoModal').classList.remove('show')});
+
+var infos={}; // populated above but kept for safety
 
 // UTILITY
 function lkr(n){return 'LKR '+n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',')}
@@ -1863,7 +1867,7 @@ t1=needed.toFixed(1);t1L='kWh Added';
 if(needed>0&&eff.effPower>0){var hrs=needed/eff.effPower;var h=Math.floor(hrs);var m=Math.round((hrs-h)*60);if(m===60){h++;m=0}t2=(h>=1?(h+'h '+m+'m'):(m+' min'))}else{t2='—'}
 t2L='Time';
 if(rangeMax>0){t3=((tgt/100)*rangeMax).toFixed(0);t3L='km Range'}else{t3='—';t3L='Range'}
-detail='Billed '+billed.toFixed(2)+' kWh at LKR '+rate.toFixed(2)+'/kWh';
+detail='Billed '+billed.toFixed(2)+' kWh at LKR '+rate.toFixed(2)+'/kWh'+(fee>0?' + '+lkr(fee)+' fee':'')+(taxPct>0?' + '+taxPct+'% tax':'');
 $('moneyWarn').style.display='none';
 addedKwh=needed;
 result={mode:'cost',capacity:capacity,cur:cur,tgt:tgt,rate:rate,needed:needed,billed:billed,total:total,vehicleKey:getDefaultVehicle(),vehicleName:vehicle?vehicle.name:'—'};
@@ -1922,7 +1926,10 @@ var actualPercent2=capped2?100:newPercent2;
 var actualUsable2=(actualPercent2-cur)/100*capacity;
 if(actualUsable2<0)actualUsable2=0;
 var billed2=actualUsable2/(eff.eff/100);
-var cost2=billed2*rate;
+// FIX 2: Apply session fee + tax in Duration mode
+var baseCost2=billed2*rate;
+var taxAmount2=baseCost2*(taxPct/100);
+var cost2=baseCost2+taxAmount2+fee;
 label='Target Reached';
 value=actualPercent2.toFixed(0)+'%';
 t1=actualUsable2.toFixed(1);t1L='kWh Added';
@@ -1936,7 +1943,7 @@ warn2.style.display='block';
 warn2.innerHTML='⚠️ Car hits 100% at about '+(h4>=1?(h4+'h '+m4+'m'):(m4+' min'))+'. Extra time won\'t add charge.';
 }else{warn2.style.display='none'}
 var durationText=mins>=60?(Math.floor(mins/60)+'h '+(mins%60)+'m'):(mins+' min');
-detail='Charging for '+durationText+' at '+eff.effPower.toFixed(1)+' kW';
+detail='Charging for '+durationText+' at '+eff.effPower.toFixed(1)+' kW'+(fee>0?' + '+lkr(fee)+' fee':'')+(taxPct>0?' + '+taxPct+'% tax':'');
 addedKwh=actualUsable2;
 result={mode:'duration',capacity:capacity,cur:cur,tgt:actualPercent2,rate:rate,needed:actualUsable2,billed:billed2,total:cost2,vehicleKey:getDefaultVehicle(),vehicleName:vehicle?vehicle.name:'—'};
 }
@@ -1958,7 +1965,8 @@ $('efFillAdded').style.left=efFrom+'%';
 $('efFillAdded').style.width=Math.max(0,(efTo-efFrom))+'%';
 $('efLegend').textContent='Adding '+addedKwh.toFixed(1)+' kWh';
 
-if(tgt>80&&(currentCalcMode==='cost'||currentCalcMode==='time')){
+// FIX 5: Show taper warning in Duration mode too
+if(tgt>80&&(currentCalcMode==='cost'||currentCalcMode==='time'||currentCalcMode==='duration')){
 var msg;
 if(tgt>=100)msg='⚠️ Charging to 100% — the last 10% takes as long as the first 50%.';
 else if(tgt>=90)msg='⚡ Above 90% is much slower.';
@@ -2102,7 +2110,141 @@ $('homeChargerPower').addEventListener('change',function(){if(this.value==='cust
 $('chargerPower').addEventListener('change',function(){if(this.value==='custom'){$('customPublicPowerField').style.display='block';$('customPublicPower').focus()}else{$('customPublicPowerField').style.display='none'}calc();savePrefs()});
 ['setFuel92','setFuel95','setDiesel','setPetrolKm','sessionFee','tax'].forEach(function(id){$(id).addEventListener('change',function(){savePrefs();calc()})});
 
-// GARAGE
+// ============ ADD PREVIOUS CHARGE ============
+$('addPastBtn').addEventListener('click',function(){
+if(!currentUser){alert('Please sign in.');return}
+var now=new Date();
+var iso=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0')+'T'+String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+$('apDate').value=iso;
+populateVehicleDropdowns();
+$('apVehicle').value=getDefaultVehicle()||'';
+var curCap=getCapacity();
+$('apFrom').value=20;
+$('apTo').value=80;
+$('apCap').value=curCap;
+$('apRate').value=150;
+$('apTotal').value='';
+$('apFee').value='0';
+$('apNotes').value='';
+apMode='public';
+$('apTabHome').classList.remove('active');
+$('apTabPublic').classList.add('active');
+$('apTotalField').style.display='block';
+$('apFeeField').style.display='block';
+updateApPreview();
+$('addPastModal').classList.add('show');
+});
+
+$('apCancel').addEventListener('click',function(){$('addPastModal').classList.remove('show')});
+
+$('apTabHome').addEventListener('click',function(){
+apMode='home';
+$('apTabHome').classList.add('active');
+$('apTabPublic').classList.remove('active');
+$('apTotalField').style.display='none';
+$('apFeeField').style.display='none';
+$('apTotal').value='';
+$('apFee').value='0';
+// Prefill rate from saved home rate
+var hr=$('homeRate').value;
+if(hr)$('apRate').value=hr;
+updateApPreview();
+});
+$('apTabPublic').addEventListener('click',function(){
+apMode='public';
+$('apTabPublic').classList.add('active');
+$('apTabHome').classList.remove('active');
+$('apTotalField').style.display='block';
+$('apFeeField').style.display='block';
+$('apRate').value=150;
+updateApPreview();
+});
+
+$('apVehicle').addEventListener('change',function(){
+var v=getVehicleByKey(this.value);
+if(v)$('apCap').value=v.capacity;
+updateApPreview();
+});
+
+['apFrom','apTo','apCap','apRate','apTotal','apFee'].forEach(function(id){
+var el=$(id);
+if(el){el.addEventListener('input',updateApPreview);el.addEventListener('change',updateApPreview)}
+});
+
+function updateApPreview(){
+var from=parseFloat($('apFrom').value)||0;
+var to=parseFloat($('apTo').value)||0;
+var cap=parseFloat($('apCap').value)||0;
+var rate=parseFloat($('apRate').value)||0;
+var eff=(apMode==='home'?(parseFloat($('homeEfficiency').value)||88):(parseFloat($('efficiency').value)||90));
+if(to<=from||cap<=0||rate<0){$('apPreview').textContent='—';return}
+var needed=((to-from)/100)*cap;
+var billed=needed/(eff/100);
+var computed=billed*rate;
+var fee=parseFloat($('apFee').value)||0;
+if(apMode==='public'){
+var userTotal=parseFloat($('apTotal').value);
+if(userTotal>0){computed=userTotal;}
+}
+computed+=fee;
+$('apPreview').textContent=lkr(computed);
+}
+
+$('apSave').addEventListener('click',function(){
+if(!currentUser){alert('Please sign in.');return}
+var dateVal=$('apDate').value;
+if(!dateVal){alert('Please select a date.');return}
+var ts=new Date(dateVal).getTime();
+if(isNaN(ts)){alert('Invalid date.');return}
+var vehicleKey=$('apVehicle').value;
+if(!vehicleKey){alert('Please select a vehicle.');return}
+var vehicle=getVehicleByKey(vehicleKey);
+if(!vehicle){alert('Vehicle not found.');return}
+var from=clamp($('apFrom').value,1,100);
+var to=clamp($('apTo').value,1,100);
+if(to<=from){alert('End % must be greater than start %.');return}
+var cap=parseFloat($('apCap').value);
+var rate=parseFloat($('apRate').value);
+if(!cap||cap<=0||rate<0){alert('Please enter valid values.');return}
+var eff=(apMode==='home'?(parseFloat($('homeEfficiency').value)||88):(parseFloat($('efficiency').value)||90));
+var needed=((to-from)/100)*cap;
+var billed=needed/(eff/100);
+var fee=parseFloat($('apFee').value)||0;
+var total=billed*rate+fee;
+if(apMode==='public'){
+var userTotal=parseFloat($('apTotal').value);
+if(userTotal>0)total=userTotal;
+}
+var rec={
+ts:ts,
+cap:cap,
+cur:from,
+tgt:to,
+r:rate,
+needed:needed,
+billed:billed,
+total:total,
+mode:apMode,
+calcMode:'manual',
+vehicleKey:vehicleKey,
+vehicleName:vehicle.name,
+notes:$('apNotes').value.trim()||''
+};
+var btn=this;
+btn.disabled=true;btn.textContent='Adding…';
+addRecord(rec,function(ok){
+btn.disabled=false;btn.textContent='Add to History';
+if(ok){
+$('addPastModal').classList.remove('show');
+renderHistory();
+showToast('Previous charge added','success');
+}else{
+showToast('Failed to add','error');
+}
+});
+});
+
+// ============ GARAGE ============
 function renderGarage(){
 var list=$('garageList');
 if(!userVehicles||userVehicles.length===0){list.innerHTML='<div class="empty-state"><div class="es-icon">🚗</div><div class="es-text"><strong>No custom vehicles yet.</strong><br>Tap "➕ Add" to save your car.</div></div>'}
@@ -2176,7 +2318,7 @@ var byBrand={};Object.keys(builtInVehicles).forEach(function(k){var v=builtInVeh
 Object.keys(byBrand).sort().forEach(function(b){var g=document.createElement('optgroup');g.label=b;byBrand[b].sort(function(a,b){return(a.v.name||'').localeCompare(b.v.name||'')}).forEach(function(i){var o=document.createElement('option');o.value=i.key;o.textContent=i.v.name;g.appendChild(o)});hf.appendChild(g)});
 hf.value=curHf;
 
-if(filtered.length===0){list.innerHTML='<div class="empty-state"><div class="es-icon">📭</div><div class="es-text"><strong>No charges'+(filter!=='all'?' for this filter':'')+'.</strong><br>Save a charge from Calculate.</div></div>';stats.style.display='none';cb.style.display='none';er.style.display='none';sc.style.display='none';chartCard.style.display='none';return}
+if(filtered.length===0){list.innerHTML='<div class="empty-state"><div class="es-icon">📭</div><div class="es-text"><strong>No charges'+(filter!=='all'?' for this filter':'')+'.</strong><br>Save a charge from Calculate or add a previous one.</div></div>';stats.style.display='none';cb.style.display='none';er.style.display='none';sc.style.display='none';chartCard.style.display='none';return}
 
 var recent=filtered.slice().sort(function(a,b){return a.ts-b.ts}).slice(-6);
 if(recent.length>0){
@@ -2206,10 +2348,12 @@ var d=new Date(item.ts),mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep
 var dt=d.getDate()+' '+mo[d.getMonth()]+' · '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
 var mIcon=item.mode==='home'?'🏠':'🔌';
 var vname=item.vehicleName||'';
+var manualBadge=(item.calcMode==='manual')?'<span class="manual-badge">Manual</span>':'';
 var savings=calculatePetrolSavings(item);
 var savingsHtml='';
 if(savings!==null&&savings>0){savingsHtml='<div style="font-size:0.72rem;color:#2ecc71;font-weight:700;margin-top:6px">💰 Saved '+lkr(savings)+' vs petrol</div>'}
-return '<div class="history-item" data-docid="'+item._docId+'"><button data-id="'+item.ts+'" class="delBtn" style="position:absolute;top:10px;right:10px;background:none;border:none;color:#6a5a9e;font-size:1.2rem;cursor:pointer;z-index:2">×</button><div style="display:flex;justify-content:space-between;margin-bottom:8px;padding-right:24px"><span style="font-size:1.05rem;font-weight:800;color:#7c3aed">'+lkr(item.total)+'</span><span style="font-size:0.7rem;color:#6a5a9e">'+dt+'</span></div>'+(vname?'<div style="font-size:0.72rem;color:var(--purpleB);font-weight:700;margin-bottom:4px">🚗 '+vname+'</div>':'')+'<div style="font-size:0.78rem;color:var(--dim);line-height:1.6">'+mIcon+' <span style="color:var(--text);font-weight:600">'+item.cur+'% → '+item.tgt+'%</span> · ⚡ <span style="color:var(--text);font-weight:600">+'+item.needed.toFixed(2)+' kWh</span> · 💵 <span style="color:var(--text);font-weight:600">'+item.r.toFixed(2)+' LKR/kWh</span></div>'+savingsHtml+'<div class="hi-edit-hint">✏️ Tap to edit</div></div>'
+var notesHtml=(item.notes)?'<div style="font-size:0.72rem;color:var(--faint);margin-top:4px;font-style:italic">📝 '+item.notes+'</div>':'';
+return '<div class="history-item" data-docid="'+item._docId+'"><button data-id="'+item.ts+'" class="delBtn" style="position:absolute;top:10px;right:10px;background:none;border:none;color:#6a5a9e;font-size:1.2rem;cursor:pointer;z-index:2">×</button><div style="display:flex;justify-content:space-between;margin-bottom:8px;padding-right:24px"><span style="font-size:1.05rem;font-weight:800;color:#7c3aed">'+lkr(item.total)+'</span><span style="font-size:0.7rem;color:#6a5a9e">'+dt+'</span></div>'+(vname?'<div style="font-size:0.72rem;color:var(--purpleB);font-weight:700;margin-bottom:4px">🚗 '+vname+manualBadge+'</div>':'')+'<div style="font-size:0.78rem;color:var(--dim);line-height:1.6">'+mIcon+' <span style="color:var(--text);font-weight:600">'+item.cur+'% → '+item.tgt+'%</span> · ⚡ <span style="color:var(--text);font-weight:600">+'+item.needed.toFixed(2)+' kWh</span> · 💵 <span style="color:var(--text);font-weight:600">'+item.r.toFixed(2)+' LKR/kWh</span></div>'+savingsHtml+notesHtml+'<div class="hi-edit-hint">✏️ Tap to edit</div></div>'
 }).join('');
 
 list.querySelectorAll('.delBtn').forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();var id=parseInt(b.dataset.id);if(confirm('Delete this charge?'))deleteRecord(id,function(){renderHistory();showToast('Charge deleted')})})});
@@ -2228,12 +2372,15 @@ editingHistoryId=docId;
 getAllRecords(function(hist){
 var item=hist.find(function(x){return x._docId===docId});
 if(!item){alert('Charge not found.');return}
+var d=new Date(item.ts);
+var iso=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')+'T'+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+$('ehDate').value=iso;
 $('ehFrom').value=item.cur||0;
 $('ehTo').value=item.tgt||0;
 $('ehCap').value=item.cap||30.08;
 $('ehRate').value=item.r||0;
 $('ehTotal').value=item.total||0;
-if(item.mode==='money'||item.moneyRequested){$('ehTotalField').style.display='block'}else{$('ehTotalField').style.display='none'}
+if(item.mode==='money'||item.moneyRequested||item.calcMode==='manual'){$('ehTotalField').style.display='block'}else{$('ehTotalField').style.display='none'}
 $('editHistoryModal').classList.add('show');
 });
 }
@@ -2254,6 +2401,8 @@ var total=billed*rate;
 var totalOverride=$('ehTotalField').style.display!=='none'?parseFloat($('ehTotal').value):null;
 if(totalOverride&&totalOverride>0)total=totalOverride;
 var updates={cur:from,tgt:to,cap:cap,r:rate,needed:needed,billed:billed,total:total};
+var dateVal=$('ehDate').value;
+if(dateVal){var newTs=new Date(dateVal).getTime();if(!isNaN(newTs))updates.ts=newTs}
 updateRecord(editingHistoryId,updates,function(ok){
 if(ok){$('editHistoryModal').classList.remove('show');editingHistoryId=null;renderHistory();showToast('Charge updated','success')}
 else{alert('Could not update.')}
@@ -2277,13 +2426,13 @@ $('clearBtn').addEventListener('click',function(){if(confirm('Delete all history
 $('exportBtn').addEventListener('click',function(){
 getAllRecords(function(h){
 if(h.length===0)return;
-var rows=[['Date','Time','Mode','Vehicle','CalcMode','From %','To %','Capacity','kWh','Rate','Total','Petrol Savings']];
+var rows=[['Date','Time','Mode','Vehicle','CalcMode','From %','To %','Capacity','kWh','Rate','Total','Petrol Savings','Notes']];
 h.slice().sort(function(a,b){return a.ts-b.ts}).forEach(function(x){
 var d=new Date(x.ts);
 var dt=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 var tm=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
 var s=calculatePetrolSavings(x);
-rows.push([dt,tm,x.mode||'public',x.vehicleName||'—',x.calcMode||'cost',x.cur,x.tgt,x.cap,x.needed.toFixed(2),x.r.toFixed(2),x.total.toFixed(2),s!==null?s.toFixed(2):'—']);
+rows.push([dt,tm,x.mode||'public',x.vehicleName||'—',x.calcMode||'cost',x.cur,x.tgt,x.cap,x.needed.toFixed(2),x.r.toFixed(2),x.total.toFixed(2),s!==null?s.toFixed(2):'—',x.notes||'']);
 });
 var csv=rows.map(function(r){return r.map(function(c){return '"'+String(c).replace(/"/g,'""')+'"'}).join(',')}).join('\n');
 var blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
@@ -2348,7 +2497,6 @@ if(p.setDiesel)$('setDiesel').value=p.setDiesel;
 if(p.setPetrolKm)$('setPetrolKm').value=p.setPetrolKm;
 }}catch(e){}
 
-// Apply saved state
 populateVehicleDropdowns();
 populateRateDropdown();
 applyDefaultVehicle();
