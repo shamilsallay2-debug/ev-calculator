@@ -860,10 +860,12 @@ dropdown.classList.add('show');
 dropdown.querySelectorAll('.vcb-item').forEach(function(item){
 item.addEventListener('click',function(){
 var key=this.dataset.key;
-input.value='';
 dropdown.classList.remove('show');
 $(vcbId+'Clear').classList.remove('show');
 onSelect(key);
+var v=getVehicleByKey(key);
+if(v && vcbId==='calcVcbInput') input.value=v.name;
+input.blur();
 });
 });
 }
@@ -904,10 +906,13 @@ $('introVcbInput').value=v?v.name:'';
 });
 
 function updateCalcVehicleDisplay(){
-var v=getVehicleByKey(getDefaultVehicle());
+var key=getDefaultVehicle();
+var v=getVehicleByKey(key);
 var input=$('calcVcbInput');
 if(v){
 input.value=v.name;
+}else if(key && key.indexOf('custom_')===0){
+// garage vehicle not loaded yet — keep placeholder, don't clear
 }else{
 input.value='';
 }
@@ -1434,7 +1439,9 @@ loadUserVehicles(function(){
 renderGarage();
 renderHistory();
 populateSettingsVehicleDropdown();
+populateRateDropdown();
 applyDefaultVehicle();
+updateCalcVehicleDisplay();
 calc();
 });
 loadStationReports(function(){renderStations()});
